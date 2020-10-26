@@ -22,6 +22,7 @@ On aura une branche par tâche. Sachant qu'une tâche a un seul développeur. Ce
 Pour cloner tous les fichiers du repertoire localement :
 
 `git clone https://gitlab.com/MathiasBsrt/pfr.git `
+
 `cd pfr `
 
 Puis on travaille sur le code.
