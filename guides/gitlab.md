@@ -6,8 +6,6 @@ J'ai détaillé cette partie dans le fichier guides/git.md. La partie gestion de
 
 Via l'onglet Issues à gauche, on peut accèder à "Board".
 
-[image]
-
 ## Organisation
 On utilise 2 board : 
 
@@ -27,6 +25,7 @@ Ainsi, le board "Development" aura 3 colonnes :
 2. DOING : Les tâches en cours
 3. DONE : La tâche est finie
 
+[](https://gitlab.com/MathiasBsrt/pfr/-/raw/master/guides/images/boardDev.png)
 Une fois testé, la tâche peut être fermée.
 
 Si un bug est découvert. Le testeur doit ouvrir une nouvelle "issue" dans le board Development et décrire le problème dans la description de celle ci avec le développeur puisse la corriger.
@@ -37,7 +36,9 @@ On définit une fonctionnalité comme un label. Un label = une colonne.
 Dans le board "fonctionnalités" on aura donc autant de colonne que de fonctionnalités.
 
 On place les tâches dans la fonctionnalité correspondante.
+Ce board permet de visualiser les tâches par fonctionnalité.
 
+[](https://gitlab.com/MathiasBsrt/pfr/-/raw/master/guides/images/boardFonct.png)
 
 ## Utilisation des boards
 
