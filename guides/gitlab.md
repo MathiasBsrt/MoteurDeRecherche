@@ -25,7 +25,7 @@ Ainsi, le board "Development" aura 3 colonnes :
 2. DOING : Les tâches en cours
 3. DONE : La tâche est finie
 
-[https://gitlab.com/MathiasBsrt/pfr/-/raw/master/guides/images/boardDev.png](https://gitlab.com/MathiasBsrt/pfr/-/raw/master/guides/images/boardDev.png)
+![board dev](https://gitlab.com/MathiasBsrt/pfr/-/raw/master/guides/images/boardDev.png)
 Une fois testé, la tâche peut être fermée.
 
 Si un bug est découvert. Le testeur doit ouvrir une nouvelle "issue" dans le board Development et décrire le problème dans la description de celle ci avec le développeur puisse la corriger.
@@ -38,7 +38,7 @@ Dans le board "fonctionnalités" on aura donc autant de colonne que de fonctionn
 On place les tâches dans la fonctionnalité correspondante.
 Ce board permet de visualiser les tâches par fonctionnalité.
 
-[board](https://gitlab.com/MathiasBsrt/pfr/-/raw/master/guides/images/boardFonct.png)
+![board fonctionnalité](https://gitlab.com/MathiasBsrt/pfr/-/raw/master/guides/images/boardFonct.png)
 
 ## Utilisation des boards
 
