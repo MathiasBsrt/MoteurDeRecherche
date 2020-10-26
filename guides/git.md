@@ -40,7 +40,9 @@ Une fois que l'on a fini la tâche ou que l'on veut sauvegarder son travail; il 
 On se place dans le dossier pfr/
 
 `git add .` -> ajouter toutes les modifications
+
 `git commit -m "3 mots sur les modifications apportés`
+
 `git push`
 
 Votre travail sera sauvegardé sur le repertoire.
