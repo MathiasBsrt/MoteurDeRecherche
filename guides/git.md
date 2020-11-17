@@ -54,6 +54,9 @@ Pour télécharger les modifications on utilise la commande :
 Si vous avez changé des choses avant de faire le git pull, vous devez faire la commande suivante avant de faire le git pull :
 `git stash`
 
+On utilise une branche par tâche. Une fois cette tâche finie est fonctionnelle on peut fusionner (merge) sur la branche principale.
+
+Attention : il ne faut pas modifier des fichiers que d'autres modifient dans une autre branche ou modifient en même temps. On risque des conflits. Il faut donc se concentrer sur sa tâche.
 
 ## Avec interface graphique
 
