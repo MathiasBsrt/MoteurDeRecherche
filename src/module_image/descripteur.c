@@ -1,100 +1,43 @@
-#include <stdio.h> 
-#include <stdlib.h> 
-#include "pile_dynamique.h"
 #include "descripteur.h"
+#include <stdio.h>
 
-
-/***
- * Cette fonction permet de créer le descripteur d'un fichier
- * donné et le stocker dans le fichier base_descripteur
- */
-
-void creationDescripteur(int taille, char *chemin[]){
-    //lire fichier pointé par le chemin
-    //quantification de chaque pixel de l'image
-    //Creer l'histograme
-    //Creer variable descripteur et le remplir
-
-    FILE* image;
-    PILE* p;
-    int lignes;
-    int colonnes;
-    int nbComposantes;
-
-    image = fopen(*chemin,"r");
-    p = chargerPile();
-
-    //Lecture des propriétés de l'image
-    scanf("%d",&lignes);
-    scanf("%d", &colonnes);
-    scanf("%d", &nbComposantes);
-
-    //création des matrices de l'image
-    int matriceImageBrut[lignes*nbComposantes][colonnes*nbComposantes]; // Contient les matrices de chaque composante
-    int matriceImageQuant[lignes][colonnes]; //Matrice après quantification de la version brut
-
-    //Lecture du fichier image
-
-    lire_image(lignes,colonnes, *matriceImageBrut, image);
-
-    // Pour une image rgb on a 3 matrices : matrice R, matrice G et matrice B
-    //Pour une image niveau de gris : un seule matrice
-    //On cree une une matrice commune à ses 3 matrices en faisant une quantification pour chaque pixel
-    quantification(*matriceImageBrut, *matriceImageQuant);
-    histogramme = creationHistogramme(matriceImageQuant, histogramme);
-
-    //Creation du descripteur
-    Descripteur * newDesc;
-    newDesc->id = p.dernier.e.id++;
-    newDesc->histogramme = histogramme;
-
-    SauvegardeDescripteur(newDesc, *cheminVersFichier,&p);
+void affiche_Descripteur(Descripteur e){
+    printf("Catégorie : %c et identifiant : %d", e.categorie, e.id);
 }
 
-/**
- * Cette fonction permet de sauvegarder un descripteur donné en paramètre dans le fichier base_descripteur_image
- * et de lier ce descripteur avec le fichier dans le fichier liste_base_image
- */
-SauvegardeDescripteur(Descripteur *decripteur,char *cheminVersFichier[], PILE *p){
-    //On empile
-    p = emPILE(p);
-    sauvegarderPile(p);
-    
-}
-/***
- * Cette fonction permet de charger la pile stockée dans
- * le fichier base_descripteur_image. Dans le cas où ce 
- * fichier n'existe pas, on le créera.
- * 
- * Retourne une pile
- */
-PILE chargerPile(){
-    
+Descripteur saisir_Descripteur(){
+  Descripteur e;
+   //do{
+        printf("Saisir la catégorie (Wagon : W, Wagon restaurant : R, Locomotive  : L) à ajouter \n");
+        scanf(" %c",&e.categorie);
+   //}while(e.categorie != 'W' | e.categorie != 'R' | e.categorie != 'L');
+
+    printf("Saisir l'identifiant de l'Descripteur (entier positif) \n");
+    scanf("%d",&e.id);
+   
+    //affiche_Descripteur(e);
+    return e;
 }
 
-/***
- * Cette fonction permet de sauvegarder la pile passée en paramètre
- * dans le fichier base_descripteur_image.
- * La pile spécifiée écrase l'ancienne
- */
-void sauvegarderPile(PILE p){
+void affecter_Descripteur(Descripteur e1, Descripteur e2){
+    e2.categorie = e1.categorie;
+    e2.id = e1.id;
 
 }
-
-int lire_image(int lignes, int colonnes, int *matriceImage[][], FILE *image){
-	int val = 0;
-	 for (int i = 0; i < lignes; i++)
-        {
-            for (int j = 0; j < colonnes; j++)
-            {
-                scanf("%d",&val);
-				*matriceImage[i][j] = val;
-                
-            }
-        
-            
-        }
-	return 0;
+// retourne 0 si e1 et e2 sont égaux
+// retourne 1 si e1> e2 (basé sur l'id)
+//retourne -1 si e1<e2 (basé sur l'id)
+int compareDescripteur(Descripteur e1, Descripteur e2){
+    if(e1.categorie == e2.categorie && e1.id == e2.id){
+        return 0;
+    }
+    else if(e1.id>e2.id){
+        return 1;
+    }
+    else{
+        return -1;
+    }
 }
+
 
 
