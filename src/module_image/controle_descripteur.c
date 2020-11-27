@@ -4,6 +4,7 @@
 #include "descripteur.h"
 
 
+
 /***
  * Cette fonction permet de créer le descripteur d'un fichier
  * donné et le stocker dans le fichier base_descripteur
@@ -20,46 +21,44 @@ void creationDescripteur(int taille, char *chemin[]){
     int lignes;
     int colonnes;
     int nbComposantes;
+    int histo[tailleHistogramme];
 
     image = fopen(*chemin,"r");
     p = chargerPile();
-
+    
     //Lecture des propriétés de l'image
     scanf("%d",&lignes);
     scanf("%d", &colonnes);
     scanf("%d", &nbComposantes);
 
-    //création des matrices de l'image
     int matriceImageBrut[lignes*nbComposantes][colonnes*nbComposantes]; // Contient les matrices de chaque composante
-    int matriceImageQuant[lignes][colonnes]; //Matrice après quantification de la version brut
+    int matriceImageQuant[lignes][colonnes]; //Matrice après quantification de la version brut   
 
     //Lecture du fichier image
 
-    lire_image(lignes,colonnes, *matriceImageBrut, image);
+    lire_image(lignes,colonnes, matriceImageBrut, image);
 
     // Pour une image rgb on a 3 matrices : matrice R, matrice G et matrice B
     //Pour une image niveau de gris : un seule matrice
     //On cree une une matrice commune à ses 3 matrices en faisant une quantification pour chaque pixel
     quantification(*matriceImageBrut, *matriceImageQuant);
-    histo = creationHistogramme(matriceImageQuant, histogramme);
-
+    
     //Creation du descripteur
-    Descripteur newDesc;
-    newDesc.id = *p.dernier.e.id++;
-    newDesc.histogramme = histogramme;
+    Descripteur *newDesc;
+    newDesc->id = 0;
 
-    SauvegardeDescripteur(newDesc, *cheminVersFichier,&p);
+    creationHistogramme(matriceImageQuant,newDesc); // doit créer l'histo et remplir l'attribut histogramme du descripteur
+    
+    SauvegardeDescripteur(newDesc, *chemin,&p);
 }
 
 /**
  * Cette fonction permet de sauvegarder un descripteur donné en paramètre dans le fichier base_descripteur_image
  * et de lier ce descripteur avec le fichier dans le fichier liste_base_image
  */
-SauvegardeDescripteur(Descripteur *decripteur,char *cheminVersFichier[], PILE *p){
+SauvegardeDescripteur(Descripteur *nouveau,char *cheminVersFichier[], PILE *p){
     //On 
-    ELEMENT nouveau;
-    nouveau.
-    p = emPILE(p, nouveau);
+    p = emPILE(p, *nouveau);
     sauvegarderPile(p);
     
 }
@@ -71,7 +70,8 @@ SauvegardeDescripteur(Descripteur *decripteur,char *cheminVersFichier[], PILE *p
  * Retourne une pile
  */
 PILE chargerPile(){
-    
+    PILE p;
+    return p;
 }
 
 /***
@@ -83,15 +83,17 @@ void sauvegarderPile(PILE p){
 
 }
 
-int lire_image(int lignes, int colonnes, int *matriceImage[][], FILE *image){
+int* lire_image(int lignes, int colonnes, int *matriceImage, FILE *image){
 	int val = 0;
 	 for (int i = 0; i < lignes; i++)
         {
             for (int j = 0; j < colonnes; j++)
             {
                 scanf("%d",&val);
-				*matriceImage[i][j] = val;
-                
+                /*
+                * Passer un tableau 2D en paramètre : https://codes-sources.commentcamarche.net/faq/918-passer-un-tableau-a-2-dimensions-a-une-fonction
+                */
+				matriceImage[(int unsigned)((i*colonnes)+i)] = val;
             }
         
             

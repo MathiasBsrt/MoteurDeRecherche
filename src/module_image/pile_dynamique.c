@@ -14,7 +14,7 @@ void affichePILE(PILE p){
 
     while(cellCourant!= NULL)
     {
-        affiche_ELEMENT(cellCourant->e);
+        affiche_Descripteur(cellCourant->e);
         cellCourant = cellCourant->suivant;
         printf(" -- ");
         
@@ -40,7 +40,7 @@ int PILE_estVide(PILE p){
     return 0;
 }
 
-PILE emPILE(PILE p, ELEMENT nouveau){
+PILE emPILE(PILE p, Descripteur nouveau){
     //affichePILE(p);
     if(PILE_estVide(p)){
         CEL *c = malloc(sizeof(CEL));
@@ -58,7 +58,7 @@ PILE emPILE(PILE p, ELEMENT nouveau){
         cellCourant = cellCourant->suivant;
     }
 
-    //Ici elementCourant sera l'élément le plus haut de la pile
+    //Ici DescripteurCourant sera l'élément le plus haut de la pile
     //Creation de la nouvelle celulle qui va s'empiler
     CEL * nouvelleCel = malloc(sizeof(CEL));
     nouvelleCel->e = nouveau;
@@ -72,7 +72,7 @@ PILE emPILE(PILE p, ELEMENT nouveau){
     return p;
 }
 
-PILE dePILE(PILE p, ELEMENT * valeur){
+PILE dePILE(PILE p, Descripteur * valeur){
     if(PILE_estVide(p)){
         return p;
     }
@@ -108,10 +108,10 @@ PILE dePILE(PILE p, ELEMENT * valeur){
 
 }
 
-PILE saisir_PILE(){
+/*PILE saisir_PILE(){
    int nbValeurs = 0;
     PILE p;
-    ELEMENT valeurAAjouter;
+    Descripteur valeurAAjouter;
     
     p = init_PILE();
     printf("Combien de valeurs voulez vous rentrer \n");
@@ -121,9 +121,9 @@ PILE saisir_PILE(){
 
     for (int i = 0; i < nbValeurs; i++)
     {
-        valeurAAjouter = saisir_ELEMENT();
+        valeurAAjouter = saisir_Descripteur();
         p = emPILE(p,valeurAAjouter);
     }
     return p;
     
-}
+}*/

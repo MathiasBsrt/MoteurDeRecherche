@@ -1,11 +1,12 @@
+#define tailleHistogramme 64
 #include <stdlib.h>
 
-typedef struct ELEMENT_t{
-    char categorie;
-    unsigned int id;
-}ELEMENT;
+typedef struct Descripteur_t{
+    int id;
+    int histogramme[tailleHistogramme];
+}Descripteur;
 
-void affiche_ELEMENT(ELEMENT e);
-ELEMENT saisir_ELEMENT();
-void affecter_ELEMENT(ELEMENT e1, ELEMENT e2);
-int compareELEMENT(ELEMENT e1, ELEMENT e2);
+void affiche_Descripteur(Descripteur e);
+Descripteur saisir_Descripteur();
+void affecter_Descripteur(Descripteur e1, Descripteur e2);
+int compareDescripteur(Descripteur e1, Descripteur e2);
