@@ -6,62 +6,80 @@
  */
 
 void creationDescripteur(int taille, char *chemin[]){
-    //lire fichier pointé par le chemin
-    //quantification de chaque pixel de l'image
-    //Creer l'histograme
-    //Creer variable descripteur et le remplir
-
-    FILE *image;
-    PILE *p; //La pile de descripteurs
-    Descripteur *newDesc;  //Le desctipeur à ajouter 
-
-    int lignes;
-    int colonnes;
-    int nbComposantes;
-    int histo[tailleHistogramme]; //l'histogramme du futur descripteur
-
-    p = NULL;
-    newDesc = NULL;
-    image = fopen(*chemin,"r");    
-    //Lecture des propriétés de l'image
-    scanf("%d",&lignes);
-    scanf("%d", &colonnes);
-    scanf("%d", &nbComposantes);
-
-    int matriceImageBrut[lignes*nbComposantes][colonnes*nbComposantes]; // Contient les matrices de chaque composante
-    int matriceImageQuant[lignes][colonnes]; //Matrice après quantification de la version brut   
-
-    //Lecture du fichier image
-
-    lire_image(lignes,colonnes, *matriceImageBrut, image);
-    fclose(image);
-
-    // Pour une image rgb on a 3 matrices : matrice R, matrice G et matrice B
-    //Pour une image niveau de gris : un seule matrice
-    //On cree une une matrice commune à ses 3 matrices en faisant une quantification pour chaque pixel
-    
-    //TODO : quantification(*matriceImageBrut, *matriceImageQuant);
-
-    //TODO : creationHistogramme(matriceImageQuant,newDesc); // doit créer l'histo et remplir l'attribut histogramme du descripteur
-
-    chargerPile(p);
-    SauvegardeDescripteur(newDesc, chemin,*p);
-    sauvegarderPile(*p);
+//     //lire fichier pointé par le chemin
+//     //quantification de chaque pixel de l'image
+//     //Creer l'histograme
+//     //Creer variable descripteur et le remplir
+//
+     FILE *image;
+     PILE *p; //La pile de descripteurs
+     Descripteur newDesc;  //Le desctipeur à ajouter
+//
+     int lignes;
+     int colonnes;
+     int nbComposantes;
+//
+     p = NULL;
+     image = fopen(chemin[1],"r");
+//     //Lecture des propriétés de l'image
+     fscanf(image,"%d",&lignes);
+     fscanf(image,"%d", &colonnes);
+     fscanf(image,"%d", &nbComposantes);
+     printf("%d %d\n",lignes,colonnes);
+     int** matriceImageQuant=(int *)malloc(sizeof(int)*lignes);
+     for(int i=0;i<lignes;i++){
+       matriceImageQuant[i]=(int *)malloc(sizeof(int)*colonnes);
+     }
+//     //Lecture du fichier image
+     if(nbComposantes==1){
+       int matriceImageNB[lignes][colonnes]; // Contient les matrices noir et blanc
+       lire_imageNB(lignes,colonnes,matriceImageNB, image);
+     }
+     else{
+       RGB **matriceRGB=(RGB*)malloc(sizeof(RGB)*lignes);
+       for(int i=0;i<lignes;i++){
+         matriceRGB[i]=(RGB*)malloc(sizeof(RGB)*colonnes);
+       }
+      lire_imageRGB(lignes,colonnes,matriceRGB,image);
+      quantificationRGB(matriceRGB, matriceImageQuant,lignes,colonnes);
+      for(int i=0;i<lignes;i++){
+        free(matriceRGB[i]);
+      }
+      free(matriceRGB);
+    }
+     fclose(image);
+//
+//     // Pour une image rgb on a 3 matrices : matrice R, matrice G et matrice B
+//     //Pour une image niveau de gris : un seule matrice
+//     //On cree une une matrice commune à ses 3 matrices en faisant une quantification pour chaque pixel
+//     if((nbComposantes==1)){
+// }
+//
+//   creationHistogramme(matriceImageQuant,&newDesc,lignes,colonnes); // doit créer l'histo et remplir l'attribut histogramme du descripteur
+//
+//
+//     chargerPile(p);
+//     SauvegardeDescripteur(newDesc, chemin,*p);
+//     sauvegarderPile(*p);
+for(int i=0;i<lignes;i++){
+  free(matriceImageQuant[i]);
+}
+free(matriceImageQuant);
 }
 
 /**
  * Cette fonction permet de sauvegarder un descripteur donné en paramètre dans le fichier base_descripteur_image
  * et de lier ce descripteur avec le fichier dans le fichier liste_base_image
  */
-void SauvegardeDescripteur(Descripteur *nouveau,char *cheminVersFichier[], PILE p){
-    nouveau->id = p->e.id++;
-    p = emPILE(p,*nouveau);    
+void SauvegardeDescripteur(Descripteur nouveau,char *cheminVersFichier[], PILE p){
+    nouveau.id = p->e.id++;
+    p = emPILE(p,nouveau);
 }
 /***
  * Cette fonction permet de charger la pile stockée dans
- * le fichier base_descripteur_image. Dans le cas où ce 
+ * le fichier base_descripteur_image. Dans le cas où ce
  * fichier n'existe pas, on le créera.
- * 
+ *
  * Retourne une pile
  */
 void chargerPile(PILE *p){
@@ -102,7 +120,7 @@ void chargerPile(PILE *p){
 void sauvegarderPile(PILE p){
     //On stocke sous la forme de une ligne = un element de la pile : "[id] [e1] [e2 [e3] ..." pour les 64 elements du tableau histogramme (sans les crochets)
     FILE *pileFichier;
-    pileFichier = fopen("base_descripteur_image","w+");    
+    pileFichier = fopen("base_descripteur_image","w+");
     CEL *cellCourant;
     cellCourant = p;
 
@@ -119,7 +137,7 @@ void sauvegarderPile(PILE p){
         }
         cellCourant = cellCourant->suivant; // Parcours de la liste dynamique
     }
-    
+
     fprintf(pileFichier,"%d ",-1);
 
 
@@ -127,31 +145,100 @@ void sauvegarderPile(PILE p){
 
 }
 
-int lire_image(int lignes, int colonnes, int *matriceImage, FILE *image){
-	int val = 0;
-	 for (int i = 0; i < lignes; i++)
-        {
-            for (int j = 0; j < colonnes; j++)
-            {
-                fscanf(image,"%d",&val);
-                /*
-                * Passer un tableau 2D en paramètre : https://codes-sources.commentcamarche.net/faq/918-passer-un-tableau-a-2-dimensions-a-une-fonction
-                */
-				matriceImage[(int unsigned)((i*colonnes)+i)] = val; // A tester, je ne sais pas si ça marche vraiment
-            }
-        
-            
-        }
+int lire_imageNB(int lignes, int colonnes, int* matriceImage[], FILE *image){
+ for (int i = 0; i < lignes; i++)
+  {
+      for (int j = 0; j < colonnes; j++)
+    {
+      fscanf(image,"%d",&matriceImage[i][j]);
+    }
+  }
+  return 0;
+}
+
+int lire_imageRGB(int lignes, int colonnes, RGB** matriceImage, FILE *image){
+
+  for (int i = 0; i < lignes; i++)
+   {
+       for (int j = 0; j < colonnes; j++)
+     {
+       fscanf(image,"%d",&matriceImage[i][j].red);
+     }
+   }
+   for (int i = 0; i < lignes; i++)
+    {
+        for (int j = 0; j < colonnes; j++)
+      {
+        fscanf(image,"%d",&matriceImage[i][j].green);
+      }
+    }
+    for (int i = 0; i < lignes; i++)
+     {
+         for (int j = 0; j < colonnes; j++)
+       {
+         fscanf(image,"%d",&matriceImage[i][j].blue);
+       }
+     }
 	return 0;
+}
+
+
+int power(int x, int puiss){
+  if(puiss==0) {
+    return 1;
+  }
+  for(int i=1;i<puiss;i++)
+  {
+    x*=x;
+  }
+  return x;
+}
+
+int quantifie_un_pixelRGB(RGB pixel){
+  int resultat=0;
+  int composantes[3*quantificateur];
+  int puissance=7;
+  int nbBits=quantificateur;
+  while(nbBits>0){
+    composantes[(3*nbBits)-1]=pixel.red>power(2,puissance);
+    composantes[(2*nbBits)-1]=pixel.green>power(2,puissance);
+    composantes[(1*nbBits)-1]=pixel.blue>power(2,puissance);
+    nbBits--;
+  }
+  for(int i=0;i<3*quantificateur;i++){
+    resultat+=composantes[i]*power(2,i);
+  }
+  return resultat;
+}
+
+int quantificationRGB(RGB *matriceImageRGB[],int *matriceImageQuant[],int lignes,int colonnes){
+  for(int i=0;i<lignes;i++)
+  {
+    for(int j=0;j<colonnes;j++)
+    {
+      matriceImageQuant[i][j]=quantifie_un_pixelRGB(matriceImageRGB[i][j]);
+    }
+  }
+  return 0;
+}
+
+int creationHistogramme(int *matriceImageQuant[],Descripteur *newDesc,int lignes,int colonnes) // doit créer l'histo et remplir l'attribut histogramme du descripteur
+{
+  for(int i=0;i<lignes;i++)
+  {
+    for(int j=0;j<colonnes;j++)
+    {
+      newDesc->histogramme[matriceImageQuant[i][j]]+=1;
+    }
+  }
+  return 0;
 }
 
 int main(int argc, char const *argv[])
 {
     /* code */
+    creationDescripteur(0, argv);
+
     return 0;
 }
-
-
-
 //TODO :liste_base_image pour lier le nom du fichier du descripteur à ce dernier
-
