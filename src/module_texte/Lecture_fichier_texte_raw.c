@@ -3,7 +3,7 @@
 #include <regex.h>
 #include <string.h>
 
-#define TAILLEMAX 512
+#define TAILLEMAX 1024
 
 void test_ligne(char *buffer)
 {
@@ -26,11 +26,11 @@ void test_ligne(char *buffer)
     }
 }
 
-void recup_pattern(char *buffer)
+char *recup_pattern(char *buffer, FILE *dest)
 {
     int err;
     regex_t preg;
-    const char *str_regex = "(>.*<)|(^(<.*>))";
+    const char *str_regex = "(>.*<)";
 
     err = regcomp(&preg, str_regex, REG_EXTENDED);
     if (err == 0)
@@ -56,14 +56,10 @@ void recup_pattern(char *buffer)
                 if (retour)
                 {
                     strncpy(retour, &buffer[start], size); /*on recupere la string sans les balises*/
-                    retour[size-1] = '\0';
-                    printf("%s\n", retour+1);
+                    retour[size - 1] = '\0';
+                    fprintf(dest, "%s\n", retour + 1);
                     free(retour);
                 }
-            }
-            else if (match == REG_NOMATCH)
-            {
-                printf("NOK\n");
             }
         }
         else
@@ -76,12 +72,16 @@ void recup_pattern(char *buffer)
 
 int main(void)
 {
-    FILE *file = fopen("test.xml", "r+");
+    FILE *file = fopen("aa.xml", "r+");
+    FILE *dest = fopen("retour.clean", "w+");
     char buffer[TAILLEMAX];
     while (fgets(buffer, TAILLEMAX, file) != NULL)
     {
         //test_ligne(buffer);
-        recup_pattern(buffer);
+        recup_pattern(buffer, dest);
     }
+    fclose(file);
+    fclose(dest);
     return 0;
 }
+*/
