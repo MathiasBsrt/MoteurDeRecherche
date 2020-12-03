@@ -57,10 +57,9 @@ void creationDescripteur(char *chemin){
     }
    creationHistogramme(matriceImageQuant,&newDesc,lignes,colonnes); // doit créer l'histo et remplir l'attribut histogramme du descripteur
 
-
-    //chargerPile(&p);
+    p=init_PILE();
+    //chargerPile(&p); // On chargera la pile
      p=SauvegardeDescripteur(newDesc,p);
-     sauvegarderPile(p);
     for(int i=0;i<lignes;i++){
       free(matriceImageQuant[i]);
   }
@@ -73,9 +72,9 @@ void creationDescripteur(char *chemin){
  * et de lier ce descripteur avec le fichier dans le fichier liste_base_image
  */
 PILE SauvegardeDescripteur(Descripteur nouveau, PILE p){
-  p=init_PILE();
-    nouveau.id = 1;//p->suivant->e.id++;
+    nouveau.id = 1;//TODOOn chargera la pile au lancement du programme pour al recherche, on aura donc accès aux id. On utilisera dernier id
     p = emPILE(p,nouveau);
+     sauvegarderPile(p);
 
   return p;
 }
@@ -110,7 +109,7 @@ PILE SauvegardeDescripteur(Descripteur nouveau, PILE p){
 //             emPILE(&p,d);
 //             fscanf(fichierPile,"%d",&val); //id
 //
-//         }while(val != -1); // -1 signifie que c'est le dernier element de la pile
+//         }while(val != EOF); // Utiliser EOF pour signifier que c'est le dernier element de la pile
 //         fclose(fichierPile);
 //     }
 // }
@@ -131,14 +130,16 @@ void sauvegarderPile(PILE p){
         //on ecrit l'histogramme, chaque valeur séparée par un espace
         //on revient à la ligne
          p=dePILE(p,&copier);
-         fprintf(pileFichier,"%d\n",copier.id);
+         // On met tout en ligne, pas beosin des indices du tableau de l'histogramme. 
+        // On met tout en ligne pour faciliter la lecture par le futur charger fichier/pile. Un \n represente la fin d'un descripteur
+         fprintf(pileFichier,"%d ",copier.id);
          for (int i = 0; i < tailleHistogramme; i++)
          {
-             fprintf(pileFichier,"%d %d\n",i,copier.histogramme[i]);
+             fprintf(pileFichier,"%d ",copier.histogramme[i]);
          }
     }
 
-    fprintf(pileFichier,"%d ",-1);
+    fprintf(pileFichier,"%s ","\n");
 
 
     fclose(pileFichier);
@@ -241,9 +242,9 @@ int creationHistogramme(int *matriceImageQuant[],Descripteur *newDesc,int lignes
 
 int main(int argc, char  *argv[])
 {
-    /* code */
     creationDescripteur(argv[1]);
 
     return 0;
 }
+
 //TODO :liste_base_image pour lier le nom du fichier du descripteur à ce dernier
