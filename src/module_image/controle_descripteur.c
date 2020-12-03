@@ -12,7 +12,7 @@ void creationDescripteur(char *chemin){
 //     //Creer variable descripteur et le remplir
 //
      FILE *image;
-     PILE *p; //La pile de descripteurs
+     PILE p; //La pile de descripteurs
      Descripteur newDesc;  //Le desctipeur à ajouter
 //
      int lignes;
@@ -58,13 +58,13 @@ void creationDescripteur(char *chemin){
    creationHistogramme(matriceImageQuant,&newDesc,lignes,colonnes); // doit créer l'histo et remplir l'attribut histogramme du descripteur
 
 
-     chargerPile(p);
-//     SauvegardeDescripteur(newDesc, chemin,*p);
-//     sauvegarderPile(*p);
- //   for(int i=0;i<lignes;i++){
- //     free(matriceImageQuant[i]);
- // }
-  // free(matriceImageQuant);
+    //chargerPile(&p);
+     p=SauvegardeDescripteur(newDesc,p);
+     sauvegarderPile(p);
+    for(int i=0;i<lignes;i++){
+      free(matriceImageQuant[i]);
+  }
+   free(matriceImageQuant);
 
    }
 
@@ -72,9 +72,12 @@ void creationDescripteur(char *chemin){
  * Cette fonction permet de sauvegarder un descripteur donné en paramètre dans le fichier base_descripteur_image
  * et de lier ce descripteur avec le fichier dans le fichier liste_base_image
  */
-void SauvegardeDescripteur(Descripteur nouveau,char *cheminVersFichier[], PILE p){
-    nouveau.id = p->e.id++;
+PILE SauvegardeDescripteur(Descripteur nouveau, PILE p){
+  p=init_PILE();
+    nouveau.id = 1;//p->suivant->e.id++;
     p = emPILE(p,nouveau);
+
+  return p;
 }
 /***
  * Cette fonction permet de charger la pile stockée dans
@@ -83,34 +86,34 @@ void SauvegardeDescripteur(Descripteur nouveau,char *cheminVersFichier[], PILE p
  *
  * Retourne une pile
  */
-void chargerPile(PILE *p){
-    Descripteur d;
-    FILE *fichierPile;
-    *p = init_PILE();
-    fichierPile = fopen("base_descripteur_image","r");
-    //Condition si le fichier n'existe pas
-    if(fichierPile == NULL){
-        char commande[1000] ;
-        strcpy(commande, "touch base_descripteur_image");
-        system(commande);
-    }
-    else{
-        int val;
-        fscanf(fichierPile,"%d",&val); //id du premier element
-        do{
-            d.id = val;
-            for (int i = 0; i < tailleHistogramme; i++)
-            {
-                fscanf(fichierPile,"%d",&val); //case de l'histogramme
-                    d.histogramme[i]= val;
-            }
-            emPILE(*p,d);
-            fscanf(fichierPile,"%d",&val); //id
-
-        }while(val != -1); // -1 signifie que c'est le dernier element de la pile
-        fclose(fichierPile);
-    }
-}
+// void chargerPile(PILE *p){
+//     Descripteur d;
+//     FILE *fichierPile;
+//     p = init_PILE();
+//     fichierPile = fopen("base_descripteur_image","r");
+//     //Condition si le fichier n'existe pas
+//     if(fichierPile == NULL){
+//         char commande[1000] ;
+//         strcpy(commande, "touch base_descripteur_image");
+//         system(commande);
+//     }
+//     else if(!feof(fichierPile)) {
+//         int val;
+//         fscanf(fichierPile,"%d",&val); //id du premier element
+//         do{
+//             d.id = val;
+//             for (int i = 0; i < tailleHistogramme; i++)
+//             {
+//                 fscanf(fichierPile,"%d",&val); //case de l'histogramme
+//                     d.histogramme[i]= val;
+//             }
+//             emPILE(&p,d);
+//             fscanf(fichierPile,"%d",&val); //id
+//
+//         }while(val != -1); // -1 signifie que c'est le dernier element de la pile
+//         fclose(fichierPile);
+//     }
+// }
 
 /***
  * Cette fonction permet de sauvegarder la pile passée en paramètre
@@ -121,21 +124,18 @@ void sauvegarderPile(PILE p){
     //On stocke sous la forme de une ligne = un element de la pile : "[id] [e1] [e2 [e3] ..." pour les 64 elements du tableau histogramme (sans les crochets)
     FILE *pileFichier;
     pileFichier = fopen("base_descripteur_image","w+");
-    CEL *cellCourant;
-    cellCourant = p;
-
-    while(cellCourant!= NULL)
+    Descripteur copier;
+    while(!PILE_estVide(p))
     {
         //on ecrit l'id + espace
         //on ecrit l'histogramme, chaque valeur séparée par un espace
         //on revient à la ligne
-
-        fprintf(pileFichier,"%d ",cellCourant->e.id);
-        for (int i = 0; i < tailleHistogramme; i++)
-        {
-            fprintf(pileFichier,"%d ",cellCourant->e.histogramme[i]);
-        }
-        cellCourant = cellCourant->suivant; // Parcours de la liste dynamique
+         p=dePILE(p,&copier);
+         fprintf(pileFichier,"%d\n",copier.id);
+         for (int i = 0; i < tailleHistogramme; i++)
+         {
+             fprintf(pileFichier,"%d %d\n",i,copier.histogramme[i]);
+         }
     }
 
     fprintf(pileFichier,"%d ",-1);

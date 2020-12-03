@@ -1,16 +1,16 @@
+#include <stdio.h>
+#include <stdlib.h>
 #include "descripteur.h"
+typedef struct cellule_t{
+  Descripteur elem;
+  struct cellule_t* suivant;
+}CELLULE;
+typedef CELLULE* PILE;
 
-typedef struct CEL CEL;
-typedef struct CEL* PILE;
-
-struct CEL{
-    Descripteur e;
-    CEL *suivant;
-};
 
 PILE init_PILE();
-void affichePILE(PILE p);
-int PILE_estVide(PILE p);
-PILE emPILE(PILE p, Descripteur nouveau);
-PILE dePILE(PILE p, Descripteur * valeur);
-PILE saisir_PILE();
+void affiche_PILE(PILE pile);
+int PILE_estVide(PILE pile);
+PILE emPILE(PILE pile,Descripteur elem);
+PILE dePILE(PILE pile, Descripteur* elem);
+//PILE saisir_PILE();

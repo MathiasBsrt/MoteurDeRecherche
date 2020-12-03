@@ -1,129 +1,79 @@
-#include <stdio.h>
 #include "pile_dynamique.h"
 
 PILE init_PILE(){
-   PILE p;
-    p = NULL;
+  return NULL;
+}
+void affiche_PILE(PILE pile){
+   CELLULE *cell=pile;
+  while(cell!=NULL){
+    affiche_Descripteur(cell->elem);
+    cell=cell->suivant;
+ }
+}
+int PILE_estVide(PILE pile){
+  return pile==NULL;
+}
+PILE emPILE(PILE pile,Descripteur elem){
+  CELLULE *cell=malloc(sizeof(CELLULE));
+  cell->elem=elem;
+  cell->suivant=NULL;
+  if(PILE_estVide(pile)){
+      pile=cell;
+    }
+    else{
+    CELLULE* curseur=pile->suivant;
+    while(curseur->suivant!=NULL){
+      curseur=curseur->suivant;
+    }
+    curseur->suivant=cell;
+  }
+  return pile;
+}
+PILE dePILE(PILE p, Descripteur *elt)
+{
+    if (PILE_estVide(p))
+        fprintf(stderr, "La pile est deja vide");
+    else
+    {
+        if (p->suivant == NULL)
+        {
+            *elt=p->elem;
+            p=NULL;
+        }
+        else
+        {
+            CELLULE *parcour = p;
+            CELLULE *marqueur;
+            while (parcour->suivant != NULL)
+                parcour = parcour->suivant;
+            *elt = parcour->elem;
+            marqueur=parcour;
+            parcour=p;
+            while(parcour->suivant!=marqueur)
+                parcour = parcour->suivant;
+            parcour->suivant=NULL;
+            free(marqueur);
+        }
+    }
+
     return p;
 }
-
-void affichePILE(PILE p){
-    printf("affichage de la pile : ");
-    CEL *cellCourant;
-    cellCourant = p;
-
-    while(cellCourant!= NULL)
-    {
-        affiche_Descripteur(cellCourant->e);
-        cellCourant = cellCourant->suivant;
-        printf(" -- ");
-        
-
-    }
-    printf("\n");
-
-
-    
-}
-
-
-/***
- * Fonction permettant de déterminer si la pile 
- * donnée est vide. 
- * Retourne 1 si la pile est pas vide, sinon 0;
- * 
- */
-int PILE_estVide(PILE p){
-    if(p == NULL){
-        return 1;
-    }
-    return 0;
-}
-
-PILE emPILE(PILE p, Descripteur nouveau){
-    //affichePILE(p);
-    if(PILE_estVide(p)){
-        CEL *c = malloc(sizeof(CEL));
-        c->e = nouveau;
-        c->suivant = NULL;
-        p = c;
-        return p;
-    }
-
-    CEL * cellCourant;
-    cellCourant = p;
-
-    while(cellCourant->suivant != NULL)
-    {
-        cellCourant = cellCourant->suivant;
-    }
-
-    //Ici DescripteurCourant sera l'élément le plus haut de la pile
-    //Creation de la nouvelle celulle qui va s'empiler
-    CEL * nouvelleCel = malloc(sizeof(CEL));
-    nouvelleCel->e = nouveau;
-    nouvelleCel->suivant = NULL;
-
-    cellCourant->suivant = nouvelleCel;
-
-
-    cellCourant->suivant = nouvelleCel;
-    
-    return p;
-}
-
-PILE dePILE(PILE p, Descripteur * valeur){
-    if(PILE_estVide(p)){
-        return p;
-    }
-
-    CEL * cellCourant;
-    CEL * cellPrecedent;
-    cellCourant = p;
-
-    //TRaitement 1 élément dans la pile 
-    if(p->suivant == NULL){
-        *valeur = p->e; // retour valeur depile
-        p = NULL;
-        return NULL;
-    }
-
-    while(cellCourant->suivant!= NULL)
-    {
-        cellPrecedent = cellCourant;
-        cellCourant = cellCourant->suivant;
-    }
-
-    //Ici cellPrecedent sera l'élément juste avant le dernier
-    //Creation de la nouvelle celulle qui va s'empiler
-
-    *valeur = cellCourant->e; // retour valeur depile
-    CEL * old;
-    old = cellPrecedent->suivant;
-    free(old);
-    cellPrecedent->suivant = NULL;
-
-    return p;
-
-
-}
-
-/*PILE saisir_PILE(){
-   int nbValeurs = 0;
-    PILE p;
-    Descripteur valeurAAjouter;
-    
-    p = init_PILE();
-    printf("Combien de valeurs voulez vous rentrer \n");
-    scanf("%d",&nbValeurs);
-
-    printf("NB valeurs :%d \n", nbValeurs);
-
-    for (int i = 0; i < nbValeurs; i++)
-    {
-        valeurAAjouter = saisir_Descripteur();
-        p = emPILE(p,valeurAAjouter);
-    }
-    return p;
-    
-}*/
+// PILE saisir_PILE(){
+//   int nb_valeur;
+//   ELEMENT valeur;
+//   PILE pile;
+//   pile=init_PILE();
+//   printf("Entrez jusqu'à %d valeurs une à une\n",MAX);
+//   printf("Combien voulez vous entrer de valeurs dans la pile ?\n");
+//   scanf("%d",&nb_valeur);
+//   while(nb_valeur>MAX || nb_valeur<1){
+//     printf("Valeur impossible");
+//     printf("Combien voulez vous entrer de valeurs dans la pile ?\n");
+//     scanf("%d",&nb_valeur);
+//   }
+//   for(int i=0;i<nb_valeur;i++){
+//     valeur=saisir_ELEMENT();
+//     pile=emPILE(pile,valeur);
+//   }
+//   return pile;
+// }
