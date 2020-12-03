@@ -25,7 +25,6 @@ void creationDescripteur(char *chemin){
      fscanf(image,"%d",&lignes);
      fscanf(image,"%d", &colonnes);
      fscanf(image,"%d", &nbComposantes);
-     printf("%d %d\n",lignes,colonnes);
      int ** matriceImageQuant=malloc(sizeof(int*)*lignes);
      for(int i=0;i<lignes;i++){
        matriceImageQuant[i]=malloc(sizeof(int)*colonnes);
@@ -53,20 +52,13 @@ void creationDescripteur(char *chemin){
 //     // Pour une image rgb on a 3 matrices : matrice R, matrice G et matrice B
 //     //Pour une image niveau de gris : un seule matrice
 //     //On cree une une matrice commune à ses 3 matrices en faisant une quantification pour chaque pixel
-  if((nbComposantes==1)){
+    for(int i=0;i<tailleHistogramme;i++){
+      newDesc.histogramme[i]=0;
+    }
    creationHistogramme(matriceImageQuant,&newDesc,lignes,colonnes); // doit créer l'histo et remplir l'attribut histogramme du descripteur
-  }
-  // for(int i=0;i<lignes;i++){
-  //   for(int j=0;j<colonnes;j++){
-  //     printf("%d ",matriceImageQuant[i][j]);
-  //   }
-  //   printf("\n");
-  // }
-  // for(int i=0;i<64;i++){
-  //   printf("%d\n",newDesc.histogramme[i]);
-  // }
-//
-//     chargerPile(p);
+
+
+     chargerPile(p);
 //     SauvegardeDescripteur(newDesc, chemin,*p);
 //     sauvegarderPile(*p);
  //   for(int i=0;i<lignes;i++){
@@ -206,29 +198,22 @@ int power(int x, int puiss){
 
 int quantifie_un_pixelRGB(RGB pixel){
   int resultat=0;
+  int etape=1;
   int composantes[6];
-
   int puissance=7;
-  int nbBits=quantificateur;
-  while(nbBits>0){
-    composantes[(3*nbBits)-1]=(pixel.red>(power(2,puissance)));
+  while(etape-quantificateur<=0){
+    composantes[(3*quantificateur)-etape]=(pixel.red>(power(2,puissance)));
     pixel.red/=2;
-    composantes[(2*nbBits)-1]=(pixel.green>(power(2,puissance)));
+    composantes[(2*quantificateur)-etape]=(pixel.green>(power(2,puissance)));
     pixel.green/=2;
-    composantes[(1*nbBits)-1]=(pixel.blue>(power(2,puissance)));
+    composantes[(1*quantificateur)-etape]=(pixel.blue>(power(2,puissance)));
     pixel.blue/=2;
     puissance--;
-    nbBits--;
-    printf("%d ",pixel);
+    etape++;
   }
   for(int i=0;i<(3*quantificateur);i++){
-
     resultat+=(composantes[i])*power(2,i);
-    //printf("%d %d %d\n",composantes[i], power(2,i), resultat);
-
-  }
-  return resultat;
-
+  }  return resultat;
 }
 
 int quantificationRGB(RGB **matriceImageRGB,int** matriceImageQuant,int lignes,int colonnes){
