@@ -5,7 +5,7 @@
  * donné et le stocker dans le fichier base_descripteur
  */
 
-void creationDescripteur(int taille, char *chemin[]){
+void creationDescripteur(char *chemin){
 //     //lire fichier pointé par le chemin
 //     //quantification de chaque pixel de l'image
 //     //Creer l'histograme
@@ -20,15 +20,15 @@ void creationDescripteur(int taille, char *chemin[]){
      int nbComposantes;
 //
      p = NULL;
-     image = fopen(chemin[1],"r");
+     image = fopen(chemin,"r");
 //     //Lecture des propriétés de l'image
      fscanf(image,"%d",&lignes);
      fscanf(image,"%d", &colonnes);
      fscanf(image,"%d", &nbComposantes);
      printf("%d %d\n",lignes,colonnes);
-     int** matriceImageQuant=(int *)malloc(sizeof(int)*lignes);
+     int ** matriceImageQuant=malloc(sizeof(int*)*lignes);
      for(int i=0;i<lignes;i++){
-       matriceImageQuant[i]=(int *)malloc(sizeof(int)*colonnes);
+       matriceImageQuant[i]=malloc(sizeof(int)*colonnes);
      }
 //     //Lecture du fichier image
      if(nbComposantes==1){
@@ -36,36 +36,45 @@ void creationDescripteur(int taille, char *chemin[]){
        lire_imageNB(lignes,colonnes,matriceImageNB, image);
      }
      else{
-       RGB **matriceRGB=(RGB*)malloc(sizeof(RGB)*lignes);
+       RGB **matriceRGB=(RGB**)malloc(sizeof(RGB)*lignes);
        for(int i=0;i<lignes;i++){
          matriceRGB[i]=(RGB*)malloc(sizeof(RGB)*colonnes);
        }
       lire_imageRGB(lignes,colonnes,matriceRGB,image);
       quantificationRGB(matriceRGB, matriceImageQuant,lignes,colonnes);
+
       for(int i=0;i<lignes;i++){
         free(matriceRGB[i]);
       }
       free(matriceRGB);
     }
      fclose(image);
-//
+
 //     // Pour une image rgb on a 3 matrices : matrice R, matrice G et matrice B
 //     //Pour une image niveau de gris : un seule matrice
 //     //On cree une une matrice commune à ses 3 matrices en faisant une quantification pour chaque pixel
-//     if((nbComposantes==1)){
-// }
-//
-//   creationHistogramme(matriceImageQuant,&newDesc,lignes,colonnes); // doit créer l'histo et remplir l'attribut histogramme du descripteur
-//
+  if((nbComposantes==1)){
+   creationHistogramme(matriceImageQuant,&newDesc,lignes,colonnes); // doit créer l'histo et remplir l'attribut histogramme du descripteur
+  }
+  // for(int i=0;i<lignes;i++){
+  //   for(int j=0;j<colonnes;j++){
+  //     printf("%d ",matriceImageQuant[i][j]);
+  //   }
+  //   printf("\n");
+  // }
+  // for(int i=0;i<64;i++){
+  //   printf("%d\n",newDesc.histogramme[i]);
+  // }
 //
 //     chargerPile(p);
 //     SauvegardeDescripteur(newDesc, chemin,*p);
 //     sauvegarderPile(*p);
-for(int i=0;i<lignes;i++){
-  free(matriceImageQuant[i]);
-}
-free(matriceImageQuant);
-}
+ //   for(int i=0;i<lignes;i++){
+ //     free(matriceImageQuant[i]);
+ // }
+  // free(matriceImageQuant);
+
+   }
 
 /**
  * Cette fonction permet de sauvegarder un descripteur donné en paramètre dans le fichier base_descripteur_image
@@ -108,7 +117,6 @@ void chargerPile(PILE *p){
 
         }while(val != -1); // -1 signifie que c'est le dernier element de la pile
         fclose(fichierPile);
-
     }
 }
 
@@ -179,42 +187,54 @@ int lire_imageRGB(int lignes, int colonnes, RGB** matriceImage, FILE *image){
          fscanf(image,"%d",&matriceImage[i][j].blue);
        }
      }
+
 	return 0;
 }
 
 
 int power(int x, int puiss){
-  if(puiss==0) {
+  int resultat=x;
+  if(puiss==0){
     return 1;
   }
   for(int i=1;i<puiss;i++)
   {
-    x*=x;
-  }
-  return x;
-}
-
-int quantifie_un_pixelRGB(RGB pixel){
-  int resultat=0;
-  int composantes[3*quantificateur];
-  int puissance=7;
-  int nbBits=quantificateur;
-  while(nbBits>0){
-    composantes[(3*nbBits)-1]=pixel.red>power(2,puissance);
-    composantes[(2*nbBits)-1]=pixel.green>power(2,puissance);
-    composantes[(1*nbBits)-1]=pixel.blue>power(2,puissance);
-    nbBits--;
-  }
-  for(int i=0;i<3*quantificateur;i++){
-    resultat+=composantes[i]*power(2,i);
+    resultat*=x;
   }
   return resultat;
 }
 
-int quantificationRGB(RGB *matriceImageRGB[],int *matriceImageQuant[],int lignes,int colonnes){
-  for(int i=0;i<lignes;i++)
+int quantifie_un_pixelRGB(RGB pixel){
+  int resultat=0;
+  int composantes[6];
+
+  int puissance=7;
+  int nbBits=quantificateur;
+  while(nbBits>0){
+    composantes[(3*nbBits)-1]=(pixel.red>(power(2,puissance)));
+    pixel.red/=2;
+    composantes[(2*nbBits)-1]=(pixel.green>(power(2,puissance)));
+    pixel.green/=2;
+    composantes[(1*nbBits)-1]=(pixel.blue>(power(2,puissance)));
+    pixel.blue/=2;
+    puissance--;
+    nbBits--;
+    printf("%d ",pixel);
+  }
+  for(int i=0;i<(3*quantificateur);i++){
+
+    resultat+=(composantes[i])*power(2,i);
+    //printf("%d %d %d\n",composantes[i], power(2,i), resultat);
+
+  }
+  return resultat;
+
+}
+
+int quantificationRGB(RGB **matriceImageRGB,int** matriceImageQuant,int lignes,int colonnes){
+  for(int i=0;i<200;i++)
   {
-    for(int j=0;j<colonnes;j++)
+    for(int j=0;j<200;j++)
     {
       matriceImageQuant[i][j]=quantifie_un_pixelRGB(matriceImageRGB[i][j]);
     }
@@ -234,10 +254,10 @@ int creationHistogramme(int *matriceImageQuant[],Descripteur *newDesc,int lignes
   return 0;
 }
 
-int main(int argc, char const *argv[])
+int main(int argc, char  *argv[])
 {
     /* code */
-    creationDescripteur(0, argv);
+    creationDescripteur(argv[1]);
 
     return 0;
 }

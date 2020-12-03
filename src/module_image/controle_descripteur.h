@@ -19,6 +19,7 @@ typedef struct RGB_t{
   * Cette fonction permet de quantifier un pixel d'image RGB passé en paramètre en fonction du quantificateur
   */
 int quantifie_un_pixelRGB(RGB pixel);
+int quantificationRGB(RGB **matriceImageRGB,int *matriceImageQuant[],int lignes,int colonnes);
 
 int creationHistogramme(int *matriceImageQuant[],Descripteur *newDesc,int lignes,int colonnes); // doit créer l'histo et remplir l'attribut histogramme du descripteur
 
@@ -27,7 +28,7 @@ int creationHistogramme(int *matriceImageQuant[],Descripteur *newDesc,int lignes
  * donné et le stocker dans le fichier base_descripteur
  */
 
-void creationDescripteur(int taille, char *chemin[]);
+void creationDescripteur(char *chemin);
 
 /**
  * Cette fonction permet de sauvegarder un descripteur donné en paramètre dans le fichier base_descripteur_image
@@ -52,7 +53,7 @@ void chargerPile(PILE *p);
 void sauvegarderPile(PILE p);
 
 int lire_imageNB(int lignes, int colonnes, int* matriceImage[], FILE *image);
-int lire_imageRGB(int lignes, int colonnes, RGB* matriceImage[], FILE *image);
+int lire_imageRGB(int lignes, int colonnes, RGB** matriceImage, FILE *image);
 
 
 //TODO :liste_base_image pour lier le nom du fichier du descripteur à ce dernier
