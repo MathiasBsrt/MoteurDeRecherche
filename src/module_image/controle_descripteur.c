@@ -29,7 +29,7 @@ void creationDescripteur(char *chemin){
      for(int i=0;i<lignes;i++){
        matriceImageQuant[i]=malloc(sizeof(int)*colonnes);
      }
-//     //Lecture du fichier image
+// //     //Lecture du fichier image
      if(nbComposantes==1){
        int matriceImageNB[lignes][colonnes]; // Contient les matrices noir et blanc
        lire_imageNB(lignes,colonnes,matriceImageNB, image);
@@ -39,14 +39,14 @@ void creationDescripteur(char *chemin){
        for(int i=0;i<lignes;i++){
          matriceRGB[i]=(RGB*)malloc(sizeof(RGB)*colonnes);
        }
-      lire_imageRGB(lignes,colonnes,matriceRGB,image);
-      quantificationRGB(matriceRGB, matriceImageQuant,lignes,colonnes);
-
+       lire_imageRGB(lignes,colonnes,matriceRGB,image);
+       quantificationRGB(matriceRGB, matriceImageQuant,lignes,colonnes);
+//
       for(int i=0;i<lignes;i++){
         free(matriceRGB[i]);
       }
       free(matriceRGB);
-    }
+     }
      fclose(image);
 
 //     // Pour une image rgb on a 3 matrices : matrice R, matrice G et matrice B
@@ -202,12 +202,12 @@ int quantifie_un_pixelRGB(RGB pixel){
   int composantes[6];
   int puissance=7;
   while(etape-quantificateur<=0){
-    composantes[(3*quantificateur)-etape]=(pixel.red>(power(2,puissance)));
-    pixel.red/=2;
+    composantes[(3*quantificateur)-etape]=pixel.red>power(2,puissance);
+    if(pixel.red>power(2,puissance)) {pixel.red/=2;}
     composantes[(2*quantificateur)-etape]=(pixel.green>(power(2,puissance)));
-    pixel.green/=2;
+    if(pixel.green>power(2,puissance)) {pixel.green/=2;}
     composantes[(1*quantificateur)-etape]=(pixel.blue>(power(2,puissance)));
-    pixel.blue/=2;
+    if(pixel.blue>power(2,puissance)) {pixel.blue/=2;}
     puissance--;
     etape++;
   }
@@ -217,9 +217,9 @@ int quantifie_un_pixelRGB(RGB pixel){
 }
 
 int quantificationRGB(RGB **matriceImageRGB,int** matriceImageQuant,int lignes,int colonnes){
-  for(int i=0;i<200;i++)
+  for(int i=0;i<lignes;i++)
   {
-    for(int j=0;j<200;j++)
+    for(int j=0;j<colonnes;j++)
     {
       matriceImageQuant[i][j]=quantifie_un_pixelRGB(matriceImageRGB[i][j]);
     }
