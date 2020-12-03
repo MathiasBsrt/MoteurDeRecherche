@@ -42,7 +42,7 @@ Params:
 	- int m, index abscisse
 	- double val, valeur réel à affecter
 */
-void set_DESC_AUDIO(DESC_AUDIO *, int, int, double);
+void set_DESC_AUDIO(DESC_AUDIO *, int, int, int);
 
 /* Affiche un descripteur audio sur la sortie standard (printf)
 Params:

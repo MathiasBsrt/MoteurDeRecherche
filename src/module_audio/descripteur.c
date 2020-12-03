@@ -15,11 +15,11 @@ double get_DESC_AUDIO(DESC_AUDIO desc, int k, int m)
 	return get_HISTOGRAMME_AUDIO(desc.histo, k, m);
 }
 
-void set_DESC_AUDIO(DESC_AUDIO * desc, int k, int m, double val)
+void set_DESC_AUDIO(DESC_AUDIO * desc, int k, int m, int val)
 {
 	if(desc == NULL)
 	{
-		fprintf(stderr, "[DESC_AUDIO] Impossible de récuperer la valeur réel à l'index (%d,%d) DESC_NOT_INIT.", k, m);
+		fprintf(stderr, "[DESC_AUDIO] Impossible de récuperer la valeur à l'index (%d,%d) DESC_NOT_INIT.\n", k, m);
 		exit(1);
 	}
 	set_HISTOGRAMME_AUDIO(&(desc->histo), k, m, val);

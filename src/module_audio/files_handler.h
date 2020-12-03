@@ -2,17 +2,17 @@
 
 #define FILES_HANDLER_AUDIO_H_INCLUS
 
-/* Créer un histogramme pour un descripteur audio
-   à partir d'un fichier d'extension TXT
-Params:
-	- char * chemin, chemin vers le fichier d'extension .txt
-	- int k, nombre de fenêtre d'analyse
-	- int m, nombre d'intervalles
+#include "histogramme.h"
 
-Returns:
-	- double *, l'histogramme créer
+/** Créer un histogramme pour un descripteur audio
+*   à partir d'un fichier d'extension TXT
+*  @param char * chemin, chemin vers le fichier d'extension .txt
+*  @param int k, nombre de fenêtre d'analyse
+*  @param int m, nombre d'intervalles
+*
+*  @return HISTOGRAMME_AUDIO, l'histogramme créé
 */
-double * creer_histogramme_TXT_DESC_AUDIO(char *, int, int);
+HISTOGRAMME_AUDIO creer_histogramme_TXT_DESC_AUDIO(char *, int, int);
 
 
 #endif
