@@ -1,7 +1,6 @@
-#include <assert.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include "histogramme.h"
-#include "files_handler.h"
 
 int main(int argc, char * argv[])
 {
@@ -17,6 +16,8 @@ int main(int argc, char * argv[])
 	sscanf(argv[2],"%d",&k);
 	sscanf(argv[3],"%d",&m);
 
-	HISTOGRAMME_AUDIO histo = creer_histogramme_TXT_DESC_AUDIO(argv[1], k, m);
+	HISTOGRAMME_AUDIO histo;
+	int code = generer_HISTOGRAMME_AUDIO(&histo, argv[1], k, m);
+	if(code != HISTOGRAMME_CREER_SUCCES) exit(code);
 	affiche_HISTOGRAMME_AUDIO(histo);
 }

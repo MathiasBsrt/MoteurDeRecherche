@@ -2,7 +2,6 @@
 #include <stdio.h>
 #include "descripteur.h"
 #include "histogramme.h"
-#include "files_handler.h"
 
 int main(int argc, char * argv[])
 {
@@ -40,7 +39,9 @@ int main(int argc, char * argv[])
 
 	printf("    --- CREER HISTOGRAMME TXT DESC AUDIO --- \n");
 
-	HISTOGRAMME_AUDIO histo = creer_histogramme_TXT_DESC_AUDIO(argv[1], k, m);
+	HISTOGRAMME_AUDIO histo;
+	int code = generer_HISTOGRAMME_AUDIO(&histo, argv[1], k, m);
+	if(code != HISTOGRAMME_CREER_SUCCES) exit(code);
 	affiche_HISTOGRAMME_AUDIO(histo);
 
 	printf("--- FIN DES TEST AUDIO --- \n");

@@ -2,6 +2,9 @@
 
 #define HISTOGRAMME_AUDIO_H_INCLUS
 
+#define HISTOGRAMME_CREER_SUCCES 0
+#define HISTOGRAMME_CREER_ERREUR 1
+
 typedef struct Histogramme_Audio_t
 {
 	int k; /* k, nombre de fenêtre d'analyse */
@@ -56,5 +59,17 @@ Params:
 	- int m, index abscisse
 */
 void inc_HISTOGRAMME_AUDIO(HISTOGRAMME_AUDIO *, int, int);
+
+
+/** Créer un histogramme pour un descripteur audio
+*   à partir d'un fichier d'extension TXT
+*  @param HISTOGRAMME_AUDIO *, l'histogramme créé
+*  @param char * chemin, chemin vers le fichier d'extension .txt
+*  @param int k, nombre de fenêtre d'analyse
+*  @param int m, nombre d'intervalles
+*
+*  @return int, code de retour
+*/
+int generer_HISTOGRAMME_AUDIO(HISTOGRAMME_AUDIO *, char *, int, int);
 
 #endif
