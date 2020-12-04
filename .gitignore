@@ -1,0 +1,2 @@
+# exclude all .o and .out files
+*.o
