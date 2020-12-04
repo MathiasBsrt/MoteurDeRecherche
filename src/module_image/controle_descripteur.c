@@ -6,30 +6,36 @@
  */
 
 void creationDescripteur(char *chemin){
-//     //lire fichier pointé par le chemin
-//     //quantification de chaque pixel de l'image
-//     //Creer l'histograme
-//     //Creer variable descripteur et le remplir
-//
+    //lire fichier pointé par le chemin
+    //quantification de chaque pixel de l'image
+    //Creer l'histograme
+    //Creer variable descripteur et le remplir
      FILE *image;
      PILE p; //La pile de descripteurs
      Descripteur newDesc;  //Le desctipeur à ajouter
-//
+
      int lignes;
      int colonnes;
      int nbComposantes;
-//
+     char *basec, *bname; //bname est le nom du fichier à indexer
+    // Intialisation des variables
+
+    basec = strdup(chemin); 
+    bname = basename(basec);
      p = NULL;
      image = fopen(chemin,"r");
-//     //Lecture des propriétés de l'image
+
+     //Lecture des propriétés de l'image
      fscanf(image,"%d",&lignes);
      fscanf(image,"%d", &colonnes);
      fscanf(image,"%d", &nbComposantes);
      int ** matriceImageQuant=malloc(sizeof(int*)*lignes);
+
+     //intialisation de la matrice de quantification
      for(int i=0;i<lignes;i++){
        matriceImageQuant[i]=malloc(sizeof(int)*colonnes);
      }
-// //     //Lecture du fichier image
+     //Lecture du fichier image
      if(nbComposantes==1){
        int matriceImageNB[lignes][colonnes]; // Contient les matrices noir et blanc
        lire_imageNB(lignes,colonnes,matriceImageNB, image);
@@ -41,7 +47,7 @@ void creationDescripteur(char *chemin){
        }
        lire_imageRGB(lignes,colonnes,matriceRGB,image);
        quantificationRGB(matriceRGB, matriceImageQuant,lignes,colonnes);
-//
+
       for(int i=0;i<lignes;i++){
         free(matriceRGB[i]);
       }
@@ -49,17 +55,16 @@ void creationDescripteur(char *chemin){
      }
      fclose(image);
 
-//     // Pour une image rgb on a 3 matrices : matrice R, matrice G et matrice B
-//     //Pour une image niveau de gris : un seule matrice
-//     //On cree une une matrice commune à ses 3 matrices en faisant une quantification pour chaque pixel
+    // intialisation de l'histogramme
     for(int i=0;i<tailleHistogramme;i++){
       newDesc.histogramme[i]=0;
     }
    creationHistogramme(matriceImageQuant,&newDesc,lignes,colonnes); // doit créer l'histo et remplir l'attribut histogramme du descripteur
 
+    //Sauvegarde du nouveau descripteur
     p=init_PILE();
     //chargerPile(&p); // On chargera la pile
-     p=SauvegardeDescripteur(newDesc,p);
+     p=SauvegardeDescripteur(newDesc,p,bname);
     for(int i=0;i<lignes;i++){
       free(matriceImageQuant[i]);
   }
@@ -71,10 +76,11 @@ void creationDescripteur(char *chemin){
  * Cette fonction permet de sauvegarder un descripteur donné en paramètre dans le fichier base_descripteur_image
  * et de lier ce descripteur avec le fichier dans le fichier liste_base_image
  */
-PILE SauvegardeDescripteur(Descripteur nouveau, PILE p){
+PILE SauvegardeDescripteur(Descripteur nouveau, PILE p, char *nom){
     nouveau.id = 1;//TODOOn chargera la pile au lancement du programme pour al recherche, on aura donc accès aux id. On utilisera dernier id
     p = emPILE(p,nouveau);
-     sauvegarderPile(p);
+    sauvegarderPile(p);
+    lierDescripteur(nouveau,nom);
 
   return p;
 }
@@ -240,6 +246,28 @@ int creationHistogramme(int *matriceImageQuant[],Descripteur *newDesc,int lignes
   return 0;
 }
 
+/***
+ * Cette fonction permet de lier un descripteur à son fichier
+ * Le fichier liste_base image mémorise le nom des fichiers traités
+ * et l'idendifiant unique du descripteur de ce fichier
+ */
+void lierDescripteur(Descripteur d, char *nom){
+    FILE *pileFichier;
+    pileFichier = fopen("liste_base_image","w+");
+  //Condition si le fichier n'existe pas
+     if(pileFichier == NULL){
+         char commande[1000] ;
+         strcpy(commande, "touch base_descripteur_image");
+         system(commande);
+         pileFichier = fopen("liste_base_image","w+");
+     }
+
+    //on ecrit l'id + le nom du fichier + retour à la la ligne
+    fprintf(pileFichier,"%d %s \n",d.id, nom);
+
+    fclose(pileFichier);
+}
+
 int main(int argc, char  *argv[])
 {
     creationDescripteur(argv[1]);
@@ -247,4 +275,3 @@ int main(int argc, char  *argv[])
     return 0;
 }
 
-//TODO :liste_base_image pour lier le nom du fichier du descripteur à ce dernier
