@@ -1,14 +1,15 @@
+#Ici on fait le makefile de notre projet
 build-job:
   stage: build
   script:
     - echo "build"
-
+#Ici on compile et on execute notre 
 test-job1:
   stage: test
   script:
     - gcc tests/CItests.c -o tests/tests.out
     - ./tests/tests.out
-
+#Inutile ici mais montre la possibilité de faire d'autres "jobs" = taches
 test-job2:
   stage: test
   script:
@@ -16,8 +17,10 @@ test-job2:
     - echo "After the echo commands complete, it runs the sleep command for 20 seconds"
     - echo "which simulates a test that runs 20 seconds longer than test-job1"
     - sleep 20
-
+#On déploie en prod, pas utile pour nous ?? => à voir
 deploy-prod:
   stage: deploy
   script:
     - echo "This job deploys something from the $CI_COMMIT_BRANCH branch."
+
+#SI tout est bon, le commit est validé sur la branche master. Sinon, il n'y a pas de changements effectués.
