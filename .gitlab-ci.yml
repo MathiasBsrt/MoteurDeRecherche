@@ -1,11 +1,12 @@
 build-job:
   stage: build
   script:
-    - gcc tests/CItests.c -o tests/tests.out
+    - echo "build"
 
 test-job1:
   stage: test
   script:
+    - gcc tests/CItests.c -o tests/tests.out
     - ./tests/tests.out
 
 test-job2:
