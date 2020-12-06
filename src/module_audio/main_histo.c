@@ -7,7 +7,7 @@ int main(int argc, char * argv[])
 	if(argc != 4)
 	{
 		fprintf(stderr, "Pour que le programme puisse fonctionner, des arguments sont attendus.\n");
-		fprintf(stderr, "Usage: %s <fichier.txt> <k> <m>\n", argv[0]);
+		fprintf(stderr, "Usage: %s <fichier> <k> <m>\n", argv[0]);
 		return 1;
 	}
 

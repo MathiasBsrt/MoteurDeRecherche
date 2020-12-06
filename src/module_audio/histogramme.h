@@ -60,6 +60,15 @@ Params:
 */
 void inc_HISTOGRAMME_AUDIO(HISTOGRAMME_AUDIO *, int, int);
 
+/**
+*	Compare deux histogrammes audio
+*
+*	@param HISTOGRAMME_AUDIO histo1, premier histogramme à comparer
+*	@param HISTOGRAMME_AUDIO histo2, second histogramme à comparer
+*	@return int, 0 si égaux, >!= 0 si différents
+*/
+int compare_HISTOGRAMME_AUDIO(HISTOGRAMME_AUDIO, HISTOGRAMME_AUDIO);
+
 
 /** Créer un histogramme pour un descripteur audio
 *   à partir d'un fichier d'extension TXT
@@ -71,5 +80,11 @@ void inc_HISTOGRAMME_AUDIO(HISTOGRAMME_AUDIO *, int, int);
 *  @return int, code de retour
 */
 int generer_HISTOGRAMME_AUDIO(HISTOGRAMME_AUDIO *, char *, int, int);
+
+int creer_histogramme_TXT_DESC_AUDIO(HISTOGRAMME_AUDIO * histo, char * chemin, int k, int m);
+
+int creer_histogramme_BIN_DESC_AUDIO(HISTOGRAMME_AUDIO * histo, char * chemin, int k, int m);
+
+int creer_histogramme_WAV_DESC_AUDIO(HISTOGRAMME_AUDIO * histo, char * chemin, int k, int m);
 
 #endif
