@@ -9,7 +9,6 @@ Ce module audio permet de traiter les différents formats de fichier ci-dessous:
 | WAV       | Permet d'écouter l'audio |
 | BIN       | Permet d'effectuer des traitements sur le fichier audio |
 | TXT       | Permet de vérifier la lecture du fichier audio |
-|-----------|----------|
 
 Cependant ce module maintient la lecture des trois format pour pouvoir générer un descripteur audio.
 
