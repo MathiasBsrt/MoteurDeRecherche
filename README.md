@@ -19,7 +19,20 @@ make test
 Vous pouvez visualiser les sorties dans les fichiers base_descripteur_image et liste_base_image.
 ### Module Texte
 
-### Module son
+### Module Audio
+
+Vous pouvez utiliser le fichier de test (encore à completer) avec:
+```bash
+cd {chemin}/pfr/src/module_audio
+make test_audio
+```
+
+Vous pouvez créer un histogramme (à partir d'un fichier TXT) à l'aide de:
+```bash
+cd {chemin}/pfr/src/module_audio
+make creer_histo_txt
+./main_histo_text <chemin fichier.txt> <k fenêtres d'analyses> <m intervalles>
+```
 
 ## Ressources
 
