@@ -4,7 +4,6 @@
  * Cette fonction permet de créer le descripteur d'un fichier
  * donné et le stocker dans le fichier base_descripteur
  */
-
 void creationDescripteur(char *chemin){
     //lire fichier pointé par le chemin
     //quantification de chaque pixel de l'image
@@ -91,34 +90,34 @@ PILE SauvegardeDescripteur(Descripteur nouveau, PILE p, char *nom){
  *
  * Retourne une pile
  */
-// void chargerPile(PILE *p){
-//     Descripteur d;
-//     FILE *fichierPile;
-//     p = init_PILE();
-//     fichierPile = fopen("base_descripteur_image","r");
-//     //Condition si le fichier n'existe pas
-//     if(fichierPile == NULL){
-//         char commande[1000] ;
-//         strcpy(commande, "touch base_descripteur_image");
-//         system(commande);
-//     }
-//     else if(!feof(fichierPile)) {
-//         int val;
-//         fscanf(fichierPile,"%d",&val); //id du premier element
-//         do{
-//             d.id = val;
-//             for (int i = 0; i < tailleHistogramme; i++)
-//             {
-//                 fscanf(fichierPile,"%d",&val); //case de l'histogramme
-//                     d.histogramme[i]= val;
-//             }
-//             emPILE(&p,d);
-//             fscanf(fichierPile,"%d",&val); //id
-//
-//         }while(val != EOF); // Utiliser EOF pour signifier que c'est le dernier element de la pile
-//         fclose(fichierPile);
-//     }
-// }
+ void chargerPile(PILE *p){
+     Descripteur d;
+     FILE *fichierPile;
+     p = init_PILE();
+     fichierPile = fopen("base_descripteur_image","r");
+     //Condition si le fichier n'existe pas
+     if(fichierPile == NULL){
+         char commande[1000] ;
+         strcpy(commande, "touch base_descripteur_image");
+         system(commande);
+     }
+     else if(!feof(fichierPile)) {
+         int val;
+         fscanf(fichierPile,"%d",&val); //id du premier element
+         do{
+             d.id = val;
+             for (int i = 0; i < tailleHistogramme; i++)
+             {
+                 fscanf(fichierPile,"%d",&val); //case de l'histogramme
+                     d.histogramme[i]= val;
+             }
+             emPILE(&p,d);
+             fscanf(fichierPile,"%d",&val); //id
+
+         }while(val != EOF); // Utiliser EOF pour signifier que c'est le dernier element de la pile
+         fclose(fichierPile);
+     }
+ }
 
 /***
  * Cette fonction permet de sauvegarder la pile passée en paramètre
@@ -127,8 +126,8 @@ PILE SauvegardeDescripteur(Descripteur nouveau, PILE p, char *nom){
  */
 void sauvegarderPile(PILE p){
     //On stocke sous la forme de une ligne = un element de la pile : "[id] [e1] [e2 [e3] ..." pour les 64 elements du tableau histogramme (sans les crochets)
-    FILE *pileFichier;
-    pileFichier = fopen("base_descripteur_image","w+");
+    FILE * pileFichier;
+    pileFichier = fopen("base_descripteur_image","a");
     Descripteur copier;
     while(!PILE_estVide(p))
     {
@@ -145,13 +144,17 @@ void sauvegarderPile(PILE p){
          }
     }
 
-    fprintf(pileFichier,"%s ","\n");
+    fprintf(pileFichier,"%s","\n");
 
 
     fclose(pileFichier);
 
 }
 
+/***
+ * Cette méthode permet de lire une image noir et blanc
+ * @return une matrice représentant l'image noir et blanc
+ */
 int lire_imageNB(int lignes, int colonnes, int* matriceImage[], FILE *image){
  for (int i = 0; i < lignes; i++)
   {
@@ -203,6 +206,10 @@ int power(int x, int puiss){
   return resultat;
 }
 
+/***
+ * Cette méthode permet de quantifier un pixel de type RGB
+ * @return entier resultat de la quantification
+ */
 int quantifie_un_pixelRGB(RGB pixel){
   int resultat=0;
   int etape=1;
@@ -223,6 +230,10 @@ int quantifie_un_pixelRGB(RGB pixel){
   }  return resultat;
 }
 
+/***
+ * Cette méthode permet de quantifier une matrice de type RGB
+ * @return la matrice quantifiée et un code de retour (succes ou echec)
+ */
 int quantificationRGB(RGB **matriceImageRGB,int** matriceImageQuant,int lignes,int colonnes){
   for(int i=0;i<lignes;i++)
   {
@@ -234,6 +245,10 @@ int quantificationRGB(RGB **matriceImageRGB,int** matriceImageQuant,int lignes,i
   return 0;
 }
 
+/***
+ * Cette méthode permet de créer un histogramme à partir de de la matrice quantifiée et de l'ajouter au nouveau descripteur
+ * @return le nouveau descripteur et un code de retour (succès ou echec)
+ */
 int creationHistogramme(int *matriceImageQuant[],Descripteur *newDesc,int lignes,int colonnes) // doit créer l'histo et remplir l'attribut histogramme du descripteur
 {
   for(int i=0;i<lignes;i++)
@@ -253,7 +268,7 @@ int creationHistogramme(int *matriceImageQuant[],Descripteur *newDesc,int lignes
  */
 void lierDescripteur(Descripteur d, char *nom){
     FILE *pileFichier;
-    pileFichier = fopen("liste_base_image","w+");
+    pileFichier = fopen("liste_base_image","a");
   //Condition si le fichier n'existe pas
      if(pileFichier == NULL){
          char commande[1000] ;
