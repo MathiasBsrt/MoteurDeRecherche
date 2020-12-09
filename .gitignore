@@ -1,3 +1,5 @@
 # exclude all .o and .out files
 *.o
 *.out
+base_descripteur_*
+lier_base_*
