@@ -1,6 +1,7 @@
 /***
  * Ici les tests de l'indexation
  */
+//#SI notre prog de test retourn 1 : echec de la pipeline
 
 int indexationImage(){
     return 0;

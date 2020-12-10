@@ -1,3 +1,4 @@
+#SI notre prog de test retourn 1 : echec de la pipeline
 #Ici on fait le makefile de notre projet
 build-job:
   stage: build
@@ -8,20 +9,20 @@ test-indexation:
   stage: test
   script:
     #- make projet-pfr
-    - gcc testsCI/indexation.c -o tests/tests.out
+    - gcc testsCI/indexation.c -o testsCI/tests.out
     - ./tests/tests.out
 
 test-recherche:
   stage: test
   script:
     #- make projet-pfr
-    - gcc testsCI/recherche.c -o tests/tests.out
+    - gcc testsCI/recherche.c -o testsCI/tests.out
     - ./tests/tests.out
 
 test-progPrincipal:
   stage: test
   script:
     #- make projet-pfr
-    - gcc testsCI/progP.c -o tests/tests.out
+    - gcc testsCI/progP.c -o testsCI/tests.out
     - ./tests/tests.out
 

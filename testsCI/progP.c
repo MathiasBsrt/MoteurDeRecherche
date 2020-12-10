@@ -1,6 +1,8 @@
 /***
  * Ici les tests de la recherche texte
  */
+//#SI notre prog de test retourn 1 : echec de la pipeline
+
 int test1(){
     return 0;
 }

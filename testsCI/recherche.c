@@ -1,6 +1,7 @@
 /***
  * Ici les tests de la recherche son
  */
+//#SI notre prog de test retourn 1 : echec de la pipeline
 
 int rechercheImage(){
     return 0;
