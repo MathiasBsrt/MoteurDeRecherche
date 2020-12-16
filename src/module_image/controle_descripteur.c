@@ -283,6 +283,16 @@ void lierDescripteur(Descripteur d, char *nom){
     fclose(pileFichier);
 }
 
+void genererDescripteurDossier(char* chemin){
+
+  char cheminFichier[100];
+  // exec ls
+ /* for (size_t i = 0; i < count; i++)
+  {
+    creationDescripteur(cheminFichier);
+  }*/
+  
+}
 int main(int argc, char  *argv[])
 {
     creationDescripteur(argv[1]);
