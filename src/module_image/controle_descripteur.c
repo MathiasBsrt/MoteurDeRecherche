@@ -21,7 +21,7 @@ void creationDescripteur(char *chemin){
 
     basec = strdup(chemin);
     bname = basename(basec);
-     p = NULL;
+     p = init_PILE();
      image = fopen(chemin,"r");
 
      //Lecture des propriétés de l'image
@@ -62,8 +62,8 @@ void creationDescripteur(char *chemin){
 
     //Sauvegarde du nouveau descripteur
     p=init_PILE();
-    //chargerPile(&p); // On chargera la pile
-     p=SauvegardeDescripteur(newDesc,p,bname);
+  chargerPile(&p); // On chargera la pile
+   p=SauvegardeDescripteur(newDesc,p,bname);
     for(int i=0;i<lignes;i++){
       free(matriceImageQuant[i]);
   }
