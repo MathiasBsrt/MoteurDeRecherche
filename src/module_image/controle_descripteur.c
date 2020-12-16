@@ -36,8 +36,16 @@ void creationDescripteur(char *chemin){
      }
      //Lecture du fichier image
      if(nbComposantes==1){
-       int matriceImageNB[lignes][colonnes]; // Contient les matrices noir et blanc
-       lire_imageNB(lignes,colonnes,matriceImageNB, image);
+        int **matriceNB=(int**)malloc(sizeof(int*)*lignes); // Contient les matrices noir et blanc
+       for(int i=0;i<lignes;i++){
+         matriceNB[i]=(int*)malloc(sizeof(int)*colonnes);
+       }
+       lire_imageNB(lignes,colonnes,matriceNB, image);
+       quantificationNB(matriceNB,matriceImageQuant,lignes,colonnes);
+       for(int i=0;i<lignes;i++){
+         free(matriceNB[i]);
+       }
+       free(matriceNB);
      }
      else{
        RGB **matriceRGB=(RGB**)malloc(sizeof(RGB)*lignes);
@@ -62,14 +70,14 @@ void creationDescripteur(char *chemin){
 
     //Sauvegarde du nouveau descripteur
     p=init_PILE();
-  chargerPile(&p); // On chargera la pile
+    //p=chargerPile(p); // On chargera la pile
    p=SauvegardeDescripteur(newDesc,p,bname);
     for(int i=0;i<lignes;i++){
       free(matriceImageQuant[i]);
   }
    free(matriceImageQuant);
 
-   }
+}
 
 /**
  * Cette fonction permet de sauvegarder un descripteur donné en paramètre dans le fichier base_descripteur_image
@@ -90,10 +98,10 @@ PILE SauvegardeDescripteur(Descripteur nouveau, PILE p, char *nom){
  *
  * Retourne une pile
  */
- void chargerPile(PILE *p){
+ PILE chargerPile(PILE p){
      Descripteur d;
      FILE *fichierPile;
-     *p = init_PILE();
+     p = init_PILE();
      fichierPile = fopen("base_descripteur_image","r");
      //Condition si le fichier n'existe pas
      if(fichierPile == NULL){
@@ -111,12 +119,13 @@ PILE SauvegardeDescripteur(Descripteur nouveau, PILE p, char *nom){
                  fscanf(fichierPile,"%d",&val); //case de l'histogramme
                      d.histogramme[i]= val;
              }
-             *p=emPILE(*p,d);
+             p=emPILE(p,d);
              fscanf(fichierPile,"%d",&val); //id
 
          }while(val != EOF); // Utiliser EOF pour signifier que c'est le dernier element de la pile
          fclose(fichierPile);
      }
+     return p;
  }
 
 /***
@@ -155,7 +164,7 @@ void sauvegarderPile(PILE p){
  * Cette méthode permet de lire une image noir et blanc
  * @return une matrice représentant l'image noir et blanc
  */
-int lire_imageNB(int lignes, int colonnes, int* matriceImage[], FILE *image){
+int lire_imageNB(int lignes, int colonnes, int** matriceImage, FILE *image){
  for (int i = 0; i < lignes; i++)
   {
       for (int j = 0; j < colonnes; j++)
@@ -165,7 +174,22 @@ int lire_imageNB(int lignes, int colonnes, int* matriceImage[], FILE *image){
   }
   return 0;
 }
+int quantificationNB(int **matriceImageNB,int** matriceImageQuant,int lignes,int colonnes){
+  int niveau=64;
+  int pixel;
+  for(int i=0;i<lignes;i++){
+    for(int j=0;j<colonnes;j++){
+      pixel=matriceImageNB[i][j];
+      matriceImageQuant[i][j]=pixel/(256/niveau);
+    }
+  }
+  return 0;
+}
 
+/***
+ * Cette méthode permet de lire une RGB
+ * @return une matrice représentant l'image RGB
+ */
 int lire_imageRGB(int lignes, int colonnes, RGB** matriceImage, FILE *image){
 
   for (int i = 0; i < lignes; i++)
