@@ -48,7 +48,7 @@ void creationDescripteur(char *chemin);
  *
  * Retourne une pile
  */
-PILE chargerPile(PILE p);
+PILE chargerPile();
 
 /***
  * Cette fonction permet de sauvegarder la pile passée en paramètre
