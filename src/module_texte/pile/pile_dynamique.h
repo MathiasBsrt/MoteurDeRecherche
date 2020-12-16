@@ -119,13 +119,27 @@ PILE_descripteur_texte init_PILE_desc();
 int PILE_desc_estVide(PILE_descripteur_texte d);
 
 /**
- * @brief Permet d'empiler un descripteur dans une pile de descripteurs
+ * @brief Permet d'empiler un descripteur dans une pile de descripteurs a partir d'une pile
  * 
  * @param[in] p 
  * @param[in,out] d 
  */
-void EMPILE_desc(PILE p, PILE_descripteur_texte *d);
+void EMPILE_desc_from_pile(PILE p, PILE_descripteur_texte *d);
 
+/**
+ * @brief Permet d'empiler un descripteur dans une pile de descripteurs
+ * 
+ * @param d 
+ * @param descripteur 
+ */
+void EMPILE_desc(PILE_descripteur_texte *d,Descripteur_texte *descripteur);
+
+/**
+ * @brief Permet de depiler un le dernier descripteur dans la pile de descripteurs
+ * 
+ * @param[in] p 
+ */
+void DEPILE_desc(PILE_descripteur_texte *p);
 /**
  * @brief Permet d'enregistrer dans un fichier une pile de descripteurs de textes
  * 
@@ -133,3 +147,11 @@ void EMPILE_desc(PILE p, PILE_descripteur_texte *d);
  * @param[in] save_descripteurs_textes chemin vers lequel la pile de descripteurs va etre sauvegardée
  */
 void enregistre_PILE_Desc(PILE_descripteur_texte p, char *save_descripteurs_textes);
+
+/**
+ * @brief Permet de charger une pile de descripteurs a partir d'un fichier
+ * 
+ * @param[in,out] p 
+ * @param[in] save_descripteurs_textes 
+ */
+void charger_PILE_Desc(PILE_descripteur_texte *p, char *save_descripteurs_textes);

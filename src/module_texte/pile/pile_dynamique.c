@@ -142,7 +142,7 @@ int total_mot(PILE p, int *nombre_de_mots_differents)
     return total;
 }
 
-void EMPILE_desc(PILE p, PILE_descripteur_texte *d)
+void EMPILE_desc_from_pile(PILE p, PILE_descripteur_texte *d)
 {
     int mots_retenus;
     Descripteur_texte *descripteur = malloc(sizeof(Descripteur_texte));
@@ -173,6 +173,51 @@ void EMPILE_desc(PILE p, PILE_descripteur_texte *d)
     }
 }
 
+void EMPILE_desc(PILE_descripteur_texte *d,Descripteur_texte *descripteur)
+{
+
+    if (PILE_desc_estVide(*d))
+    {
+        *d = descripteur;
+    }
+    else
+    {
+        Descripteur_texte *parcours = *d;
+        while (parcours->suivant != NULL)
+        {
+            parcours = parcours->suivant;
+        }
+        parcours->suivant = descripteur;
+    }
+}
+
+void DEPILE_desc(PILE_descripteur_texte *p)
+{
+    if (PILE_desc_estVide(*p))
+        fprintf(stderr, "La pile est deja vide");
+    else
+    {
+        if ((*p)->suivant == NULL)
+        {
+            free(*p);
+        }
+        else
+        {
+            Descripteur_texte *parcours = *p;
+            Descripteur_texte *marqueur;
+            while (parcours->suivant != NULL)
+                parcours = parcours->suivant;
+            marqueur = parcours;
+            parcours = *p;
+            while (parcours->suivant != marqueur)
+                parcours = parcours->suivant;
+            parcours->suivant = NULL;
+            free(marqueur);
+        }
+    }
+}
+
+
 void enregistre_PILE_Desc(PILE_descripteur_texte p, char *save_descripteurs_textes)
 {
     if (PILE_desc_estVide(p))
@@ -192,6 +237,19 @@ void enregistre_PILE_Desc(PILE_descripteur_texte p, char *save_descripteurs_text
                 parcours=parcours->suivant;
             }
             fclose(f);
+        }
+    }
+}
+
+void charger_PILE_Desc(PILE_descripteur_texte *p, char *save_descripteurs_textes)
+{
+    FILE *f = fopen(save_descripteurs_textes, "r");
+    if(f)
+    {
+        Descripteur_texte tmp;
+        while(fread(&tmp,sizeof(Descripteur_texte),1,f))
+        {
+            EMPILE_desc(p,&tmp);
         }
     }
 }

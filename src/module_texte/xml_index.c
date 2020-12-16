@@ -30,7 +30,6 @@ void descripteur_de_texte(FILE *src, PILE *p)
             estDanslaPile(*p, buffer);
         }
     }
-    affiche_PILE(*p);
 }
 
 /**
@@ -52,7 +51,7 @@ void fabrique_a_descripteur(char *path_to_xml, PILE_descripteur_texte *pile_desc
         xml_filter(tmp, tmp1);
         rewind(tmp1);
         descripteur_de_texte(tmp1, &p);
-        EMPILE_desc(p, pile_desc);
+        EMPILE_desc_from_pile(p, pile_desc);
 
         fclose(tmp);
         fclose(tmp1);
@@ -95,8 +94,3 @@ void Descripteur_texte_fichier(char *nom_fichier, PILE_descripteur_texte *pile_d
     fabrique_a_descripteur(nom_fichier, pile_desc);
 }
 
-int main(void)
-{
-    PILE_descripteur_texte pile=init_PILE_desc();
-    Descripteur_texte_fichier("Textes_UTF8/28-Danse___Robyn_Orlin_et_utf8.xml",&pile);
-}
