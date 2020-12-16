@@ -58,22 +58,4 @@ PILE dePILE(PILE p, Descripteur *elt)
 
     return p;
 }
-// PILE saisir_PILE(){
-//   int nb_valeur;
-//   ELEMENT valeur;
-//   PILE pile;
-//   pile=init_PILE();
-//   printf("Entrez jusqu'à %d valeurs une à une\n",MAX);
-//   printf("Combien voulez vous entrer de valeurs dans la pile ?\n");
-//   scanf("%d",&nb_valeur);
-//   while(nb_valeur>MAX || nb_valeur<1){
-//     printf("Valeur impossible");
-//     printf("Combien voulez vous entrer de valeurs dans la pile ?\n");
-//     scanf("%d",&nb_valeur);
-//   }
-//   for(int i=0;i<nb_valeur;i++){
-//     valeur=saisir_ELEMENT();
-//     pile=emPILE(pile,valeur);
-//   }
-//   return pile;
-// }
+

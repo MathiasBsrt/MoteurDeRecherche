@@ -2,6 +2,9 @@
 #include <stdlib.h>
 #include <string.h>
 #include <libgen.h>
+#include <dirent.h>
+#include <sys/types.h>
+#include <sys/stat.h>
 
 #include "pile_dynamique.h"
 //STRUCTURES
@@ -60,4 +63,4 @@ int quantificationNB(int **matriceImageNB,int** matriceImageQuant,int lignes,int
 
 void lierDescripteur(Descripteur d, char *nom);
 
-//TODO :liste_base_image pour lier le nom du fichier du descripteur à ce dernier
+void genererDescripteurDossier(char *cheminDossier);

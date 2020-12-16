@@ -307,9 +307,86 @@ void lierDescripteur(Descripteur d, char *nom){
     fclose(pileFichier);
 }
 
+
+void path_maker(char *chemin, char *nom_dossier, char *nom_fichier)
+{
+    strcpy(chemin, nom_dossier);
+    strcat(chemin, "/");
+    strcat(chemin, nom_fichier);
+}
+
+void lecture_dossier(FILE *f, char *nom_dossier)
+{
+    struct dirent *dir;
+    DIR *d = opendir(nom_dossier);
+
+    while ((dir = readdir(d)) != NULL)
+    {
+
+        if (!strcmp(dir->d_name, ".") || !strcmp(dir->d_name, "..")); //on evite de lire les "." et ".."
+        else
+        {
+            struct stat InfosFile;
+            char chemin[100];
+            path_maker(chemin,nom_dossier,dir->d_name);
+            stat(chemin, &InfosFile);       //on recupere les stat du fichier lu pour savoir si c' est un dossier
+            if (S_ISREG(InfosFile.st_mode) != 0) //on vérifie si c'est un fichier
+            {
+
+                fprintf(f, "%s ", dir->d_name);
+            }
+        }
+
+    }
+    closedir(d);
+    rewind(f); //on remet le pointeur du fichier au début
+}
+
+
+
+void genererDescripteurDossier(char *cheminDossier)
+{
+  FILE *f = fopen("nom_fichiers.txt", "w+");
+
+  if (f == NULL)
+  {
+    char commande[1000];
+    strcpy(commande, "touch nom_fichiers.txt");
+    system(commande);
+    f = fopen("nom_fichiers.txt", "w+");
+  }
+
+  lecture_dossier(f,cheminDossier); // Dans f on a tous nos fichiers
+  rewind(f);
+
+  //On lit maintenant le fichier
+  //On lance une indexation pour chaque fichiers
+  char val[100];
+  char cheminFichier[100];
+  int res = 0;
+  do
+  {
+    strcpy(cheminFichier,cheminDossier);
+    res = fscanf(f, "%s", val);
+    strcat(cheminFichier,val);
+    printf("cheminFichier= %s \n",cheminFichier);
+    creationDescripteur(cheminFichier);
+    
+  } while (res != EOF); 
+  
+
+
+  fclose(f);
+
+  printf("fin de la génération des descripteurs du dossier %s", cheminDossier);
+  //Ajouter la modif de davy pour la pile
+}
+
 int main(int argc, char  *argv[])
 {
-    creationDescripteur(argv[1]);
+    genererDescripteurDossier("tests/TEST_RGB/txt/"); // Génération rgb
+    genererDescripteurDossier("tests/TEST_NB/txt/"); // Génératio nb
 
     return 0;
 }
+
