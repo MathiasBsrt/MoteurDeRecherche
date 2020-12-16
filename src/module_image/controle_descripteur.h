@@ -2,9 +2,6 @@
 #include <stdlib.h>
 #include <string.h>
 #include <libgen.h>
-#include <dirent.h>
-#include <sys/types.h>
-#include <sys/stat.h>
 
 #include "pile_dynamique.h"
 //STRUCTURES
@@ -48,7 +45,7 @@ void creationDescripteur(char *chemin);
  *
  * Retourne une pile
  */
-void chargerPile(PILE *p);
+PILE chargerPile(PILE p);
 
 /***
  * Cette fonction permet de sauvegarder la pile passée en paramètre
@@ -59,7 +56,8 @@ void sauvegarderPile(PILE p);
 
 int lire_imageNB(int lignes, int colonnes, int* matriceImage[], FILE *image);
 int lire_imageRGB(int lignes, int colonnes, RGB** matriceImage, FILE *image);
+int quantificationNB(int **matriceImageNB,int** matriceImageQuant,int lignes,int colonnes);
 
 void lierDescripteur(Descripteur d, char *nom);
 
-void genererDescripteurDossier(char *cheminDossier);
+//TODO :liste_base_image pour lier le nom du fichier du descripteur à ce dernier
