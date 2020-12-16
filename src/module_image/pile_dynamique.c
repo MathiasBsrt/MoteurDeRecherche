@@ -21,7 +21,7 @@ PILE emPILE(PILE pile,Descripteur elem){
       pile=cell;
     }
     else{
-    CELLULE* curseur=pile;
+    CELLULE* curseur=pile->suivant;
     while(curseur->suivant!=NULL){
       curseur=curseur->suivant;
     }
