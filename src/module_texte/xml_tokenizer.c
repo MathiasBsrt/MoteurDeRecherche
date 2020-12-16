@@ -1,34 +1,37 @@
 #include "Header.h"
-
-#define MAX_WORD 128
-
-void xml_filter(FILE *stopwords, FILE *src, FILE *dest)
-
+/**
+ * @brief Permet de créer une pile contenant tous les stopwords
+ * 
+ * @return PILE pile de stopwords
+ */
+PILE pile_stopwords()
 {
-    PILE pile_stopwords = init_pile();
-    char buffer[MAX_WORD];
-
-    while (fscanf(stopwords, "%s", buffer) != EOF) //mise en mémoire des stopwords
-        pile_stopwords = emPILE(pile_stopwords, affecter_MOT(buffer));
-
-    while (fscanf(src, "%s ", buffer) != EOF)
+    FILE *stopwords = fopen("stopwords.txt", "r");
+    if (stopwords)
     {
-        if (!estDanslaPile(pile_stopwords, buffer))
-            fprintf(dest, "%s ", buffer);
+        char buffer[MAX_WORD];
+        PILE pile_stopwords = init_pile();
+        while (fscanf(stopwords, "%s", buffer) != EOF) //mise en mémoire des stopwords
+            pile_stopwords = emPILE(pile_stopwords, affecter_MOT(buffer));
+
+        fclose(stopwords);
+        return pile_stopwords;
+    }
+    else
+    {
+        fprintf(stderr, "Probleme d'ouverture des stopwords");
+        exit(2);
     }
 }
 
-int main(void)
+void xml_filter(FILE *src, FILE *dest)
+
 {
-    FILE *stopwords = fopen("stopwords.txt", "r");
-    FILE *src = fopen("out.clean", "r");
-    FILE *dest = fopen("a.tok", "w");
-    if (stopwords && src && dest)
+    char buffer[MAX_WORD];
+    PILE pileStopwords = pile_stopwords();
+    while (fscanf(src, "%s ", buffer) != EOF)
     {
-        xml_filter(stopwords, src, dest);
-        fclose(stopwords);
-        fclose(dest);
-        fclose(src);
+        if (!estDanslaPile(pileStopwords, buffer))
+            fprintf(dest, "%s ", buffer);
     }
-    return 0;
 }

@@ -10,7 +10,7 @@ void add_char(char *buffer, char c, int *cpt)
 
 int estPonctuation(char c)
 {
-    return (c == '.' || c == ',' || c == '?' || c == ';' || c == '!' || c == '\'' || c == ':' || c == '"' || c == '&' || c == '(' || c == ')' || c == '-' || c == '_');
+    return (c == '.' || c == ',' || c == '?' || c == ';' || c == '!' || c == '\'' || c == ':' || c == '"' || c == '&' || c == '(' || c == ')' || c == '-' || c == '_' || c == '%'|| c == '€' );
 }
 
 void xml_cleaner(FILE *src, FILE *dest)
@@ -49,15 +49,3 @@ void xml_cleaner(FILE *src, FILE *dest)
     }
 }
 
-int main(void)
-{
-    FILE *src = fopen("Textes_UTF8/05-Le_Colombien_Juan_Pablo_Montoya_utf8.xml", "r");
-    FILE *dest = fopen("out.clean", "w");
-    if (src)
-    {
-        xml_cleaner(src, dest);
-    }
-    fclose(src);
-    fclose(dest);
-    return 0;
-}

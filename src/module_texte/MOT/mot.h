@@ -10,6 +10,8 @@
 typedef struct f_mots
 {
     char mot[MAX_WORD];
+    int nbr_occurrence;
+
 }MOT;
 
 /**
