@@ -1,6 +1,24 @@
+/**
+ * @file xml_cleaner.c
+ * @author Baptiste POMARELLE
+ * @brief Fonctions permettant de nettoyer un fichier xml et d'obtenir un .xml
+ * @version 0.1
+ * @date 2020-12-16
+ * 
+ * @copyright Copyright (c) 2020
+ * 
+ */
+
 #include "Header.h"
 
 
+/**
+ * @brief Permet d'ajouter un caractère à une chaine
+ * 
+ * @param[out] buffer chaine de retour
+ * @param[in] c 
+ * @param[in] cpt 
+ */
 void add_char(char *buffer, char c, int *cpt)
 {
     c = tolower(c);
@@ -8,10 +26,17 @@ void add_char(char *buffer, char c, int *cpt)
     *cpt = *cpt + 1;
 }
 
+/**
+ * @brief Permet de déterminer si le caractère donné en paramètre est une ponctuation
+ * 
+ * @param[in] c 
+ * @return int 
+ */
 int estPonctuation(char c)
 {
     return (c == '.' || c == ',' || c == '?' || c == ';' || c == '!' || c == '\'' || c == ':' || c == '"' || c == '&' || c == '(' || c == ')' || c == '-' || c == '_' || c == '%'|| c == '€' );
 }
+
 
 void xml_cleaner(FILE *src, FILE *dest)
 {

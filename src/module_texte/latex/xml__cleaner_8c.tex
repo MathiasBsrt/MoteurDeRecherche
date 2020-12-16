@@ -1,0 +1,99 @@
+\hypertarget{xml__cleaner_8c}{}\section{Référence du fichier xml\+\_\+cleaner.\+c}
+\label{xml__cleaner_8c}\index{xml\+\_\+cleaner.\+c@{xml\+\_\+cleaner.\+c}}
+
+
+Fonctions permettant de nettoyer un fichier xml et d\textquotesingle{}obtenir un .xml.  
+
+
+{\ttfamily \#include \char`\"{}Header.\+h\char`\"{}}\newline
+Graphe des dépendances par inclusion de xml\+\_\+cleaner.\+c\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{xml__cleaner_8c__incl}
+\end{center}
+\end{figure}
+\subsection*{Fonctions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{xml__cleaner_8c_aff4747721c1e29bc81b8a76cfe8b708d}{add\+\_\+char} (char $\ast$buffer, char c, int $\ast$cpt)
+\begin{DoxyCompactList}\small\item\em Permet d\textquotesingle{}ajouter un caractère à une chaine. \end{DoxyCompactList}\item 
+int \hyperlink{xml__cleaner_8c_a9a8fd3b9ef561f383766bffef7dd2a1d}{est\+Ponctuation} (char c)
+\begin{DoxyCompactList}\small\item\em Permet de déterminer si le caractère donné en paramètre est une ponctuation. \end{DoxyCompactList}\item 
+void \hyperlink{xml__cleaner_8c_ae541103221499ab14d680ed40958a049}{xml\+\_\+cleaner} (F\+I\+LE $\ast$src, F\+I\+LE $\ast$dest)
+\begin{DoxyCompactList}\small\item\em Permet de passer d\textquotesingle{}un fichier source xml brut à un fichier dest \char`\"{}nettoyé\char`\"{} de ses balises. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Description détaillée}
+Fonctions permettant de nettoyer un fichier xml et d\textquotesingle{}obtenir un .xml. 
+
+\begin{DoxyAuthor}{Auteur}
+Baptiste P\+O\+M\+A\+R\+E\+L\+LE 
+\end{DoxyAuthor}
+\begin{DoxyVersion}{Version}
+0.\+1 
+\end{DoxyVersion}
+\begin{DoxyDate}{Date}
+2020-\/12-\/16
+\end{DoxyDate}
+\begin{DoxyCopyright}{Copyright}
+Copyright (c) 2020 
+\end{DoxyCopyright}
+
+
+\subsection{Documentation des fonctions}
+\mbox{\Hypertarget{xml__cleaner_8c_aff4747721c1e29bc81b8a76cfe8b708d}\label{xml__cleaner_8c_aff4747721c1e29bc81b8a76cfe8b708d}} 
+\index{xml\+\_\+cleaner.\+c@{xml\+\_\+cleaner.\+c}!add\+\_\+char@{add\+\_\+char}}
+\index{add\+\_\+char@{add\+\_\+char}!xml\+\_\+cleaner.\+c@{xml\+\_\+cleaner.\+c}}
+\subsubsection{\texorpdfstring{add\+\_\+char()}{add\_char()}}
+{\footnotesize\ttfamily void add\+\_\+char (\begin{DoxyParamCaption}\item[{char $\ast$}]{buffer,  }\item[{char}]{c,  }\item[{int $\ast$}]{cpt }\end{DoxyParamCaption})}
+
+
+
+Permet d\textquotesingle{}ajouter un caractère à une chaine. 
+
+
+\begin{DoxyParams}[1]{Paramètres}
+\mbox{\tt out}  & {\em buffer} & chaine de retour \\
+\hline
+\mbox{\tt in}  & {\em c} & \\
+\hline
+\mbox{\tt in}  & {\em cpt} & \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{xml__cleaner_8c_a9a8fd3b9ef561f383766bffef7dd2a1d}\label{xml__cleaner_8c_a9a8fd3b9ef561f383766bffef7dd2a1d}} 
+\index{xml\+\_\+cleaner.\+c@{xml\+\_\+cleaner.\+c}!est\+Ponctuation@{est\+Ponctuation}}
+\index{est\+Ponctuation@{est\+Ponctuation}!xml\+\_\+cleaner.\+c@{xml\+\_\+cleaner.\+c}}
+\subsubsection{\texorpdfstring{est\+Ponctuation()}{estPonctuation()}}
+{\footnotesize\ttfamily int est\+Ponctuation (\begin{DoxyParamCaption}\item[{char}]{c }\end{DoxyParamCaption})}
+
+
+
+Permet de déterminer si le caractère donné en paramètre est une ponctuation. 
+
+
+\begin{DoxyParams}[1]{Paramètres}
+\mbox{\tt in}  & {\em c} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Renvoie}
+int 
+\end{DoxyReturn}
+\mbox{\Hypertarget{xml__cleaner_8c_ae541103221499ab14d680ed40958a049}\label{xml__cleaner_8c_ae541103221499ab14d680ed40958a049}} 
+\index{xml\+\_\+cleaner.\+c@{xml\+\_\+cleaner.\+c}!xml\+\_\+cleaner@{xml\+\_\+cleaner}}
+\index{xml\+\_\+cleaner@{xml\+\_\+cleaner}!xml\+\_\+cleaner.\+c@{xml\+\_\+cleaner.\+c}}
+\subsubsection{\texorpdfstring{xml\+\_\+cleaner()}{xml\_cleaner()}}
+{\footnotesize\ttfamily void xml\+\_\+cleaner (\begin{DoxyParamCaption}\item[{F\+I\+LE $\ast$}]{src,  }\item[{F\+I\+LE $\ast$}]{dest }\end{DoxyParamCaption})}
+
+
+
+Permet de passer d\textquotesingle{}un fichier source xml brut à un fichier dest \char`\"{}nettoyé\char`\"{} de ses balises. 
+
+
+\begin{DoxyParams}[1]{Paramètres}
+\mbox{\tt in}  & {\em src} & fichier source a traiter \\
+\hline
+\mbox{\tt in}  & {\em dest} & fichier de sortie nettoyé \\
+\hline
+\end{DoxyParams}

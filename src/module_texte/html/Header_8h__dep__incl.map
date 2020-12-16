@@ -1,0 +1,6 @@
+<map id="Header.h" name="Header.h">
+<area shape="rect" id="node2" href="$outils_8c.html" title="Quelques fonctions annexes nécessaire au bon fonctionnement. " alt="" coords="5,80,69,107"/>
+<area shape="rect" id="node3" href="$xml__cleaner_8c.html" title="Fonctions permettant de nettoyer un fichier xml et d&#39;obtenir un .xml. " alt="" coords="94,80,197,107"/>
+<area shape="rect" id="node4" href="$xml__index_8c.html" title="Fonctions d&#39;indexations et de création de piles de descripteurs. " alt="" coords="221,80,313,107"/>
+<area shape="rect" id="node5" href="$xml__tokenizer_8c.html" title="Fonctions de nettoyage de fichiers .clean. " alt="" coords="337,80,452,107"/>
+</map>

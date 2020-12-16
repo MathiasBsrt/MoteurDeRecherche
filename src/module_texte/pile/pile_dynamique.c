@@ -1,3 +1,13 @@
+/**
+ * @file pile_dynamique.c
+ * @author Baptiste POMARELLE
+ * @brief Les fonctions relatives a la pile de mots (et de leurs occurences) et a la pile de descripteurs
+ * @version 0.1
+ * @date 2020-12-16
+ * 
+ * @copyright Copyright (c) 2020
+ * 
+ */
 #include "pile_dynamique.h"
 
 PILE init_pile()
@@ -79,25 +89,6 @@ PILE dePILE(PILE p, MOT *elt)
     return p;
 }
 
-PILE saisir_PILE()
-{
-    PILE p = init_pile();
-    MOT tmp;
-    int nombre_a_ajouter;
-    printf("Entrer le nombre de valeur a ajouter ? ");
-    do
-    {
-        scanf("%d", &nombre_a_ajouter);
-    } while (nombre_a_ajouter < 1);
-    printf("///\tDebut entree utilisateur\t///\n");
-    for (int i = 0; i < nombre_a_ajouter; i++)
-    {
-        saisir_MOT(&tmp);
-        p = emPILE(p, tmp);
-    }
-
-    return p;
-}
 
 int estDanslaPile(PILE p, char *buffer)
 {

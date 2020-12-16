@@ -1,3 +1,13 @@
+/**
+ * @file mot.c
+ * @author Baptiste Pomarelle
+ * @brief Les fonctions relatives aux elements de type mot
+ * @version 0.1
+ * @date 2020-12-16
+ * 
+ * @copyright Copyright (c) 2020
+ * 
+ */
 #include "mot.h"
 
 void affiche_MOT(MOT e)

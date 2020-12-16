@@ -1,3 +1,14 @@
+/**
+ * @file xml_tokenizer.c
+ * @author Baptiste POMARELLE
+ * @brief Fonctions de nettoyage de fichiers .clean
+ * @version 0.1
+ * @date 2020-12-16
+ * 
+ * @copyright Copyright (c) 2020
+ * 
+ */
+
 #include "Header.h"
 /**
  * @brief Permet de créer une pile contenant tous les stopwords
@@ -23,6 +34,7 @@ PILE pile_stopwords()
         exit(2);
     }
 }
+
 
 void xml_filter(FILE *src, FILE *dest)
 

@@ -15,8 +15,8 @@
 /**
  * @brief Permet d'obtenir une pile contenant les mots qui apparaissent ainsi que leurs occurences dans le texte
  * 
- * @param src Descripteur du fichier texte 
- * @param p La pile à remplir
+ * @param[in] src Descripteur du fichier texte 
+ * @param[in,out] p La pile à remplir
  */
 void descripteur_de_texte(FILE *src, PILE *p)
 {
@@ -36,8 +36,8 @@ void descripteur_de_texte(FILE *src, PILE *p)
 /**
  * @brief Permet de concevoir un descripteur et à l'empiler
  * 
- * @param path_to_xml chemin vers un fichier xml
- * @param pile_desc Pile de descripteurs
+ * @param[in] path_to_xml chemin vers un fichier xml
+ * @param[in,out] pile_desc Pile de descripteurs
  */
 void fabrique_a_descripteur(char *path_to_xml, PILE_descripteur_texte *pile_desc)
 {

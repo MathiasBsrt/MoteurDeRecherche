@@ -1,0 +1,121 @@
+\hypertarget{xml__index_8c}{}\section{Référence du fichier xml\+\_\+index.\+c}
+\label{xml__index_8c}\index{xml\+\_\+index.\+c@{xml\+\_\+index.\+c}}
+
+
+Fonctions d\textquotesingle{}indexations et de création de piles de descripteurs.  
+
+
+{\ttfamily \#include \char`\"{}Header.\+h\char`\"{}}\newline
+Graphe des dépendances par inclusion de xml\+\_\+index.\+c\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{xml__index_8c__incl}
+\end{center}
+\end{figure}
+\subsection*{Fonctions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{xml__index_8c_acffc1df009d3eb1aa80c318c0a585dc2}{descripteur\+\_\+de\+\_\+texte} (F\+I\+LE $\ast$src, P\+I\+LE $\ast$p)
+\begin{DoxyCompactList}\small\item\em Permet d\textquotesingle{}obtenir une pile contenant les mots qui apparaissent ainsi que leurs occurences dans le texte. \end{DoxyCompactList}\item 
+void \hyperlink{xml__index_8c_a2a272e4e98b1c930fcceff178f60bdd8}{fabrique\+\_\+a\+\_\+descripteur} (char $\ast$path\+\_\+to\+\_\+xml, P\+I\+L\+E\+\_\+descripteur\+\_\+texte $\ast$pile\+\_\+desc)
+\begin{DoxyCompactList}\small\item\em Permet de concevoir un descripteur et à l\textquotesingle{}empiler. \end{DoxyCompactList}\item 
+int \hyperlink{xml__index_8c_a47f1db2fb139f2d254299930debddd1d}{Descripteur\+\_\+texte\+\_\+dossier} (char $\ast$nom\+\_\+dossier, P\+I\+L\+E\+\_\+descripteur\+\_\+texte $\ast$pile\+\_\+desc)
+\begin{DoxyCompactList}\small\item\em Permet d\textquotesingle{}obtenir tous les descripteurs texte présents dans un dossier. \end{DoxyCompactList}\item 
+void \hyperlink{xml__index_8c_ab3ff0edee79903c931ae1cc1be78e1c6}{Descripteur\+\_\+texte\+\_\+fichier} (char $\ast$nom\+\_\+fichier, P\+I\+L\+E\+\_\+descripteur\+\_\+texte $\ast$pile\+\_\+desc)
+\begin{DoxyCompactList}\small\item\em Permet d\textquotesingle{}obtenir un descripteur texte à partir du chemin d\textquotesingle{}un fichier xml. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{xml__index_8c_a840291bc02cba5474a4cb46a9b9566fe}\label{xml__index_8c_a840291bc02cba5474a4cb46a9b9566fe}} 
+int {\bfseries main} (void)
+\end{DoxyCompactItemize}
+
+
+\subsection{Description détaillée}
+Fonctions d\textquotesingle{}indexations et de création de piles de descripteurs. 
+
+\begin{DoxyAuthor}{Auteur}
+Baptiste P\+O\+M\+A\+R\+E\+L\+LE 
+\end{DoxyAuthor}
+\begin{DoxyVersion}{Version}
+0.\+1 
+\end{DoxyVersion}
+\begin{DoxyDate}{Date}
+2020-\/12-\/16
+\end{DoxyDate}
+\begin{DoxyCopyright}{Copyright}
+Copyright (c) 2020 
+\end{DoxyCopyright}
+
+
+\subsection{Documentation des fonctions}
+\mbox{\Hypertarget{xml__index_8c_acffc1df009d3eb1aa80c318c0a585dc2}\label{xml__index_8c_acffc1df009d3eb1aa80c318c0a585dc2}} 
+\index{xml\+\_\+index.\+c@{xml\+\_\+index.\+c}!descripteur\+\_\+de\+\_\+texte@{descripteur\+\_\+de\+\_\+texte}}
+\index{descripteur\+\_\+de\+\_\+texte@{descripteur\+\_\+de\+\_\+texte}!xml\+\_\+index.\+c@{xml\+\_\+index.\+c}}
+\subsubsection{\texorpdfstring{descripteur\+\_\+de\+\_\+texte()}{descripteur\_de\_texte()}}
+{\footnotesize\ttfamily void descripteur\+\_\+de\+\_\+texte (\begin{DoxyParamCaption}\item[{F\+I\+LE $\ast$}]{src,  }\item[{P\+I\+LE $\ast$}]{p }\end{DoxyParamCaption})}
+
+
+
+Permet d\textquotesingle{}obtenir une pile contenant les mots qui apparaissent ainsi que leurs occurences dans le texte. 
+
+
+\begin{DoxyParams}[1]{Paramètres}
+\mbox{\tt in}  & {\em src} & Descripteur du fichier texte \\
+\hline
+\mbox{\tt in,out}  & {\em p} & La pile à remplir \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{xml__index_8c_a47f1db2fb139f2d254299930debddd1d}\label{xml__index_8c_a47f1db2fb139f2d254299930debddd1d}} 
+\index{xml\+\_\+index.\+c@{xml\+\_\+index.\+c}!Descripteur\+\_\+texte\+\_\+dossier@{Descripteur\+\_\+texte\+\_\+dossier}}
+\index{Descripteur\+\_\+texte\+\_\+dossier@{Descripteur\+\_\+texte\+\_\+dossier}!xml\+\_\+index.\+c@{xml\+\_\+index.\+c}}
+\subsubsection{\texorpdfstring{Descripteur\+\_\+texte\+\_\+dossier()}{Descripteur\_texte\_dossier()}}
+{\footnotesize\ttfamily int Descripteur\+\_\+texte\+\_\+dossier (\begin{DoxyParamCaption}\item[{char $\ast$}]{nom\+\_\+dossier,  }\item[{P\+I\+L\+E\+\_\+descripteur\+\_\+texte $\ast$}]{pile\+\_\+desc }\end{DoxyParamCaption})}
+
+
+
+Permet d\textquotesingle{}obtenir tous les descripteurs texte présents dans un dossier. 
+
+
+\begin{DoxyParams}[1]{Paramètres}
+\mbox{\tt in}  & {\em nom\+\_\+dossier} & Dossier a traiter \\
+\hline
+\mbox{\tt in,out}  & {\em pile\+\_\+desc} & pile de descripteurs dans laquelle on ajoute les descripteurs créés \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Renvoie}
+int 1 si ça a marché, 0 sinon 
+\end{DoxyReturn}
+\mbox{\Hypertarget{xml__index_8c_ab3ff0edee79903c931ae1cc1be78e1c6}\label{xml__index_8c_ab3ff0edee79903c931ae1cc1be78e1c6}} 
+\index{xml\+\_\+index.\+c@{xml\+\_\+index.\+c}!Descripteur\+\_\+texte\+\_\+fichier@{Descripteur\+\_\+texte\+\_\+fichier}}
+\index{Descripteur\+\_\+texte\+\_\+fichier@{Descripteur\+\_\+texte\+\_\+fichier}!xml\+\_\+index.\+c@{xml\+\_\+index.\+c}}
+\subsubsection{\texorpdfstring{Descripteur\+\_\+texte\+\_\+fichier()}{Descripteur\_texte\_fichier()}}
+{\footnotesize\ttfamily void Descripteur\+\_\+texte\+\_\+fichier (\begin{DoxyParamCaption}\item[{char $\ast$}]{nom\+\_\+fichier,  }\item[{P\+I\+L\+E\+\_\+descripteur\+\_\+texte $\ast$}]{pile\+\_\+desc }\end{DoxyParamCaption})}
+
+
+
+Permet d\textquotesingle{}obtenir un descripteur texte à partir du chemin d\textquotesingle{}un fichier xml. 
+
+
+\begin{DoxyParams}[1]{Paramètres}
+\mbox{\tt in}  & {\em nom\+\_\+fichier} & nom du fichier texte \\
+\hline
+\mbox{\tt in,out}  & {\em pile\+\_\+desc} & pile de descripteurs dans laquelle on ajoute le descripteur créé \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{xml__index_8c_a2a272e4e98b1c930fcceff178f60bdd8}\label{xml__index_8c_a2a272e4e98b1c930fcceff178f60bdd8}} 
+\index{xml\+\_\+index.\+c@{xml\+\_\+index.\+c}!fabrique\+\_\+a\+\_\+descripteur@{fabrique\+\_\+a\+\_\+descripteur}}
+\index{fabrique\+\_\+a\+\_\+descripteur@{fabrique\+\_\+a\+\_\+descripteur}!xml\+\_\+index.\+c@{xml\+\_\+index.\+c}}
+\subsubsection{\texorpdfstring{fabrique\+\_\+a\+\_\+descripteur()}{fabrique\_a\_descripteur()}}
+{\footnotesize\ttfamily void fabrique\+\_\+a\+\_\+descripteur (\begin{DoxyParamCaption}\item[{char $\ast$}]{path\+\_\+to\+\_\+xml,  }\item[{P\+I\+L\+E\+\_\+descripteur\+\_\+texte $\ast$}]{pile\+\_\+desc }\end{DoxyParamCaption})}
+
+
+
+Permet de concevoir un descripteur et à l\textquotesingle{}empiler. 
+
+
+\begin{DoxyParams}[1]{Paramètres}
+\mbox{\tt in}  & {\em path\+\_\+to\+\_\+xml} & chemin vers un fichier xml \\
+\hline
+\mbox{\tt in,out}  & {\em pile\+\_\+desc} & Pile de descripteurs \\
+\hline
+\end{DoxyParams}

@@ -1,0 +1,262 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.8.13"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Indexation texte: Référence du fichier xml_index.c</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">Indexation texte
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Généré par Doxygen 1.8.13 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search",false,'Recherche');
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+$(function() {
+  initMenu('',true,false,'search.php','Recherche');
+  $(document).ready(function() { init_search(); });
+});
+</script>
+<div id="main-nav"></div>
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+</div><!-- top -->
+<div class="header">
+  <div class="summary">
+<a href="#func-members">Fonctions</a>  </div>
+  <div class="headertitle">
+<div class="title">Référence du fichier xml_index.c</div>  </div>
+</div><!--header-->
+<div class="contents">
+
+<p>Fonctions d'indexations et de création de piles de descripteurs.  
+<a href="#details">Plus de détails...</a></p>
+<div class="textblock"><code>#include &quot;<a class="el" href="Header_8h_source.html">Header.h</a>&quot;</code><br />
+</div><div class="textblock"><div class="dynheader">
+Graphe des dépendances par inclusion de xml_index.c:</div>
+<div class="dyncontent">
+<div class="center"><img src="xml__index_8c__incl.png" border="0" usemap="#xml__index_8c" alt=""/></div>
+<map name="xml__index_8c" id="xml__index_8c">
+<area shape="rect" id="node2" href="Header_8h.html" title="Header de toute la partie Texte. " alt="" coords="581,80,656,107"/>
+</map>
+</div>
+</div><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
+Fonctions</h2></td></tr>
+<tr class="memitem:acffc1df009d3eb1aa80c318c0a585dc2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="xml__index_8c.html#acffc1df009d3eb1aa80c318c0a585dc2">descripteur_de_texte</a> (FILE *src, PILE *p)</td></tr>
+<tr class="memdesc:acffc1df009d3eb1aa80c318c0a585dc2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Permet d'obtenir une pile contenant les mots qui apparaissent ainsi que leurs occurences dans le texte.  <a href="#acffc1df009d3eb1aa80c318c0a585dc2">Plus de détails...</a><br /></td></tr>
+<tr class="separator:acffc1df009d3eb1aa80c318c0a585dc2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2a272e4e98b1c930fcceff178f60bdd8"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="xml__index_8c.html#a2a272e4e98b1c930fcceff178f60bdd8">fabrique_a_descripteur</a> (char *path_to_xml, PILE_descripteur_texte *pile_desc)</td></tr>
+<tr class="memdesc:a2a272e4e98b1c930fcceff178f60bdd8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Permet de concevoir un descripteur et à l'empiler.  <a href="#a2a272e4e98b1c930fcceff178f60bdd8">Plus de détails...</a><br /></td></tr>
+<tr class="separator:a2a272e4e98b1c930fcceff178f60bdd8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a47f1db2fb139f2d254299930debddd1d"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="xml__index_8c.html#a47f1db2fb139f2d254299930debddd1d">Descripteur_texte_dossier</a> (char *nom_dossier, PILE_descripteur_texte *pile_desc)</td></tr>
+<tr class="memdesc:a47f1db2fb139f2d254299930debddd1d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Permet d'obtenir tous les descripteurs texte présents dans un dossier.  <a href="#a47f1db2fb139f2d254299930debddd1d">Plus de détails...</a><br /></td></tr>
+<tr class="separator:a47f1db2fb139f2d254299930debddd1d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab3ff0edee79903c931ae1cc1be78e1c6"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="xml__index_8c.html#ab3ff0edee79903c931ae1cc1be78e1c6">Descripteur_texte_fichier</a> (char *nom_fichier, PILE_descripteur_texte *pile_desc)</td></tr>
+<tr class="memdesc:ab3ff0edee79903c931ae1cc1be78e1c6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Permet d'obtenir un descripteur texte à partir du chemin d'un fichier xml.  <a href="#ab3ff0edee79903c931ae1cc1be78e1c6">Plus de détails...</a><br /></td></tr>
+<tr class="separator:ab3ff0edee79903c931ae1cc1be78e1c6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a840291bc02cba5474a4cb46a9b9566fe"><td class="memItemLeft" align="right" valign="top"><a id="a840291bc02cba5474a4cb46a9b9566fe"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>main</b> (void)</td></tr>
+<tr class="separator:a840291bc02cba5474a4cb46a9b9566fe"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">Description détaillée</h2>
+<div class="textblock"><p>Fonctions d'indexations et de création de piles de descripteurs. </p>
+<dl class="section author"><dt>Auteur</dt><dd>Baptiste POMARELLE </dd></dl>
+<dl class="section version"><dt>Version</dt><dd>0.1 </dd></dl>
+<dl class="section date"><dt>Date</dt><dd>2020-12-16</dd></dl>
+<dl class="section copyright"><dt>Copyright</dt><dd>Copyright (c) 2020 </dd></dl>
+</div><h2 class="groupheader">Documentation des fonctions</h2>
+<a id="acffc1df009d3eb1aa80c318c0a585dc2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acffc1df009d3eb1aa80c318c0a585dc2">&#9670;&nbsp;</a></span>descripteur_de_texte()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void descripteur_de_texte </td>
+          <td>(</td>
+          <td class="paramtype">FILE *&#160;</td>
+          <td class="paramname"><em>src</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">PILE *&#160;</td>
+          <td class="paramname"><em>p</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Permet d'obtenir une pile contenant les mots qui apparaissent ainsi que leurs occurences dans le texte. </p>
+<dl class="params"><dt>Paramètres</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">src</td><td>Descripteur du fichier texte </td></tr>
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">p</td><td>La pile à remplir </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a47f1db2fb139f2d254299930debddd1d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a47f1db2fb139f2d254299930debddd1d">&#9670;&nbsp;</a></span>Descripteur_texte_dossier()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int Descripteur_texte_dossier </td>
+          <td>(</td>
+          <td class="paramtype">char *&#160;</td>
+          <td class="paramname"><em>nom_dossier</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">PILE_descripteur_texte *&#160;</td>
+          <td class="paramname"><em>pile_desc</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Permet d'obtenir tous les descripteurs texte présents dans un dossier. </p>
+<dl class="params"><dt>Paramètres</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">nom_dossier</td><td>Dossier a traiter </td></tr>
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">pile_desc</td><td>pile de descripteurs dans laquelle on ajoute les descripteurs créés </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Renvoie</dt><dd>int 1 si ça a marché, 0 sinon </dd></dl>
+
+</div>
+</div>
+<a id="ab3ff0edee79903c931ae1cc1be78e1c6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab3ff0edee79903c931ae1cc1be78e1c6">&#9670;&nbsp;</a></span>Descripteur_texte_fichier()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Descripteur_texte_fichier </td>
+          <td>(</td>
+          <td class="paramtype">char *&#160;</td>
+          <td class="paramname"><em>nom_fichier</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">PILE_descripteur_texte *&#160;</td>
+          <td class="paramname"><em>pile_desc</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Permet d'obtenir un descripteur texte à partir du chemin d'un fichier xml. </p>
+<dl class="params"><dt>Paramètres</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">nom_fichier</td><td>nom du fichier texte </td></tr>
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">pile_desc</td><td>pile de descripteurs dans laquelle on ajoute le descripteur créé </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a2a272e4e98b1c930fcceff178f60bdd8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2a272e4e98b1c930fcceff178f60bdd8">&#9670;&nbsp;</a></span>fabrique_a_descripteur()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void fabrique_a_descripteur </td>
+          <td>(</td>
+          <td class="paramtype">char *&#160;</td>
+          <td class="paramname"><em>path_to_xml</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">PILE_descripteur_texte *&#160;</td>
+          <td class="paramname"><em>pile_desc</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Permet de concevoir un descripteur et à l'empiler. </p>
+<dl class="params"><dt>Paramètres</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">path_to_xml</td><td>chemin vers un fichier xml </td></tr>
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">pile_desc</td><td>Pile de descripteurs </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+</div><!-- contents -->
+<!-- start footer part -->
+<hr class="footer"/><address class="footer"><small>
+Généré par &#160;<a href="http://www.doxygen.org/index.html">
+<img class="footer" src="doxygen.png" alt="doxygen"/>
+</a> 1.8.13
+</small></address>
+</body>
+</html>
