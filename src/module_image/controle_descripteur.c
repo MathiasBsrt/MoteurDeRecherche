@@ -19,7 +19,7 @@ void creationDescripteur(char *chemin){
      char *basec, *bname; //bname est le nom du fichier à indexer
     // Intialisation des variables
 
-    basec = strdup(chemin); 
+    basec = strdup(chemin);
     bname = basename(basec);
      p = NULL;
      image = fopen(chemin,"r");
@@ -93,7 +93,7 @@ PILE SauvegardeDescripteur(Descripteur nouveau, PILE p, char *nom){
  void chargerPile(PILE *p){
      Descripteur d;
      FILE *fichierPile;
-     p = init_PILE();
+     *p = init_PILE();
      fichierPile = fopen("base_descripteur_image","r");
      //Condition si le fichier n'existe pas
      if(fichierPile == NULL){
@@ -111,7 +111,7 @@ PILE SauvegardeDescripteur(Descripteur nouveau, PILE p, char *nom){
                  fscanf(fichierPile,"%d",&val); //case de l'histogramme
                      d.histogramme[i]= val;
              }
-             emPILE(&p,d);
+             *p=emPILE(*p,d);
              fscanf(fichierPile,"%d",&val); //id
 
          }while(val != EOF); // Utiliser EOF pour signifier que c'est le dernier element de la pile
@@ -135,7 +135,7 @@ void sauvegarderPile(PILE p){
         //on ecrit l'histogramme, chaque valeur séparée par un espace
         //on revient à la ligne
          p=dePILE(p,&copier);
-         // On met tout en ligne, pas beosin des indices du tableau de l'histogramme. 
+         // On met tout en ligne, pas beosin des indices du tableau de l'histogramme.
         // On met tout en ligne pour faciliter la lecture par le futur charger fichier/pile. Un \n represente la fin d'un descripteur
          fprintf(pileFichier,"%d ",copier.id);
          for (int i = 0; i < tailleHistogramme; i++)
@@ -289,4 +289,3 @@ int main(int argc, char  *argv[])
 
     return 0;
 }
-
