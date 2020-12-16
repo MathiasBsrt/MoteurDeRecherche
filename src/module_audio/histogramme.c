@@ -10,12 +10,12 @@
 #define SHORT_INT_MIN_VALUE -32767
 #define SHORT_INT_MAX_VALUE 32767
 
-HISTOGRAMME_AUDIO init_HISTOGRAMME_AUDIO(int k, int m)
+HISTOGRAMME_AUDIO init_HISTOGRAMME_AUDIO(int n, int m)
 {
 	HISTOGRAMME_AUDIO histo;
-	histo.k = k; // Nombre de fenêtre d'analyse
+	histo.k = (int) pow(2, n); // Nombre de fenêtre d'analyse
 	histo.m = m; // Nombre d'intervalles
-	histo.mat = (int *) malloc(sizeof(int) * k * m);
+	histo.mat = (int *) malloc(sizeof(int) * histo.k * m);
 	int y, x;
 	for(y = 0; y < histo.k; y++)
 		for(x = 0; x < histo.m; x++)
@@ -104,7 +104,7 @@ int compare_HISTOGRAMME_AUDIO(HISTOGRAMME_AUDIO histo1, HISTOGRAMME_AUDIO histo2
 	return 0;
 }
 
-int generer_HISTOGRAMME_AUDIO(HISTOGRAMME_AUDIO * histo, char * chemin, int k, int m)
+int generer_HISTOGRAMME_AUDIO(HISTOGRAMME_AUDIO * histo, char * chemin, int n, int m)
 {
 	char * ext = strrchr(chemin, '.');
 	if(!ext)
@@ -112,11 +112,11 @@ int generer_HISTOGRAMME_AUDIO(HISTOGRAMME_AUDIO * histo, char * chemin, int k, i
 		fprintf(stderr, "[CREER_HISTO] Impossible de créer l'histogramme car le fichier donné n'a pas un format supporté (%s).\n", chemin);
 		return HISTOGRAMME_CREER_ERREUR;
 	} else if(strcmp((ext + 1), "txt") == 0){
-	    return creer_histogramme_TXT_DESC_AUDIO(histo, chemin, k, m);
+	    return creer_histogramme_TXT_DESC_AUDIO(histo, chemin, n, m);
 	} else if(strcmp((ext + 1), "bin") == 0){
-	    return creer_histogramme_BIN_DESC_AUDIO(histo, chemin, k, m);
+	    return creer_histogramme_BIN_DESC_AUDIO(histo, chemin, n, m);
 	} else if(strcmp((ext + 1), "wav") == 0){
-	    return creer_histogramme_WAV_DESC_AUDIO(histo, chemin, k, m);
+	    return creer_histogramme_WAV_DESC_AUDIO(histo, chemin, n, m);
 	}
 	else
 	{
@@ -126,7 +126,7 @@ int generer_HISTOGRAMME_AUDIO(HISTOGRAMME_AUDIO * histo, char * chemin, int k, i
 
 }
 
-int creer_histogramme_TXT_DESC_AUDIO(HISTOGRAMME_AUDIO * histo, char * chemin, int k, int m)
+int creer_histogramme_TXT_DESC_AUDIO(HISTOGRAMME_AUDIO * histo, char * chemin, int n, int m)
 {
 	// Vérification de l'extension du fichier donné.
 	char * ext = strrchr(chemin, '.');
@@ -139,7 +139,7 @@ int creer_histogramme_TXT_DESC_AUDIO(HISTOGRAMME_AUDIO * histo, char * chemin, i
 		return HISTOGRAMME_CREER_ERREUR;
 	}
 
-	*histo = init_HISTOGRAMME_AUDIO(k, m);
+	*histo = init_HISTOGRAMME_AUDIO(n, m);
 	FILE * audioTXT; // Fichier audio .txt
 	audioTXT = fopen(chemin, "r");
 	// Si le programme n'arrive pas à lire le fichier demandé.
@@ -165,7 +165,7 @@ int creer_histogramme_TXT_DESC_AUDIO(HISTOGRAMME_AUDIO * histo, char * chemin, i
 	printf("Data size: %d\n", lines);
 
 	// Lecture des valeurs
-	double y_ratio = lines / (double) k;
+	double y_ratio = lines / (double) histo->k;
 	double x_ratio = 2.0 / m;
 
 	/* DEBUG Things
@@ -196,7 +196,7 @@ int creer_histogramme_TXT_DESC_AUDIO(HISTOGRAMME_AUDIO * histo, char * chemin, i
 	return HISTOGRAMME_CREER_SUCCES;
 }
 
-int creer_histogramme_BIN_DESC_AUDIO(HISTOGRAMME_AUDIO * histo, char * chemin, int k, int m)
+int creer_histogramme_BIN_DESC_AUDIO(HISTOGRAMME_AUDIO * histo, char * chemin, int n, int m)
 {
 	// Vérification de l'extension du fichier donné.
 	char * ext = strrchr(chemin, '.');
@@ -209,7 +209,7 @@ int creer_histogramme_BIN_DESC_AUDIO(HISTOGRAMME_AUDIO * histo, char * chemin, i
 		return HISTOGRAMME_CREER_ERREUR;
 	}
 
-	*histo = init_HISTOGRAMME_AUDIO(k, m);
+	*histo = init_HISTOGRAMME_AUDIO(n, m);
 	FILE * audioBIN; // Fichier audio .bin
 	audioBIN = fopen(chemin, "r");
 	// Si le programme n'arrive pas à lire le fichier demandé.
@@ -229,7 +229,7 @@ int creer_histogramme_BIN_DESC_AUDIO(HISTOGRAMME_AUDIO * histo, char * chemin, i
 	rewind(audioBIN); 
 
 	// Lecture des valeurs
-	double y_ratio = nbDoubleWord / (double) k;
+	double y_ratio = nbDoubleWord / (double) histo->k;
 	double x_ratio = 2.0 / m;
 
 	int y, x;
@@ -248,7 +248,7 @@ int creer_histogramme_BIN_DESC_AUDIO(HISTOGRAMME_AUDIO * histo, char * chemin, i
 	return HISTOGRAMME_CREER_SUCCES;
 }
 
-int creer_histogramme_WAV_DESC_AUDIO(HISTOGRAMME_AUDIO * histo, char * chemin, int k, int m)
+int creer_histogramme_WAV_DESC_AUDIO(HISTOGRAMME_AUDIO * histo, char * chemin, int n, int m)
 {
 	// Vérification de l'extension du fichier donné.
 	char * ext = strrchr(chemin, '.');
@@ -261,7 +261,7 @@ int creer_histogramme_WAV_DESC_AUDIO(HISTOGRAMME_AUDIO * histo, char * chemin, i
 		return HISTOGRAMME_CREER_ERREUR;
 	}
 
-	*histo = init_HISTOGRAMME_AUDIO(k, m);
+	*histo = init_HISTOGRAMME_AUDIO(n, m);
 	FILE * audioWAV; // Fichier audio .bin
 	audioWAV = fopen(chemin, "r");
 	// Si le programme n'arrive pas à lire le fichier demandé.
@@ -298,7 +298,7 @@ int creer_histogramme_WAV_DESC_AUDIO(HISTOGRAMME_AUDIO * histo, char * chemin, i
 
 
 	// Lecture des valeurs
-	double y_ratio = dataSize / (double) k;
+	double y_ratio = dataSize / (double) histo->k;
 	double x_ratio = 2.0 / m;
 
 	int y, x;

@@ -1,5 +1,6 @@
 #include <assert.h>
 #include <stdio.h>
+#include <math.h>
 #include "descripteur.h"
 #include "histogramme.h"
 
@@ -9,10 +10,11 @@ int main(int argc, char * argv[])
 	printf("  --- DESCRIPTEUR --- \n");
 	printf("    --- Initialisation du descripteur --- \n");
 	// Initialisation du descripteur
-	int k = 10;
+	int n = 10;
+	int k = pow(2, n);
 	int m = 15;
 
-	DESC_AUDIO desc = init_DESC_AUDIO(k, m);
+	DESC_AUDIO desc = init_DESC_AUDIO(n, m);
 	assert(desc.histo.k == k);
 	assert(desc.histo.m == m);
 	printf("      Descripteur: id=%d, k=%d, m=%d\n", desc.id, desc.histo.k, desc.histo.m);
@@ -33,7 +35,7 @@ int main(int argc, char * argv[])
 	printf("    --- CREER HISTOGRAMME TXT DESC AUDIO --- \n");
 
 	HISTOGRAMME_AUDIO histoTXT;
-	int codeTXT = generer_HISTOGRAMME_AUDIO(&histoTXT, "./TEST_SON/corpus_fi.txt", k, m);
+	int codeTXT = generer_HISTOGRAMME_AUDIO(&histoTXT, "./TEST_SON/corpus_fi.txt", n, m);
 	if(codeTXT != HISTOGRAMME_CREER_SUCCES) exit(codeTXT);
 	affiche_HISTOGRAMME_AUDIO(histoTXT);
 	
@@ -41,14 +43,14 @@ int main(int argc, char * argv[])
 	printf("    --- CREER HISTOGRAMME BIN DESC AUDIO --- \n");
 
 	HISTOGRAMME_AUDIO histoBIN;
-	int codeBIN = generer_HISTOGRAMME_AUDIO(&histoBIN, "./TEST_SON/corpus_fi.bin", k, m);
+	int codeBIN = generer_HISTOGRAMME_AUDIO(&histoBIN, "./TEST_SON/corpus_fi.bin", n, m);
 	if(codeBIN != HISTOGRAMME_CREER_SUCCES) exit(codeBIN);
 	affiche_HISTOGRAMME_AUDIO(histoBIN);
 
 	printf("    --- CREER HISTOGRAMME WAV DESC AUDIO --- \n");
 
 	HISTOGRAMME_AUDIO histoWAV;
-	int codeWAV = generer_HISTOGRAMME_AUDIO(&histoWAV, "./TEST_SON/corpus_fi.wav", k, m);
+	int codeWAV = generer_HISTOGRAMME_AUDIO(&histoWAV, "./TEST_SON/corpus_fi.wav", n, m);
 	if(codeWAV != HISTOGRAMME_CREER_SUCCES) exit(codeWAV);
 	affiche_HISTOGRAMME_AUDIO(histoWAV);
 

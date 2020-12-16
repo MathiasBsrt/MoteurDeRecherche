@@ -28,7 +28,7 @@ Une compilation pour pouvoir générer un executable capable de créer un histog
 
 ```bash
 make main_histo
-./main_histo <fichier> <k> <m>
+./main_histo <fichier> <n> <m>
 ```
 
 ## TODO

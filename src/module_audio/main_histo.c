@@ -7,17 +7,17 @@ int main(int argc, char * argv[])
 	if(argc != 4)
 	{
 		fprintf(stderr, "Pour que le programme puisse fonctionner, des arguments sont attendus.\n");
-		fprintf(stderr, "Usage: %s <fichier> <k> <m>\n", argv[0]);
+		fprintf(stderr, "Usage: %s <fichier> <n> <m>\n", argv[0]);
 		return 1;
 	}
 
-	int k, m;
+	int n, m;
 
-	sscanf(argv[2],"%d",&k);
+	sscanf(argv[2],"%d",&n);
 	sscanf(argv[3],"%d",&m);
 
 	HISTOGRAMME_AUDIO histo;
-	int code = generer_HISTOGRAMME_AUDIO(&histo, argv[1], k, m);
+	int code = generer_HISTOGRAMME_AUDIO(&histo, argv[1], n, m);
 	if(code != HISTOGRAMME_CREER_SUCCES) exit(code);
 	affiche_HISTOGRAMME_AUDIO(histo);
 }
