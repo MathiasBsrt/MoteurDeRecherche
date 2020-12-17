@@ -19,10 +19,13 @@ void creationDescripteur(char *chemin)
   int nbComposantes;
   char *basec, *bname; //bname est le nom du fichier à indexer
   // Intialisation des variables
+  
+  p = init_pile();
+  int dernierId = charger_PILE_Desc(&p,"base_descripteur_image");
 
   basec = strdup(chemin);
   bname = basename(basec);
-  p = init_PILE();
+  p = init_pile();
   image = fopen(chemin, "r");
 
   //Lecture des propriétés de l'image
@@ -78,9 +81,8 @@ void creationDescripteur(char *chemin)
   creationHistogramme(matriceImageQuant, &newDesc, lignes, colonnes); // doit créer l'histo et remplir l'attribut histogramme du descripteur
 
   //Sauvegarde du nouveau descripteur
-  p = init_PILE();
-  p = chargerPile(p); // On chargera la pile
-  p = SauvegardeDescripteur(newDesc, p, bname);
+   p = SauvegardeDescripteur(newDesc, p, bname, dernierId);
+
   for (int i = 0; i < lignes; i++)
   {
     free(matriceImageQuant[i]);
@@ -92,51 +94,15 @@ void creationDescripteur(char *chemin)
  * Cette fonction permet de sauvegarder un descripteur donné en paramètre dans le fichier base_descripteur_image
  * et de lier ce descripteur avec le fichier dans le fichier liste_base_image
  */
-PILE SauvegardeDescripteur(Descripteur nouveau, PILE p, char *nom)
+PILE SauvegardeDescripteur(Descripteur nouveau, PILE p, char *nom, int dernierId)
 {
-  nouveau.id = p->elem.id; //TODOOn chargera la pile au lancement du programme pour al recherche, on aura donc accès aux id. On utilisera dernier id
+  nouveau.id = dernierId +1; 
   p = emPILE(p, nouveau);
   sauvegarderPile(p);
   lierDescripteur(nouveau, nom);
 
   return p;
 }
-/***
- * Cette fonction permet de charger la pile stockée dans
- * le fichier base_descripteur_image. Dans le cas où ce
- * fichier n'existe pas, on le créera.
- *
- * Retourne une pile
- */
-/*PILE chargerPile(PILE p){
-     Descripteur d;
-     FILE *fichierPile;
-     p = init_PILE();
-     fichierPile = fopen("base_descripteur_image","r");
-     //Condition si le fichier n'existe pas
-     if(fichierPile == NULL){
-         char commande[1000] ;
-         strcpy(commande, "touch base_descripteur_image");
-         system(commande);
-     }
-     else if(!feof(fichierPile)) {
-         int val;
-         fscanf(fichierPile,"%d",&val); //id du premier element
-         do{
-             d.id = val;
-             for (int i = 0; i < tailleHistogramme; i++)
-             {
-                 fscanf(fichierPile,"%d",&val); //case de l'histogramme
-                     d.histogramme[i]= val;
-             }
-             p=emPILE(p,d);
-             fscanf(fichierPile,"%d",&val); //id
-
-         }while(val != EOF); // Utiliser EOF pour signifier que c'est le dernier element de la pile
-         fclose(fichierPile);
-     }
-     return p;
- }*/
 
 /***
  * Cette fonction permet de sauvegarder la pile passée en paramètre
@@ -408,12 +374,12 @@ void genererDescripteurDossier(char *cheminDossier)
   //Ajouter la modif de davy pour la pile
 }
 
-PILE chargerPile()
+/*PILE chargerPile()
 {
   PILE p;
   Descripteur d;
   FILE *fichierPile;
-  p = init_PILE();
+  p = init_pile();
   fichierPile = fopen("base_descripteur_image", "r");
   //Condition si le fichier n'existe pas
   if (fichierPile == NULL)
@@ -440,13 +406,13 @@ PILE chargerPile()
   fclose(fichierPile);
 
   return p;
-}
+}*/
 
 int main(int argc, char *argv[])
 {
-  /*genererDescripteurDossier("tests/TEST_RGB/txt/"); // Génération rgb
-    genererDescripteurDossier("tests/TEST_NB/txt/"); // Génératio nb*/
-  PILE p = chargerPile();
+  genererDescripteurDossier("tests/TEST_RGB/txt/"); // Génération rgb
+    genererDescripteurDossier("tests/TEST_NB/txt/"); // Génératio nb
+ 
 
   return 0;
 }
