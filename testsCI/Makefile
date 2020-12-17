@@ -6,6 +6,7 @@ indexation : ../src/module_audio/histogramme.c ../src/module_audio/histogramme.h
 	gcc -c indexation.c
 	gcc -o indexation.out histogramme.o descripteur.o pile_dynamique.o base_descripteur.o indexation.o -lm
 	./indexation.out
+	rm -f *.o *.out
 
 clean:
 	rm -f *.o *.out
