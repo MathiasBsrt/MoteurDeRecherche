@@ -5,11 +5,12 @@
 #define HISTOGRAMME_CREER_SUCCES 0
 #define HISTOGRAMME_CREER_ERREUR 1
 
+/** Représentation d'un histogramme utile pour un descripteur audio */
 typedef struct Histogramme_Audio_t
 {
-	unsigned int k; /* k, nombre de fenêtre d'analyse */
-	unsigned int m; /* m, nombre d'intervalles */
-	int * mat; /* Histogramme, soit une matrice k x m,
+	unsigned int k; /**< k, nombre de fenêtre d'analyse */
+	unsigned int m; /**< m, nombre d'intervalles */
+	int * mat; /**< Histogramme, soit une matrice k x m,
 						de points (double)
 						Indices: [K, M]
 						*/
@@ -71,9 +72,9 @@ int compare_HISTOGRAMME_AUDIO(HISTOGRAMME_AUDIO, HISTOGRAMME_AUDIO);
 
 
 /** Créer un histogramme pour un descripteur audio
-*   à partir d'un fichier d'extension TXT
+*   à partir d'un fichier d'extension TXT, BIN ou WAV.
 *  @param HISTOGRAMME_AUDIO *, l'histogramme créé
-*  @param char * chemin, chemin vers le fichier d'extension .txt
+*  @param char * chemin, chemin vers le fichier d'extension .txt, .bin ou .wav
 *  @param int k, nombre de fenêtre d'analyse
 *  @param int m, nombre d'intervalles
 *
@@ -81,10 +82,37 @@ int compare_HISTOGRAMME_AUDIO(HISTOGRAMME_AUDIO, HISTOGRAMME_AUDIO);
 */
 int generer_HISTOGRAMME_AUDIO(HISTOGRAMME_AUDIO *, char *, int, int);
 
-int creer_histogramme_TXT_DESC_AUDIO(HISTOGRAMME_AUDIO * histo, char * chemin, int n, int m);
+/** Créer un histogramme pour un descripteur audio
+*   à partir d'un fichier d'extension TXT.
+*  @param HISTOGRAMME_AUDIO *, l'histogramme créé
+*  @param char * chemin, chemin vers le fichier d'extension .txt
+*  @param int k, nombre de fenêtre d'analyse
+*  @param int m, nombre d'intervalles
+*
+*  @return int, code de retour
+*/
+int creer_histogramme_TXT_DESC_AUDIO(HISTOGRAMME_AUDIO *, char *, int, int);
 
+/** Créer un histogramme pour un descripteur audio
+*   à partir d'un fichier d'extension BIN.
+*  @param HISTOGRAMME_AUDIO *, l'histogramme créé
+*  @param char * chemin, chemin vers le fichier d'extension .bin
+*  @param int k, nombre de fenêtre d'analyse
+*  @param int m, nombre d'intervalles
+*
+*  @return int, code de retour
+*/
 int creer_histogramme_BIN_DESC_AUDIO(HISTOGRAMME_AUDIO * histo, char * chemin, int n, int m);
 
+/** Créer un histogramme pour un descripteur audio
+*   à partir d'un fichier d'extension WAV.
+*  @param HISTOGRAMME_AUDIO *, l'histogramme créé
+*  @param char * chemin, chemin vers le fichier d'extension .wav
+*  @param int k, nombre de fenêtre d'analyse
+*  @param int m, nombre d'intervalles
+*
+*  @return int, code de retour
+*/
 int creer_histogramme_WAV_DESC_AUDIO(HISTOGRAMME_AUDIO * histo, char * chemin, int n, int m);
 
 #endif

@@ -40,7 +40,7 @@ int compare_DESC_AUDIO(DESC_AUDIO desc1, DESC_AUDIO desc2)
 	return compare_HISTOGRAMME_AUDIO(desc1.histo, desc2.histo);
 }
 
-int afficher_DESC_AUDIO(DESC_AUDIO desc)
+int affiche_DESC_AUDIO(DESC_AUDIO desc)
 {
 	printf("Identifiant: %d\nHistogramme:\n", desc.id);
 	affiche_HISTOGRAMME_AUDIO(desc.histo);
