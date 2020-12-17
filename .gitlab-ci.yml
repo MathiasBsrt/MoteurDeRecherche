@@ -9,8 +9,10 @@ test-indexation:
   stage: test
   script:
     #- make projet-pfr
-    - gcc testsCI/indexation.c -o testsCI/tests.out
+    # - gcc testsCI/indexation.c -o testsCI/tests.out
+    - make indexation
     - ./testsCI/tests.out
+    - rm -f *.o *.out
 
 test-recherche:
   stage: test
