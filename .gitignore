@@ -2,7 +2,7 @@
 *.o
 *.out
 base_descripteur_*
-lier_base_*
+liste_base_*
 !base_descripteur_*_OK
-!lier_base_*_OK
+!liste_base_*_OK
 

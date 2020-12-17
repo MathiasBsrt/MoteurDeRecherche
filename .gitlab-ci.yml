@@ -11,8 +11,11 @@ test-indexation:
     #- make projet-pfr
     # - gcc testsCI/indexation.c -o testsCI/tests.out
     - cd testsCI
-    - make indexation
-    - ./indexation.out
+    - make indexationSon
+    - ./indexationSon.out
+    - rm -f *.o *.out
+    - make indexationImage
+    - ./indexationImage.out
     - rm -f *.o *.out
 
 test-recherche:

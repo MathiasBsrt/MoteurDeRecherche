@@ -374,45 +374,14 @@ void genererDescripteurDossier(char *cheminDossier)
   //Ajouter la modif de davy pour la pile
 }
 
-/*PILE chargerPile()
+
+/*int main(int argc, char *argv[])
 {
-  PILE p;
-  Descripteur d;
-  FILE *fichierPile;
-  p = init_pile();
-  fichierPile = fopen("base_descripteur_image", "r");
-  //Condition si le fichier n'existe pas
-  if (fichierPile == NULL)
-  {
-    char commande[1000];
-    strcpy(commande, "touch base_descripteur_image");
-    system(commande);
-  }
-  int val;
-  int res;
-  do
-  {
-    res = fscanf(fichierPile, "%d", &val); //id du premier element
-    d.id = val;
-    for (int i = 0; i < tailleHistogramme; i++)
-    {
-      res = fscanf(fichierPile, "%d", &val); //case de l'histogramme
-      d.histogramme[i] = val;
-    }
-    p = emPILE(p, d);
-    fscanf(fichierPile, "%d", &val); //id
-
-  } while (res != EOF); // Utiliser EOF pour signifier que c'est le dernier element de la pile
-  fclose(fichierPile);
-
-  return p;
-}*/
-
-int main(int argc, char *argv[])
-{
-  genererDescripteurDossier("tests/TEST_RGB/txt/"); // Génération rgb
-    genererDescripteurDossier("tests/TEST_NB/txt/"); // Génératio nb
+  //genererDescripteurDossier("tests/TEST_RGB/txt/"); // Génération rgb
+  //genererDescripteurDossier("tests/TEST_NB/txt/"); // Génératio nb
  
+   creationDescripteur("tests/TEST_RGB/txt/01.txt"); // Génération rgb
+    creationDescripteur("tests/TEST_NB/txt/51.txt"); // Génératio nb
 
   return 0;
-}
+}*/
