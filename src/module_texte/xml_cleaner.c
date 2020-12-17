@@ -1,6 +1,24 @@
+/**
+ * @file xml_cleaner.c
+ * @author Baptiste POMARELLE
+ * @brief Fonctions permettant de nettoyer un fichier xml et d'obtenir un .xml
+ * @version 0.1
+ * @date 2020-12-16
+ * 
+ * @copyright Copyright (c) 2020
+ * 
+ */
+
 #include "Header.h"
 
 
+/**
+ * @brief Permet d'ajouter un caractère à une chaine
+ * 
+ * @param[out] buffer chaine de retour
+ * @param[in] c 
+ * @param[in] cpt 
+ */
 void add_char(char *buffer, char c, int *cpt)
 {
     c = tolower(c);
@@ -8,10 +26,17 @@ void add_char(char *buffer, char c, int *cpt)
     *cpt = *cpt + 1;
 }
 
+/**
+ * @brief Permet de déterminer si le caractère donné en paramètre est une ponctuation
+ * 
+ * @param[in] c 
+ * @return int 
+ */
 int estPonctuation(char c)
 {
-    return (c == '.' || c == ',' || c == '?' || c == ';' || c == '!' || c == '\'' || c == ':' || c == '"' || c == '&' || c == '(' || c == ')' || c == '-' || c == '_');
+    return (c == '.' || c == ',' || c == '?' || c == ';' || c == '!' || c == '\'' || c == ':' || c == '"' || c == '&' || c == '(' || c == ')' || c == '-' || c == '_' || c == '%');
 }
+
 
 void xml_cleaner(FILE *src, FILE *dest)
 {
@@ -49,15 +74,3 @@ void xml_cleaner(FILE *src, FILE *dest)
     }
 }
 
-int main(void)
-{
-    FILE *src = fopen("Textes_UTF8/05-Le_Colombien_Juan_Pablo_Montoya_utf8.xml", "r");
-    FILE *dest = fopen("out.clean", "w");
-    if (src)
-    {
-        xml_cleaner(src, dest);
-    }
-    fclose(src);
-    fclose(dest);
-    return 0;
-}

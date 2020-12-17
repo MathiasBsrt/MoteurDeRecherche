@@ -1,0 +1,176 @@
+\hypertarget{Header_8h}{}\section{Référence du fichier Header.\+h}
+\label{Header_8h}\index{Header.\+h@{Header.\+h}}
+
+
+Header de toute la partie Texte.  
+
+
+{\ttfamily \#include \char`\"{}pile/pile\+\_\+dynamique.\+h\char`\"{}}\newline
+{\ttfamily \#include $<$ctype.\+h$>$}\newline
+{\ttfamily \#include $<$dirent.\+h$>$}\newline
+{\ttfamily \#include $<$sys/types.\+h$>$}\newline
+{\ttfamily \#include $<$sys/stat.\+h$>$}\newline
+Graphe des dépendances par inclusion de Header.\+h\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{Header_8h__incl}
+\end{center}
+\end{figure}
+Ce graphe montre quels fichiers incluent directement ou indirectement ce fichier \+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{Header_8h__dep__incl}
+\end{center}
+\end{figure}
+\subsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{Header_8h_a392fb874e547e582e9c66a08a1f23326}\label{Header_8h_a392fb874e547e582e9c66a08a1f23326}} 
+\#define {\bfseries M\+AX}~512
+\end{DoxyCompactItemize}
+\subsection*{Fonctions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{Header_8h_ab3ff0edee79903c931ae1cc1be78e1c6}{Descripteur\+\_\+texte\+\_\+fichier} (char $\ast$nom\+\_\+fichier, P\+I\+L\+E\+\_\+descripteur\+\_\+texte $\ast$pile\+\_\+desc)
+\begin{DoxyCompactList}\small\item\em Permet d\textquotesingle{}obtenir un descripteur texte à partir du chemin d\textquotesingle{}un fichier xml. \end{DoxyCompactList}\item 
+int \hyperlink{Header_8h_a47f1db2fb139f2d254299930debddd1d}{Descripteur\+\_\+texte\+\_\+dossier} (char $\ast$nom\+\_\+dossier, P\+I\+L\+E\+\_\+descripteur\+\_\+texte $\ast$pile\+\_\+desc)
+\begin{DoxyCompactList}\small\item\em Permet d\textquotesingle{}obtenir tous les descripteurs texte présents dans un dossier. \end{DoxyCompactList}\item 
+void \hyperlink{Header_8h_ae541103221499ab14d680ed40958a049}{xml\+\_\+cleaner} (F\+I\+LE $\ast$src, F\+I\+LE $\ast$dest)
+\begin{DoxyCompactList}\small\item\em Permet de passer d\textquotesingle{}un fichier source xml brut à un fichier dest \char`\"{}nettoyé\char`\"{} de ses balises. \end{DoxyCompactList}\item 
+void \hyperlink{Header_8h_a25a265268495488b4b060c9a6e394105}{xml\+\_\+filter} (F\+I\+LE $\ast$src, F\+I\+LE $\ast$dest)
+\begin{DoxyCompactList}\small\item\em Permet d\textquotesingle{}obtenir un fichier \char`\"{}nettoyé\char`\"{} de ses stopwords ainsi que de sa ponctuation (et des majuscules) \end{DoxyCompactList}\item 
+void \hyperlink{Header_8h_a425c9a0a21cf3d96fd4c12f4b0ebb37d}{lecture\+\_\+dossier} (F\+I\+LE $\ast$f, char $\ast$nom\+\_\+dossier)
+\begin{DoxyCompactList}\small\item\em Permet de récupérer les noms de chaque fichier (qui ne sont pas des dossiers) \end{DoxyCompactList}\item 
+void \hyperlink{Header_8h_a5a1f0bfe6b0d9368768dab1e9bfcda74}{path\+\_\+maker} (char $\ast$chemin, char $\ast$nom\+\_\+dossier, char $\ast$nom\+\_\+fichier)
+\begin{DoxyCompactList}\small\item\em Permet de mettre un chemin vers un fichier sous forme de chaine de caracteres. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Description détaillée}
+Header de toute la partie Texte. 
+
+\begin{DoxyAuthor}{Auteur}
+Baptiste P\+O\+M\+A\+R\+E\+L\+LE 
+\end{DoxyAuthor}
+\begin{DoxyVersion}{Version}
+0.\+1 
+\end{DoxyVersion}
+\begin{DoxyDate}{Date}
+2020-\/12-\/16
+\end{DoxyDate}
+\begin{DoxyCopyright}{Copyright}
+Copyright (c) 2020 
+\end{DoxyCopyright}
+
+
+\subsection{Documentation des fonctions}
+\mbox{\Hypertarget{Header_8h_a47f1db2fb139f2d254299930debddd1d}\label{Header_8h_a47f1db2fb139f2d254299930debddd1d}} 
+\index{Header.\+h@{Header.\+h}!Descripteur\+\_\+texte\+\_\+dossier@{Descripteur\+\_\+texte\+\_\+dossier}}
+\index{Descripteur\+\_\+texte\+\_\+dossier@{Descripteur\+\_\+texte\+\_\+dossier}!Header.\+h@{Header.\+h}}
+\subsubsection{\texorpdfstring{Descripteur\+\_\+texte\+\_\+dossier()}{Descripteur\_texte\_dossier()}}
+{\footnotesize\ttfamily int Descripteur\+\_\+texte\+\_\+dossier (\begin{DoxyParamCaption}\item[{char $\ast$}]{nom\+\_\+dossier,  }\item[{P\+I\+L\+E\+\_\+descripteur\+\_\+texte $\ast$}]{pile\+\_\+desc }\end{DoxyParamCaption})}
+
+
+
+Permet d\textquotesingle{}obtenir tous les descripteurs texte présents dans un dossier. 
+
+
+\begin{DoxyParams}[1]{Paramètres}
+\mbox{\tt in}  & {\em nom\+\_\+dossier} & Dossier a traiter \\
+\hline
+\mbox{\tt in,out}  & {\em pile\+\_\+desc} & pile de descripteurs dans laquelle on ajoute les descripteurs créés \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Renvoie}
+int 1 si ça a marché, 0 sinon 
+\end{DoxyReturn}
+\mbox{\Hypertarget{Header_8h_ab3ff0edee79903c931ae1cc1be78e1c6}\label{Header_8h_ab3ff0edee79903c931ae1cc1be78e1c6}} 
+\index{Header.\+h@{Header.\+h}!Descripteur\+\_\+texte\+\_\+fichier@{Descripteur\+\_\+texte\+\_\+fichier}}
+\index{Descripteur\+\_\+texte\+\_\+fichier@{Descripteur\+\_\+texte\+\_\+fichier}!Header.\+h@{Header.\+h}}
+\subsubsection{\texorpdfstring{Descripteur\+\_\+texte\+\_\+fichier()}{Descripteur\_texte\_fichier()}}
+{\footnotesize\ttfamily void Descripteur\+\_\+texte\+\_\+fichier (\begin{DoxyParamCaption}\item[{char $\ast$}]{nom\+\_\+fichier,  }\item[{P\+I\+L\+E\+\_\+descripteur\+\_\+texte $\ast$}]{pile\+\_\+desc }\end{DoxyParamCaption})}
+
+
+
+Permet d\textquotesingle{}obtenir un descripteur texte à partir du chemin d\textquotesingle{}un fichier xml. 
+
+
+\begin{DoxyParams}[1]{Paramètres}
+\mbox{\tt in}  & {\em nom\+\_\+fichier} & nom du fichier texte \\
+\hline
+\mbox{\tt in,out}  & {\em pile\+\_\+desc} & pile de descripteurs dans laquelle on ajoute le descripteur créé \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{Header_8h_a425c9a0a21cf3d96fd4c12f4b0ebb37d}\label{Header_8h_a425c9a0a21cf3d96fd4c12f4b0ebb37d}} 
+\index{Header.\+h@{Header.\+h}!lecture\+\_\+dossier@{lecture\+\_\+dossier}}
+\index{lecture\+\_\+dossier@{lecture\+\_\+dossier}!Header.\+h@{Header.\+h}}
+\subsubsection{\texorpdfstring{lecture\+\_\+dossier()}{lecture\_dossier()}}
+{\footnotesize\ttfamily void lecture\+\_\+dossier (\begin{DoxyParamCaption}\item[{F\+I\+LE $\ast$}]{f,  }\item[{char $\ast$}]{nom\+\_\+dossier }\end{DoxyParamCaption})}
+
+
+
+Permet de récupérer les noms de chaque fichier (qui ne sont pas des dossiers) 
+
+
+\begin{DoxyParams}[1]{Paramètres}
+\mbox{\tt in}  & {\em f} & le descripteur du fichier dans lequel on va enregistrer les noms de fichiers \\
+\hline
+\mbox{\tt in}  & {\em nom\+\_\+dossier} & le nom du dossier \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{Header_8h_a5a1f0bfe6b0d9368768dab1e9bfcda74}\label{Header_8h_a5a1f0bfe6b0d9368768dab1e9bfcda74}} 
+\index{Header.\+h@{Header.\+h}!path\+\_\+maker@{path\+\_\+maker}}
+\index{path\+\_\+maker@{path\+\_\+maker}!Header.\+h@{Header.\+h}}
+\subsubsection{\texorpdfstring{path\+\_\+maker()}{path\_maker()}}
+{\footnotesize\ttfamily void path\+\_\+maker (\begin{DoxyParamCaption}\item[{char $\ast$}]{chemin,  }\item[{char $\ast$}]{nom\+\_\+dossier,  }\item[{char $\ast$}]{nom\+\_\+fichier }\end{DoxyParamCaption})}
+
+
+
+Permet de mettre un chemin vers un fichier sous forme de chaine de caracteres. 
+
+
+\begin{DoxyParams}[1]{Paramètres}
+\mbox{\tt in,out}  & {\em chemin} & \\
+\hline
+\mbox{\tt in}  & {\em nom\+\_\+dossier} & \\
+\hline
+\mbox{\tt in}  & {\em nom\+\_\+fichier} & \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{Header_8h_ae541103221499ab14d680ed40958a049}\label{Header_8h_ae541103221499ab14d680ed40958a049}} 
+\index{Header.\+h@{Header.\+h}!xml\+\_\+cleaner@{xml\+\_\+cleaner}}
+\index{xml\+\_\+cleaner@{xml\+\_\+cleaner}!Header.\+h@{Header.\+h}}
+\subsubsection{\texorpdfstring{xml\+\_\+cleaner()}{xml\_cleaner()}}
+{\footnotesize\ttfamily void xml\+\_\+cleaner (\begin{DoxyParamCaption}\item[{F\+I\+LE $\ast$}]{src,  }\item[{F\+I\+LE $\ast$}]{dest }\end{DoxyParamCaption})}
+
+
+
+Permet de passer d\textquotesingle{}un fichier source xml brut à un fichier dest \char`\"{}nettoyé\char`\"{} de ses balises. 
+
+
+\begin{DoxyParams}[1]{Paramètres}
+\mbox{\tt in}  & {\em src} & fichier source a traiter \\
+\hline
+\mbox{\tt in}  & {\em dest} & fichier de sortie nettoyé \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{Header_8h_a25a265268495488b4b060c9a6e394105}\label{Header_8h_a25a265268495488b4b060c9a6e394105}} 
+\index{Header.\+h@{Header.\+h}!xml\+\_\+filter@{xml\+\_\+filter}}
+\index{xml\+\_\+filter@{xml\+\_\+filter}!Header.\+h@{Header.\+h}}
+\subsubsection{\texorpdfstring{xml\+\_\+filter()}{xml\_filter()}}
+{\footnotesize\ttfamily void xml\+\_\+filter (\begin{DoxyParamCaption}\item[{F\+I\+LE $\ast$}]{src,  }\item[{F\+I\+LE $\ast$}]{dest }\end{DoxyParamCaption})}
+
+
+
+Permet d\textquotesingle{}obtenir un fichier \char`\"{}nettoyé\char`\"{} de ses stopwords ainsi que de sa ponctuation (et des majuscules) 
+
+
+\begin{DoxyParams}[1]{Paramètres}
+\mbox{\tt in}  & {\em src} & \\
+\hline
+\mbox{\tt in}  & {\em dest} & \\
+\hline
+\end{DoxyParams}

@@ -1,0 +1,73 @@
+\hypertarget{xml__tokenizer_8c}{}\section{Référence du fichier xml\+\_\+tokenizer.\+c}
+\label{xml__tokenizer_8c}\index{xml\+\_\+tokenizer.\+c@{xml\+\_\+tokenizer.\+c}}
+
+
+Fonctions de nettoyage de fichiers .clean.  
+
+
+{\ttfamily \#include \char`\"{}Header.\+h\char`\"{}}\newline
+Graphe des dépendances par inclusion de xml\+\_\+tokenizer.\+c\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{xml__tokenizer_8c__incl}
+\end{center}
+\end{figure}
+\subsection*{Fonctions}
+\begin{DoxyCompactItemize}
+\item 
+P\+I\+LE \hyperlink{xml__tokenizer_8c_a04d0c831682d653fc5f8e54461d0129d}{pile\+\_\+stopwords} ()
+\begin{DoxyCompactList}\small\item\em Permet de créer une pile contenant tous les stopwords. \end{DoxyCompactList}\item 
+void \hyperlink{xml__tokenizer_8c_a25a265268495488b4b060c9a6e394105}{xml\+\_\+filter} (F\+I\+LE $\ast$src, F\+I\+LE $\ast$dest)
+\begin{DoxyCompactList}\small\item\em Permet d\textquotesingle{}obtenir un fichier \char`\"{}nettoyé\char`\"{} de ses stopwords ainsi que de sa ponctuation (et des majuscules) \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Description détaillée}
+Fonctions de nettoyage de fichiers .clean. 
+
+\begin{DoxyAuthor}{Auteur}
+Baptiste P\+O\+M\+A\+R\+E\+L\+LE 
+\end{DoxyAuthor}
+\begin{DoxyVersion}{Version}
+0.\+1 
+\end{DoxyVersion}
+\begin{DoxyDate}{Date}
+2020-\/12-\/16
+\end{DoxyDate}
+\begin{DoxyCopyright}{Copyright}
+Copyright (c) 2020 
+\end{DoxyCopyright}
+
+
+\subsection{Documentation des fonctions}
+\mbox{\Hypertarget{xml__tokenizer_8c_a04d0c831682d653fc5f8e54461d0129d}\label{xml__tokenizer_8c_a04d0c831682d653fc5f8e54461d0129d}} 
+\index{xml\+\_\+tokenizer.\+c@{xml\+\_\+tokenizer.\+c}!pile\+\_\+stopwords@{pile\+\_\+stopwords}}
+\index{pile\+\_\+stopwords@{pile\+\_\+stopwords}!xml\+\_\+tokenizer.\+c@{xml\+\_\+tokenizer.\+c}}
+\subsubsection{\texorpdfstring{pile\+\_\+stopwords()}{pile\_stopwords()}}
+{\footnotesize\ttfamily P\+I\+LE pile\+\_\+stopwords (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Permet de créer une pile contenant tous les stopwords. 
+
+\begin{DoxyReturn}{Renvoie}
+P\+I\+LE pile de stopwords 
+\end{DoxyReturn}
+\mbox{\Hypertarget{xml__tokenizer_8c_a25a265268495488b4b060c9a6e394105}\label{xml__tokenizer_8c_a25a265268495488b4b060c9a6e394105}} 
+\index{xml\+\_\+tokenizer.\+c@{xml\+\_\+tokenizer.\+c}!xml\+\_\+filter@{xml\+\_\+filter}}
+\index{xml\+\_\+filter@{xml\+\_\+filter}!xml\+\_\+tokenizer.\+c@{xml\+\_\+tokenizer.\+c}}
+\subsubsection{\texorpdfstring{xml\+\_\+filter()}{xml\_filter()}}
+{\footnotesize\ttfamily void xml\+\_\+filter (\begin{DoxyParamCaption}\item[{F\+I\+LE $\ast$}]{src,  }\item[{F\+I\+LE $\ast$}]{dest }\end{DoxyParamCaption})}
+
+
+
+Permet d\textquotesingle{}obtenir un fichier \char`\"{}nettoyé\char`\"{} de ses stopwords ainsi que de sa ponctuation (et des majuscules) 
+
+
+\begin{DoxyParams}[1]{Paramètres}
+\mbox{\tt in}  & {\em src} & \\
+\hline
+\mbox{\tt in}  & {\em dest} & \\
+\hline
+\end{DoxyParams}

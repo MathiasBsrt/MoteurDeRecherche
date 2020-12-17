@@ -1,3 +1,14 @@
+/**
+ * @file mot.h
+ * @author Baptiste POMARELLE
+ * @brief Les fonctions relatives aux elements de type mot
+ * @version 0.1
+ * @date 2020-12-16
+ * 
+ * @copyright Copyright (c) 2020
+ * 
+ */
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -10,11 +21,13 @@
 typedef struct f_mots
 {
     char mot[MAX_WORD];
+    int nbr_occurrence;
+
 }MOT;
 
 /**
  * @brief Fonction permettant d'afficher un element
- * @param MOT e
+ * @param[in] MOT e
  * */
 void affiche_MOT(MOT e);
 
@@ -29,16 +42,16 @@ void saisir_MOT(MOT *e);
 /**
  * @brief Fonction permettant de comparer deux mots
  * 
- * @param MOT a 
- * @param MOT b 
- * @return The test result
+ * @param[in] MOT a 
+ * @param[in] MOT b 
+ * @return Le resultat du test
  */
 int compare_MOT(MOT a,MOT b);
 
 /**
  * @brief permet d'affecter une valeur a un mot
  * 
- * @param word 
+ * @param[in] word 
  * @return un mot 
  */
 MOT affecter_MOT(char* word);
