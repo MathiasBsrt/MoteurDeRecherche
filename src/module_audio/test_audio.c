@@ -1,27 +1,25 @@
 #include <assert.h>
 #include <stdio.h>
+#include <math.h>
 #include "descripteur.h"
 #include "histogramme.h"
-#include "files_handler.h"
+#include "base_descripteur.h"
 
 int main(int argc, char * argv[])
 {
-	if(argc != 4)
-	{
-		fprintf(stderr, "Pour que les tests puissent fonctionner, des arguments sont attendus.\n");
-		fprintf(stderr, "Usage: %s <fichier.txt> <k> <m>\n", argv[0]);
-		return 1;
-	}
 	printf("--- DEBUT DES TESTS AUDIO --- \n");
 	printf("  --- DESCRIPTEUR --- \n");
+	int n = 2;
+	int k = pow(2, n);
+	int m = 15;
+	printf("    --- Paramètres généraux proposés: --- \n");
+	printf("      n = %d \n", n);
+	printf("      k = 2^%d = %d \n", n, k);
+	printf("      m = %d \n", m);
 	printf("    --- Initialisation du descripteur --- \n");
 	// Initialisation du descripteur
-	int k, m;
 
-	sscanf(argv[2],"%d",&k);
-	sscanf(argv[3],"%d",&m);
-
-	DESC_AUDIO desc = init_DESC_AUDIO(k, m);
+	DESC_AUDIO desc = init_vide_DESC_AUDIO(n, m);
 	assert(desc.histo.k == k);
 	assert(desc.histo.m == m);
 	printf("      Descripteur: id=%d, k=%d, m=%d\n", desc.id, desc.histo.k, desc.histo.m);
@@ -38,10 +36,104 @@ int main(int argc, char * argv[])
 		for(x = 0; x < m; x++)
 			assert(get_DESC_AUDIO(desc, y, x) == (y * desc.histo.m + x));
 
+	
 	printf("    --- CREER HISTOGRAMME TXT DESC AUDIO --- \n");
 
-	HISTOGRAMME_AUDIO histo = creer_histogramme_TXT_DESC_AUDIO(argv[1], k, m);
-	affiche_HISTOGRAMME_AUDIO(histo);
+	HISTOGRAMME_AUDIO histoTXT;
+	int codeTXT = generer_HISTOGRAMME_AUDIO(&histoTXT, "./TEST_SON/corpus_fi.txt", n, m);
+	assert(codeTXT == HISTOGRAMME_CREER_SUCCES);
+	if(codeTXT != HISTOGRAMME_CREER_SUCCES) exit(codeTXT);
+	//affiche_HISTOGRAMME_AUDIO(histoTXT);
+	
+
+	printf("    --- CREER HISTOGRAMME BIN DESC AUDIO --- \n");
+
+	HISTOGRAMME_AUDIO histoBIN;
+	int codeBIN = generer_HISTOGRAMME_AUDIO(&histoBIN, "./TEST_SON/corpus_fi.bin", n, m);
+	assert(codeBIN == HISTOGRAMME_CREER_SUCCES);
+	if(codeBIN != HISTOGRAMME_CREER_SUCCES) exit(codeBIN);
+	//affiche_HISTOGRAMME_AUDIO(histoBIN);
+
+	printf("    --- CREER HISTOGRAMME WAV DESC AUDIO --- \n");
+
+	HISTOGRAMME_AUDIO histoWAV;
+	int codeWAV = generer_HISTOGRAMME_AUDIO(&histoWAV, "./TEST_SON/corpus_fi.wav", n, m);
+	assert(codeWAV == HISTOGRAMME_CREER_SUCCES);
+	if(codeWAV != HISTOGRAMME_CREER_SUCCES) exit(codeWAV);
+	//affiche_HISTOGRAMME_AUDIO(histoWAV);
+
+	printf("    --- VERIFICATION D'EGALITE --- \n");
+	int compareTXTBIN = compare_HISTOGRAMME_AUDIO(histoTXT, histoBIN);
+	int compareTXTWAV = compare_HISTOGRAMME_AUDIO(histoTXT, histoWAV);
+	int compareBINWAV = compare_HISTOGRAMME_AUDIO(histoBIN, histoWAV);
+	printf("      --- HISTO TXT == HISTO BIN --- \n");
+	printf("        %s\n", (compareTXTBIN == 0 ? "Vrai" : "Faux"));
+	assert(compareTXTBIN == 0);
+	printf("      --- HISTO TXT == HISTO WAV --- \n");
+	printf("        %s\n", (compareTXTWAV == 0 ? "Vrai" : "Faux"));
+	assert(compareTXTWAV == 0);
+	printf("      --- HISTO BIN == HISTO WAV --- \n");
+	printf("        %s\n", (compareBINWAV == 0 ? "Vrai" : "Faux"));
+	assert(compareBINWAV == 0);
+
+
+	printf("  --- CONTROLEUR BASE DESCRIPTEUR --- \n");
+	printf("    --- Initialisation du controleur --- \n");
+	PILE pileDescripteur = init_PILE();
+	init_FICHIER_BASE_DESC(pileDescripteur);
+
+	printf("    --- Création du descripteur audio de TEST_SON/corpus_fi.wav --- \n");
+	DESC_AUDIO descCorpusWAV = init_DESC_AUDIO(0, n, m, "TEST_SON/corpus_fi.wav");
+	
+	printf("    --- Sauvegarde du descripteur --- \n");
+	pileDescripteur = sauvegarder_DESC_AUDIO(pileDescripteur, descCorpusWAV);
+
+	printf("    --- Sauvegarde de la pile de descripteurs --- \n");
+	sauvegarder_PILE_DESC_AUDIO(pileDescripteur);
+
+	printf("    --- Création du descripteur audio de TEST_SON/jingle_fi.wav --- \n");
+	DESC_AUDIO descJingleWAV = init_DESC_AUDIO(1, n + 2, m, "TEST_SON/jingle_fi.wav");
+	
+	printf("    --- Sauvegarde du descripteur --- \n");
+	pileDescripteur = sauvegarder_DESC_AUDIO(pileDescripteur, descJingleWAV);
+
+	printf("    --- Sauvegarde de la pile de descripteurs --- \n");
+	sauvegarder_PILE_DESC_AUDIO(pileDescripteur);
+
+	printf("    --- Chargement des descripteurs enregistrés --- \n");
+	PILE secondePile = charger_PILE_DESC_AUDIO();
+
+	printf("       --- Pile est vide ? --- \n");
+	printf("          %s \n", (PILE_estVide(secondePile) ? "Oui" : "Non"));
+	assert(PILE_estVide(secondePile) == 0);
+
+	printf("       --- Depile premier descripteur --- \n");
+	DESC_AUDIO descDepile1;
+	secondePile = dePILE(secondePile, &descDepile1);
+
+	printf("         --- Descripteur depile1 == celui empile ? --- \n");
+	int compareDepile1Empile = compare_DESC_AUDIO(descDepile1, descCorpusWAV);
+	printf("           %s\n", (compareDepile1Empile == 0 ? "Vrai" : "Faux"));
+	assert(compareDepile1Empile == 0);
+
+	printf("       --- Pile est vide ? --- \n");
+	printf("          %s \n", (PILE_estVide(secondePile) ? "Oui" : "Non"));
+	assert(PILE_estVide(secondePile) == 0);
+
+	printf("       --- Depile second descripteur --- \n");
+	DESC_AUDIO descDepile2;
+	secondePile = dePILE(secondePile, &descDepile2);
+
+	printf("         --- Descripteur depile2 == celui empile ? --- \n");
+	int compareDepile2Empile = compare_DESC_AUDIO(descDepile2, descJingleWAV);
+	printf("           %s\n", (compareDepile2Empile == 0 ? "Vrai" : "Faux"));
+	assert(compareDepile2Empile == 0);
+
+	printf("       --- Pile est vide ? --- \n");
+	printf("          %s \n", (PILE_estVide(secondePile) ? "Oui" : "Non"));
+	assert(PILE_estVide(secondePile) == 1);
+
+
 
 	printf("--- FIN DES TEST AUDIO --- \n");
 }

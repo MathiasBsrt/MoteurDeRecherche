@@ -1,14 +1,17 @@
-test_audio : histogramme.c histogramme.h files_handler.c files_handler.h descripteur.c descripteur.h test_audio.c
+test_audio : histogramme.c histogramme.h descripteur.c descripteur.h pile_dynamique.h pile_dynamique.c base_descripteur.h base_descripteur.c test_audio.c
 	gcc -c histogramme.c
-	gcc -c files_handler.c
 	gcc -c descripteur.c
+	gcc -c base_descripteur.c
+	gcc -c pile_dynamique.c
 	gcc -c test_audio.c
-	gcc -o test_audio.out histogramme.o files_handler.o descripteur.o test_audio.o -lm
-	./test_audio.out ./TEST_SON/corpus_fi.txt 10 15
+	gcc -o test_audio.out histogramme.o descripteur.o pile_dynamique.o base_descripteur.o test_audio.o -lm
+	./test_audio.out
 
-creer_histo_txt : histogramme.c histogramme.h files_handler.c files_handler.h main_histo_text.c
+main_histo : histogramme.c histogramme.h main_histo.c
 	gcc -c histogramme.c
-	gcc -c files_handler.c
-	gcc -c main_histo_text.c
-	gcc -o main_histo_text.out histogramme.o files_handler.o main_histo_text.o -lm
+	gcc -c main_histo.c
+	gcc -o main_histo.out histogramme.o main_histo.o -lm
+
+clean:
+	rm -f *.o *.out
 	
