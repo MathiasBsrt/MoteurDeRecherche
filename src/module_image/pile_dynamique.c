@@ -1,31 +1,58 @@
 #include "pile_dynamique.h"
 
-PILE init_PILE(){
-  return NULL;
+/**
+ * @file pile_dynamique.c
+ * @author Baptiste POMARELLE
+ * @brief Les fonctions relatives a la pile de Descripteurs (et de leurs occurences) et a la pile de descripteurs
+ * @version 0.1
+ * @date 2020-12-16
+ * 
+ * @copyright Copyright (c) 2020
+ * 
+ */
+
+PILE init_pile()
+{
+    PILE p;
+    p = NULL;
+    return p;
 }
-void affiche_PILE(PILE pile){
-   CELLULE *cell=pile;
-  while(cell!=NULL){
-    affiche_Descripteur(cell->elem);
-    cell=cell->suivant;
- }
+
+int PILE_estVide(PILE p)
+{
+    return (p == NULL);
 }
-int PILE_estVide(PILE pile){
-  return pile==NULL;
+
+void affiche_PILE(PILE p)
+{
+    if (PILE_estVide(p))
+        fprintf(stderr, "La pile est vide\n");
+
+    else
+    {
+        Cellule *parcours = p;
+        printf("\n\n\t AFFICHAGE DES DescripteurS ET LEURS OCCURENCES\n");
+        do
+        {
+            affiche_Descripteur(parcours->elt);
+            parcours = parcours->suivant;
+        } while (parcours != NULL);
+        printf("\n");
+    }
 }
 
 PILE emPILE(PILE p, Descripteur elt)
 {
-    CELLULE *cel = malloc(sizeof(CELLULE));
+    Cellule *cel = malloc(sizeof(Cellule));
     cel->suivant = NULL;
-    cel->elem = elt;
+    cel->elt = elt;
     if (PILE_estVide(p))
     {
         p = cel;
     }
     else
     {
-        CELLULE *parcours = p;
+        Cellule *parcours = p;
         while (parcours->suivant != NULL)
             parcours = parcours->suivant;
         parcours->suivant = cel;
@@ -41,91 +68,53 @@ PILE dePILE(PILE p, Descripteur *elt)
     {
         if (p->suivant == NULL)
         {
-            *elt=p->elem;
-            p=NULL;
+            *elt = p->elt;
+            p = NULL;
         }
         else
         {
-            CELLULE *parcour = p;
-            CELLULE *marqueur;
+            Cellule *parcour = p;
+            Cellule *marqueur;
             while (parcour->suivant != NULL)
                 parcour = parcour->suivant;
-            *elt = parcour->elem;
-            marqueur=parcour;
-            parcour=p;
-            while(parcour->suivant!=marqueur)
+            *elt = parcour->elt;
+            marqueur = parcour;
+            parcour = p;
+            while (parcour->suivant != marqueur)
                 parcour = parcour->suivant;
-            parcour->suivant=NULL;
+            parcour->suivant = NULL;
             free(marqueur);
         }
     }
-    
+
     return p;
 }
 
 
-/*
-PILE emPILE(PILE pile,Descripteur elem){
-  CELLULE *cell=malloc(sizeof(CELLULE));
-  cell->elem=elem;
-  cell->suivant=NULL;
-  if(PILE_estVide(pile)){
-      pile=cell;
-    }
-    else{
-    CELLULE* curseur=pile;
-    while(curseur->suivant!=NULL){
-      curseur=curseur->suivant;
-    }
-    curseur->suivant=cell;
-  }
-  return pile;
-}
-PILE dePILE(PILE p, Descripteur *elt)
-{
-    if (PILE_estVide(p))
-        fprintf(stderr, "La pile est deja vide");
-    else
+int charger_PILE_Desc(PILE *p, char *save_descripteurs_textes)
+{   
+    int id = 0;
+    FILE *f = fopen("base_descripteur_image", "r");
+    if (f)
     {
-        if (p->suivant == NULL)
+        Descripteur tmp;
+        int val;
+        while (fscanf(f,"%d",&val) != EOF)
         {
-            *elt=p->elem;
-            p=NULL;
+            tmp.id = val;
+            for (int i = 0; i < tailleHistogramme; i++)
+            {
+                fscanf(f,"%d",&val);
+                tmp.histogramme[i] = val;
+            }
+            
+            emPILE(*p, tmp);
+            id = tmp.id;
+
         }
-        else
-        {
-            CELLULE *parcour = p;
-            CELLULE *marqueur;
-            while (parcour->suivant != NULL)
-                parcour = parcour->suivant;
-            *elt = parcour->elem;
-            marqueur=parcour;
-            parcour=p;
-            while(parcour->suivant!=marqueur)
-                parcour = parcour->suivant;
-            parcour->suivant=NULL;
-            free(marqueur);
-        }
+        fclose(f);
     }
 
-    return p;
-}*/
-// PILE saisir_PILE(){
-//   int nb_valeur;
-//   ELEMENT valeur;
-//   PILE pile;
-//   pile=init_PILE();
-//   printf("Entrez jusqu'à %d valeurs une à une\n",MAX);
-//   printf("Combien voulez vous entrer de valeurs dans la pile ?\n");
-//   scanf("%d",&nb_valeur);
-//   while(nb_valeur>MAX || nb_valeur<1){
-//     printf("Valeur impossible");
-//     printf("Combien voulez vous entrer de valeurs dans la pile ?\n");
-//     scanf("%d",&nb_valeur);
-//   }
-//   for(int i=0;i<nb_valeur;i++){
-//     valeur=saisir_ELEMENT();
-//     pile=emPILE(pile,valeur);
-//   }
-//   return pile;
-// }
+    return id;
+}
+

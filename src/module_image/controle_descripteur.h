@@ -39,7 +39,7 @@ void creationDescripteur(char *chemin);
  * Cette fonction permet de sauvegarder un descripteur donné en paramètre dans le fichier base_descripteur_image
  * et de lier ce descripteur avec le fichier dans le fichier liste_base_image
  */
- PILE SauvegardeDescripteur(Descripteur nouveau, PILE p, char *nom);
+ PILE SauvegardeDescripteur(Descripteur nouveau, PILE p, char *nom, int dernierId);
 
 /***
  * Cette fonction permet de charger la pile stockée dans
@@ -48,7 +48,7 @@ void creationDescripteur(char *chemin);
  *
  * Retourne une pile
  */
-PILE chargerPile();
+//PILE chargerPile();
 
 /***
  * Cette fonction permet de sauvegarder la pile passée en paramètre
