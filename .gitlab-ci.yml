@@ -10,7 +10,7 @@ test-indexation:
   script:
     #- make projet-pfr
     # - gcc testsCI/indexation.c -o testsCI/tests.out
-    - cd testsCi
+    - cd testsCI
     - make indexation
     - ./indexation.out
     - rm -f *.o *.out
