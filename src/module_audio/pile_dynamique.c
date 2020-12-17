@@ -7,7 +7,7 @@ PILE init_PILE(){
 void affiche_PILE(PILE pile){
    CELLULE *cell=pile;
   while(cell!=NULL){
-    afficher_DESC_AUDIO(cell->elem);
+    affiche_DESC_AUDIO(cell->elem);
     cell=cell->suivant;
  }
 }
