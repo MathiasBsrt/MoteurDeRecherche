@@ -26,6 +26,7 @@ HISTOGRAMME_AUDIO init_HISTOGRAMME_AUDIO(int n, int m)
 void affiche_HISTOGRAMME_AUDIO(HISTOGRAMME_AUDIO histo)
 {
 	int y, x;
+	printf("k = %d, m = %d\n", histo.k, histo.m);
 	printf("y \\ x\n");
 	for(y = 0; y < histo.k; y++)
 	{
@@ -39,10 +40,10 @@ void affiche_HISTOGRAMME_AUDIO(HISTOGRAMME_AUDIO histo)
 			printf("\n");
 		}
 		else*/
-		for(x = -1; x < histo.m; x++)
+		for(x = 0; x < histo.m; x++)
 		{
-			if(x == -1) printf("%d | \t", y);
-			else printf("%d\t", get_HISTOGRAMME_AUDIO(histo, y, x));
+			if(x == 0) printf("%d | \t", y);
+			printf("%d\t", get_HISTOGRAMME_AUDIO(histo, y, x));
 		}
 		printf("\n");
 	}
@@ -162,7 +163,7 @@ int creer_histogramme_TXT_DESC_AUDIO(HISTOGRAMME_AUDIO * histo, char * chemin, i
 		}
 	}
 	audioTXT = fopen(chemin, "r");
-	printf("Data size: %d\n", lines);
+	//printf("Data size: %d\n", lines);
 
 	// Lecture des valeurs
 	double y_ratio = lines / (double) histo->k;
@@ -223,7 +224,7 @@ int creer_histogramme_BIN_DESC_AUDIO(HISTOGRAMME_AUDIO * histo, char * chemin, i
 	long nbDoubleWord;
 	for(nbDoubleWord = 0; getc(audioBIN) != EOF; nbDoubleWord++);
 	nbDoubleWord = nbDoubleWord / 8;
-	printf("Data size: %d\n", nbDoubleWord);
+	//printf("Data size: %d\n", nbDoubleWord);
 
 	// Retour au début du fichier pour sa lecture
 	rewind(audioBIN); 
@@ -292,7 +293,7 @@ int creer_histogramme_WAV_DESC_AUDIO(HISTOGRAMME_AUDIO * histo, char * chemin, i
 	int dataSize;
 	fread(&dataSize, 4, 1, audioWAV);
 	dataSize = (dataSize / 2);
-	printf("Data size: %d\n", dataSize);
+	//printf("Data size: %d\n", dataSize);
 
 	fseek(audioWAV, 44, SEEK_SET);
 
@@ -306,7 +307,7 @@ int creer_histogramme_WAV_DESC_AUDIO(HISTOGRAMME_AUDIO * histo, char * chemin, i
 
 	double val;
 	val = (((double) (0 - SHORT_INT_MIN_VALUE) / (-SHORT_INT_MIN_VALUE + SHORT_INT_MAX_VALUE)) * 2.0) - 1.0;
-	printf("%lf\n", val);
+	//printf("%lf\n", val);
 
 	for(i = 0; i < dataSize; i++)
 	{

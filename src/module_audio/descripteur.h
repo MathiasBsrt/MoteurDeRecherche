@@ -16,13 +16,27 @@ typedef struct Descripteur_Audio_t
 
 /* Initilalise un descripteur audio
 Params:
-	- int k, nombre de fenêtre d'analyse
+	- int id, id de l'histogramme
+	- int n, 2^n nombre de fenêtre d'analyse
 	- int m, nombre d'intervalles
+	- char * chemin, chemin vers le fichier à traiter.
 
 Returns:
 	- DESC_AUDIO, le descripteur audio initialisé
 */
-DESC_AUDIO init_DESC_AUDIO(int, int);
+DESC_AUDIO init_DESC_AUDIO(int, int, int, char *);
+
+/* Initilalise un descripteur audio vide
+Params:
+	- int id, id de l'histogramme
+	- int n, 2^n nombre de fenêtre d'analyse
+	- int m, nombre d'intervalles
+	- char * chemin, chemin vers le fichier à traiter.
+
+Returns:
+	- DESC_AUDIO, le descripteur audio initialisé
+*/
+DESC_AUDIO init_vide_DESC_AUDIO(int, int);
 
 /* Retourne le réels à l'index k,m
 Params:
@@ -33,7 +47,7 @@ Params:
 Returns:
 	- double, la valeur réel à l'index k,m
 */
-double get_DESC_AUDIO(DESC_AUDIO, int, int);
+int get_DESC_AUDIO(DESC_AUDIO, int, int);
 
 /* Affecte un réels à l'index k,m
 Params:
@@ -68,6 +82,6 @@ Returns:
 */
 int compare_DESC_AUDIO(DESC_AUDIO, DESC_AUDIO);
 
-
+int afficher_DESC_AUDIO(DESC_AUDIO);
 
 #endif

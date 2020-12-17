@@ -7,8 +7,8 @@
 
 typedef struct Histogramme_Audio_t
 {
-	int k; /* k, nombre de fenêtre d'analyse */
-	int m; /* m, nombre d'intervalles */
+	unsigned int k; /* k, nombre de fenêtre d'analyse */
+	unsigned int m; /* m, nombre d'intervalles */
 	int * mat; /* Histogramme, soit une matrice k x m,
 						de points (double)
 						Indices: [K, M]
@@ -65,7 +65,7 @@ void inc_HISTOGRAMME_AUDIO(HISTOGRAMME_AUDIO *, int, int);
 *
 *	@param HISTOGRAMME_AUDIO histo1, premier histogramme à comparer
 *	@param HISTOGRAMME_AUDIO histo2, second histogramme à comparer
-*	@return int, 0 si égaux, >!= 0 si différents
+*	@return int, 0 si égaux, != 0 si différents
 */
 int compare_HISTOGRAMME_AUDIO(HISTOGRAMME_AUDIO, HISTOGRAMME_AUDIO);
 
@@ -81,10 +81,10 @@ int compare_HISTOGRAMME_AUDIO(HISTOGRAMME_AUDIO, HISTOGRAMME_AUDIO);
 */
 int generer_HISTOGRAMME_AUDIO(HISTOGRAMME_AUDIO *, char *, int, int);
 
-int creer_histogramme_TXT_DESC_AUDIO(HISTOGRAMME_AUDIO * histo, char * chemin, int k, int m);
+int creer_histogramme_TXT_DESC_AUDIO(HISTOGRAMME_AUDIO * histo, char * chemin, int n, int m);
 
-int creer_histogramme_BIN_DESC_AUDIO(HISTOGRAMME_AUDIO * histo, char * chemin, int k, int m);
+int creer_histogramme_BIN_DESC_AUDIO(HISTOGRAMME_AUDIO * histo, char * chemin, int n, int m);
 
-int creer_histogramme_WAV_DESC_AUDIO(HISTOGRAMME_AUDIO * histo, char * chemin, int k, int m);
+int creer_histogramme_WAV_DESC_AUDIO(HISTOGRAMME_AUDIO * histo, char * chemin, int n, int m);
 
 #endif
