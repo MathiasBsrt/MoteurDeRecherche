@@ -132,7 +132,7 @@ void EMPILE_desc_from_pile(PILE p, PILE_descripteur_texte *d);
  * @param d 
  * @param descripteur 
  */
-void EMPILE_desc(PILE_descripteur_texte *d,Descripteur_texte *descripteur);
+void EMPILE_desc(PILE_descripteur_texte *d, Descripteur_texte descripteur);
 
 /**
  * @brief Permet de depiler un le dernier descripteur dans la pile de descripteurs

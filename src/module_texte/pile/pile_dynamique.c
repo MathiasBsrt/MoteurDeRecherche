@@ -89,7 +89,6 @@ PILE dePILE(PILE p, MOT *elt)
     return p;
 }
 
-
 int estDanslaPile(PILE p, char *buffer)
 {
     if (!PILE_estVide(p))
@@ -148,12 +147,10 @@ void EMPILE_desc_from_pile(PILE p, PILE_descripteur_texte *d)
     Descripteur_texte *descripteur = malloc(sizeof(Descripteur_texte));
     descripteur->suivant = NULL;
     descripteur->pile_mot = p;
-
+    descripteur->nombre_mots_total = total_mot(p, &mots_retenus); //on remplit le descripteur avec toutes les informations connues
+    descripteur->nbr_mots_retenus = mots_retenus;
     if (PILE_desc_estVide(*d))
     {
-
-        descripteur->nombre_mots_total = total_mot(p, &mots_retenus);
-        descripteur->nbr_mots_retenus = mots_retenus;
         descripteur->id = 1;
         *d = descripteur;
     }
@@ -166,19 +163,28 @@ void EMPILE_desc_from_pile(PILE p, PILE_descripteur_texte *d)
             id++;
             parcours = parcours->suivant;
         }
-        descripteur->nbr_mots_retenus = total_mot(p, &mots_retenus);
-        descripteur->nbr_mots_retenus = mots_retenus;
+        
         descripteur->id = id;
         parcours->suivant = descripteur;
     }
 }
 
-void EMPILE_desc(PILE_descripteur_texte *d,Descripteur_texte *descripteur)
+void copie_descripteur(Descripteur_texte *a, Descripteur_texte b)
 {
+    a->id = b.id;
+    a->nbr_mots_retenus = b.nbr_mots_retenus;
+    a->nombre_mots_total = b.nombre_mots_total;
+    a->pile_mot = b.pile_mot;
+    a->suivant = NULL;
+}
 
+void EMPILE_desc(PILE_descripteur_texte *d, Descripteur_texte descripteur)
+{
+    Descripteur_texte *ajout = malloc(sizeof(Descripteur_texte));
+    copie_descripteur(ajout, descripteur);
     if (PILE_desc_estVide(*d))
     {
-        *d = descripteur;
+        *d = ajout;
     }
     else
     {
@@ -187,7 +193,7 @@ void EMPILE_desc(PILE_descripteur_texte *d,Descripteur_texte *descripteur)
         {
             parcours = parcours->suivant;
         }
-        parcours->suivant = descripteur;
+        parcours->suivant = ajout;
     }
 }
 
@@ -217,7 +223,6 @@ void DEPILE_desc(PILE_descripteur_texte *p)
     }
 }
 
-
 void enregistre_PILE_Desc(PILE_descripteur_texte p, char *save_descripteurs_textes)
 {
     if (PILE_desc_estVide(p))
@@ -231,10 +236,10 @@ void enregistre_PILE_Desc(PILE_descripteur_texte p, char *save_descripteurs_text
         if (f)
         {
             Descripteur_texte *parcours = p;
-            while(parcours)
+            while (parcours)
             {
-                fwrite(parcours,sizeof(Descripteur_texte),1,f);
-                parcours=parcours->suivant;
+                fwrite(parcours, sizeof(Descripteur_texte), 1, f);
+                parcours = parcours->suivant;
             }
             fclose(f);
         }
@@ -244,12 +249,13 @@ void enregistre_PILE_Desc(PILE_descripteur_texte p, char *save_descripteurs_text
 void charger_PILE_Desc(PILE_descripteur_texte *p, char *save_descripteurs_textes)
 {
     FILE *f = fopen(save_descripteurs_textes, "r");
-    if(f)
+    if (f)
     {
         Descripteur_texte tmp;
-        while(fread(&tmp,sizeof(Descripteur_texte),1,f))
+        while (fread(&tmp, sizeof(Descripteur_texte), 1, f))
         {
-            EMPILE_desc(p,&tmp);
+            EMPILE_desc(p, tmp);
         }
+        fclose(f);
     }
 }
