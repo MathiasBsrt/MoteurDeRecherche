@@ -13,14 +13,12 @@ typedef struct Descripteur_Audio_t
 } DESC_AUDIO;
 
 /* Initilalise un descripteur audio
-Params:
-	- int id id de l'histogramme
-	- int n 2^n nombre de fenêtre d'analyse
-	- int m nombre d'intervalles
-	- char * chemin chemin vers le fichier à traiter.
-
-Returns:
-	- DESC_AUDIO, le descripteur audio initialisé
+* @param id id du descripteur
+* @param n n^2 nombre de fenêtre d'analyse
+* @param m nombre d'intervalles
+* @param char * chemin chemin vers le fichier à traiter
+*
+* @return DESC_AUDIO desc le descripteur audio initialisé
 */
 DESC_AUDIO init_DESC_AUDIO(int, int, int, char *);
 

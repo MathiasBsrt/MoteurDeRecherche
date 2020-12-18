@@ -216,7 +216,7 @@ int creer_histogramme_BIN_DESC_AUDIO(HISTOGRAMME_AUDIO * histo, char * chemin, i
 	// Si le programme n'arrive pas à lire le fichier demandé.
 	if(audioBIN == NULL)
 	{
-		fprintf(stderr, "[CREER_HISTO_BIN] Impossible de lire le fichier %s.", chemin);
+		fprintf(stderr, "[CREER_HISTO_BIN] Impossible de lire le fichier %s.\n", chemin);
 		exit(1);
 	}
 
