@@ -3,6 +3,7 @@
 #include "histogramme.h"
 #include "descripteur.h"
 
+
 DESC_AUDIO init_DESC_AUDIO(int id, int n, int m, char * chemin)
 {
 	DESC_AUDIO desc;

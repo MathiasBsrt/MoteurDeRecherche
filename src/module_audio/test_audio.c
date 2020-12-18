@@ -80,6 +80,7 @@ int main(int argc, char * argv[])
 
     printf("    --- Création du descripteur audio de TEST_SON/corpus_fi.wav --- \n");
     DESC_AUDIO descCorpusWAV = init_DESC_AUDIO(0, n, m, "TEST_SON/corpus_fi.wav");
+    lier_DESC_AUDIO_FICHIER(descCorpusWAV, "TEST_SON/corpus_fi.wav");
     
     printf("    --- Sauvegarde du descripteur --- \n");
     pileDescripteur = sauvegarder_DESC_AUDIO(pileDescripteur, descCorpusWAV);
@@ -89,6 +90,7 @@ int main(int argc, char * argv[])
 
     printf("    --- Création du descripteur audio de TEST_SON/jingle_fi.wav --- \n");
     DESC_AUDIO descJingleWAV = init_DESC_AUDIO(1, n + 2, m, "TEST_SON/jingle_fi.wav");
+    lier_DESC_AUDIO_FICHIER(descJingleWAV, "TEST_SON/jingle_fi.wav");
     
     printf("    --- Sauvegarde du descripteur --- \n");
     pileDescripteur = sauvegarder_DESC_AUDIO(pileDescripteur, descJingleWAV);
@@ -129,7 +131,15 @@ int main(int argc, char * argv[])
     printf("          %s \n", (PILE_estVide(secondePile) ? "Oui" : "Non"));
     if(PILE_estVide(secondePile) != 1) return 1;
 
+    printf("    --- Création des descripteurs audio du dossier TEST_SON --- \n");
+    PILE pileDescDossier = init_MULTIPLE_DESC_AUDIO(0, 2, 15, "TEST_SON");
 
+    DESC_AUDIO depileDesc;
+    while(!PILE_estVide(pileDescDossier))
+    {
+    	pileDescDossier = dePILE(pileDescDossier, &depileDesc);
+    	//affiche_DESC_AUDIO(depileDesc);
+    }
 
     printf("--- FIN DES TEST AUDIO --- \n");
     return 0;
