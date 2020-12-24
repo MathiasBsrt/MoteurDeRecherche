@@ -6,6 +6,8 @@ Nous avons élaboré un moteur de recherche (image, son, audio).
 
 Veuillez lire le cahier des charges ainsi que le dossier de spécification se trouvant dans le dossier "documentation/"
 
+Ce projet utilise la méthode d'intégration continue. Vous pouvez visualiser la pipeline ici : https://gitlab.com/MathiasBsrt/pfr/-/pipelines
+
 ## Lancement
 
 A l'heure actuelle, les modules sont indépendants et pas fonctionnels à 100%.
