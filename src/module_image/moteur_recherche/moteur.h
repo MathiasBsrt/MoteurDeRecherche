@@ -2,7 +2,9 @@
  * Moteur de recherche
  * Ce fichier regroupe les fonctins permettant le comparaison et la recherche de documents
  */
-
+#include "../descripteur.h"
+#include <stdio.h>
+#include "../pile_dynamique.h"
 /***
  * Compare 2 descripteurs de même type
  * @param Descripteur d1
@@ -10,7 +12,7 @@
  * @param int seuilSimilarité 
  * @return 0 si égaux, 1 si similaires, 2 si trop différent
  */
-int comparaison(Descripteur d1, Descripteur d2, int seui);
+int comparaison(Descripteur d1, Descripteur d2, int seuil);
 
 /***
  * Recherche par critère

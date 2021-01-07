@@ -277,6 +277,15 @@ int creationHistogramme(int *matriceImageQuant[], Descripteur *newDesc, int lign
       newDesc->histogramme[matriceImageQuant[i][j]] += 1;
     }
   }
+
+  //Pour les tests, à supprimer
+  int nbP = 0;
+  for (int i = 0; i < tailleHistogramme; i++)
+  {
+    nbP += newDesc->histogramme[i];
+  }
+  printf("\n nb valeurs totales = %d \n",nbP);
+  //A supp
   return 0;
 }
 
@@ -375,13 +384,13 @@ void genererDescripteurDossier(char *cheminDossier)
 }
 
 
-/*int main(int argc, char *argv[])
+int main(int argc, char *argv[])
 {
   //genererDescripteurDossier("tests/TEST_RGB/txt/"); // Génération rgb
   //genererDescripteurDossier("tests/TEST_NB/txt/"); // Génératio nb
- 
-   creationDescripteur("tests/TEST_RGB/txt/01.txt"); // Génération rgb
-    creationDescripteur("tests/TEST_NB/txt/51.txt"); // Génératio nb
+   printf("Indexation RGB 01 et RGB 02");
+   creationDescripteur("tests/TEST_RGB/txt/05.txt"); // Génération rgb
+   creationDescripteur("tests/TEST_RGB/txt/06.txt"); // Génératio nb
 
   return 0;
-}*/
+}

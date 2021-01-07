@@ -1,6 +1,7 @@
 #define tailleHistogramme 64
 #define quantificateur 2
 #include <stdlib.h>
+#include <stdio.h> 
 
 typedef struct Descripteur_t{
     int id;
