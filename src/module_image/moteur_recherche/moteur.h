@@ -9,7 +9,7 @@
  * Compare 2 descripteurs de même type
  * @param Descripteur d1
  * @param Desripteur d2
- * @param int seuilSimilarité 
+ * @param double seuilSimilarité => pourcentage de similarité entre 2 mêmes cases de l'histogramme
  * @return 0 si égaux, 1 si similaires, 2 si trop différent
  */
 int comparaison(Descripteur d1, Descripteur d2, int seuil);
