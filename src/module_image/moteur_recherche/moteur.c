@@ -1,7 +1,6 @@
 #include "moteur.h"
 
 int comparaison(Descripteur d1, Descripteur d2, double seuil){
-    int totalValeurs = 40000; //défini par test pour RGB, vari en fonction de la taille de l'image ?
     //Méthode de comparaison : intersection des 2 histogrammes (cf cahier des charges) => comment faire l'intersection des 2 tableaux ? revient à une différence ?
     // voir ici : https://openclassrooms.com/forum/sujet/intersection-de-2-tableaux
     
@@ -50,7 +49,7 @@ int comparaison(Descripteur d1, Descripteur d2, double seuil){
  * @param File[] tableau à remplir
  * @param int seuilSimilarité 
  */
-void rechercheParCritere(char *couleurDominante, File *fichiersSimilaires, int seuilSimilarite){
+void rechercheParCritere(char *couleurDominante, FILE *fichiersSimilaires, int seuilSimilarite){
 
 }
 
@@ -61,7 +60,7 @@ void rechercheParCritere(char *couleurDominante, File *fichiersSimilaires, int s
  * @param File[] tableau à remplir
  * @param int seuilSimilarité 
  */
-void rechercheParDocument(char *cheminVersDocument, File *fichiersSimilaires, int seuilSimilarite){
+void rechercheParDocument(char *cheminVersDocument, FILE *fichiersSimilaires, int seuilSimilarite){
 
 }
 
@@ -71,16 +70,19 @@ void rechercheParDocument(char *cheminVersDocument, File *fichiersSimilaires, in
 int main(int argc, char const *argv[])
 {
     PILE p;
+    p = init_pile();
     charger_PILE_Desc(&p,"base_descripteur_image");
-    Descripteur *d;
+
+    affiche_PILE(p);
+    Descripteur *d = NULL;
     dePILE(p,d);
-    Descripteur *d2;
+    Descripteur *d2 = NULL;
     dePILE(p,d2);
 
     printf("\n on compare...\n");
-    int res = comparaison(d,d2,1000);
-
+    int res = comparaison(*d,*d2,1000);
+    printf("res=%d\n",res);
     //On envoie 2 descriteurs pour les comaprer et tester
-
+    
     return 0;
 }

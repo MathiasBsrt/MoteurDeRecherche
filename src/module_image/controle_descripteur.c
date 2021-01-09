@@ -278,14 +278,6 @@ int creationHistogramme(int *matriceImageQuant[], Descripteur *newDesc, int lign
     }
   }
 
-  //Pour les tests, à supprimer
-  int nbP = 0;
-  for (int i = 0; i < tailleHistogramme; i++)
-  {
-    nbP += newDesc->histogramme[i];
-  }
-  printf("\n nb valeurs totales = %d \n",nbP);
-  //A supp
   return 0;
 }
 

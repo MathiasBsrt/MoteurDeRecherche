@@ -101,6 +101,7 @@ int charger_PILE_Desc(PILE *p, char *save_descripteurs_textes)
         int val;
         while (fscanf(f,"%d",&val) != EOF)
         {
+                    //printf("salut");
             tmp.id = val;
             for (int i = 0; i < tailleHistogramme; i++)
             {
@@ -108,13 +109,16 @@ int charger_PILE_Desc(PILE *p, char *save_descripteurs_textes)
                 tmp.histogramme[i] = val;
             }
             
-            emPILE(*p, tmp);
+            *p = emPILE(*p, tmp);
             id = tmp.id;
 
         }
         fclose(f);
+    }else{
+        printf("\nbase_descripteur_image n'existe pas\n");
     }
 
+    //affiche_PILE(*p);
     return id;
 }
 

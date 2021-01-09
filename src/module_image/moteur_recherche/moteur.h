@@ -2,7 +2,6 @@
  * Moteur de recherche
  * Ce fichier regroupe les fonctins permettant le comparaison et la recherche de documents
  */
-#include "../descripteur.h"
 #include <stdio.h>
 #include "../pile_dynamique.h"
 /***
@@ -21,7 +20,7 @@ int comparaison(Descripteur d1, Descripteur d2, double seuil);
  * @param File[] tableau à remplir
  * @param int seuilSimilarité 
  */
-void rechercheParCritere(char *couleurDominante, File *fichiersSimilaires, int seuilSimilarite);
+void rechercheParCritere(char *couleurDominante, FILE *fichiersSimilaires, int seuilSimilarite);
 
 /***
  * Recherche par document
@@ -30,6 +29,6 @@ void rechercheParCritere(char *couleurDominante, File *fichiersSimilaires, int s
  * @param File[] tableau à remplir
  * @param int seuilSimilarité 
  */
-void rechercheParDocument(char *cheminVersDocument, File *fichiersSimilaires, int seuilSimilarite);
+void rechercheParDocument(char *cheminVersDocument, FILE *fichiersSimilaires, int seuilSimilarite);
 
 
