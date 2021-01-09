@@ -55,5 +55,12 @@ PILE init_MULTIPLE_DESC_AUDIO(int, int, int, char *);
 */
 int lier_DESC_AUDIO_FICHIER(DESC_AUDIO, char *);
 
+/** Récupère le fichier lier au descripteur donné en parmaètre
+* @param DESC_AUDIO desc descripteur audio
+*
+* @return char * chemin chemin vers le fichier
+*/
+char * fichier_lier_DESC_AUDIO(DESC_AUDIO);
+
 
 #endif

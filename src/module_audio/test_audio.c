@@ -138,8 +138,13 @@ int main(int argc, char * argv[])
     while(!PILE_estVide(pileDescDossier))
     {
     	pileDescDossier = dePILE(pileDescDossier, &depileDesc);
-    	//affiche_DESC_AUDIO(depileDesc);
+        char * chemin = fichier_lier_DESC_AUDIO(depileDesc);
+        printf(" Fichier associé au descripteur %d: %s\n", depileDesc.id, 
+            chemin != NULL ? chemin : "Introuvable");
+    	if(chemin != NULL) free(chemin);
+        //affiche_DESC_AUDIO(depileDesc);
     }
+
 
     printf("--- FIN DES TEST AUDIO --- \n");
     return 0;

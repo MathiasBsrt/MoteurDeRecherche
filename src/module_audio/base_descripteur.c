@@ -184,3 +184,23 @@ int lier_DESC_AUDIO_FICHIER(DESC_AUDIO desc, char * chemin)
 
 	return returnCode;
 }
+
+
+char * fichier_lier_DESC_AUDIO(DESC_AUDIO desc)
+{
+	char * filename = (char *) malloc(sizeof(char) * 100);
+	FILE * listeBaseFichier = fopen(LISTE_BASE_FICHIER, "rw");
+	if(listeBaseFichier == NULL) return NULL;
+
+	int id;
+	char * chemin;
+	do
+	{
+		fscanf(listeBaseFichier, "%d", &id);
+		if(id == EOF) break;
+		fscanf(listeBaseFichier, "%s", filename);
+		printf("%d %s\n", id, filename);
+	} while(id != desc.id);
+	if(id == EOF) return NULL;
+	return filename;
+}
