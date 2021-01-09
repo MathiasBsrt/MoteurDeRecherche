@@ -105,6 +105,11 @@ int compare_HISTOGRAMME_AUDIO(HISTOGRAMME_AUDIO histo1, HISTOGRAMME_AUDIO histo2
 	return 0;
 }
 
+double evaluer_HISTOGRAMME_AUDIO(HISTOGRAMME_AUDIO histo1, HISTOGRAMME_AUDIO histo2)
+{
+	if(histo1.k > histo2.k)
+}
+
 int generer_HISTOGRAMME_AUDIO(HISTOGRAMME_AUDIO * histo, char * chemin, int n, int m)
 {
 	char * ext = strrchr(chemin, '.');

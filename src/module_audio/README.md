@@ -31,6 +31,13 @@ make main_histo
 ./main_histo <fichier> <n> <m>
 ```
 
+### Commentaires
+
+Dans sa globalité, le code du module Audio est commenté.
+Chaque méthode a un commentaire pour la décrire (voir format Doxygen).
+En plus, pour chaque méthode, il est spécifié si elle peut être utile pour la fonctionnalité d'**indexation**, de **recherche** ou ayant une **utilité générale**.
+Cela ne **prive bien sûr en rien** leurs utilisations dans un autre cas que celui qui est spécifié ! Ces notes sont présentes pour faciliter **l'implémentation** de ce module dans le **programme principale**.
+
 ## TODO
 
-- [ ] Sauvegarde des descripteurs créés
+- [ ] Fonctionnalité de la recherche pour le module Audio.
