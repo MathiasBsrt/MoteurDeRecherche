@@ -66,6 +66,12 @@ void rechercheParCritere(char *couleurDominante, FILE *fichiersSimilaires, int s
  */
 void rechercheParDocument(char *cheminVersDocument, FILE *fichiersSimilaires, int seuilSimilarite){
 
+    //Charger pile
+
+    //Indexer le nouveau document si pas déjà présent
+
+    //comparer le descripteur du nouveau document avec chaque descripteur de la pile.
+    //rempir le tableau fichierSimilares
 }
 
 
