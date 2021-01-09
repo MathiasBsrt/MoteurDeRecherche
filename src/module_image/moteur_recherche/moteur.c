@@ -1,12 +1,14 @@
 #include "moteur.h"
 
 int comparaison(Descripteur d1, Descripteur d2, double seuil){
-    //Méthode de comparaison : intersection des 2 histogrammes (cf cahier des charges) => comment faire l'intersection des 2 tableaux ? revient à une différence ?
-    // voir ici : https://openclassrooms.com/forum/sujet/intersection-de-2-tableaux
+    //Méthode de comparaison : intersection des 2 histogrammes 
     
     //Similaire si seuil% des cases sont similaire
     //Une case est similaire si l la valeur 1 et compris dans l'intervale val2-seuil; val2 +seuil
-
+    printf("\nd1 : \n");
+    affiche_Descripteur(d1);
+    printf("\nd2 : \n");
+    affiche_Descripteur(d2);
     if(d1.id == d2.id){
         return 0;
     }
@@ -21,7 +23,7 @@ int comparaison(Descripteur d1, Descripteur d2, double seuil){
   {
       val1 = d1.histogramme[i];
       val2 = d2.histogramme[i];
-      if(val2-val2*(seuil/100) <= val1 && val1<= val2+val2*(seuil/100) ){
+      if(val2-val2*((100.0-seuil)/100) <= val1 && val1<= val2+val2*((100.0-seuil)/100) ){
           nbCaseIntersection++;
       }
   }
@@ -29,7 +31,9 @@ int comparaison(Descripteur d1, Descripteur d2, double seuil){
   //On obtient un tableau dont al longueur et le nb de cases similaire. On peut en tirer un pourcentage de similarité (sur les 64 cases d'un histogramme)
   //On compare la similarité au seuil
   printf("\n similaire sur %d cases\n", nbCaseIntersection);
-  float pourcentage = (nbCaseIntersection/tailleHistogramme)*100;
+
+  double pourcentage =(double) nbCaseIntersection/tailleHistogramme*100;
+
   printf("Similaire à %f pourcents\n",pourcentage);
   if(pourcentage==100){
       return 0;
@@ -71,17 +75,17 @@ int main(int argc, char const *argv[])
 {
     PILE p;
     p = init_pile();
-    charger_PILE_Desc(&p,"base_descripteur_image");
+    charger_PILE_Desc(&p,"../base_descripteur_image");
 
-    affiche_PILE(p);
-    Descripteur *d = NULL;
-    dePILE(p,d);
-    Descripteur *d2 = NULL;
-    dePILE(p,d2);
+    //affiche_PILE(p);
+    Descripteur d;
+    dePILE(p,&d);
+    Descripteur d2;
+    dePILE(p,&d2);
 
-    printf("\n on compare...\n");
-    int res = comparaison(*d,*d2,1000);
-    printf("res=%d\n",res);
+   printf("\n on compare...\n");
+   int res = comparaison(d,d2,70);
+   printf("res=%d\n",res);
     //On envoie 2 descriteurs pour les comaprer et tester
     
     return 0;

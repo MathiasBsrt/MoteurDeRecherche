@@ -94,7 +94,7 @@ PILE dePILE(PILE p, Descripteur *elt)
 int charger_PILE_Desc(PILE *p, char *save_descripteurs_textes)
 {   
     int id = 0;
-    FILE *f = fopen("base_descripteur_image", "r");
+    FILE *f = fopen(save_descripteurs_textes, "r");
     if (f)
     {
         Descripteur tmp;
