@@ -46,3 +46,8 @@ void affiche_DESC_AUDIO(DESC_AUDIO desc)
 	printf("Identifiant: %d\nHistogramme:\n", desc.id);
 	affiche_HISTOGRAMME_AUDIO(desc.histo);
 }
+
+void free_DESC_AUDIO(DESC_AUDIO * desc)
+{
+	free_HISTOGRAMME_AUDIO(&(desc->histo));
+}

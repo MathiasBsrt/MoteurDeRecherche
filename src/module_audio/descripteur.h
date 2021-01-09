@@ -69,4 +69,9 @@ void affecter_DESC_AUDIO(DESC_AUDIO, DESC_AUDIO);
 */
 int compare_DESC_AUDIO(DESC_AUDIO, DESC_AUDIO);
 
+/** Libère la mémoire occupée par l'histogramme du descripteur donné en paramètre
+* @param DESC_AUDIO desc descripteur audio
+*/
+void free_DESC_AUDIO(DESC_AUDIO *);
+
 #endif

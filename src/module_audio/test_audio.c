@@ -142,6 +142,8 @@ int main(int argc, char * argv[])
         printf(" Fichier associé au descripteur %d: %s\n", depileDesc.id, 
             chemin != NULL ? chemin : "Introuvable");
     	if(chemin != NULL) free(chemin);
+        free_DESC_AUDIO(&depileDesc);=
+        printf("%p\n", depileDesc.histo.mat);
         //affiche_DESC_AUDIO(depileDesc);
     }
 
