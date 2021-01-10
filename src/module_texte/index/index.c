@@ -128,7 +128,8 @@ void enregistre_Table_Index(Table_Index table, char *save_table_index)
     }
     else
     {
-        printf("la table est vide, rien n'a ete enregistre.\n");
+        fprintf(stderr,"la table est vide, rien n'a ete enregistre.\n");
+        exit(5);
     }
 }
 
@@ -178,4 +179,10 @@ void charger_Table_index(Table_Index *table, char *save_table_index)
                 Ajout_dans_table_pourCharger(table,tmp);
             }
     }
+    else
+    {
+        perror("probleme lors de l'ouverture du fichier sauvegarde");
+        exit(3);
+    }
+    
 }
