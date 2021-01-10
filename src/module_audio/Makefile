@@ -12,6 +12,12 @@ main_histo : histogramme.c histogramme.h main_histo.c
 	gcc -c main_histo.c
 	gcc -o main_histo.out histogramme.o main_histo.o -lm
 
+test_wav_helper : wav_file_helper.c wav_file_helper.h test_wav_helper.c
+	gcc -c wav_file_helper.c
+	gcc -c test_wav_helper.c
+	gcc -o test_wav_helper.out wav_file_helper.o test_wav_helper.o
+	./test_wav_helper.out
+
 clean:
 	rm -f *.o *.out
 	

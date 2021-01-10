@@ -31,7 +31,7 @@ make main_histo
 ./main_histo <fichier> <n> <m>
 ```
 
-### Commentaires
+## Commentaires
 
 Dans sa globalité, le code du module Audio est commenté.
 Chaque méthode a un commentaire pour la décrire (voir format Doxygen).
