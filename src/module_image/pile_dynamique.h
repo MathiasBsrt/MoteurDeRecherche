@@ -5,9 +5,9 @@
  * @brief Les fonctions relatives a la pile de mots (et de leurs occurences) et a la pile de descripteurs
  * @version 0.1
  * @date 2020-12-16
- * 
+ *
  * @copyright Copyright (c) 2020
- * 
+ *
  */
 
 
@@ -17,7 +17,7 @@
 
 /**
  * @brief Structure d'une Cellule
- * 
+ *
  */
 typedef struct s_Cellule
 {
@@ -27,7 +27,7 @@ typedef struct s_Cellule
 
 /**
  * @brief Structure d'une pile de mots avec occurences
- * 
+ *
  */
 typedef Cellule* PILE;
 
@@ -35,56 +35,56 @@ typedef Cellule* PILE;
 
 /**
  * @brief Permet de dépiler un élément d'une pile de mots
- * 
- * @param[in] p 
- * @param[in,out] elt 
- * @return La pile sans le dernier element 
+ *
+ * @param[in] p
+ * @param[in,out] elt
+ * @return La pile sans le dernier element
  */
 PILE dePILE(PILE p, Descripteur *elt);
 
 /**
  * @brief Permet d'empiler un élément d'une pile de mots
- * 
- * @param[in] p 
- * @param[in] elt 
+ *
+ * @param[in] p
+ * @param[in] elt
  * @return La pile avec elt
  */
 PILE emPILE(PILE p, Descripteur elt);
 
 /**
  * @brief Permet d'initialiser une pile de mots
- * 
+ *
  * @return une pile vide
  */
 PILE init_pile();
 
 /**
  * @brief Permet d'afficher une pile de mots
- * 
- * @param[in] p 
+ *
+ * @param[in] p
  */
 void affiche_PILE(PILE p);
 
 /**
  * @brief Permet de dire si une pile est vide ou non
- * 
- * @param[in] p 
+ *
+ * @param[in] p
  * @return 1 si vrai, 0 sinon
  */
 int PILE_estVide(PILE p);
 
 /**
  * @brief Permet de dire si un mot est dans une pile de mots
- * 
- * @param[in] p 
- * @param[in] buffer 
+ *
+ * @param[in] p
+ * @param[in] buffer
  * @return 1 si vrai, 0 sinon
  */
 int estDanslaPile(PILE p,char *buffer);
 
 int charger_PILE_Desc(PILE *p, char *save_descripteurs_textes);
 
-
+PILE inverserPILE(PILE pile);
 
 
 /*#include <stdio.h>

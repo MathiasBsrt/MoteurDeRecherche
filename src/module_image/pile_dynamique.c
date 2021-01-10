@@ -6,9 +6,9 @@
  * @brief Les fonctions relatives a la pile de Descripteurs (et de leurs occurences) et a la pile de descripteurs
  * @version 0.1
  * @date 2020-12-16
- * 
+ *
  * @copyright Copyright (c) 2020
- * 
+ *
  */
 
 PILE init_pile()
@@ -52,12 +52,13 @@ PILE emPILE(PILE p, Descripteur elt)
     }
     else
     {
-        Cellule *parcours = p;
-        while (parcours->suivant != NULL)
-            parcours = parcours->suivant;
-        parcours->suivant = cel;
+      cel->suivant=p;
+        // Cellule *parcours = p;
+        // while (parcours->suivant != NULL)
+        //     parcours = parcours->suivant;
+        // parcours->suivant = cel;
     }
-    return p;
+    return cel;
 }
 
 PILE dePILE(PILE p, Descripteur *elt)
@@ -69,20 +70,14 @@ PILE dePILE(PILE p, Descripteur *elt)
         if (p->suivant == NULL)
         {
             *elt = p->elt;
-            p = NULL;
+            p=NULL;
         }
         else
         {
-            Cellule *parcour = p;
-            Cellule *marqueur;
-            while (parcour->suivant != NULL)
-                parcour = parcour->suivant;
-            *elt = parcour->elt;
-            marqueur = parcour;
-            parcour = p;
-            while (parcour->suivant != marqueur)
-                parcour = parcour->suivant;
-            parcour->suivant = NULL;
+            Cellule* marqueur=p;
+            *elt = p->elt;
+            p=p->suivant;
+            marqueur=NULL;
             free(marqueur);
         }
     }
@@ -90,35 +85,43 @@ PILE dePILE(PILE p, Descripteur *elt)
     return p;
 }
 
-
-int charger_PILE_Desc(PILE *p, char *save_descripteurs_textes)
-{   
-    int id = 0;
-    FILE *f = fopen(save_descripteurs_textes, "r");
-    if (f)
-    {
-        Descripteur tmp;
-        int val;
-        while (fscanf(f,"%d",&val) != EOF)
-        {
-                    //printf("salut");
-            tmp.id = val;
-            for (int i = 0; i < tailleHistogramme; i++)
-            {
-                fscanf(f,"%d",&val);
-                tmp.histogramme[i] = val;
-            }
-            
-            *p = emPILE(*p, tmp);
-            id = tmp.id;
-
-        }
-        fclose(f);
-    }else{
-        printf("\nbase_descripteur_image n'existe pas\n");
-    }
-
-    //affiche_PILE(*p);
-    return id;
+PILE inverserPILE(PILE pile){
+  PILE sub=init_pile();
+  Descripteur elem;
+  while(!PILE_estVide(pile)){
+    pile=dePILE(pile,&elem);
+    sub=emPILE(sub,elem);
+  }
+  return  sub;
 }
 
+// int charger_PILE_Desc(PILE *p, char *save_descripteurs_textes)
+// {
+//     int id = 0;
+//     FILE *f = fopen(save_descripteurs_textes, "r");
+//     if (f)
+//     {
+//         Descripteur tmp;
+//         int val;
+//         while (fscanf(f,"%d",&val) != EOF)
+//         {
+//                     //printf("salut");
+//             tmp.id = val;
+//             for (int i = 0; i < tailleHistogramme; i++)
+//             {
+//                 fscanf(f,"%d",&val);
+//                 tmp.histogramme[i] = val;
+//             }
+//
+//             *p = emPILE(*p, tmp);
+//             id = tmp.id;
+//
+//         }
+//         fclose(f);
+//     }else{
+//         printf("\nbase_descripteur_image n'existe pas\n");
+//     }
+//
+//     //affiche_PILE(*p);
+//     return id;
+// }
