@@ -85,21 +85,7 @@ void creationDescripteur(char *chemin,PILE * p)
   free(matriceImageQuant);
 }
 
-PILE chargerPILE(char* cheminFichier){
-  PILE pile=init_pile();
-  FILE* fich=fopen(cheminFichier,"r");
-  if(fich){
-    Descripteur desc;
-    while(fscanf(fich,"%d",&desc.id)!=EOF){
-      for(int i=0;i<tailleHistogramme;i++){
-        fscanf(fich,"%d",&desc.histogramme[i]);
-      }
-      pile=emPILE(pile,desc);
-    }
-  }
 
-  return pile;
-}
 /**
  * Cette fonction permet de sauvegarder un descripteur donné en paramètre dans le fichier base_descripteur_image
  * et de lier ce descripteur avec le fichier dans le fichier liste_base_image

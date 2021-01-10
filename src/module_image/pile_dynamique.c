@@ -95,33 +95,18 @@ PILE inverserPILE(PILE pile){
   return  sub;
 }
 
-// int charger_PILE_Desc(PILE *p, char *save_descripteurs_textes)
-// {
-//     int id = 0;
-//     FILE *f = fopen(save_descripteurs_textes, "r");
-//     if (f)
-//     {
-//         Descripteur tmp;
-//         int val;
-//         while (fscanf(f,"%d",&val) != EOF)
-//         {
-//                     //printf("salut");
-//             tmp.id = val;
-//             for (int i = 0; i < tailleHistogramme; i++)
-//             {
-//                 fscanf(f,"%d",&val);
-//                 tmp.histogramme[i] = val;
-//             }
-//
-//             *p = emPILE(*p, tmp);
-//             id = tmp.id;
-//
-//         }
-//         fclose(f);
-//     }else{
-//         printf("\nbase_descripteur_image n'existe pas\n");
-//     }
-//
-//     //affiche_PILE(*p);
-//     return id;
-// }
+PILE chargerPILE(char* cheminFichier){
+  PILE pile=init_pile();
+  FILE* fich=fopen(cheminFichier,"r");
+  if(fich){
+    Descripteur desc;
+    while(fscanf(fich,"%d",&desc.id)!=EOF){
+      for(int i=0;i<tailleHistogramme;i++){
+        fscanf(fich,"%d",&desc.histogramme[i]);
+      }
+      pile=emPILE(pile,desc);
+    }
+  }
+
+  return pile;
+}

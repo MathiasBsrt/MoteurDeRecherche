@@ -1,8 +1,8 @@
 #include "moteur.h"
 
 int comparaison(Descripteur d1, Descripteur d2, double seuil){
-    //Méthode de comparaison : intersection des 2 histogrammes 
-    
+    //Méthode de comparaison : intersection des 2 histogrammes
+
     //Similaire si seuil% des cases sont similaire
     //Une case est similaire si l la valeur 1 et compris dans l'intervale val2-seuil; val2 +seuil
     printf("\nd1 : \n");
@@ -12,7 +12,7 @@ int comparaison(Descripteur d1, Descripteur d2, double seuil){
     if(d1.id == d2.id){
         return 0;
     }
-    
+
    //Construire le tableau d'intersection
   //Une case est similaire si l la valeur 1 et compris dans l'intervale val2-seuil; val2 +seuil
   // On ajoute cette case dans le teableau d'intersection
@@ -27,7 +27,7 @@ int comparaison(Descripteur d1, Descripteur d2, double seuil){
           nbCaseIntersection++;
       }
   }
-  
+
   //On obtient un tableau dont al longueur et le nb de cases similaire. On peut en tirer un pourcentage de similarité (sur les 64 cases d'un histogramme)
   //On compare la similarité au seuil
   printf("\n similaire sur %d cases\n", nbCaseIntersection);
@@ -51,7 +51,7 @@ int comparaison(Descripteur d1, Descripteur d2, double seuil){
  * Cette fonction permet de rechercher des documents en fonction d'u critère donné
  * @param String couleurDominante
  * @param File[] tableau à remplir
- * @param int seuilSimilarité 
+ * @param int seuilSimilarité
  */
 void rechercheParCritere(char *couleurDominante, FILE *fichiersSimilaires, int seuilSimilarite){
 
@@ -62,7 +62,7 @@ void rechercheParCritere(char *couleurDominante, FILE *fichiersSimilaires, int s
  * Cette fonction permet de rechercher des documents en fonction d'un document donné
  * @param String cheminVersDocument
  * @param File[] tableau à remplir
- * @param int seuilSimilarité 
+ * @param int seuilSimilarité
  */
 void rechercheParDocument(char *cheminVersDocument, FILE *fichiersSimilaires, int seuilSimilarite){
 
@@ -81,18 +81,18 @@ int main(int argc, char const *argv[])
 {
     PILE p;
     p = init_pile();
-    charger_PILE_Desc(&p,"../base_descripteur_image");
+    p=chargerPILE("../base_descripteur_image_RGB");
 
     //affiche_PILE(p);
     Descripteur d;
-    dePILE(p,&d);
+    p=dePILE(p,&d);
     Descripteur d2;
-    dePILE(p,&d2);
+    p=dePILE(p,&d2);
 
    printf("\n on compare...\n");
    int res = comparaison(d,d2,70);
    printf("res=%d\n",res);
     //On envoie 2 descriteurs pour les comaprer et tester
-    
+
     return 0;
 }

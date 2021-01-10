@@ -82,8 +82,7 @@ int PILE_estVide(PILE p);
  */
 int estDanslaPile(PILE p,char *buffer);
 
-int charger_PILE_Desc(PILE *p, char *save_descripteurs_textes);
-
+PILE chargerPILE(char* cheminFichier);
 PILE inverserPILE(PILE pile);
 
 

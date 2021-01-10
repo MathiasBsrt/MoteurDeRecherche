@@ -20,6 +20,8 @@ typedef struct RGB_t{
 
 
 //FONCTIONS
+
+
 /***
   * Cette fonction permet de quantifier un pixel d'image RGB passé en paramètre en fonction du quantificateur
   */
