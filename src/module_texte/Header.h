@@ -20,6 +20,12 @@
  */
 #define MAX 512
 
+/**
+ * @def Correspond a la taille d'un index 
+ * 
+ */
+#define INDEX_LENGTH 64
+
 //FONCTIONS PRINCIPALES
 
 /**
@@ -28,7 +34,7 @@
  * @param[in] nom_fichier nom du fichier texte
  * @param[in,out] pile_desc pile de descripteurs dans laquelle on ajoute le descripteur créé
  */
-void Descripteur_texte_fichier(char* nom_fichier,PILE_descripteur_texte *pile_desc);
+void Descripteur_texte_fichier(char *nom_fichier, PILE_descripteur_texte *pile_desc,Table_Index *table_index);
 
 
  /**
@@ -38,7 +44,7 @@ void Descripteur_texte_fichier(char* nom_fichier,PILE_descripteur_texte *pile_de
   * @param[in,out] pile_desc pile de descripteurs dans laquelle on ajoute les descripteurs créés
   * @return int 1 si ça a marché, 0 sinon
   */
-int Descripteur_texte_dossier(char* nom_dossier,PILE_descripteur_texte *pile_desc);
+int Descripteur_texte_dossier(char *nom_dossier, PILE_descripteur_texte *pile_desc,Table_Index *table_index);
 
 
 

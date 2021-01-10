@@ -13,6 +13,7 @@
 #include <stdlib.h>
 #include <string.h>
 #define MAX_WORD 128
+#define MAX_STRING 512
 
 /**
  * @struct ELEMENT

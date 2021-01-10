@@ -30,11 +30,11 @@ void add_char(char *buffer, char c, int *cpt)
  * @brief Permet de déterminer si le caractère donné en paramètre est une ponctuation
  * 
  * @param[in] c 
- * @return int 
+ * @return 1 si c'est de la ponctuation, 0 sinon
  */
 int estPonctuation(char c)
 {
-    return (c == '.' || c == ',' || c == '?' || c == ';' || c == '!' || c == '\'' || c == ':' || c == '"' || c == '&' || c == '(' || c == ')' || c == '-' || c == '_' || c == '%');
+    return (c == '.' || c == ',' || c == '?' || c == ';' || c == '!' || c == '\'' || c == ':' || c == '"' || c == '&' || c == '(' || c == ')' || c == '-' || c == '_' || c == '%' || !strcmp("$",&c) || !strcmp("€",&c) || !strcmp("£",&c));
 }
 
 
