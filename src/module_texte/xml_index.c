@@ -35,7 +35,7 @@ void *descripteur_de_texte(FILE *src, PILE *p, Table_Index *table_index)
 int texte_deja_indexe(char *path_to_xml)
 {
 
-    FILE *liste_base_desc = fopen(path_to_xml, "r");
+    FILE *liste_base_desc = fopen("liste_base_descripteurs", "r");
     if (liste_base_desc)
     {
         int code_retour = 0;
@@ -43,8 +43,10 @@ int texte_deja_indexe(char *path_to_xml)
         char buffer[MAX_STRING];
         while (fscanf(liste_base_desc, "%s %d", buffer, &id_texte) != EOF)
         {
+            printf("%s\n", buffer);
             if (!strcmp(buffer, path_to_xml))
             {
+
                 code_retour = id_texte;
                 break;
             }
@@ -67,16 +69,24 @@ void fabrique_a_descripteur(char *path_to_xml, PILE_descripteur_texte *pile_desc
     FILE *src = fopen(path_to_xml, "r");
     PILE p = init_pile();
 
-    if (tmp && tmp1 && src && !texte_deja_indexe(path_to_xml))
+    if (tmp && tmp1 && src)
     {
-        Index *index;
-        xml_cleaner(src, tmp);
-        rewind(tmp);
-        xml_filter(tmp, tmp1);
-        rewind(tmp1);
+        if (!texte_deja_indexe(path_to_xml))
+        {
+            Index *index;
+            xml_cleaner(src, tmp);
+            rewind(tmp);
+            xml_filter(tmp, tmp1);
+            rewind(tmp1);
 
-        descripteur_de_texte(tmp1, &p, table_index);
-        EMPILE_desc_from_pile(p, pile_desc, path_to_xml, table_index);
+            descripteur_de_texte(tmp1, &p, table_index);
+            EMPILE_desc_from_pile(p, pile_desc, path_to_xml, table_index);
+        }
+        else
+        {
+            perror("Texte déjà lu");
+        }
+        
 
         fclose(tmp);
         fclose(tmp1);
@@ -117,7 +127,7 @@ void Descripteur_texte_fichier(char *nom_fichier, PILE_descripteur_texte *pile_d
     remove("tmp");
     remove("tmp1");
 }
-
+/*
 int main(void)
 {
     PILE_descripteur_texte pile = init_PILE_desc();
@@ -126,20 +136,21 @@ int main(void)
     Table_Index table1 = Init_Index();
     Descripteur_texte_dossier("Textes_UTF8", &pile, &table);
     //Descripteur_texte_fichier("Textes_UTF8/03-Mimer_un_signal_nerveux_pour_utf8.xml", &pile, &table);
-    
-    
+
     //Enregistrement Index
     enregistre_Table_Index(table, "sauvegarde.index");
     charger_Table_index(&table1, "sauvegarde.index");
-    
+
     //Enregistrement Pile
     enregistre_PILE_Desc(pile, "sauvegarde.desc");
     charger_PILE_Desc(&pile1, "sauvegarde.desc");
-    
+
     //Affichage de quelques resultats
 
     /*affiche_PILE(pile1->pile_mot);
     printf("nombre total de mots : %d\tnombre de mots differents : %d\n", pile1->nombre_mots_total, pile1->nbr_mots_retenus);
-    printf("nombre total de mots : %d\tnombre de mots differents : %d\n", pile->nombre_mots_total, pile->nbr_mots_retenus);*/
+    printf("nombre total de mots : %d\tnombre de mots differents : %d\n", pile->nombre_mots_total, pile->nbr_mots_retenus);
     AFFICHE_table_index(table1);
+    //remove("liste_base_descripteurs");
 }
+*/
