@@ -91,10 +91,11 @@ PILE dePILE(PILE p, MOT *elt)
 
 int estDanslaPile(PILE p, char *buffer)
 {
+    Cellule *parcours = NULL;
     if (!PILE_estVide(p))
     {
         int test = 0;
-        Cellule *parcours = p;
+        parcours = p;
         while (parcours && !test)
         {
             test = compare_MOT(parcours->elt, affecter_MOT(buffer));
@@ -141,32 +142,64 @@ int total_mot(PILE p, int *nombre_de_mots_differents)
     return total;
 }
 
-void EMPILE_desc_from_pile(PILE p, PILE_descripteur_texte *d)
+void Index_from_pile(Table_Index *table, PILE pile, int id_texte)
 {
+    if (!PILE_estVide(pile))
+    {
+        Cellule *parcours = pile;
+        Index *index;
+        int passage = 0;
+        while (parcours)
+        {
+
+            if (!(index = ExisteDansTable_Index(*table, parcours->elt.mot)))
+            {
+                index=Ajout_Dans_Table_index(table, parcours->elt.mot);
+                Incremente_index(index,id_texte,parcours->elt.nbr_occurrence);
+            }
+            else
+            {
+                Incremente_index(index, id_texte, parcours->elt.nbr_occurrence);
+            }
+            parcours = parcours->suivant;
+        }
+    }
+}
+
+void EMPILE_desc_from_pile(PILE p, PILE_descripteur_texte *d, char *path_to_xml, Table_Index *table)
+{
+    FILE *liste_descripteurs = fopen("liste_base_descripteurs", "a");
+    Index *index;
     int mots_retenus;
+
+    //on remplit le descripteur a empiler
     Descripteur_texte *descripteur = malloc(sizeof(Descripteur_texte));
     descripteur->suivant = NULL;
     descripteur->pile_mot = p;
     descripteur->nombre_mots_total = total_mot(p, &mots_retenus); //on remplit le descripteur avec toutes les informations connues
     descripteur->nbr_mots_retenus = mots_retenus;
+
     if (PILE_desc_estVide(*d))
     {
         descripteur->id = 1;
         *d = descripteur;
+        fprintf(liste_descripteurs, "%s %d\n", path_to_xml, descripteur->id);
     }
     else
     {
-        int id = 0;
+        int id = 2;
         Descripteur_texte *parcours = *d;
         while (parcours->suivant != NULL)
         {
             id++;
             parcours = parcours->suivant;
         }
-        
         descripteur->id = id;
+        fprintf(liste_descripteurs, "%s %d\n", path_to_xml, descripteur->id);
+
         parcours->suivant = descripteur;
     }
+    Index_from_pile(table, p, descripteur->id);
 }
 
 void copie_descripteur(Descripteur_texte *a, Descripteur_texte b)

@@ -8,7 +8,8 @@
  * @copyright Copyright (c) 2020
  * 
  */
-#include "../MOT/mot.h"
+
+#include "../index/index.h"
 
 /**
  * @brief Structure d'une Cellule
@@ -97,7 +98,7 @@ int PILE_estVide(PILE p);
  * @param[in] buffer 
  * @return 1 si vrai, 0 sinon
  */
-int estDanslaPile(PILE p,char *buffer);
+int estDanslaPile(PILE p, char *buffer);
 
 
 
@@ -123,8 +124,9 @@ int PILE_desc_estVide(PILE_descripteur_texte d);
  * 
  * @param[in] p 
  * @param[in,out] d 
+ * @param[in] path_to_xml Chemin vers le fichier xml
  */
-void EMPILE_desc_from_pile(PILE p, PILE_descripteur_texte *d);
+void EMPILE_desc_from_pile(PILE p, PILE_descripteur_texte *d, char *path_to_xml,Table_Index *table);
 
 /**
  * @brief Permet d'empiler un descripteur dans une pile de descripteurs
@@ -140,12 +142,8 @@ void EMPILE_desc(PILE_descripteur_texte *d, Descripteur_texte descripteur);
  * @param[in] p 
  */
 void DEPILE_desc(PILE_descripteur_texte *p);
-/**
- * @brief Permet d'enregistrer dans un fichier une pile de descripteurs de textes
- * 
- * @param[in] p 
- * @param[in] save_descripteurs_textes chemin vers lequel la pile de descripteurs va etre sauvegardée
- */
+
+
 void enregistre_PILE_Desc(PILE_descripteur_texte p, char *save_descripteurs_textes);
 
 /**

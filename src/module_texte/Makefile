@@ -12,14 +12,15 @@ test2 : xml_cleaner.c Header.h
 	rm -f *.o core
 	./test2.out
 	
-test3 : MOT/mot.c pile/pile_dynamique.c outils.c xml_cleaner.c xml_tokenizer.c xml_index.c Header.h
+test3 : MOT/mot.c index/index.c pile/pile_dynamique.c outils.c xml_cleaner.c xml_tokenizer.c xml_index.c Header.h
 	gcc -c -g mot/mot.c
+	gcc -c -g index/index.c
 	gcc -c -g pile/pile_dynamique.c
 	gcc -c -g outils.c
 	gcc -c -g xml_cleaner.c
 	gcc -c -g xml_tokenizer.c
 	gcc -c -g xml_index.c 
-	gcc -o test3.out mot.o pile_dynamique.o outils.c xml_cleaner.o xml_tokenizer.o xml_index.o
+	gcc -o test3.out mot.o index.o pile_dynamique.o outils.o xml_cleaner.o xml_tokenizer.o xml_index.o
 	rm -f *.o core
 	./test3.out
 
