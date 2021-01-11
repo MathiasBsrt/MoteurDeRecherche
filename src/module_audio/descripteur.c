@@ -73,6 +73,23 @@ void avoir_min(int n, int in, double * input_values, int * index, double * value
 
 RES_EVAL_AUDIO evaluer_DESC_AUDIO(DESC_AUDIO desc1, DESC_AUDIO desc2, unsigned int nb)
 {
+	/*
+        REMARQUE:
+            On remarque que si l'on fait tendre n1 et n2 vers l'infini, en gardant n1 = n2 * 2 ?????,
+            la recherche devient de plus en plus précise.
+            L'objectif est donc d'avoir, 
+                avec f(x, y) = | x - y |,
+                d1 durée du descripteur 1,
+                d2 durée du descripteur 2:
+                    min_(n1, n2) f((2^(n2) / d2), (2^(n1) / d1)) ;
+                    C'est à dire la plus petite distance entre le nombre de "ligne" dédiée par seconde dans le descripteur 1 
+                    et le nombre de "ligne" dédiée par seconde dans le descripteur 2.
+                    Poser cette équation veut dire "trouver les valeurs n1 et n2 qui minimise la fonction f".
+
+            Après plusieurs tests, on remarque que plus on fait grandir n1 et n2, plus la précision en est diminué ... ?
+
+    */
+
 	// On commence à créer un résultat vide.
 	RES_EVAL_AUDIO resultat;
 	resultat.n = 0;
@@ -183,6 +200,7 @@ RES_EVAL_AUDIO evaluer_DESC_AUDIO(DESC_AUDIO desc1, DESC_AUDIO desc2, unsigned i
 			// l'histogramme 2 dans l'histogramme 1.
 			resultat.times[i] = ((double) (indicies[i] * padding) / index1_max) * duration1;
 		}
+		free_HISTOGRAMME_AUDIO(&histo1);
 		
 	} else return evaluer_DESC_AUDIO(desc2, desc1, nb); // On inverse simplement les arguments
 	// On retourne l'histogramme

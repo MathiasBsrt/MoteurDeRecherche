@@ -6,6 +6,7 @@
 
 // Includes pour tests son
 #include <math.h>
+#include "../src/module_audio/wav_file_helper.h"
 #include "../src/module_audio/descripteur.h"
 #include "../src/module_audio/histogramme.h"
 #include "../src/module_audio/base_descripteur.h"

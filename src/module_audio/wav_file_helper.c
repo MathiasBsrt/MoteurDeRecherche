@@ -8,14 +8,14 @@ int wav_get_duration(char * chemin)
     if(file == NULL) return WAV_FILE_DOESNT_EXIST;
 
     // Direction la bonne partie du header du fichier WAV
-    fseek(file, 28, SEEK_SET);
+    fseek(file, OFFSET_BYTE_PER_SECOND, SEEK_SET);
 
     // On lit 4 octets (un int) pour récupérer le nombre d'octet par seconde
     int bytePerSecond;
     fread(&bytePerSecond, 4, 1, file);
      
     // On saute 8 octets
-    fseek(file, 8, SEEK_CUR);
+    fseek(file, OFFSET_DATA_SIZE, SEEK_SET);
 
     // On lit 4 octets (un int) pour récupérer le nombre total d'octet
     int dataSize;

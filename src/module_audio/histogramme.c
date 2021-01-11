@@ -331,5 +331,8 @@ int creer_histogramme_WAV_DESC_AUDIO(HISTOGRAMME_AUDIO * histo, char * chemin, i
 
 void free_HISTOGRAMME_AUDIO(HISTOGRAMME_AUDIO * histo)
 {
-	if(histo->mat != NULL) { free(histo->mat); }
+	if(histo != NULL)
+	{
+		if(histo->mat != NULL) { free(histo->mat); }
+	}
 }
