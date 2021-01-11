@@ -8,8 +8,8 @@
 /** Représentation d'un histogramme utile pour un descripteur audio */
 typedef struct Histogramme_Audio_t
 {
-	unsigned int k; /**< k, nombre de fenêtre d'analyse */
-	unsigned int m; /**< m, nombre d'intervalles */
+	unsigned int k; /**< k, nombre de fenêtre d'analyse (mémo: nb colonnes)*/
+	unsigned int m; /**< m, nombre d'intervalles (mémo: nb ligne) */
 	int * mat; /**< Histogramme, soit une matrice k x m,
 						de points (double)
 						Indices: [K, M]
@@ -77,9 +77,11 @@ int compare_HISTOGRAMME_AUDIO(HISTOGRAMME_AUDIO, HISTOGRAMME_AUDIO);
 *
 *	@param HISTOGRAMME_AUDIO histo1, premier histogramme à évaluer
 *	@param HISTOGRAMME_AUDIO histo2, second histogramme à évaluer
+*	@param int duration1 durée du premier fichier
+*	@param int duration2 durée du second fichier
 *	@return double, l'évalution des deux histogrammes audio passés en paramètres
 */
-double evaluer_HISTOGRAMME_AUDIO(HISTOGRAMME_AUDIO, HISTOGRAMME_AUDIO);
+double evaluer_HISTOGRAMME_AUDIO(HISTOGRAMME_AUDIO, HISTOGRAMME_AUDIO, int, int);
 
 
 /** Créer un histogramme pour un descripteur audio

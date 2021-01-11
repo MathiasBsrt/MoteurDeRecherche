@@ -12,6 +12,12 @@ typedef struct Descripteur_Audio_t
 	HISTOGRAMME_AUDIO histo; /**< Histogramme du descripteur audio */
 } DESC_AUDIO;
 
+typedef struct Resultat_Evalutation_t
+{
+	int n; /* < Nombre de temps */
+	double * times; /* < Les temps trouvés */
+} RES_EVAL_AUDIO;
+
 /** Initilalise un descripteur audio
 * Utilité: Générale
 * @param id id du descripteur
@@ -83,9 +89,10 @@ int compare_DESC_AUDIO(DESC_AUDIO, DESC_AUDIO);
 *
 *	@param DESC_AUDIO desc1, premier descripteur à évaluer
 *	@param DESC_AUDIO desc2, second descripteur à évaluer
-*	@return double, l'évalution des deux descripteurs audio passés en paramètres
+*	@param unsigned int nombre de résultat souhaité.
+*	@return RES_EVAL_AUDIO le résultat de l'évalutation audio
 */
-double evaluer_HISTOGRAMME_AUDIO(DESC_AUDIO, DESC_AUDIO);
+RES_EVAL_AUDIO evaluer_DESC_AUDIO(DESC_AUDIO, DESC_AUDIO, unsigned int);
 
 
 /** Libère la mémoire occupée par l'histogramme du descripteur donné en paramètre
@@ -93,5 +100,10 @@ double evaluer_HISTOGRAMME_AUDIO(DESC_AUDIO, DESC_AUDIO);
 * @param DESC_AUDIO desc descripteur audio
 */
 void free_DESC_AUDIO(DESC_AUDIO *);
+
+/** Initialise un résultat d'une évalutation audio
+ * @return RES_EVAL_AUDIO le résultat de l'évaluation audio encore vide.
+ */
+RES_EVAL_AUDIO init_RES_EVAL_AUDIO();
 
 #endif

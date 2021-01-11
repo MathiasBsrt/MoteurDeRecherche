@@ -3,6 +3,7 @@
 #include <string.h>
 #include <math.h>
 #include "histogramme.h"
+#include "wav_file_helper.h"
 
 // Normalement la valeur minimale que peux prendre un short int (2 octets)
 // est -32768, mais pour le bien de la conversion dans un interval [-1; 1],
@@ -105,9 +106,9 @@ int compare_HISTOGRAMME_AUDIO(HISTOGRAMME_AUDIO histo1, HISTOGRAMME_AUDIO histo2
 	return 0;
 }
 
-double evaluer_HISTOGRAMME_AUDIO(HISTOGRAMME_AUDIO histo1, HISTOGRAMME_AUDIO histo2)
+double evaluer_HISTOGRAMME_AUDIO(HISTOGRAMME_AUDIO histo1, HISTOGRAMME_AUDIO histo2, int duration1, int duration2)
 {
-	if(histo1.k > histo2.k)
+	return 0.0;
 }
 
 int generer_HISTOGRAMME_AUDIO(HISTOGRAMME_AUDIO * histo, char * chemin, int n, int m)

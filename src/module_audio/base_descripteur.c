@@ -199,7 +199,6 @@ char * fichier_lier_DESC_AUDIO(DESC_AUDIO desc)
 		fscanf(listeBaseFichier, "%d", &id);
 		if(id == EOF) break;
 		fscanf(listeBaseFichier, "%s", filename);
-		printf("%d %s\n", id, filename);
 	} while(id != desc.id);
 	if(id == EOF) return NULL;
 	return filename;

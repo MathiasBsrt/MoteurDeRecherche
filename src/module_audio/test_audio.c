@@ -142,10 +142,41 @@ int main(int argc, char * argv[])
         printf(" Fichier associé au descripteur %d: %s\n", depileDesc.id, 
             chemin != NULL ? chemin : "Introuvable");
     	if(chemin != NULL) free(chemin);
-        free_DESC_AUDIO(&depileDesc);=
-        printf("%p\n", depileDesc.histo.mat);
+        free_DESC_AUDIO(&depileDesc);
         //affiche_DESC_AUDIO(depileDesc);
     }
+
+    /*
+        REMARQUE:
+            On remarque que si l'on fait tendre n1 et n2 vers l'infini, en gardant n1 = n2 * 2 ?????,
+            la recherche devient de plus en plus précise.
+            L'objectif est donc d'avoir, 
+                avec f(x, y) = | x - y |,
+                d1 durée du descripteur 1,
+                d2 durée du descripteur 2:
+                    min_(n1, n2) f((2^(n2) / d2), (2^(n1) / d1)) ;
+                    C'est à dire la plus petite distance entre le nombre de "ligne" dédiée par seconde dans le descripteur 1 
+                    et le nombre de "ligne" dédiée par seconde dans le descripteur 2.
+                    Poser cette équation veut dire "trouver les valeurs n1 et n2 qui minimise la fonction f".
+
+            Après plusieurs tests, on remarque que plus on fait grandir n1 et n2, plus la précision en est diminué ... ?
+
+    */
+
+   
+    printf("  --- RECHERCHE --- \n");
+    printf("    --- Recherche TEST_SON/jingle_fi.wav  dans TEST_SON/corpus_fi.wav avec les 3 meilleurs résultats --- \n");
+
+    DESC_AUDIO desc1 = init_DESC_AUDIO(0, 5, 30, "TEST_SON/corpus_fi.wav");
+    DESC_AUDIO desc2 = init_DESC_AUDIO(1, 5, 30, "TEST_SON/jingle_fi.wav");
+    RES_EVAL_AUDIO resultat = evaluer_DESC_AUDIO(desc1, desc2, 3);
+    printf("      Temps trouvés:\n");
+    for(int i = 0; i < resultat.n; i++)
+    {
+        printf("      i = %d: %f\n", i, resultat.times[i]);
+    }
+    //affiche_DESC_AUDIO(desc1);
+    //affiche_DESC_AUDIO(desc2);
 
 
     printf("--- FIN DES TEST AUDIO --- \n");
