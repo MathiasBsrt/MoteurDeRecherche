@@ -4,6 +4,7 @@
 //#SI notre prog de test retourn 1 : echec de la pipeline
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 // Includes pour tests son
 #include <math.h>
