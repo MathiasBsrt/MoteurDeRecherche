@@ -155,8 +155,55 @@ int indexationSon(){
     printf("          %s \n", (PILE_estVide(secondePile) ? "Oui" : "Non"));
     if(PILE_estVide(secondePile) != 1) return 1;
 
+    printf("    --- Création des descripteurs audio du dossier TEST_SON --- \n");
+    PILE pileDescDossier = init_MULTIPLE_DESC_AUDIO(0, 2, 15, "TEST_SON");
 
+    DESC_AUDIO depileDesc;
+    while(!PILE_estVide(pileDescDossier))
+    {
+    	pileDescDossier = dePILE(pileDescDossier, &depileDesc);
+        char * chemin = fichier_lier_DESC_AUDIO(depileDesc);
+        printf(" Fichier associé au descripteur %d: %s\n", depileDesc.id, 
+            chemin != NULL ? chemin : "Introuvable");
+        if(depileDesc.id == 0) if(strcmp(chemin, "TEST_SON/corpus_fi.wav") != 0)
+        {
+            fprintf(stderr, "Le chemin trouvé n'est pas le bon, il doit être TEST_SON/corpus_fi.wav au lieu de %s !\n", chemin);
+            return 1;   
+        }
+        if(depileDesc.id == 1) if(strcmp(chemin, "TEST_SON/jingle_fi.wav") != 0)
+        {
+            fprintf(stderr, "Le chemin trouvé n'est pas le bon, il doit être TEST_SON/jingle_fi.wav au lieu de %s !\n", chemin);
+            return 1;   
+        }
+    	if(chemin != NULL) free(chemin);
+        //affiche_DESC_AUDIO(depileDesc);
+    }
 
+    printf("  --- RECHERCHE --- \n");
+    printf("    --- Recherche TEST_SON/jingle_fi.wav  dans TEST_SON/corpus_fi.wav avec les 3 meilleurs résultats --- \n");
+
+    // On pose une marge de 1.0 seconde pour le calcul de la position du jingle dans le corpus.
+    double marge = 1.0;
+
+    DESC_AUDIO desc1 = init_DESC_AUDIO(0, 5, 30, "TEST_SON/corpus_fi.wav");
+    DESC_AUDIO desc2 = init_DESC_AUDIO(1, 5, 30, "TEST_SON/jingle_fi.wav");
+    RES_EVAL_AUDIO resultat = evaluer_DESC_AUDIO(desc1, desc2, 3);
+    if(resultat.n == 0)
+    {
+        fprintf(stderr, "Aucun résultat trouvé .. Normalement le programme doit trouver le jingle à +/- 29s.\n");
+        return 1;
+    }
+    printf("      Temps trouvés:\n");
+    for(int i = 0; i < resultat.n; i++)
+    {
+        printf("      i = %d: %f\n", i, resultat.times[i]);
+    }
+    if(resultat.times[0] < 29 - marge || resultat.times[0] > 29 + marge)
+    {
+        fprintf(stderr, "Le résultat trouvé n'est pas bon.\n");
+        fprintf(stderr, "Le programme a trouvé %f et cette valeur n'est pas dans l'interval [%d ; %f]\n", resultat.times[0], resultat.times[0] - marge, resultat.times[0] + marge);
+        return 1;
+    }
     printf("--- FIN DES TEST AUDIO --- \n");
     return 0;
 }
