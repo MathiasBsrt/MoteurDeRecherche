@@ -3,6 +3,7 @@
 #include "descripteur.h"
 #include "histogramme.h"
 #include "base_descripteur.h"
+#include "pile_dynamique.h"
 
 int main(int argc, char * argv[])
 {

@@ -12,6 +12,7 @@
 #include "../src/module_audio/descripteur.h"
 #include "../src/module_audio/histogramme.h"
 #include "../src/module_audio/base_descripteur.h"
+#include "../src/module_audio/pile_dynamique.h"
 
 int indexationImage(){
     //Lancer une indexation pour tous les fichiers du dossier de test
@@ -108,6 +109,7 @@ int indexationSon(){
 
     printf("    --- Création du descripteur audio de TEST_SON/corpus_fi.wav --- \n");
     DESC_AUDIO descCorpusWAV = init_DESC_AUDIO(0, n, m, "TEST_SON/corpus_fi.wav");
+    lier_DESC_AUDIO_FICHIER(descCorpusWAV, "TEST_SON/corpus_fi.wav");
     
     printf("    --- Sauvegarde du descripteur --- \n");
     pileDescripteur = sauvegarder_DESC_AUDIO(pileDescripteur, descCorpusWAV);
@@ -117,6 +119,7 @@ int indexationSon(){
 
     printf("    --- Création du descripteur audio de TEST_SON/jingle_fi.wav --- \n");
     DESC_AUDIO descJingleWAV = init_DESC_AUDIO(1, n + 2, m, "TEST_SON/jingle_fi.wav");
+    lier_DESC_AUDIO_FICHIER(descJingleWAV, "TEST_SON/jingle_fi.wav");
     
     printf("    --- Sauvegarde du descripteur --- \n");
     pileDescripteur = sauvegarder_DESC_AUDIO(pileDescripteur, descJingleWAV);
@@ -185,7 +188,7 @@ int indexationSon(){
     printf("    --- Recherche TEST_SON/jingle_fi.wav  dans TEST_SON/corpus_fi.wav avec les 3 meilleurs résultats --- \n");
 
     // On pose une marge de 1.0 seconde pour le calcul de la position du jingle dans le corpus.
-    double marge = 1.0;
+    double marge = 0.5;
 
     DESC_AUDIO desc1 = init_DESC_AUDIO(0, 5, 30, "TEST_SON/corpus_fi.wav");
     DESC_AUDIO desc2 = init_DESC_AUDIO(1, 5, 30, "TEST_SON/jingle_fi.wav");
@@ -203,7 +206,7 @@ int indexationSon(){
     if(resultat.times[0] < 29 - marge || resultat.times[0] > 29 + marge)
     {
         fprintf(stderr, "Le résultat trouvé n'est pas bon.\n");
-        fprintf(stderr, "Le programme a trouvé %f et cette valeur n'est pas dans l'interval [%d ; %f]\n", resultat.times[0], resultat.times[0] - marge, resultat.times[0] + marge);
+        fprintf(stderr, "Le programme a trouvé %f et cette valeur n'est pas dans l'interval [%f ; %f] (marge de %f)\n", resultat.times[0], resultat.times[0] - marge, resultat.times[0] + marge, marge);
         return 1;
     }
     printf("--- FIN DES TEST AUDIO --- \n");
