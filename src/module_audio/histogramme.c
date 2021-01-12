@@ -322,6 +322,10 @@ int creer_histogramme_WAV_DESC_AUDIO(HISTOGRAMME_AUDIO * histo, char * chemin, i
 		//printf("%d %d %lf\n", i, buffer, val);
 		y = floor(i / y_ratio);
 		x = floor((val + 1) / x_ratio);
+		// Il se peut que la valeur lue soit -32768
+		// et c'est une valeur que le programme n'est pas capable de gérer,
+		// on saute donc l'enregistrement de cette valeur.
+		if(x < 0) continue;
 		inc_HISTOGRAMME_AUDIO(histo, y, x);
 	}
 

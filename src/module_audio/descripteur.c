@@ -46,7 +46,7 @@ int compare_DESC_AUDIO(DESC_AUDIO desc1, DESC_AUDIO desc2)
 
 void avoir_min(int n, int in, double * input_values, int * index, double * values)
 {
-	double min = 999999999999999999;
+	double min = 99999999999;
 	int mini = 0;
 	int alreadyPicked = 0;
 	for(int i = 0; i < n; i++)
@@ -66,9 +66,46 @@ void avoir_min(int n, int in, double * input_values, int * index, double * value
 		}
 		index[i] = mini;
 		values[i] = min;
-		min = 999999999999999999;
+		min = 99999999999;
 		mini = 0;
 	}
+}
+
+void avoir_max(int n, int in, double * input_values, int * index, double * values)
+{
+	double max = -9999999;
+	int maxi = 0;
+	int alreadyPicked = 0;
+	for(int i = 0; i < n; i++)
+	{
+		for(int j = 0; j < in; j++)
+		{
+			for(int k = 0; k < i; k++)
+			{
+				if(j == index[k]) { alreadyPicked = 1; break;}
+			}
+			if(alreadyPicked) { alreadyPicked = 0; continue; } 
+			if(input_values[j] > max)
+			{
+				max = input_values[j];
+				maxi = j;
+			}
+		}
+		index[i] = maxi;
+		values[i] = max;
+		max = -9999999;
+		maxi = 0;
+	}
+}
+
+double avoir_moyenne(int in, double * input_values)
+{
+	double moyenne = 0;
+	for(int i = 0; i < in; i++)
+	{
+		moyenne += input_values[i];
+	}
+	return moyenne / in;
 }
 
 RES_EVAL_AUDIO evaluer_DESC_AUDIO(DESC_AUDIO desc1, DESC_AUDIO desc2, unsigned int nb)
@@ -154,14 +191,14 @@ RES_EVAL_AUDIO evaluer_DESC_AUDIO(DESC_AUDIO desc1, DESC_AUDIO desc2, unsigned i
 		double scores[size];
 		double currentScore;
 		int test = 0;
+		int nbLost = 0;
 
 		// L'objectif ici va être de "déplacer" l'histogramme 2 sur l'histogramme 1
 		// et de calculer la distance entre les deux histogramme à chaque fois.
 		// Cela nous génèrera un score qui sera stocké dans scores.
-		while (index1 <= index1_max)
+		while (index1 + index2_max <= index1_max)
 		{
 			currentScore = 0.0;
-			test = 0;
 			while(curseurIndex2 <= index2_max)
 			{
 				val1 = histo1.mat[curseurIndex1];
@@ -172,11 +209,23 @@ RES_EVAL_AUDIO evaluer_DESC_AUDIO(DESC_AUDIO desc1, DESC_AUDIO desc2, unsigned i
 				currentScore += abs(val1 - val2);
 				curseurIndex2++;
 				curseurIndex1++;
-				test++;
 			}
 			//printf("test %d: %f %d time = %f\n", index1 / padding, currentScore, test, ((double) index1 / index1_max) * duration1);
 			scores[index1 / padding] = currentScore / (desc2.histo.k * desc2.histo.m);
 			//printf("%f\n", scores[index1 / padding]);
+			index1 += padding;
+			curseurIndex1 = index1;
+			curseurIndex2 = 0;
+			test++;
+		}
+		while(index1 <= index1_max)
+		{
+			nbLost++;
+			while(curseurIndex2 <= index2_max)
+			{
+				curseurIndex2++;
+				curseurIndex1++;
+			}
 			index1 += padding;
 			curseurIndex1 = index1;
 			curseurIndex2 = 0;
@@ -185,13 +234,37 @@ RES_EVAL_AUDIO evaluer_DESC_AUDIO(DESC_AUDIO desc1, DESC_AUDIO desc2, unsigned i
 		//printf("index1 = %d , min = %f , mini = %d, mini2 = %d, time = %f\n", index1, min, mini, mini2, ((double) mini / index1_max) * duration1);
 		//printf("new_duration1 = %d , duration1 = %d\n", new_duration1, duration1);
 
-		// On configure alors le réusltat
+		// On vérifie si il se peut que l'on est trouvé une position
+
+		double * values_max = (double *) malloc(sizeof(double));
+		int * indicies_max = (int *) malloc(sizeof(int));
+		avoir_max(1, size - nbLost, scores, indicies_max, values_max);
+
 		resultat.n = nb;
 		resultat.times = (double *) malloc(sizeof(double) * nb);
-		double * values = (double *) malloc(sizeof(double) * nb);
-		int * indicies = (int *) malloc(sizeof(double) * nb);
+		double * values_min = (double *) malloc(sizeof(double) * nb);
+		int * indicies_min = (int *) malloc(sizeof(double) * nb);
 		// On récupère les nb meilleurs score
-		avoir_min(nb, size, scores, indicies, values);
+		avoir_min(nb, size - nbLost, scores, indicies_min, values_min);
+
+		double moyenne = avoir_moyenne(size - nbLost, scores);
+
+		double val_verification = (moyenne - values_min[0]) / values_max[0];
+
+		/*printf("moyenne = %f\n", moyenne);
+		printf("values_min = %f\n", values_min[0]);
+		printf("values_max = %f\n",  values_max[0]);
+		printf("val_verification = %f\n", val_verification);*/
+
+		// Constante de vérification: 1.2
+		if(val_verification < 0.12)
+		{
+			// Le résultat est jugé invalide, on retourne donc un résultat vide.
+			resultat.n = 0;
+			return resultat;
+		} 
+		
+		// On configure alors le réusltat
 		for(int i = 0; i < nb; i++)
 		{
 			//printf("n = %d: ", i);
@@ -199,7 +272,7 @@ RES_EVAL_AUDIO evaluer_DESC_AUDIO(DESC_AUDIO desc1, DESC_AUDIO desc2, unsigned i
 			
 			// On calcul le temps vers lequel le programme à trouver
 			// l'histogramme 2 dans l'histogramme 1.
-			resultat.times[i] = ((double) (indicies[i] * padding) / index1_max) * duration1;
+			resultat.times[i] = ((double) (indicies_min[i] * padding) / index1_max) * duration1;
 		}
 		free_HISTOGRAMME_AUDIO(&histo1);
 		

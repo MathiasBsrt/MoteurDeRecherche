@@ -203,7 +203,7 @@ int indexationSon(){
     {
     	pileDescDossier = dePILE(pileDescDossier, &depileDesc);
         char * chemin = fichier_lier_DESC_AUDIO(depileDesc);
-        printf(" Fichier associé au descripteur %d: %s\n", depileDesc.id, 
+        printf("      Fichier associé au descripteur %d: %s\n", depileDesc.id, 
             chemin != NULL ? chemin : "Introuvable");
         if(depileDesc.id == 0) if(strcmp(chemin, "TEST_SON/corpus_fi.wav") != 0)
         {

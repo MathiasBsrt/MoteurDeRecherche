@@ -95,6 +95,16 @@ int main(int argc, char * argv[])
     
     printf("    --- Sauvegarde du descripteur --- \n");
     pileDescripteur = sauvegarder_DESC_AUDIO(pileDescripteur, descJingleWAV);
+    
+    printf("    --- Sauvegarde de la pile de descripteurs --- \n");
+    sauvegarder_PILE_DESC_AUDIO(pileDescripteur);
+
+    printf("    --- Création du descripteur audio de TEST_SON/cymbale.wav --- \n");
+    DESC_AUDIO descCymbaleWAV = init_DESC_AUDIO(2, n + 1, m, "TEST_SON/cymbale.wav");
+    lier_DESC_AUDIO_FICHIER(descCymbaleWAV, "TEST_SON/cymbale.wav");
+    
+    printf("    --- Sauvegarde du descripteur --- \n");
+    pileDescripteur = sauvegarder_DESC_AUDIO(pileDescripteur, descCymbaleWAV);
 
     printf("    --- Sauvegarde de la pile de descripteurs --- \n");
     sauvegarder_PILE_DESC_AUDIO(pileDescripteur);
@@ -127,6 +137,19 @@ int main(int argc, char * argv[])
     int compareDepile2Empile = compare_DESC_AUDIO(descDepile2, descJingleWAV);
     printf("           %s\n", (compareDepile2Empile == 0 ? "Vrai" : "Faux"));
     if(compareDepile2Empile != 0) return 1;
+
+    printf("       --- Pile est vide ? --- \n");
+    printf("          %s \n", (PILE_estVide(secondePile) ? "Oui" : "Non"));
+    if(PILE_estVide(secondePile) != 0) return 1;
+
+    printf("       --- Depile troisième descripteur --- \n");
+    DESC_AUDIO descDepile3;
+    secondePile = dePILE(secondePile, &descDepile3);
+
+    printf("         --- Descripteur depile3 == celui empile ? --- \n");
+    int compareDepile3Empile = compare_DESC_AUDIO(descDepile3, descCymbaleWAV);
+    printf("           %s\n", (compareDepile3Empile == 0 ? "Vrai" : "Faux"));
+    if(compareDepile3Empile != 0) return 1;
 
     printf("       --- Pile est vide ? --- \n");
     printf("          %s \n", (PILE_estVide(secondePile) ? "Oui" : "Non"));

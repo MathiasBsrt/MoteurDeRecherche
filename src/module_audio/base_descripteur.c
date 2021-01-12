@@ -25,7 +25,6 @@ void init_FICHIER_BASE_DESC(PILE PILE_DESCRIPTEUR_AUDIO)
 PILE sauvegarder_DESC_AUDIO(PILE PILE_DESCRIPTEUR_AUDIO, DESC_AUDIO desc)
 {
 	PILE_DESCRIPTEUR_AUDIO = emPILE(PILE_DESCRIPTEUR_AUDIO, desc);
-	// TODO sauvegarder PILE
 	return PILE_DESCRIPTEUR_AUDIO;
 }
 
@@ -126,19 +125,24 @@ DESC_AUDIO charger_byid_DESC_AUDIO(int id)
 	int y, x;
 	//fscanf(baseDescFichier, "%d ", &val);
 	fread(&val, 4, 1, baseDescFichier);
+		printf("%d\n", val);
 	do
 	{
 		fread(&k, 4, 1, baseDescFichier);
 		fread(&m, 4, 1, baseDescFichier);
+		printf("Lecture de k=%d m=%d\n", k, m);
 		//fscanf(baseDescFichier, "%d %d", &k, &m);
 		desc.id = val;
 		desc.histo = init_HISTOGRAMME_AUDIO((int) log2(k), m);
+		printf("Saut de %d * %d = %d\n", desc.histo.k, desc.histo.m, desc.histo.k * desc.histo.m);
 		fread(desc.histo.mat, 4, desc.histo.k * desc.histo.m, baseDescFichier);
 		if(val == id) break;
 		fread(&val, 4, 1, baseDescFichier);
+		printf("%d\n", val);
 	} while(val != EOF && desc.id != id);
 	if(val == EOF) desc.id = -1;
 	fclose(baseDescFichier);
+	printf("========\n");
 	return desc;
 }
 
