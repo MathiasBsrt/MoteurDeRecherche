@@ -13,6 +13,7 @@
 #define LISTE_BASE_FICHIER "liste_base_audio"
 
 #define ID_NOT_FOUND -1
+#define ALREADY_GENERATED 1
 
 /** Initialise le controleur du fichier BASE_DESC_FICHIER
 * @param PILE la pile de descripteurs audios
@@ -76,6 +77,13 @@ int lier_DESC_AUDIO_FICHIER(DESC_AUDIO, char *);
  *  @return int identifiant du descripteur
  */
 int get_id_byname_DESC_AUDIO(char *);
+
+/** Permet de savoir si un descripteur a déjà été généré à partir du fichier donné
+ *  @param char * chemin vers le fichier
+ * 
+ *  @return int ALREADY_GENERATED (= 1) si déjà généré, 0 sinon
+ */
+int deja_genere_DESC_AUDIO(char *);
 
 
 /** Récupère le fichier lier au descripteur donné en parmaètre

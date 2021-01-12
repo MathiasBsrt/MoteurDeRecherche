@@ -163,6 +163,14 @@ int indexationSon(){
     printf("    --- Création des descripteurs audio du dossier TEST_SON --- \n");
     PILE pileDescDossier = init_MULTIPLE_DESC_AUDIO(0, 2, 15, "TEST_SON");
 
+    printf("    --- Tests deja_genere_DESC_AUDIO(char *) --- \n");
+    int resCorpus = deja_genere_DESC_AUDIO("TEST_SON/corpus_fi.wav");
+    if(resCorpus != ALREADY_GENERATED) { fprintf(stderr, "Le programme doit trouver un descripteur déjà généré pour le corpus.\n"); return 1; }
+    int resJingle = deja_genere_DESC_AUDIO("TEST_SON/jingle_fi.wav");
+    if(resJingle != ALREADY_GENERATED) { fprintf(stderr, "Le programme doit trouver un descripteur déjà généré pour le jingle.\n"); return 1; }
+    int resInconnu = deja_genere_DESC_AUDIO("TEST_SON/jingle_fi99.wav");
+    if(resInconnu == ALREADY_GENERATED) { fprintf(stderr, "Le programme ne doit pas trouver de descripteur déjà généré pour le jingle99.\n"); return 1; }
+
     printf("    --- Tests get_id_byname_DESC_AUDIO(char *) --- \n");
     int idCorpus = get_id_byname_DESC_AUDIO("TEST_SON/corpus_fi.wav");
     if(idCorpus != 0) { fprintf(stderr, "Le programme doit trouver un ID pour le corpus.\n"); return 1; }

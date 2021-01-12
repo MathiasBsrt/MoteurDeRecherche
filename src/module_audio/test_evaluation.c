@@ -15,13 +15,15 @@ int main(int argc, char * argv[])
     char * filename1 = argv[1];
     char * filename2 = argv[2];
 
-    DESC_AUDIO desc1 = init_DESC_AUDIO(0, 5, 30, "TEST_SON/corpus_fi.wav");
-    DESC_AUDIO desc2 = init_DESC_AUDIO(1, 5, 30, "TEST_SON/jingle_fi.wav");
+    int n = 10;
+
+    DESC_AUDIO desc1 = init_DESC_AUDIO(0, n, 30, "TEST_SON/corpus_fi.wav");
+    DESC_AUDIO desc2 = init_DESC_AUDIO(1, n, 30, "TEST_SON/jingle_fi.wav");
     RES_EVAL_AUDIO resultat = evaluer_DESC_AUDIO(desc1, desc2, 3);
-    printf("      Temps trouvés:\n");
-    for(int i = 0; i < resultat.n; i++)
+    //printf("      Temps trouvés:\n");
+    /*for(int i = 0; i < resultat.n; i++)
     {
         printf("      i = %d: %f\n", i, resultat.times[i]);
-    }
+    }*/
 
 }

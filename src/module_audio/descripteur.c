@@ -176,6 +176,7 @@ RES_EVAL_AUDIO evaluer_DESC_AUDIO(DESC_AUDIO desc1, DESC_AUDIO desc2, unsigned i
 			}
 			//printf("test %d: %f %d time = %f\n", index1 / padding, currentScore, test, ((double) index1 / index1_max) * duration1);
 			scores[index1 / padding] = currentScore / (desc2.histo.k * desc2.histo.m);
+			//printf("%f\n", scores[index1 / padding]);
 			index1 += padding;
 			curseurIndex1 = index1;
 			curseurIndex2 = 0;

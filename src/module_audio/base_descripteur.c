@@ -246,6 +246,24 @@ int get_id_byname_DESC_AUDIO(char * chemin)
 }
 
 
+int deja_genere_DESC_AUDIO(char * chemin)
+{
+	FILE * listeBaseFichier = fopen(LISTE_BASE_FICHIER, "r");
+	int id;
+	char fichier[100];
+	fscanf(listeBaseFichier, "%d %s", &id, fichier);
+	while(id != EOF)
+	{
+		if(strcmp(fichier, chemin) == 0) // On a trouvé le descripteur
+		{
+			return ALREADY_GENERATED;
+		}
+		fscanf(listeBaseFichier, "%d %s", &id, fichier);	
+	}
+	return 0;
+}
+
+
 char * fichier_lier_DESC_AUDIO(DESC_AUDIO desc)
 {
 	char * filename = (char *) malloc(sizeof(char) * 100);
