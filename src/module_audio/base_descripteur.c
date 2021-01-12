@@ -75,7 +75,7 @@ PILE charger_PILE_DESC_AUDIO()
 	FILE * baseDescFichier = fopen(BASE_DESC_FICHIER, "r");
 	if(baseDescFichier == NULL)
 	{
-		fprintf(stderr, "[SAUVEGARDER_PILE_DESC_AUDIO] Impossible de charger le fichier %s en lecture.", BASE_DESC_FICHIER);
+		fprintf(stderr, "[CHARGER_PILE_DESC_AUDIO] Impossible de charger le fichier %s en lecture.", BASE_DESC_FICHIER);
 		exit(1);
 	}
 	DESC_AUDIO * desc;
@@ -110,6 +110,48 @@ PILE charger_PILE_DESC_AUDIO()
 	return PILE_DESCRIPTEUR_AUDIO;
 }
 
+
+DESC_AUDIO charger_byid_DESC_AUDIO(int id)
+{
+	FILE * baseDescFichier = fopen(BASE_DESC_FICHIER, "r");
+	if(baseDescFichier == NULL)
+	{
+		fprintf(stderr, "[CHARGER_DESC_AUDIO] Impossible de charger le fichier %s en lecture.", BASE_DESC_FICHIER);
+		exit(1);
+	}
+	DESC_AUDIO desc;
+	desc.id = -1;
+	int val;
+	int k, m;
+	int y, x;
+	//fscanf(baseDescFichier, "%d ", &val);
+	fread(&val, 4, 1, baseDescFichier);
+	do
+	{
+		fread(&k, 4, 1, baseDescFichier);
+		fread(&m, 4, 1, baseDescFichier);
+		//fscanf(baseDescFichier, "%d %d", &k, &m);
+		desc.id = val;
+		desc.histo = init_HISTOGRAMME_AUDIO((int) log2(k), m);
+		fread(desc.histo.mat, 4, desc.histo.k * desc.histo.m, baseDescFichier);
+		if(val == id) break;
+		fread(&val, 4, 1, baseDescFichier);
+	} while(val != EOF && desc.id != id);
+	if(val == EOF) desc.id = -1;
+	fclose(baseDescFichier);
+	return desc;
+}
+
+
+DESC_AUDIO charger_byname_DESC_AUDIO(char * chemin)
+{
+	DESC_AUDIO desc;
+	int id = get_id_byname_DESC_AUDIO(chemin);
+	desc.id = id;
+	if(id == ID_NOT_FOUND) return desc;
+	return charger_byid_DESC_AUDIO(id);
+}
+
 PILE init_MULTIPLE_DESC_AUDIO(int start_id, int n, int m, char * cheminDir)
 {
 	struct dirent *dir;
@@ -133,7 +175,7 @@ PILE init_MULTIPLE_DESC_AUDIO(int start_id, int n, int m, char * cheminDir)
             stat(chemin, &InfosFile);            //on recupere les stat du fichier lu pour savoir si c' est un dossier
             if (S_ISREG(InfosFile.st_mode) != 0) //on vérifie si c'est un fichier
             {
-            	printf("%s\n", chemin);
+            	//printf("%s\n", chemin);
             	desc = (DESC_AUDIO *) malloc(sizeof(DESC_AUDIO));
             	*desc = init_DESC_AUDIO(id, n, m, chemin);
             	pile = emPILE(pile, *desc);
@@ -183,6 +225,24 @@ int lier_DESC_AUDIO_FICHIER(DESC_AUDIO desc, char * chemin)
 	system(command);
 
 	return returnCode;
+}
+
+
+int get_id_byname_DESC_AUDIO(char * chemin)
+{
+	FILE * listeBaseFichier = fopen(LISTE_BASE_FICHIER, "r");
+	int id;
+	char fichier[100];
+	fscanf(listeBaseFichier, "%d %s", &id, fichier);
+	while(id != EOF)
+	{
+		if(strcmp(fichier, chemin) == 0) // On a trouvé le descripteur
+		{
+			return id;
+		}
+		fscanf(listeBaseFichier, "%d %s", &id, fichier);	
+	}
+	return ID_NOT_FOUND;
 }
 
 

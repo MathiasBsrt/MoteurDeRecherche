@@ -135,6 +135,35 @@ int main(int argc, char * argv[])
     printf("    --- Création des descripteurs audio du dossier TEST_SON --- \n");
     PILE pileDescDossier = init_MULTIPLE_DESC_AUDIO(0, 2, 15, "TEST_SON");
 
+    
+    printf("    --- Tests get_id_byname_DESC_AUDIO(char *) --- \n");
+    int idCorpus = get_id_byname_DESC_AUDIO("TEST_SON/corpus_fi.wav");
+    if(idCorpus != 0) { fprintf(stderr, "Le programme doit trouver un ID pour le corpus.\n"); return 1; }
+    int idJingle = get_id_byname_DESC_AUDIO("TEST_SON/jingle_fi.wav");
+    if(idJingle != 1) { fprintf(stderr, "Le programme doit trouver un ID pour le jingle.\n"); return 1; }
+    int idInconnu = get_id_byname_DESC_AUDIO("TEST_SON/jingle_fi99.wav");
+    if(idInconnu != ID_NOT_FOUND) { fprintf(stderr, "Le programme ne doit pas trouver d'ID pour le jingle99.\n"); return 1; }
+
+
+    printf("    --- Tests charger_id_DESC_AUDIO(int) --- \n");
+    DESC_AUDIO descCorpus = charger_byid_DESC_AUDIO(0);
+    if(descCorpus.id == ID_NOT_FOUND) { fprintf(stderr, "Le programme doit trouver un DESC_AUDIO pour l'id 0.\n"); return 1; }
+    DESC_AUDIO descJingle = charger_byid_DESC_AUDIO(1);
+    if(descJingle.id == ID_NOT_FOUND) { fprintf(stderr, "Le programme doit trouver un DESC_AUDIO pour l'id 1.\n"); return 1; }
+    DESC_AUDIO descInconnu = charger_byid_DESC_AUDIO(50);
+    if(descInconnu.id != ID_NOT_FOUND) { fprintf(stderr, "Le programme ne doit pas trouver de DESC_AUDIO pour l'id 50.\n"); return 1; }
+
+
+    printf("    --- Tests charger_byname_DESC_AUDIO(char *) --- \n");
+    descCorpus = charger_byname_DESC_AUDIO("TEST_SON/corpus_fi.wav");
+    if(descCorpus.id == ID_NOT_FOUND) { fprintf(stderr, "Le programme doit trouver un DESC_AUDIO pour le corpus.\n"); return 1; }
+    descJingle = charger_byname_DESC_AUDIO("TEST_SON/jingle_fi.wav");
+    if(descJingle.id == ID_NOT_FOUND) { fprintf(stderr, "Le programme doit trouver un DESC_AUDIO pour le jingle.\n"); return 1; }
+    descInconnu = charger_byname_DESC_AUDIO("TEST_SON/jingle_fi99.wav");
+    if(descInconnu.id != ID_NOT_FOUND) { fprintf(stderr, "Le programme ne doit pas trouver de DESC_AUDIO pour le jingle99.\n"); return 1; }
+
+
+
     DESC_AUDIO depileDesc;
     while(!PILE_estVide(pileDescDossier))
     {
