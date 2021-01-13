@@ -34,14 +34,14 @@ void add_char(char *buffer, char c, int *cpt)
  */
 int estPonctuation(char c)
 {
-    return (c == '.' || c == ',' || c == '?' || c == ';' || c == '!' || c == '\'' || c == ':' || c == '"' || c == '&' || c == '(' || c == ')' || c == '-' || c == '_' || c == '%' || !strcmp("$",&c) || !strcmp("€",&c) || !strcmp("£",&c));
+    return (c == '.' || c == ',' || c == '?' || c == ';' || c == '!' || c == '\'' || c == ':' || c == '"' || c == '&' || c == '(' || c == ')' || c == '-' || c == '_' || c == '%' || !strcmp("$",&c) || !strcmp("€",&c) || !strcmp("£",&c) || !strcmp("«",&c) || !strcmp("»",&c));
 }
 
 
 void xml_cleaner(FILE *src, FILE *dest)
 {
     char parcours;
-    char buffer[MAX];
+    char buffer[MAX_STRING];
     int nbr_char = 0;
     parcours = fgetc(src);
     do
@@ -49,7 +49,7 @@ void xml_cleaner(FILE *src, FILE *dest)
         if (parcours == '<')
             while ((parcours = fgetc(src)) != '>')
                 ;
-        else if (nbr_char < MAX - 1)
+        else if (nbr_char < MAX_STRING - 1)
         {
             if (estPonctuation(parcours))
                 add_char(buffer, ' ', &nbr_char);

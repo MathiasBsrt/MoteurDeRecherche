@@ -9,7 +9,7 @@
  * 
  */
 #include "../MOT/mot.h"
-#define MAX_INDEX 75
+#define MAX_INDEX 50
 /**
  * @brief Structure d'un index de mot
  * Permet de savoir dans quels textes et avec quelles occurences un mot est présent
