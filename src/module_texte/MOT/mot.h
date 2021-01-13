@@ -45,7 +45,7 @@ void saisir_MOT(MOT *e);
  * 
  * @param[in] MOT a 
  * @param[in] MOT b 
- * @return Le resultat du test
+ * @return 1 si c'est egal, 0 sinon
  */
 int compare_MOT(MOT a,MOT b);
 
@@ -56,3 +56,4 @@ int compare_MOT(MOT a,MOT b);
  * @return un mot 
  */
 MOT affecter_MOT(char* word);
+>>>>>>> Menus

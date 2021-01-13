@@ -14,11 +14,6 @@
 #include <dirent.h>
 #include <sys/types.h>
 #include <sys/stat.h>
-/**
- * @def  Correspond au maximum d'une string de 512 caractères
- * 
- */
-#define MAX 512
 
 /**
  * @def Correspond a la taille d'un index 
@@ -34,7 +29,7 @@
  * @param[in] nom_fichier nom du fichier texte
  * @param[in,out] pile_desc pile de descripteurs dans laquelle on ajoute le descripteur créé
  */
-void Descripteur_texte_fichier(char *nom_fichier, PILE_descripteur_texte *pile_desc,Table_Index *table_index);
+void Descripteur_texte_fichier(char *nom_fichier, PILE_descripteur_texte *pile_desc,Table_Index *table_index,int seuil);
 
 
  /**
@@ -44,7 +39,7 @@ void Descripteur_texte_fichier(char *nom_fichier, PILE_descripteur_texte *pile_d
   * @param[in,out] pile_desc pile de descripteurs dans laquelle on ajoute les descripteurs créés
   * @return int 1 si ça a marché, 0 sinon
   */
-int Descripteur_texte_dossier(char *nom_dossier, PILE_descripteur_texte *pile_desc,Table_Index *table_index);
+int Descripteur_texte_dossier(char *nom_dossier, PILE_descripteur_texte *pile_desc,Table_Index *table_index,int seuil);
 
 
 
@@ -89,4 +84,5 @@ void lecture_dossier(FILE *f, char *nom_dossier);
  * @param[in] nom_dossier 
  * @param[in] nom_fichier 
  */
+>>>>>>> Menus
 void path_maker(char *chemin, char *nom_dossier, char *nom_fichier);

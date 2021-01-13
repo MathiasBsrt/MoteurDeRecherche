@@ -9,7 +9,7 @@
  * 
  */
 #include "../MOT/mot.h"
-#define MAX_INDEX 75
+#define MAX_INDEX 50
 /**
  * @brief Structure d'un index de mot
  * Permet de savoir dans quels textes et avec quelles occurences un mot est présent
@@ -93,3 +93,4 @@ void enregistre_Table_Index(Table_Index table, char *save_table_index);
  * @param save_table_index chemin vers la sauvegarde 
  */
 void charger_Table_index(Table_Index *table, char *save_table_index);
+>>>>>>> Menus
