@@ -105,7 +105,7 @@ int indexationSon(){
     printf("  --- CONTROLEUR BASE DESCRIPTEUR --- \n");
     printf("    --- Initialisation du controleur --- \n");
     PILE pileDescripteur = init_PILE();
-    init_FICHIER_BASE_DESC(pileDescripteur);
+    init_FICHIER_BASE_DESC();
 
     printf("    --- Création du descripteur audio de TEST_SON/corpus_fi.wav --- \n");
     DESC_AUDIO descCorpusWAV = init_DESC_AUDIO(0, n, m, "TEST_SON/corpus_fi.wav");
@@ -128,7 +128,7 @@ int indexationSon(){
     sauvegarder_PILE_DESC_AUDIO(pileDescripteur);
 
     printf("    --- Chargement des descripteurs enregistrés --- \n");
-    PILE secondePile = charger_PILE_DESC_AUDIO();
+    PILE secondePile = charger_PILE_DESC_AUDIO(NULL);
 
     printf("       --- Pile est vide ? --- \n");
     printf("          %s \n", (PILE_estVide(secondePile) ? "Oui" : "Non"));
@@ -227,7 +227,7 @@ int indexationSon(){
 
     DESC_AUDIO desc1 = init_DESC_AUDIO(0, 5, 30, "TEST_SON/corpus_fi.wav");
     DESC_AUDIO desc2 = init_DESC_AUDIO(1, 5, 30, "TEST_SON/jingle_fi.wav");
-    RES_EVAL_AUDIO resultat = evaluer_DESC_AUDIO(desc1, desc2, 3);
+    RES_EVAL_AUDIO resultat = evaluer_DESC_AUDIO(desc1, desc2, 3, EVAL_NORMAL);
     if(resultat.n == 0)
     {
         fprintf(stderr, "Aucun résultat trouvé .. Normalement le programme doit trouver le jingle à +/- 29s.\n");
