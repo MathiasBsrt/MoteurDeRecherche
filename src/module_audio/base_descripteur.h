@@ -15,10 +15,21 @@
 #define ID_NOT_FOUND -1
 #define ALREADY_GENERATED 1
 
+#define RECHERCHE_ERREUR 1
+#define RECHERCHE_OK 0
+
+/**	@struct RES_RECHERCHE_AUDIO
+ * Definition de la structure d'un résultat de recherche
+ */
+typedef struct Resultat_Recheche_t
+{
+    int n; /* < Nombre de résultat */
+	RES_EVAL_AUDIO * resultats; /* < Liste des résultats */
+} RES_RECHERCHE_AUDIO;
+
 /** Initialise le controleur du fichier BASE_DESC_FICHIER
-* @param PILE la pile de descripteurs audios
 */
-void init_FICHIER_BASE_DESC(PILE);
+void init_FICHIER_BASE_DESC();
 
 /** Sauvegarde un descripteur audio dans la pile des descripteurs
 * @param PILE la pile de descripteurs audios
@@ -35,10 +46,11 @@ void sauvegarder_PILE_DESC_AUDIO(PILE);
 
 /** Charge dans une nouvelle pile de descripteurs les descripteurs présents
 * dans le fichier BASE_DESC_FICHIER
+* @param nb_charge retourne le nombre de descripteurs chargés (peut être NULL).
 *
 * @return PILE la pile de descripteurs audios chargée.
 */
-PILE charger_PILE_DESC_AUDIO();
+PILE charger_PILE_DESC_AUDIO(int * nb_charge);
 
 /** Charge un descripteur audio enregistrer dans BASE_DESC_FICHIER à partir de son identifiant
 *
@@ -92,6 +104,25 @@ int deja_genere_DESC_AUDIO(char *);
 * @return char * chemin vers le fichier
 */
 char * fichier_lier_DESC_AUDIO(DESC_AUDIO);
+
+/** Effectue une recherche pour le module audio
+ *  @param char * chemin vers le fichier source à trouver dans d'autres fichiers déjà indexés
+ *  @param unsigned int chercher les n meilleurs temps
+ *  @param double seuil de sécurité (voir #define EVAL_... dans descripteur.h)
+ *  @param int * code d'erreur (voir #define RECHERCHE_... dans base_descripteur.h)
+ * 
+ *  @return RES_RECHERCHE_AUDIO le résultat de la recherche
+ */
+RES_RECHERCHE_AUDIO rechercher_DESC_AUDIO(char *, unsigned int, double, int *);
+
+/**
+ * @brief Libère la mémoire occupée par un résultat d'une rechercher par le module audio.
+ * 
+ * @param resultat le résultat de la recherche
+ */
+void free_RES_RECHERCHE_AUDIO(RES_RECHERCHE_AUDIO resultat);
+
+
 
 
 #endif

@@ -10,9 +10,8 @@
 #include "descripteur.h"
 #include "histogramme.h"
 
-void init_FICHIER_BASE_DESC(PILE PILE_DESCRIPTEUR_AUDIO)
+void init_FICHIER_BASE_DESC()
 {
-	PILE_DESCRIPTEUR_AUDIO = init_PILE();
 	// On créé le fichier BASE_DESC_FICHIER si il n'existe pas
 	FILE *fp = fopen(BASE_DESC_FICHIER, "ab+");
 	fclose(fp);
@@ -68,10 +67,11 @@ void sauvegarder_PILE_DESC_AUDIO(PILE PILE_DESCRIPTEUR_AUDIO)
 }
 
 
-PILE charger_PILE_DESC_AUDIO()
+PILE charger_PILE_DESC_AUDIO(int * nb_charge)
 {
 	PILE PILE_DESCRIPTEUR_AUDIO = init_PILE();
 	FILE * baseDescFichier = fopen(BASE_DESC_FICHIER, "r");
+	if(nb_charge != NULL) *nb_charge = 0;
 	if(baseDescFichier == NULL)
 	{
 		fprintf(stderr, "[CHARGER_PILE_DESC_AUDIO] Impossible de charger le fichier %s en lecture.", BASE_DESC_FICHIER);
@@ -100,6 +100,7 @@ PILE charger_PILE_DESC_AUDIO()
 			}
 		*/
 		PILE_DESCRIPTEUR_AUDIO = emPILE(PILE_DESCRIPTEUR_AUDIO, *desc);
+		if(nb_charge != NULL) *nb_charge++;
 
 		//fscanf(baseDescFichier, "%d ", &val);
 		fread(&val, 4, 1, baseDescFichier);
@@ -125,24 +126,19 @@ DESC_AUDIO charger_byid_DESC_AUDIO(int id)
 	int y, x;
 	//fscanf(baseDescFichier, "%d ", &val);
 	fread(&val, 4, 1, baseDescFichier);
-		printf("%d\n", val);
 	do
 	{
 		fread(&k, 4, 1, baseDescFichier);
 		fread(&m, 4, 1, baseDescFichier);
-		printf("Lecture de k=%d m=%d\n", k, m);
 		//fscanf(baseDescFichier, "%d %d", &k, &m);
 		desc.id = val;
 		desc.histo = init_HISTOGRAMME_AUDIO((int) log2(k), m);
-		printf("Saut de %d * %d = %d\n", desc.histo.k, desc.histo.m, desc.histo.k * desc.histo.m);
 		fread(desc.histo.mat, 4, desc.histo.k * desc.histo.m, baseDescFichier);
 		if(val == id) break;
 		fread(&val, 4, 1, baseDescFichier);
-		printf("%d\n", val);
 	} while(val != EOF && desc.id != id);
 	if(val == EOF) desc.id = -1;
 	fclose(baseDescFichier);
-	printf("========\n");
 	return desc;
 }
 
@@ -284,4 +280,60 @@ char * fichier_lier_DESC_AUDIO(DESC_AUDIO desc)
 	} while(id != desc.id);
 	if(id == EOF) return NULL;
 	return filename;
+}
+
+
+RES_RECHERCHE_AUDIO rechercher_DESC_AUDIO(char * source, unsigned int n, double threshold, int * code)
+{
+	RES_RECHERCHE_AUDIO resultat;
+
+	DESC_AUDIO desc_source = charger_byname_DESC_AUDIO(source);
+	if(desc_source.histo.mat == NULL) { *code = RECHERCHE_ERREUR; return resultat; }
+
+	int nb_charges;
+	PILE descripteurs = charger_PILE_DESC_AUDIO(&nb_charges);
+	int nb_retenus = 0;
+	RES_EVAL_AUDIO * resultats_evals = (RES_EVAL_AUDIO *) malloc(sizeof(RES_EVAL_AUDIO) * nb_charges);
+
+	DESC_AUDIO desc;
+
+	char * test1;
+	char * test2;
+	while(!PILE_estVide(descripteurs))
+	{
+		descripteurs = dePILE(descripteurs, &desc);
+		test1 = fichier_lier_DESC_AUDIO(desc);
+		test2 = fichier_lier_DESC_AUDIO(desc_source);
+		if(desc.id == desc_source.id) { free_DESC_AUDIO(&desc); continue; } // On saute le descripteur source
+
+		RES_EVAL_AUDIO resultat_eval = evaluer_DESC_AUDIO(desc, desc_source, n, threshold);
+		if(resultat_eval.n != 0)
+		{
+			resultats_evals[nb_retenus] = resultat_eval;
+			nb_retenus++;
+		}
+	}
+
+	resultat.n = nb_retenus;
+	resultat.resultats = (RES_EVAL_AUDIO *) malloc(sizeof(RES_EVAL_AUDIO) * nb_retenus);
+	for(int i = 0; i < nb_retenus; i++)
+	{
+		RES_EVAL_AUDIO res;
+		res.fichier = resultats_evals[i].fichier;
+		res.n = resultats_evals[i].n;
+		res.times = resultats_evals[i].times;
+		resultat.resultats[i] = res;
+	}
+
+	free(resultats_evals);
+	return resultat;
+}
+
+void free_RES_RECHERCHE_AUDIO(RES_RECHERCHE_AUDIO resultat)
+{
+	for(int i = 0; i < resultat.n; i++)
+	{
+		free_RES_EVAL_AUDIO(resultat.resultats[i]);
+	}
+	free(resultat.resultats);
 }

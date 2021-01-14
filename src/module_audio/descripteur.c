@@ -71,6 +71,46 @@ void avoir_min(int n, int in, double * input_values, int * index, double * value
 	}
 }
 
+void avoir_min_padding(int n, int in, double padding, double * input_values, int * index, double * values)
+{
+	double min = 99999999999;
+	int mini = 0;
+	int alreadyPicked = 0;
+	double half_padding = padding / 2.0;
+	for(int i = 0; i < n; i++)
+	{
+		for(int j = 0; j < in; j++)
+		{
+			for(int k = 0; k < i; k++)
+			{
+				if(j == index[k]) 
+				{ 
+					alreadyPicked = 1; 
+					break;
+				}
+			}
+			if(alreadyPicked) { alreadyPicked = 0; continue; } 
+			if(input_values[j] < min)
+			{
+				for(int k = 0; k < i; k++)
+				{	
+					if((j > index[k] - half_padding && j < index[k] + half_padding))
+					{
+						alreadyPicked = 1; break;
+					}
+				}
+				if(alreadyPicked) { alreadyPicked = 0; continue; } 
+				min = input_values[j];
+				mini = j;
+			}
+		}
+		index[i] = mini;
+		values[i] = min;
+		min = 99999999999;
+		mini = 0;
+	}
+}
+
 void avoir_max(int n, int in, double * input_values, int * index, double * values)
 {
 	double max = -9999999;
@@ -108,7 +148,7 @@ double avoir_moyenne(int in, double * input_values)
 	return moyenne / in;
 }
 
-RES_EVAL_AUDIO evaluer_DESC_AUDIO(DESC_AUDIO desc1, DESC_AUDIO desc2, unsigned int nb)
+RES_EVAL_AUDIO evaluer_DESC_AUDIO(DESC_AUDIO desc1, DESC_AUDIO desc2, unsigned int nb, double threshold)
 {
 	/*
         REMARQUE:
@@ -141,6 +181,8 @@ RES_EVAL_AUDIO evaluer_DESC_AUDIO(DESC_AUDIO desc1, DESC_AUDIO desc2, unsigned i
 	char * filename2 = fichier_lier_DESC_AUDIO(desc2);
 	// Même vérification avec le descripteur 2.
 	if(filename2 == NULL) return resultat;
+
+	resultat.fichier = filename1;
 
 	// On récupère finalement les durées des fichiers WAV.
 	int duration1 = wav_get_duration(filename1);
@@ -240,16 +282,15 @@ RES_EVAL_AUDIO evaluer_DESC_AUDIO(DESC_AUDIO desc1, DESC_AUDIO desc2, unsigned i
 		int * indicies_max = (int *) malloc(sizeof(int));
 		avoir_max(1, size - nbLost, scores, indicies_max, values_max);
 
-		resultat.n = nb;
-		resultat.times = (double *) malloc(sizeof(double) * nb);
-		double * values_min = (double *) malloc(sizeof(double) * nb);
-		int * indicies_min = (int *) malloc(sizeof(double) * nb);
+		double * values_min = (double *) malloc(sizeof(double));
+		int * indicies_min = (int *) malloc(sizeof(double));
 		// On récupère les nb meilleurs score
-		avoir_min(nb, size - nbLost, scores, indicies_min, values_min);
+		avoir_min(1, size - nbLost, scores, indicies_min, values_min);
 
 		double moyenne = avoir_moyenne(size - nbLost, scores);
 
 		double val_verification = (moyenne - values_min[0]) / values_max[0];
+		
 
 		/*printf("moyenne = %f\n", moyenne);
 		printf("values_min = %f\n", values_min[0]);
@@ -257,13 +298,20 @@ RES_EVAL_AUDIO evaluer_DESC_AUDIO(DESC_AUDIO desc1, DESC_AUDIO desc2, unsigned i
 		printf("val_verification = %f\n", val_verification);*/
 
 		// Constante de vérification: 1.2
-		if(val_verification < 0.12)
+		if(val_verification < threshold)
 		{
 			// Le résultat est jugé invalide, on retourne donc un résultat vide.
 			resultat.n = 0;
 			return resultat;
 		} 
+
+		resultat.n = nb;
+		resultat.times = (double *) malloc(sizeof(double) * nb);
+		double * values = (double *) malloc(sizeof(double) * nb);
+		int * indicies = (int *) malloc(sizeof(double) * nb);
+		avoir_min_padding(nb, size - nbLost, (size - nbLost) / (duration2 * 2), scores, indicies, values);
 		
+		int offset = 0;
 		// On configure alors le réusltat
 		for(int i = 0; i < nb; i++)
 		{
@@ -272,11 +320,25 @@ RES_EVAL_AUDIO evaluer_DESC_AUDIO(DESC_AUDIO desc1, DESC_AUDIO desc2, unsigned i
 			
 			// On calcul le temps vers lequel le programme à trouver
 			// l'histogramme 2 dans l'histogramme 1.
-			resultat.times[i] = ((double) (indicies_min[i] * padding) / index1_max) * duration1;
+			val_verification = (moyenne - values[i]) / values_max[0];
+			if(val_verification < threshold)
+			{
+				offset++;
+				continue;
+			}
+			resultat.times[i - offset] = ((double) (indicies[i] * padding) / index1_max) * duration1;
 		}
+		resultat.n = resultat.n - offset;
+		free(values_max);
+		free(indicies_max);
+		free(values_min);
+		free(indicies_min);
+		free(values);
+		free(indicies);
 		free_HISTOGRAMME_AUDIO(&histo1);
 		
-	} else return evaluer_DESC_AUDIO(desc2, desc1, nb); // On inverse simplement les arguments
+	//} else return evaluer_DESC_AUDIO(desc2, desc1, nb, threshold); // On inverse simplement les arguments
+	} else return resultat;
 	// On retourne l'histogramme
 	return resultat;
 }
@@ -290,4 +352,9 @@ void affiche_DESC_AUDIO(DESC_AUDIO desc)
 void free_DESC_AUDIO(DESC_AUDIO * desc)
 {
 	free_HISTOGRAMME_AUDIO(&(desc->histo));
+}
+
+void free_RES_EVAL_AUDIO(RES_EVAL_AUDIO res_eval_audio)
+{
+	free(res_eval_audio.times);
 }
