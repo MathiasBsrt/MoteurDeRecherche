@@ -13,12 +13,12 @@ int main(int argc, char * argv[])
         return 1;
     }
     
-    PILE pileDescripteur = init_PILE();
+    /*PILE pileDescripteur = init_PILE();
     init_FICHIER_BASE_DESC();
-    DESC_AUDIO descCorpusWAV = init_DESC_AUDIO(0, 5, 30, "TEST_SON/corpus_fi.wav");
+    DESC_AUDIO descCorpusWAV = init_DESC_AUDIO(0, 6, 30, "TEST_SON/corpus_fi.wav");
     lier_DESC_AUDIO_FICHIER(descCorpusWAV, "TEST_SON/corpus_fi.wav");
     pileDescripteur = sauvegarder_DESC_AUDIO(pileDescripteur, descCorpusWAV);
-    DESC_AUDIO descJingleWAV = init_DESC_AUDIO(1, 5, 30, "TEST_SON/jingle_fi.wav");
+    DESC_AUDIO descJingleWAV = init_DESC_AUDIO(1, 7, 30, "TEST_SON/jingle_fi.wav");
     lier_DESC_AUDIO_FICHIER(descJingleWAV, "TEST_SON/jingle_fi.wav");
     pileDescripteur = sauvegarder_DESC_AUDIO(pileDescripteur, descJingleWAV);
     DESC_AUDIO descCymbaleWAV = init_DESC_AUDIO(2, 5, 30, "TEST_SON/cymbale.wav");
@@ -29,7 +29,7 @@ int main(int argc, char * argv[])
 
     free_DESC_AUDIO(&descCorpusWAV);
     free_DESC_AUDIO(&descJingleWAV);
-    free_DESC_AUDIO(&descCymbaleWAV);
+    free_DESC_AUDIO(&descCymbaleWAV);*/
 
     char * filename1 = argv[1];
 

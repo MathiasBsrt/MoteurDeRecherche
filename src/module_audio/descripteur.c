@@ -199,7 +199,11 @@ RES_EVAL_AUDIO evaluer_DESC_AUDIO(DESC_AUDIO desc1, DESC_AUDIO desc2, unsigned i
 		//printf("Rapport = %f\n", rapport);
 
 		// On calcul alors le nouveau 'n' pour le descripteur 1.
-		int n = (int) (log2((double) desc1.histo.k) + log2(rapport));
+		int n1 = (int) log2((double) desc1.histo.k);
+		int n2 = (int) log2((double) desc2.histo.k);
+		int n = (int) (n1 + log2(rapport));
+		// A TESTER: 
+		n +=  ((int) floor(((double) n2 / n1) * n1) - n1);
 		//printf("%f + %f = %d\n", log2((double) desc1.histo.k), log2(rapport), n);
 
 		// On regénère le descripteur 1.
