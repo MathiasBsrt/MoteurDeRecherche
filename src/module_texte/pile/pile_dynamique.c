@@ -113,9 +113,7 @@ int estDanslaPile(PILE p, char *buffer)
 
 PILE_descripteur_texte init_PILE_desc()
 {
-    PILE_descripteur_texte p;
-    p = NULL;
-    return p;
+    return NULL;
 }
 
 int PILE_desc_estVide(PILE_descripteur_texte d)
@@ -148,7 +146,6 @@ void Index_from_pile(Table_Index *table, PILE pile, int id_texte)
     {
         Cellule *parcours = pile;
         Index *index;
-        int passage = 0;
         while (parcours)
         {
 
@@ -168,8 +165,7 @@ void Index_from_pile(Table_Index *table, PILE pile, int id_texte)
 
 void EMPILE_desc_from_pile(PILE p, PILE_descripteur_texte *d, char *path_to_xml, Table_Index *table)
 {
-    FILE *liste_descripteurs = fopen("liste_base_descripteurs", "a");
-    Index *index;
+    FILE *liste_descripteurs = fopen("sauvegardes/liste_base_descripteurs", "a");
     int mots_retenus;
 
     //on remplit le descripteur a empiler
@@ -310,14 +306,15 @@ void charger_PILE_Desc(PILE_descripteur_texte *p, char *save_descripteurs_textes
     FILE *f = fopen(save_descripteurs_textes, "r");
     if (f)
     {
-        PILE pile_mots;
-        Cellule *mot;
         Descripteur_texte tmp;
         while (fread(&tmp, sizeof(tmp), 1, f))
         {
             EMPILE_desc(p, tmp,f);
-            fflush(f);
         }
         fclose(f);
+    }
+    else
+    {
+        perror("Aucunes sauvegardes disponibles. Essayez d'indexer puis de sauvegarder");
     }
 }

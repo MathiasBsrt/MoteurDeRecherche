@@ -43,7 +43,7 @@ void recherche_et_destruction(PILE *p, MOT mot)
  * @param[in] src Descripteur du fichier texte 
  * @param[in,out] p La pile à remplir
  */
-void *descripteur_de_texte(FILE *src, PILE *p, Table_Index *table_index, int seuil)
+void descripteur_de_texte(FILE *src, PILE *p, int seuil)
 {
     char buffer[MAX_WORD];
     while (fscanf(src, "%s ", buffer) != EOF)
@@ -95,6 +95,14 @@ int texte_deja_indexe(char *path_to_xml)
     return code_retour;
 }
 
+/*void conversionUTF8(char* path_to_xml)
+{
+    char Retour[MAX_STRING]="iconv -f ISO-8859-1 -t UTF-8 ";
+    strcat(Retour,path_to_xml);
+    strcat(Retour," -o temp");
+    system(Retour);
+}*/
+
 /**
  * @brief Permet de concevoir un descripteur et à l'empiler
  * 
@@ -106,34 +114,35 @@ void fabrique_a_descripteur(char *path_to_xml, PILE_descripteur_texte *pile_desc
 
     FILE *tmp = fopen("tmp", "w+");   //fichier de destination du xml_cleaner
     FILE *tmp1 = fopen("tmp1", "w+"); // fichier de destination du xml_tokenizer
-    FILE *src = fopen(path_to_xml, "r");
+    FILE *src= fopen(path_to_xml,"r");
+    
     PILE p = init_pile();
 
     if (tmp && tmp1 && src)
     {
         if (!texte_deja_indexe(path_to_xml))
         {
-            Index *index;
             xml_cleaner(src, tmp);
             rewind(tmp);
             xml_filter(tmp, tmp1);
             rewind(tmp1);
 
-            descripteur_de_texte(tmp1, &p, table_index, seuil);
+            descripteur_de_texte(tmp1, &p, seuil);
 
             EMPILE_desc_from_pile(p, pile_desc, path_to_xml, table_index);
         }
         else
-        {
+        { 
             perror("Texte déjà rentré !\n");
         }
 
         fclose(tmp);
         fclose(tmp1);
         fclose(src);
+        remove("temp");
     }
     else
-    {
+    { 
         perror("erreur dans l'ouverture des fichiers");
         exit(3);
     }
@@ -143,7 +152,8 @@ int Descripteur_texte_dossier(char *nom_dossier, PILE_descripteur_texte *pile_de
 {
     FILE *f = fopen("nom_fichiers.txt", "w+");
     if (f)
-    {
+    {   
+        printf("--> Dossier en cours d'indexation\n");
         lecture_dossier(f, nom_dossier);
         char path_to_xml[MAX_WORD];
         char nom_fichier[MAX_WORD / 2];
@@ -164,11 +174,12 @@ int Descripteur_texte_dossier(char *nom_dossier, PILE_descripteur_texte *pile_de
 
 void Descripteur_texte_fichier(char *nom_fichier, PILE_descripteur_texte *pile_desc, Table_Index *table_index, int seuil)
 {
+    printf("--> Fichier en cours d'indexation\n");
     fabrique_a_descripteur(nom_fichier, pile_desc, table_index, seuil);
     remove("tmp");
     remove("tmp1");
 }
-
+/*
 int main(void)
 {
     PILE_descripteur_texte pile = init_PILE_desc();
@@ -176,22 +187,22 @@ int main(void)
     Table_Index table = Init_Index();
     Table_Index table1 = Init_Index();
 
-    //Descripteur_texte_dossier("Textes_UTF8", &pile, &table, 1);
+    Descripteur_texte_dossier("Textes_UTF8", &pile, &table, 1);
     //Descripteur_texte_fichier("Textes_UTF8/03-Mimer_un_signal_nerveux_pour_utf8.xml", &pile, &table, 1);
     //affiche_PILE(pile1->pile_mot);
 
     //Enregistrement Index
     //enregistre_Table_Index(table, "sauvegarde.index");
-    //charger_Table_index(&table1, "sauvegarde.index");
+    charger_Table_index(&table1, "sauvegarde.index");
 
     //Enregistrement Pile
     //enregistre_PILE_Desc(pile, "sauvegarde.desc");
     charger_PILE_Desc(&pile1, "sauvegarde.desc");
 
     //Affichage de quelques resultats
-    affiche_PILE(pile1->pile_mot);
-    printf("nombre total de mots : %d\tnombre de mots differents : %d\n", pile1->nombre_mots_total, pile1->nbr_mots_retenus);
-    //printf("nombre total de mots : %d\tnombre de mots differents : %d\n", pile->nombre_mots_total, pile->nbr_mots_retenus);
-    //AFFICHE_table_index(table1);
+    //affiche_PILE(pile1->pile_mot);
+    //printf("nombre total de mots : %d\tnombre de mots differents : %d\n", pile1->nombre_mots_total, pile1->nbr_mots_retenus);
+    printf("nombre total de mots : %d\tnombre de mots differents : %d\n", pile->nombre_mots_total, pile->nbr_mots_retenus);
+    AFFICHE_table_index(table1);
     remove("liste_base_descripteurs");
-}
+}*/

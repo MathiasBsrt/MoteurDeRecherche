@@ -14,6 +14,7 @@
 #include <dirent.h>
 #include <sys/types.h>
 #include <sys/stat.h>
+#include <unistd.h>
 
 /**
  * @def Correspond a la taille d'un index 

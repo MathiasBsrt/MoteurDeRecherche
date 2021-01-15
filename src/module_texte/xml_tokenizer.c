@@ -25,7 +25,7 @@ PILE pile_stopwords()
         while (fscanf(stopwords, "%s", buffer) != EOF) //mise en mémoire des stopwords
             pile_stopwords = emPILE(pile_stopwords, affecter_MOT(buffer));
 
-        fclose(stopwords); 
+        fclose(stopwords);
         return pile_stopwords;
     }
     else
@@ -34,7 +34,6 @@ PILE pile_stopwords()
         exit(2);
     }
 }
-
 
 void xml_filter(FILE *src, FILE *dest)
 
