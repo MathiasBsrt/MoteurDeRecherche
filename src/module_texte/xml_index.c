@@ -190,6 +190,7 @@ int Descripteur_texte_fichier(char *nom_fichier, PILE_descripteur_texte *pile_de
     remove("tmp1");
     return id;
 }
+
 /*
 int main(void)
 {
@@ -203,6 +204,7 @@ int main(void)
     //affiche_PILE_mots(pile1->pile_mot);
 
     //Enregistrement Index
+<<<<<<< HEAD
     //enregistre_Table_Index(table, "sauvegarde.index");
     charger_Table_index(&table1, "sauvegarde.index");
 

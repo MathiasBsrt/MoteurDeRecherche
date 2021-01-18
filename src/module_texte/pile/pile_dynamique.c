@@ -303,6 +303,7 @@ void enregistre_PILE_Desc(PILE_descripteur_texte p, char *save_descripteurs_text
 }
 
 void charger_PILE_Desc_mot(PILE_descripteur_texte *p, char *save_descripteurs_textes)
+
 {
     FILE *f = fopen(save_descripteurs_textes, "r");
     if (f)
