@@ -84,5 +84,11 @@ void lecture_dossier(FILE *f, char *nom_dossier);
  * @param[in] nom_dossier 
  * @param[in] nom_fichier 
  */
->>>>>>> Menus
 void path_maker(char *chemin, char *nom_dossier, char *nom_fichier);
+
+/***
+ * Verifie si un texte a déjà été indexé
+ * @param char[] chemin du fichier
+ * @return id du fichier si existe sinon 0
+ */
+int texte_deja_indexe(char *path_to_xml);

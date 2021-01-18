@@ -93,4 +93,3 @@ void enregistre_Table_Index(Table_Index table, char *save_table_index);
  * @param save_table_index chemin vers la sauvegarde 
  */
 void charger_Table_index(Table_Index *table, char *save_table_index);
->>>>>>> Menus

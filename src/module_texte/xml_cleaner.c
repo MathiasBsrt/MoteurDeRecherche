@@ -74,4 +74,3 @@ void xml_cleaner(FILE *src, FILE *dest)
     }
 }
 
->>>>>>> Menus

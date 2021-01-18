@@ -11,8 +11,8 @@ int comparaison(Descripteur_texte d1, Descripteur_texte d2, double seuil)
 
     // On ajoute cette case dans le teableau d'intersection
     int nbCaseIntersection = 0;
-    char *mot1;
-    char *mot2;
+    char mot1[100];
+    char mot2[100];
     int nbR1;
     int nbR2;
 
@@ -22,11 +22,13 @@ int comparaison(Descripteur_texte d1, Descripteur_texte d2, double seuil)
     affiche_PILE(d1.pile_mot);
     //printf("nbR= %d",parcours_d1->elt.nbr_occurrence);
 
-    do // Parcours d1
+    while (parcours_d1 != NULL) // Parcours d1
     {
+
         nbR1 = parcours_d1->elt.nbr_occurrence;
         strcpy(mot1, parcours_d1->elt.mot);
-        do //Parcours d2
+
+        while (parcours_d2 != NULL) //Parcours d2
         {
             nbR2 = parcours_d2->elt.nbr_occurrence;
             strcpy(mot2, parcours_d2->elt.mot);
@@ -37,12 +39,11 @@ int comparaison(Descripteur_texte d1, Descripteur_texte d2, double seuil)
                     nbCaseIntersection++;
                 }
             }
-            parcours_d1 = parcours_d2->suivant;
-        } while (parcours_d1 != NULL);
+            parcours_d2 = parcours_d2->suivant;
+        }
 
         parcours_d1 = parcours_d1->suivant;
-    } while (parcours_d1 != NULL);
-
+    }
     //On obtient un tableau dont al longueur et le nb de cases similaire. On peut en tirer un pourcentage de similarité
     //On compare la similarité au seuil
 
@@ -63,61 +64,80 @@ int comparaison(Descripteur_texte d1, Descripteur_texte d2, double seuil)
     return 2;
 }
 
-void rechercheParCritere(char *mot, int *fichiersSimilairesID, double seuilSimilarite)
+void rechercheParCritere(char *mot, char **fichiersSimilaires, int *nbF, double seuilSimilarite)
 {
-
+    printf("recherche par critère...\n");
     PILE_descripteur_texte pile = init_PILE_desc();
-    PILE_descripteur_texte pile1 = init_PILE_desc();
-    Table_Index table = Init_Index();
+    charger_PILE_Desc(&pile, "sauvegarde.desc");
     Table_Index table1 = Init_Index();
-    Descripteur_texte_dossier("Textes_UTF8", &pile, &table);
-
-    //Charger la table
-    enregistre_Table_Index(table, "sauvegarde.index");
     charger_Table_index(&table1, "sauvegarde.index");
-    //AFFICHE_table_index(table1);
 
     //Dans cette table on cherche l'index du mot pour obtenir la liste des fichiers qui ont ce mot
 
     Table_Index indexMot;
     indexMot = rechercheMot(table1, mot);
 
-    //une liste de tout ses fichiers
-    //int *idTxt_avec_occ[2]; tableau 2D des id associés au nombre d'occur du mot
     if (indexMot == NULL)
     {
-        fichiersSimilairesID = NULL;
+        fichiersSimilaires = NULL;
     }
     else
     {
-        //Pour tester
-        int id = indexMot->idTxt_avec_occ[0][0];
-        int nbOcc = indexMot->idTxt_avec_occ[0][1];
 
-        //Creer le descripteur du plus grand
-        Descripteur_texte desc1; //pas null, chercher dans la pile
-
-        //On prend le fichier avec le plus grand nb de fois mot
-        int fichiers[TAILLEPILE];
-
-        fichiers[0] = desc1.id;
         //On compare ce fichier avec tous les autres fichiers en appliquant le seuil
-        for (int i = 1; i < indexMot->nb_max; i++)
+        printf("nb_max=%d\n", indexMot->nb_occ);
+        *nbF = indexMot->nb_occ;
+        for (int i = 0; i < indexMot->nb_occ; i++)
         {
-            //Creer le descripteur du desc2
-            Descripteur_texte desc2; //pas null, chercher dans la pile
-            if (comparaison(desc1, desc2, seuilSimilarite) < 2)
-            {
-                //stock id du desc
-                fichiers[i] = desc2.id;
-            }
-        }
 
-        fichiersSimilairesID = &fichiers;
+            char chemin[350];
+            getChemin(indexMot->idTxt_avec_occ[0][i], chemin);
+            printf("chemin trouvé=%s\n", chemin);
+            strcpy(fichiersSimilaires[i], chemin);
+        }
     }
 }
 
-Table_Index *rechercheMot(Table_Index a, char *mot)
+void getChemin(int id, char chemin[])
+{
+    FILE *f = fopen("liste_base_descripteurs", "r");
+    if (f)
+    {
+        int idLu;
+        while (fscanf(f, "%s", chemin) != EOF)
+        {
+            fscanf(f, "%d", &idLu);
+            if (idLu == id)
+            {
+                break;
+            }
+        }
+        fclose(f);
+    }
+}
+Descripteur_texte *getDescripteur_Texte(int id, PILE_descripteur_texte *p)
+{
+
+    Descripteur_texte *parcours = NULL;
+    printf("on cherche le descripteur correspondant\n");
+    int test = 0;
+    parcours = *p;
+    while (parcours != NULL)
+    {
+        printf("parcours id :%d\n", parcours->id);
+
+        if (parcours->id == id)
+        {
+            printf(" descripteur bien trouvé\n\n");
+
+            return parcours;
+        }
+        parcours = parcours->suivant;
+    }
+    return parcours;
+}
+
+Table_Index rechercheMot(Table_Index a, char *mot)
 {
     if (a == NULL)
     {
@@ -138,38 +158,90 @@ Table_Index *rechercheMot(Table_Index a, char *mot)
     }
 }
 
-void rechercheParDocument(char *cheminVersDocument, int *fichiersSimilairesID, double seuilSimilarite)
+void rechercheParDocument(char *cheminVersDocument, char *fichiersSimilaires[], int *nbF, double seuilSimilarite)
 {
-    //Indexer nouveau document
-    Descripteur_texte desc1;
 
-    //desc2 => descripteur courant,permet de parcourir la pile
-    Descripteur_texte desc2;
+    //On indexe le nouveau document
+    PILE_descripteur_texte pile = init_PILE_desc();
+    Table_Index table = Init_Index();
 
-    for (int i = 0; i < taillePile; i++)
+    int id = Descripteur_texte_fichier(cheminVersDocument, &pile, &table, 1);
+    /*
+    if (pile == NULL)
     {
-        desc2 = NULL; //pas null, voir dans pile
-        if(comparaison(desc1, desc2, seuilSimilarite) < 2)
+        for (int i = 0; i < 10000; i++)
         {
-            fichiersSimilairesID[i] = desc2.id;
+            printf("pile null");
         }
+    }*/
+
+    //Si le fichier n'est pas indexé
+    if (pile != NULL)
+    {
+        //Enregistrement Index
+        enregistre_Table_Index(table, "sauvegarde.index");
+        //Enregistrement Pile
+        enregistre_PILE_Desc(pile, "sauvegarde.desc");
+    }
+
+    //on charge la pile des descripteurs
+    charger_PILE_Desc(&pile, "sauvegarde.desc");
+
+    //On récupéere le descripteur qui vient d'être crée
+    Descripteur_texte *desc1 = getDescripteur_Texte(id, &pile);
+
+    //On compare le desc1 avec tous les descripteurs de la pile sauf lui même
+    Descripteur_texte *desc2 = pile;
+    while (desc2 != NULL)
+    {
+        if (comparaison(*desc1, *desc2, seuilSimilarite) < 2)
+        {
+            getChemin(desc2->id, fichiersSimilaires[*nbF]);
+            *nbF++;
+        }
+        desc2 = desc2->suivant;
     }
 }
 
 int main(int argc, char const *argv[])
 {
 
-    FILE *f;
-    rechercheParCritere("lyon", f, 80.0);
-    /* Descripteur_texte *d1;
-    Descripteur_texte *d2;
-    PILE_descripteur_texte p;
-    charger_PILE_Desc(&p,"sauvegarde.index");
-    d1 = p;
-    d2 = p->suivant;
+    //Exemple code pour recherchee par critère
+    /*char **fichiers;
+    fichiers = malloc(sizeof(char *) * 350);
+    for (int i=0;i<350;i++)
+    {
+        fichiers[i]=malloc(sizeof(char)*512);
+    }
+    int nbF = 0;
+    double seuil = 60.0;
+    rechercheParCritere("football", fichiers, &nbF, seuil);
+    printf("recherche par critère, résulats : \n");
+    for (int i = 0; i < nbF; i++)
+    {
+        printf("%s \n", fichiers[i]);
+    }*/
 
-    affiche_PILE(d1->pile_mot);*/
+    //FREEEEEEEE
+    printf("\n");
 
-    //comparaison(*d1,*d2,80.0);
+    //Exemple code recherche par document:
+    char **fichiers;
+    int nbF = 0;
+    double seuil = 90.0;
+
+    fichiers = malloc(sizeof(char *) * 350);
+    for (int i = 0; i < 350; i++)
+    {
+        fichiers[i] = malloc(sizeof(char) * 512);
+    }
+
+    rechercheParDocument("Textes_UTF8/27-Le_Stade_de_France_s_ouvre_utf8.xml", fichiers, &nbF, seuil);
+    printf("recherche par document\n");
+    for (int i = 0; i < nbF; i++)
+    {
+        printf("%s \n", fichiers[i]);
+    }
+
     return 0;
 }

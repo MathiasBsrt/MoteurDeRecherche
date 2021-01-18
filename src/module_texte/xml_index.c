@@ -169,6 +169,7 @@ void Descripteur_texte_fichier(char *nom_fichier, PILE_descripteur_texte *pile_d
     remove("tmp1");
 }
 
+/*
 int main(void)
 {
     PILE_descripteur_texte pile = init_PILE_desc();
@@ -176,23 +177,22 @@ int main(void)
     Table_Index table = Init_Index();
     Table_Index table1 = Init_Index();
 
-    //Descripteur_texte_dossier("Textes_UTF8", &pile, &table, 1);
+    Descripteur_texte_dossier("Textes_UTF8", &pile, &table, 1);
     //Descripteur_texte_fichier("Textes_UTF8/03-Mimer_un_signal_nerveux_pour_utf8.xml", &pile, &table, 1);
     //affiche_PILE(pile1->pile_mot);
 
     //Enregistrement Index
-    //enregistre_Table_Index(table, "sauvegarde.index");
+    enregistre_Table_Index(table, "sauvegarde.index");
     //charger_Table_index(&table1, "sauvegarde.index");
 
     //Enregistrement Pile
-    //enregistre_PILE_Desc(pile, "sauvegarde.desc");
-    charger_PILE_Desc(&pile1, "sauvegarde.desc");
+    enregistre_PILE_Desc(pile, "sauvegarde.desc");
+    //charger_PILE_Desc(&pile1, "sauvegarde.desc");
 
     //Affichage de quelques resultats
-    affiche_PILE(pile1->pile_mot);
-    printf("nombre total de mots : %d\tnombre de mots differents : %d\n", pile1->nombre_mots_total, pile1->nbr_mots_retenus);
+    //affiche_PILE(pile1->pile_mot);
+    //printf("nombre total de mots : %d\tnombre de mots differents : %d\n", pile1->nombre_mots_total, pile1->nbr_mots_retenus);
     //printf("nombre total de mots : %d\tnombre de mots differents : %d\n", pile->nombre_mots_total, pile->nbr_mots_retenus);
     //AFFICHE_table_index(table1);
-    remove("liste_base_descripteurs");
-}
->>>>>>> Menus
+    //remove("liste_base_descripteurs");
+}*/

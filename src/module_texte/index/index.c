@@ -184,5 +184,4 @@ void charger_Table_index(Table_Index *table, char *save_table_index)
         perror("erreur lors de l'ouverture du fichier de sauvegarde index");
         exit(3);
     }
->>>>>>> Menus
 }

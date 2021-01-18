@@ -16,13 +16,12 @@ int comparaison(Descripteur_texte t1, Descripteur_texte t2, double seuil);
 
 /***
  * Recherche par critère
- * Cette fonction permet de rechercher des documents en fonction d'u critère donné
+ * Cette fonction permet de rechercher des documents en fonction d'un critère donné
  * @param String mot à chercher
- * @param File[] tableau à remplir
- * @param int seuilSimilarité 
+ * @param Strin[] resultats de la recherche, sous forme de chemin des documents
+ * @param double seuilSimilarité 
  */
-void rechercheParCritere(char *mot, FILE *fichiersSimilaires, double seuilSimilarite);
-
+void rechercheParCritere(char *mot, char *fichiersSimilaires[], int *nbF, double seuilSimilarite);
 /***
  * Recherche par document
  * Cette fonction permet de rechercher des documents en fonction d'un document donné
@@ -30,4 +29,7 @@ void rechercheParCritere(char *mot, FILE *fichiersSimilaires, double seuilSimila
  * @param File[] tableau à remplir
  * @param int seuilSimilarité 
  */
-void rechercheParDocument(char *cheminVersDocument, FILE *fichiersSimilaires, double seuilSimilarite);
+void rechercheParDocument(char *cheminVersDocument, char *fichiersSimilaires[], int *nbF, double seuilSimilarite);
+Table_Index rechercheMot(Table_Index a, char *mot);
+Descripteur_texte* getDescripteur_Texte(int id, PILE_descripteur_texte *p);
+void getChemin(int id, char chemin[]);

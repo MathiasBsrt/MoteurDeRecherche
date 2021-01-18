@@ -47,4 +47,3 @@ void xml_filter(FILE *src, FILE *dest)
             fprintf(dest, "%s ", buffer);
     }
 }
->>>>>>> Menus
