@@ -29,8 +29,9 @@
  * 
  * @param[in] nom_fichier nom du fichier texte
  * @param[in,out] pile_desc pile de descripteurs dans laquelle on ajoute le descripteur créé
+ * @return l'id du texte indexé.
  */
-void Descripteur_texte_fichier(char *nom_fichier, PILE_descripteur_texte *pile_desc,Table_Index *table_index,int seuil);
+int Descripteur_texte_fichier(char *nom_fichier, PILE_descripteur_texte *pile_desc,Table_Index *table_index,int seuil);
 
 
  /**

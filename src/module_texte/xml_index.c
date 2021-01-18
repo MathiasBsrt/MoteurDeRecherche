@@ -17,10 +17,10 @@
  * @param[in,out] p 
  * @param[in] mot 
  */
-void recherche_et_destruction(PILE *p, MOT mot)
+void recherche_et_destruction(pile_mot *p, MOT mot)
 {
-    Cellule *marqueur;
-    Cellule *parcours = *p;
+    Cellule_mot *marqueur;
+    Cellule_mot *parcours = *p;
     while (parcours)
     {
         if (compare_MOT(mot, parcours->elt))
@@ -42,21 +42,22 @@ void recherche_et_destruction(PILE *p, MOT mot)
  * 
  * @param[in] src Descripteur du fichier texte 
  * @param[in,out] p La pile à remplir
+ * @param[in] seuil le seuil a respecter
  */
-void descripteur_de_texte(FILE *src, PILE *p, int seuil)
+void descripteur_de_texte(FILE *src, pile_mot *p, int seuil)
 {
     char buffer[MAX_WORD];
     while (fscanf(src, "%s ", buffer) != EOF)
     {
-        if (!(estDanslaPile(*p, buffer)))
+        if (!(estDanslaPile_mot(*p, buffer)))
         {
 
-            *p = emPILE(*p, affecter_MOT(buffer));
-            estDanslaPile(*p, buffer);
+            *p = emPILE_mot(*p, affecter_MOT(buffer));
+            estDanslaPile_mot(*p, buffer);
         }
     }
 
-    Cellule *parcours = *p;
+    Cellule_mot *parcours = *p;
     if (seuil)
 
     {
@@ -71,6 +72,12 @@ void descripteur_de_texte(FILE *src, PILE *p, int seuil)
     }
 }
 
+/**
+ * @brief Permet de savoir si un texte a déjà été indexé
+ * 
+ * @param path_to_xml chemin vers le fichier
+ * @return retourne l'id du texte, 0 sinon 
+ */
 int texte_deja_indexe(char *path_to_xml)
 {
     int code_retour = 0;
@@ -109,14 +116,14 @@ int texte_deja_indexe(char *path_to_xml)
  * @param[in] path_to_xml chemin vers un fichier xml
  * @param[in,out] pile_desc Pile de descripteurs
  */
-void fabrique_a_descripteur(char *path_to_xml, PILE_descripteur_texte *pile_desc, Table_Index *table_index, int seuil)
+int fabrique_a_descripteur(char *path_to_xml, PILE_descripteur_texte *pile_desc, Table_Index *table_index, int seuil)
 {
-
+    int id=0;
     FILE *tmp = fopen("tmp", "w+");   //fichier de destination du xml_cleaner
     FILE *tmp1 = fopen("tmp1", "w+"); // fichier de destination du xml_tokenizer
-    FILE *src= fopen(path_to_xml,"r");
-    
-    PILE p = init_pile();
+    FILE *src = fopen(path_to_xml, "r");
+
+    pile_mot p = init_pile_mot();
 
     if (tmp && tmp1 && src)
     {
@@ -129,30 +136,32 @@ void fabrique_a_descripteur(char *path_to_xml, PILE_descripteur_texte *pile_desc
 
             descripteur_de_texte(tmp1, &p, seuil);
 
-            EMPILE_desc_from_pile(p, pile_desc, path_to_xml, table_index);
+            id=EMPILE_desc_from_pile(p, pile_desc, path_to_xml, table_index);
+
         }
         else
-        { 
+        {
             perror("Texte déjà rentré !\n");
         }
-
+        return 
         fclose(tmp);
         fclose(tmp1);
         fclose(src);
         remove("temp");
     }
     else
-    { 
+    {
         perror("erreur dans l'ouverture des fichiers");
         exit(3);
     }
+    return id;
 }
 
 int Descripteur_texte_dossier(char *nom_dossier, PILE_descripteur_texte *pile_desc, Table_Index *table_index, int seuil)
 {
     FILE *f = fopen("nom_fichiers.txt", "w+");
     if (f)
-    {   
+    {
         printf("--> Dossier en cours d'indexation\n");
         lecture_dossier(f, nom_dossier);
         char path_to_xml[MAX_WORD];
@@ -172,12 +181,14 @@ int Descripteur_texte_dossier(char *nom_dossier, PILE_descripteur_texte *pile_de
     return 0;
 }
 
-void Descripteur_texte_fichier(char *nom_fichier, PILE_descripteur_texte *pile_desc, Table_Index *table_index, int seuil)
+int Descripteur_texte_fichier(char *nom_fichier, PILE_descripteur_texte *pile_desc, Table_Index *table_index, int seuil)
 {
+    int id;
     printf("--> Fichier en cours d'indexation\n");
-    fabrique_a_descripteur(nom_fichier, pile_desc, table_index, seuil);
+    id=fabrique_a_descripteur(nom_fichier, pile_desc, table_index, seuil);
     remove("tmp");
     remove("tmp1");
+    return id;
 }
 /*
 int main(void)
@@ -189,7 +200,7 @@ int main(void)
 
     Descripteur_texte_dossier("Textes_UTF8", &pile, &table, 1);
     //Descripteur_texte_fichier("Textes_UTF8/03-Mimer_un_signal_nerveux_pour_utf8.xml", &pile, &table, 1);
-    //affiche_PILE(pile1->pile_mot);
+    //affiche_PILE_mots(pile1->pile_mot);
 
     //Enregistrement Index
     //enregistre_Table_Index(table, "sauvegarde.index");
@@ -197,10 +208,10 @@ int main(void)
 
     //Enregistrement Pile
     //enregistre_PILE_Desc(pile, "sauvegarde.desc");
-    charger_PILE_Desc(&pile1, "sauvegarde.desc");
+    charger_PILE_Desc_mot(&pile1, "sauvegarde.desc");
 
     //Affichage de quelques resultats
-    //affiche_PILE(pile1->pile_mot);
+    //affiche_PILE_mots(pile1->pile_mot);
     //printf("nombre total de mots : %d\tnombre de mots differents : %d\n", pile1->nombre_mots_total, pile1->nbr_mots_retenus);
     printf("nombre total de mots : %d\tnombre de mots differents : %d\n", pile->nombre_mots_total, pile->nbr_mots_retenus);
     AFFICHE_table_index(table1);
