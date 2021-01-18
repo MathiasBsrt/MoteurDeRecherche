@@ -1,6 +1,6 @@
 #include "Header.h"
 
-int comparaison(Descripteur_texte d1, Descripteur_texte d2, double seuil)
+int comparaison(Descripteur_texte *d1, Descripteur_texte *d2, double seuil)
 {
     //Similaire si seuil% des mots sont similaire
     /****Une case est similaire si :
@@ -16,8 +16,13 @@ int comparaison(Descripteur_texte d1, Descripteur_texte d2, double seuil)
     int nbR1;
     int nbR2;
 
-    Cellule_mot *parcours_d1 = d1.pile_mot;
-    Cellule_mot *parcours_d2 = d2.pile_mot;
+    
+    if(d2->pile_mot == NULL){
+        printf("yo");
+    }
+    Cellule_mot *parcours_d2 = d2->pile_mot;
+        Cellule_mot *parcours_d1 = d1->pile_mot;
+
 
     while (parcours_d1 != NULL) // Parcours d1
     {
@@ -46,7 +51,7 @@ int comparaison(Descripteur_texte d1, Descripteur_texte d2, double seuil)
 
     printf("\n similaire sur %d cases\n", nbCaseIntersection);
 
-    double pourcentage = (double)nbCaseIntersection / ((d1.nbr_mots_retenus + d2.nbr_mots_retenus) / 2) * 100;
+    double pourcentage = (double)nbCaseIntersection / ((d1->nbr_mots_retenus + d2->nbr_mots_retenus) / 2) * 100;
 
     printf("Similaire à %f pourcents\n", pourcentage);
     if (pourcentage == 100)
@@ -117,7 +122,6 @@ Descripteur_texte *getDescripteur_Texte(int id, PILE_descripteur_texte *p)
 
     Descripteur_texte *parcours = NULL;
     printf("on cherche le descripteur correspondant\n");
-    int test = 0;
     parcours = *p;
     while (parcours != NULL)
     {
@@ -131,6 +135,7 @@ Descripteur_texte *getDescripteur_Texte(int id, PILE_descripteur_texte *p)
         }
         parcours = parcours->suivant;
     }
+    //printf("%s\n",parcours->pile_mot->elt.mot);
     return parcours;
 }
 
@@ -163,35 +168,40 @@ void rechercheParDocument(char *cheminVersDocument, char *fichiersSimilaires[], 
     Table_Index table = Init_Index();
 
     int id = Descripteur_texte_fichier(cheminVersDocument, &pile, &table, 1);
-    /*
-    if (pile == NULL)
-    {
-        for (int i = 0; i < 10000; i++)
-        {
-            printf("pile null");
-        }
-    }*/
+
 
     //Si le fichier n'est pas indexé
     if (pile != NULL)
     {
         //Enregistrement Index
-        enregistre_Table_Index(table, "sauvegarde.index");
+        enregistre_Table_Index(table, "sauvegardes/sauvegarde.index");
         //Enregistrement Pile
-        enregistre_PILE_Desc(pile, "sauvegarde.desc");
+        enregistre_PILE_Desc(pile, "sauvegardes/sauvegarde.desc");
     }
 
     //on charge la pile des descripteurs
-    charger_PILE_Desc_mot(&pile, "sauvegarde.desc");
-
+    //charger_PILE_Desc_mot(&pile, "sauvegarde.desc");
+    
+    Descripteur_texte *parcours = NULL;
+    printf("on cherche le descripteur correspondant\n");
+    parcours = pile;
+    while (parcours != NULL)
+    {
+        //printf("parcours id :%d\n", parcours->id);
+        parcours = parcours->suivant;
+    }
+    //printf("%s\n",parcours->pile_mot->elt.mot);
+    
     //On récupéere le descripteur qui vient d'être crée
     Descripteur_texte *desc1 = getDescripteur_Texte(id, &pile);
 
     //On compare le desc1 avec tous les descripteurs de la pile sauf lui même
     Descripteur_texte *desc2 = pile;
+    int res; // resultat de la comparaison
     while (desc2 != NULL)
-    {
-        if (comparaison(*desc1, *desc2, seuilSimilarite) < 2)
+    {   
+        res = comparaison(desc1, desc2, seuilSimilarite);
+        if (res < 2)
         {
             getChemin(desc2->id, fichiersSimilaires[*nbF]);
             *nbF++;
@@ -200,6 +210,7 @@ void rechercheParDocument(char *cheminVersDocument, char *fichiersSimilaires[], 
     }
 }
 
+/*
 int main(int argc, char const *argv[])
 {
 
@@ -217,7 +228,7 @@ int main(int argc, char const *argv[])
     for (int i = 0; i < nbF; i++)
     {
         printf("%s \n", fichiers[i]);
-    }*/
+    }
 
     //FREEEEEEEE
     printf("\n");
@@ -232,13 +243,12 @@ int main(int argc, char const *argv[])
     {
         fichiers[i] = malloc(sizeof(char) * 512);
     }
-
-    rechercheParDocument("Textes_UTF8/27-Le_Stade_de_France_s_ouvre_utf8.xml", fichiers, &nbF, seuil);
-    printf("recherche par document\n");
+    rechercheParDocument("../module_texte/Textes_UTF8/27-Le_Stade_de_France_s_ouvre_utf8.xml", fichiers, &nbF, seuil);
+    printf("recherche par document :<\n");
     for (int i = 0; i < nbF; i++)
     {
         printf("%s \n", fichiers[i]);
     }
 
     return 0;
-}
+}*/

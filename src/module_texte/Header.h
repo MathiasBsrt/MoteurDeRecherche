@@ -51,7 +51,7 @@ int Descripteur_texte_dossier(char *nom_dossier, PILE_descripteur_texte *pile_de
  * @param double seuilSimilarité => pourcentage de similarité entre 2 mêmes cases de l'histogramme
  * @return 0 si égaux, 1 si similaires, 2 si trop différent
  */
-int comparaison(Descripteur_texte t1, Descripteur_texte t2, double seuil);
+int comparaison(Descripteur_texte *d1, Descripteur_texte *d2, double seuil);
 
 /***
  * Recherche par critère
