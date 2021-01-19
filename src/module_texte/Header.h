@@ -58,7 +58,8 @@ int comparaison(Descripteur_texte *d1, Descripteur_texte *d2, double seuil,Table
  * Recherche par critère
  * Cette fonction permet de rechercher des documents en fonction d'un critère donné
  * @param String mot à chercher
- * @param Strin[] resultats de la recherche, sous forme de chemin des documents
+ * @param String[] resultats de la recherche, sous forme de chemin des documents
+ * @param int *nbF : nombre de fichiers trouvés
  * @param double seuilSimilarité 
  */
 void rechercheParCritere(char *mot, char *fichiersSimilaires[], int *nbF, double seuilSimilarite);
