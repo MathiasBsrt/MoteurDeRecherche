@@ -172,10 +172,7 @@ void rechercheParDocument(char *cheminVersDocument, char *fichiersSimilaires[], 
     if (id == 0)
     {
         id = Descripteur_texte_fichier(cheminVersDocument, &pile, &table, 1); // Bug, idée : le nouveau fichier indexé ecrase la pile ?
-        //Enregistrement Index
-        enregistre_Table_Index(table, "sauvegardes/sauvegarde.index");
-        //Enregistrement Pile
-        enregistre_PILE_Desc(pile, "sauvegardes/sauvegarde.desc");
+       
     }
 
     //on charge la pile des descripteurs
@@ -206,6 +203,11 @@ void rechercheParDocument(char *cheminVersDocument, char *fichiersSimilaires[], 
     {
         fprintf(stderr, "erreur dans la recherche du descripteur du fichier source...");
     }
+
+        //Enregistrement Index
+    enregistre_Table_Index(table, "sauvegardes/sauvegarde.index");
+    //Enregistrement Pile
+    enregistre_PILE_Desc(pile, "sauvegardes/sauvegarde.desc");
 }
 
 /*

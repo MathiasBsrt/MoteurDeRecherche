@@ -77,10 +77,10 @@ int main(void)
     PILE_descripteur_texte pile_desc = init_PILE_desc();
     Table_Index table_index = Init_Index();
 
-    charger_PILE_Desc_mot(&pile_desc,"sauvegardes/sauvegarde.desc");
+    charger_PILE_Desc_mot(&pile_desc, "sauvegardes/sauvegarde.desc");
 
     //Exemple code recherche par document:
-    
+
     char **fichiers;
     int nbF = 0;
     double seuil = 90.0;
@@ -91,13 +91,14 @@ int main(void)
         fichiers[i] = malloc(sizeof(char) * 512);
     }
     rechercheParDocument("module_texte/Textes_UTF8/27-Le_Stade_de_France_s_ouvre_utf8.xml", fichiers, &nbF, seuil);
+
+
     printf("recherche par document :<\n");
     for (int i = 0; i < nbF; i++)
     {
         printf("%s \n", fichiers[i]);
     }
 
-    
     //menus_admin(&pile_desc,&table_index);
     remove("sauvegardes/liste_base_descripteurs");
     //system("clear");
