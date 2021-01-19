@@ -199,7 +199,7 @@ void rechercheParDocument(char *cheminVersDocument, char *fichiersSimilaires[], 
         desc2 = desc2->suivant;
     }
 }
-
+/*
 int main(int argc, char const *argv[])
 {
 
@@ -217,7 +217,7 @@ int main(int argc, char const *argv[])
     for (int i = 0; i < nbF; i++)
     {
         printf("%s \n", fichiers[i]);
-    }*/
+    }
 
     //FREEEEEEEE
     printf("\n");
@@ -242,3 +242,4 @@ int main(int argc, char const *argv[])
 
     return 0;
 }
+*/

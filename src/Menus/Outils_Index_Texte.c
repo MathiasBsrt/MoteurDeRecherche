@@ -52,6 +52,11 @@ void chargement_desc_texte(PILE_descripteur_texte *pile_desc, Table_Index *table
     }
 }
 
+void Affichage_texte(PILE_descripteur_texte pile)
+{
+    
+}
+
 void MenuIndexation_texte(PILE_descripteur_texte *pile, Table_Index* table)
 {
     int indice_sauvegarde = 1;
