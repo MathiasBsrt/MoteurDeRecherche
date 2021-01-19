@@ -47,8 +47,8 @@ void MenuIndexation(PILE_descripteur_texte *pile, Table_Index *table)
 void menu_user(PILE_descripteur_texte *pile, Table_Index *table)
 {
     int code;
-    do
-    {
+   // do
+    //{
         system("clear");
         //Affichage du menu
         printf("///\tMENU USER\t///\n");
@@ -61,14 +61,22 @@ void menu_user(PILE_descripteur_texte *pile, Table_Index *table)
         }
         else if (code == 1)
         {
-            int nbF = 0;
             char **fichiers;
             fichiers = malloc(sizeof(char *) * 350);
             for (int i = 0; i < 350; i++)
             {
                 fichiers[i] = malloc(sizeof(char) * 512);
             }
-            rechercheParDocument("module_texte/Textes_UTF8/27-Le_Stade_de_France_s_ouvre_utf8.xml", fichiers, &nbF, 0);
+           /* PILE_descripteur_texte p = init_PILE_desc();
+            charger_PILE_Desc_mot(&p,"sauvegardes/sauvegarde.desc");
+            Descripteur_texte *d1 = getDescripteur_Texte(13,&p);
+            Descripteur_texte *d2 = getDescripteur_Texte(13,&p);*/
+
+            //int res = comparaison(d1,d2,80.0);
+
+            
+            int nbF = rechercheParDocument("module_texte/Textes_UTF8/27-Le_Stade_de_France_s_ouvre_utf8.xml", fichiers, 13.0);
+            printf("nbF principal =%d\n",nbF);
             printf("recherche par document :<\n");
             for (int i = 0; i < nbF; i++)
             {
@@ -76,7 +84,7 @@ void menu_user(PILE_descripteur_texte *pile, Table_Index *table)
             }
         }
 
-    } while (code != 2);
+   // } while (code != 2);
 }
 
 void menus_admin(PILE_descripteur_texte *pile, Table_Index *table)
@@ -114,7 +122,8 @@ int main(void)
     Table_Index table_index = Init_Index();
     menu_user(&pile_desc, &table_index);
     //menus_admin(&pile_desc, &table_index);
-    remove("sauvegardes/liste_base_descripteurs");
+    //remove("sauvegardes/liste_base_descripteurs");
+
     /*
     charger_PILE_Desc_mot(&pile_desc, "sauvegardes/sauvegarde.desc");
 

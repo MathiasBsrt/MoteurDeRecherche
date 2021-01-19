@@ -49,9 +49,10 @@ int Descripteur_texte_dossier(char *nom_dossier, PILE_descripteur_texte *pile_de
  * @param Table_Index t1
  * @param Table_Index t2
  * @param double seuilSimilarité => pourcentage de similarité entre 2 mêmes cases de l'histogramme
+ * @param Table_index t : table index à parcourir
  * @return 0 si égaux, 1 si similaires, 2 si trop différent
  */
-int comparaison(Descripteur_texte *d1, Descripteur_texte *d2, double seuil);
+int comparaison(Descripteur_texte *d1, Descripteur_texte *d2, double seuil,Table_Index t);
 
 /***
  * Recherche par critère
@@ -68,8 +69,7 @@ void rechercheParCritere(char *mot, char *fichiersSimilaires[], int *nbF, double
  * @param File[] tableau à remplir
  * @param int seuilSimilarité 
  */
-void rechercheParDocument(char *cheminVersDocument, char *fichiersSimilaires[], int *nbF, double seuilSimilarite);
-
+int rechercheParDocument(char *cheminVersDocument, char *fichiersSimilaires[], double seuilSimilarite);
 
 
 
