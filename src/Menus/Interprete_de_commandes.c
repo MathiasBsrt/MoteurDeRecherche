@@ -33,7 +33,7 @@ void MenuIndexation(PILE_descripteur_texte *pile, Table_Index *table)
         }
         else if (code == 2)
         {
-            //MenuIndexation_image();
+            //MenuIndexation_image(pile,table);
         }
         else if (code == 3)
         {

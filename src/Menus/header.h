@@ -10,7 +10,7 @@
  */
 
 #include "../module_texte/Header.h"
-//#include "../module_image/controle_descripteur.h"
+#include "../module_image/controle_descripteur.h"
 //#include "../module_audio/base_descripteur.h"
 
 

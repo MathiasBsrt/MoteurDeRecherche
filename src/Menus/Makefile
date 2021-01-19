@@ -27,7 +27,7 @@ SRCA=
 OBJA=$(SRCA.c=.o)
 
 #module image
-SRCI=
+SRCI=$(wildcard $(DIR_IMAGE)/*.c) $(wildcard $(DIR_IMAGE)/moteur_recherche/*.c)
 OBJI=$(SRCI.C=.o)
 
 

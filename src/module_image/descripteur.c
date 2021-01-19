@@ -9,7 +9,7 @@ void affiche_Descripteur(Descripteur e){
         printf("%d : %d fois",i,e.histogramme[i]);
     }
     printf("\n");
-    
+
 }
 
 // retourne 0 si e1 et e2 sont égaux
@@ -27,6 +27,3 @@ int compareDescripteur(Descripteur e1, Descripteur e2){
     }*/
     return 0;
 }
-
-
-
