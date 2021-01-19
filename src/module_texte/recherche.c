@@ -178,7 +178,7 @@ int rechercheParDocument(char *cheminVersDocument, char *fichiersSimilaires[], d
     //printf("id du descripteur 1 =%d\n", id);
     char chemin1[100];
     getChemin(desc1->id, chemin1);
-   // printf("chemin = %s\n", chemin1);
+    // printf("chemin = %s\n", chemin1);
 
     if (desc1 != NULL)
     {
@@ -187,7 +187,7 @@ int rechercheParDocument(char *cheminVersDocument, char *fichiersSimilaires[], d
         int res; // resultat de la comparaison
         while (desc2 != NULL)
         {
-  
+
             char chemin2[350];
             //printf("\nid du descripteur 2 =%d\n", desc2->id);
             res = comparaison(desc1, desc2, seuilSimilarite, table);
@@ -201,17 +201,4 @@ int rechercheParDocument(char *cheminVersDocument, char *fichiersSimilaires[], d
             desc2 = desc2->suivant;
         }
     }
-    else
-    {
-        fprintf(stderr, "erreur dans la recherche du descripteur du fichier source...");
-    }
-    //cd Menus/ && make && cd .. && gdb ./moteur_recherche
-
-    //Enregistrement Index
-    enregistre_Table_Index(table, "sauvegardes/sauvegarde.index");
-    //Enregistrement Pile
-    enregistre_PILE_Desc(pile, "sauvegardes/sauvegarde.desc");
-    return nbF;
 }
-
-    

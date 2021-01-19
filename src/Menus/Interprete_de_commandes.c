@@ -35,11 +35,40 @@ void MenuIndexation(PILE_descripteur_texte *pile, Table_Index *table)
         {
 
             //MenuIndexation_image();
+
         }
         else if (code == 3)
         {
 
             MenuIndexation_texte(pile, table);
+
+        }
+    } while (code != 4);
+}
+
+void Menu_affichage(PILE_descripteur_texte pile, Table_Index table)
+{
+    int code;
+    do
+    {
+        system("clear");
+        printf("///\tMENU VISUALISATION\t///\n");
+        printf("1. Affichage descripteurs audios\n2. Affichage descripteurs image\n3. Affichage descripteurs\n4. Retour\n");
+        printf("Veuillez choisir une action :\n");
+        scanf("%d", &code);
+        if (code < 1 || code > 4)
+        {
+            printf("Veuillez choisir une action valide.\n");
+        }
+        else if (code == 1)
+        {
+        }
+        else if (code == 2)
+        {
+        }
+        else if (code == 3)
+        {
+            Affichage_texte(pile);
         }
     } while (code != 4);
 }
@@ -106,6 +135,10 @@ void menus_admin(PILE_descripteur_texte *pile, Table_Index *table)
         {
             MenuIndexation(pile, table);
         }
+        else if (code == 2)
+        {
+            Menu_affichage(*pile, *table);
+        }
         else if (code == 3)
         {
             printf("Cette option est encore en cours de développement...\n");
@@ -134,6 +167,7 @@ int main(void)
     double seuil = 90.0;
 
     fichiers = malloc(sizeof(char *) * 350);
+
     for (int i = 0; i < 350; i++)
     {
         fichiers[i] = malloc(sizeof(char) * 512);
