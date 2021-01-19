@@ -12,24 +12,6 @@ int main(int argc, char * argv[])
         fprintf(stderr, "\tPour rechercher file1 dans les fichiers déjà indexés.\n");
         return 1;
     }
-    
-    /*PILE pileDescripteur = init_PILE();
-    init_FICHIER_BASE_DESC();
-    DESC_AUDIO descCorpusWAV = init_DESC_AUDIO(0, 6, 30, "TEST_SON/corpus_fi.wav");
-    lier_DESC_AUDIO_FICHIER(descCorpusWAV, "TEST_SON/corpus_fi.wav");
-    pileDescripteur = sauvegarder_DESC_AUDIO(pileDescripteur, descCorpusWAV);
-    DESC_AUDIO descJingleWAV = init_DESC_AUDIO(1, 7, 30, "TEST_SON/jingle_fi.wav");
-    lier_DESC_AUDIO_FICHIER(descJingleWAV, "TEST_SON/jingle_fi.wav");
-    pileDescripteur = sauvegarder_DESC_AUDIO(pileDescripteur, descJingleWAV);
-    DESC_AUDIO descCymbaleWAV = init_DESC_AUDIO(2, 5, 30, "TEST_SON/cymbale.wav");
-    lier_DESC_AUDIO_FICHIER(descCymbaleWAV, "TEST_SON/cymbale.wav");
-    pileDescripteur = sauvegarder_DESC_AUDIO(pileDescripteur, descCymbaleWAV);
-    
-    sauvegarder_PILE_DESC_AUDIO(pileDescripteur);
-
-    free_DESC_AUDIO(&descCorpusWAV);
-    free_DESC_AUDIO(&descJingleWAV);
-    free_DESC_AUDIO(&descCymbaleWAV);*/
 
     char * filename1 = argv[1];
 
@@ -39,7 +21,7 @@ int main(int argc, char * argv[])
     printf("Recherche de '%s' dans d'autres fichiers audio.\n", filename1);
 
     int code;
-    RES_RECHERCHE_AUDIO resultat = rechercher_DESC_AUDIO(filename1, fetch_n_best, EVAL_VERYHIGH, &code);
+    RES_RECHERCHE_AUDIO resultat = rechercher_DESC_AUDIO(filename1, fetch_n_best, EVAL_VERYTOUGH, &code);
 
     if(code == RECHERCHE_ERREUR)
     {
@@ -62,5 +44,8 @@ int main(int argc, char * argv[])
         printf("\t\t j = %d: %f\n", j, resultat.resultats[i].times[j]);
         }
     }
+
+    
+    free_RES_RECHERCHE_AUDIO(resultat);
 
 }

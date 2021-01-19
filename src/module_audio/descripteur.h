@@ -28,6 +28,8 @@
 #define EVAL_NORMAL 0.12
 #define EVAL_HIGH 0.18
 #define EVAL_VERYHIGH 0.24
+#define EVAL_TOUGH 0.30
+#define EVAL_VERYTOUGH 0.36
 
 /**	@struct DESC_AUDIO
  * Definition de la structure d'un descripteur audio
