@@ -11,6 +11,18 @@
 #define SHORT_INT_MIN_VALUE -32767
 #define SHORT_INT_MAX_VALUE 32767
 
+/**
+ * @file histogramme.c
+ * @author Théo TRAFNY
+ * @brief Les fonctions relatives à la gestion des histogrammes audio.
+ * @version 0.1
+ * @date 2021-01-19
+ *
+ * @copyright Copyright (c) 2020
+ *
+ */
+
+
 HISTOGRAMME_AUDIO init_HISTOGRAMME_AUDIO(int n, int m)
 {
 	HISTOGRAMME_AUDIO histo;
@@ -104,11 +116,6 @@ int compare_HISTOGRAMME_AUDIO(HISTOGRAMME_AUDIO histo1, HISTOGRAMME_AUDIO histo2
 		for(x = 0; x < histo1.m; x++)
 			if(get_HISTOGRAMME_AUDIO(histo1, y, x) != get_HISTOGRAMME_AUDIO(histo2, y, x)) { printf("y=%d, x=%d\n", y, x); return 1; }
 	return 0;
-}
-
-double evaluer_HISTOGRAMME_AUDIO(HISTOGRAMME_AUDIO histo1, HISTOGRAMME_AUDIO histo2, int duration1, int duration2)
-{
-	return 0.0;
 }
 
 int generer_HISTOGRAMME_AUDIO(HISTOGRAMME_AUDIO * histo, char * chemin, int n, int m)

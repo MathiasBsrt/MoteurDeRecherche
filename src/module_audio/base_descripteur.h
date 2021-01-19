@@ -37,12 +37,12 @@ void init_FICHIER_BASE_DESC();
 *
 * @return PILE la nouvelle version de la pile de descripteurs audios
 */
-PILE sauvegarder_DESC_AUDIO(PILE, DESC_AUDIO);
+PILE sauvegarder_DESC_AUDIO(PILE PILE_DESCRIPTEUR_AUDIO, DESC_AUDIO desc);
 
 /** Sauvegarde la pile de descripteurs dans le fichier BASE_DESC_FICHIER
 * @param PILE la pile de descripteurs audios
 */
-void sauvegarder_PILE_DESC_AUDIO(PILE);
+void sauvegarder_PILE_DESC_AUDIO(PILE PILE_DESCRIPTEUR_AUDIO);
 
 /** Charge dans une nouvelle pile de descripteurs les descripteurs présents
 * dans le fichier BASE_DESC_FICHIER
@@ -53,17 +53,19 @@ void sauvegarder_PILE_DESC_AUDIO(PILE);
 PILE charger_PILE_DESC_AUDIO(int * nb_charge);
 
 /** Charge un descripteur audio enregistrer dans BASE_DESC_FICHIER à partir de son identifiant
+* @param int id du descripteur audio que l'on veut charger.
 *
 * @return DESC_AUDIO le descripteur chargé.
 */
-DESC_AUDIO charger_byid_DESC_AUDIO(int);
+DESC_AUDIO charger_byid_DESC_AUDIO(int id);
 
 /** Charge un descripteur audio enregistrer dans BASE_DESC_FICHIER à partir de son fichier.
 * C'est à dire que cette méthode va simplement chercher le descripteur déjà généré.
+* @param char * chemin vers le fichier représenté par le descripteur audio que l'on veut charger.
 *
 * @return DESC_AUDIO le descripteur chargé.
 */
-DESC_AUDIO charger_byname_DESC_AUDIO(char *);
+DESC_AUDIO charger_byname_DESC_AUDIO(char * chemin);
 
 /** Initialise des descripteurs audios à partir d'un chemin vers un dossier comprenant les fichiers audio.
 * @param int premier id du premier descripteur (incrémenté à chaque descripteur créé)
@@ -73,7 +75,7 @@ DESC_AUDIO charger_byname_DESC_AUDIO(char *);
 *
 * @return PILE pile pile contenant les descripteurs créés
 */
-PILE init_MULTIPLE_DESC_AUDIO(int, int, int, char *);
+PILE init_MULTIPLE_DESC_AUDIO(int start_id, int n, int m, char * cheminDir);
 
 /** Lie un descripteur audio à un fichier
 * @param DESC_AUDIO  descripteur audio à lier à un fichier
@@ -81,21 +83,21 @@ PILE init_MULTIPLE_DESC_AUDIO(int, int, int, char *);
 *
 * @return int 1 si le fichier était déjà lier et qu'il a était sur-lié, 0 si il a été ajouté sans aucune autre manipulation.
 */
-int lier_DESC_AUDIO_FICHIER(DESC_AUDIO, char *);
+int lier_DESC_AUDIO_FICHIER(DESC_AUDIO desc, char * chemin);
 
 /** Récupère l'identifiant du descripteur audio associé à ce fichier.
  *  @param char * chemin vers le fichier
  * 
  *  @return int identifiant du descripteur
  */
-int get_id_byname_DESC_AUDIO(char *);
+int get_id_byname_DESC_AUDIO(char * chemin);
 
 /** Permet de savoir si un descripteur a déjà été généré à partir du fichier donné
  *  @param char * chemin vers le fichier
  * 
  *  @return int ALREADY_GENERATED (= 1) si déjà généré, 0 sinon
  */
-int deja_genere_DESC_AUDIO(char *);
+int deja_genere_DESC_AUDIO(char * chemin);
 
 
 /** Récupère le fichier lier au descripteur donné en parmaètre
@@ -103,7 +105,7 @@ int deja_genere_DESC_AUDIO(char *);
 *
 * @return char * chemin vers le fichier
 */
-char * fichier_lier_DESC_AUDIO(DESC_AUDIO);
+char * fichier_lier_DESC_AUDIO(DESC_AUDIO desc);
 
 /** Effectue une recherche pour le module audio
  *  @param char * chemin vers le fichier source à trouver dans d'autres fichiers déjà indexés
@@ -113,7 +115,7 @@ char * fichier_lier_DESC_AUDIO(DESC_AUDIO);
  * 
  *  @return RES_RECHERCHE_AUDIO le résultat de la recherche
  */
-RES_RECHERCHE_AUDIO rechercher_DESC_AUDIO(char *, unsigned int, double, int *);
+RES_RECHERCHE_AUDIO rechercher_DESC_AUDIO(char * source, unsigned int n, double threshold, int * code);
 
 /**
  * @brief Libère la mémoire occupée par un résultat d'une rechercher par le module audio.

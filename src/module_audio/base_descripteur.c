@@ -10,6 +10,17 @@
 #include "descripteur.h"
 #include "histogramme.h"
 
+/**
+ * @file base_descripteur.c
+ * @author Théo TRAFNY
+ * @brief Les fonctions relatives à la gestion des liens existants entre les descripteurs audio, et les élements exterieurs.
+ * @version 0.1
+ * @date 2021-01-19
+ *
+ * @copyright Copyright (c) 2020
+ *
+ */
+
 void init_FICHIER_BASE_DESC()
 {
 	// On créé le fichier BASE_DESC_FICHIER si il n'existe pas

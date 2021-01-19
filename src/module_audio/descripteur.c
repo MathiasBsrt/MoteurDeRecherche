@@ -7,6 +7,17 @@
 #include "wav_file_helper.h"
 
 
+/**
+ * @file descripteur.c
+ * @author Théo TRAFNY
+ * @brief Les fonctions relatives à la gestion des descripteurs audio.
+ * @version 0.1
+ * @date 2021-01-19
+ *
+ * @copyright Copyright (c) 2020
+ *
+ */
+
 DESC_AUDIO init_DESC_AUDIO(int id, int n, int m, char * chemin)
 {
 	DESC_AUDIO desc;

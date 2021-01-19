@@ -45,9 +45,9 @@ typedef struct Descripteur_Audio_t
  */
 typedef struct Resultat_Evalutation_t
 {
-	char * fichier;
-	int n; /* < Nombre de temps */
-	double * times; /* < Les temps trouvés */
+	char * fichier; /**< Fichier dans lequel le fichier audio a été trouvé */
+	int n; /**< Nombre de temps */
+	double * times; /**< Les temps trouvés */
 } RES_EVAL_AUDIO;
 
 /** Initilalise un descripteur audio
@@ -59,7 +59,7 @@ typedef struct Resultat_Evalutation_t
 *
 * @return DESC_AUDIO le descripteur audio initialisé
 */
-DESC_AUDIO init_DESC_AUDIO(int, int, int, char *);
+DESC_AUDIO init_DESC_AUDIO(int id, int n, int m, char * chemin);
 
 /** Initilalise un descripteur audio vide
 * @param int id de l'histogramme
@@ -69,7 +69,7 @@ DESC_AUDIO init_DESC_AUDIO(int, int, int, char *);
 *
 * @return DESC_AUDIO le descripteur audio initialisé
 */
-DESC_AUDIO init_vide_DESC_AUDIO(int, int);
+DESC_AUDIO init_vide_DESC_AUDIO(int n, int m);
 
 /** Retourne le réels à l'index k,m
 * Utilité: Générale
@@ -79,7 +79,7 @@ DESC_AUDIO init_vide_DESC_AUDIO(int, int);
 *
 * @return double la valeur réel à l'index k,m
 */
-int get_DESC_AUDIO(DESC_AUDIO, int, int);
+int get_DESC_AUDIO(DESC_AUDIO desc, int k, int m);
 
 /** Affecte un réels à l'index k,m
 * Utilité: Générale
@@ -88,13 +88,13 @@ int get_DESC_AUDIO(DESC_AUDIO, int, int);
 * @param int index abscisse (m)
 * @param double valeur réel à affecter
 */
-void set_DESC_AUDIO(DESC_AUDIO *, int, int, int);
+void set_DESC_AUDIO(DESC_AUDIO * desc, int k, int m, int val);
 
 /** Affiche un descripteur audio sur la sortie standard (printf)
 * Utilité: Générale
 * @param DESC_AUDIO le descripteur audio que l'on souhaite afficher
 */
-void affiche_DESC_AUDIO(DESC_AUDIO);
+void affiche_DESC_AUDIO(DESC_AUDIO desc);
 
 /** Affecte les valeurs d'un descripteur audio à un autre
 *  On affecte les valeurs du desc2 dans le desc1
@@ -111,7 +111,7 @@ void affecter_DESC_AUDIO(DESC_AUDIO, DESC_AUDIO);
 * @param DESC_AUDIO second descripteur audio à comparer
 * @return int la comparaison des deux descripteurs
 */
-int compare_DESC_AUDIO(DESC_AUDIO, DESC_AUDIO);
+int compare_DESC_AUDIO(DESC_AUDIO desc1, DESC_AUDIO desc2);
 
 /**
 *	Evalue la comparaison des deux descripteur audio passés en paramètres.
@@ -126,14 +126,14 @@ int compare_DESC_AUDIO(DESC_AUDIO, DESC_AUDIO);
 *	@param double seuil de sécurité (voir #define EVAL_... dans descripteur.h)
 *	@return RES_EVAL_AUDIO le résultat de l'évalutation audio
 */
-RES_EVAL_AUDIO evaluer_DESC_AUDIO(DESC_AUDIO, DESC_AUDIO, unsigned int, double threshold);
+RES_EVAL_AUDIO evaluer_DESC_AUDIO(DESC_AUDIO desc1, DESC_AUDIO desc2, unsigned int nb, double threshold);
 
 
 /** Libère la mémoire occupée par l'histogramme du descripteur donné en paramètre
 * Utilité: Générale
 * @param DESC_AUDIO descripteur audio
 */
-void free_DESC_AUDIO(DESC_AUDIO *);
+void free_DESC_AUDIO(DESC_AUDIO * desc);
 
 /** Initialise un résultat d'une évalutation audio
  * Utilité: Générale
@@ -145,7 +145,7 @@ RES_EVAL_AUDIO init_RES_EVAL_AUDIO();
 * Utilité: Générale
 * @param RES_EVAL_AUDIO résultat de l'évaluation audio
 */
-void free_RES_EVAL_AUDIO(RES_EVAL_AUDIO);
+void free_RES_EVAL_AUDIO(RES_EVAL_AUDIO res_eval_audio);
 
 
 #endif

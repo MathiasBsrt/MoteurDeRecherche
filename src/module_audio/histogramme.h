@@ -26,13 +26,13 @@ typedef struct Histogramme_Audio_t
 *
 * @return HISTOGRAMME_AUDIO l'histogramme audio initialisé
 */
-HISTOGRAMME_AUDIO init_HISTOGRAMME_AUDIO(int, int);
+HISTOGRAMME_AUDIO init_HISTOGRAMME_AUDIO(int n, int m);
 
 /** Afficher l'histogramme comme une matrice
 * Utilité: Générale
 * @param HISTOGRAMME_AUDIO histogramme audio
 */
-void affiche_HISTOGRAMME_AUDIO(HISTOGRAMME_AUDIO);
+void affiche_HISTOGRAMME_AUDIO(HISTOGRAMME_AUDIO histo);
 
 /** Retourne l'entier à l'index k,m
 * Utilité: Générale
@@ -42,7 +42,7 @@ void affiche_HISTOGRAMME_AUDIO(HISTOGRAMME_AUDIO);
 *
 * @return double la valeur réel à l'index k,m
 */
-int get_HISTOGRAMME_AUDIO(HISTOGRAMME_AUDIO, int, int);
+int get_HISTOGRAMME_AUDIO(HISTOGRAMME_AUDIO histo, int k, int m);
 
 /** Affecte un réels à l'index k,m
 * Utilité: Générale
@@ -51,7 +51,7 @@ int get_HISTOGRAMME_AUDIO(HISTOGRAMME_AUDIO, int, int);
 * @param int index abscisse (m)
 * @param double valeur réel à affecter
 */
-void set_HISTOGRAMME_AUDIO(HISTOGRAMME_AUDIO *, int, int, int);
+void set_HISTOGRAMME_AUDIO(HISTOGRAMME_AUDIO * histo, int k, int m, int val);
 
 /** Incremente de 1 la valeur à l'index k,m
 * Utilité: Indexation
@@ -59,7 +59,7 @@ void set_HISTOGRAMME_AUDIO(HISTOGRAMME_AUDIO *, int, int, int);
 * @param int index odronnée (k)
 * @param int index abscisse (m)
 */
-void inc_HISTOGRAMME_AUDIO(HISTOGRAMME_AUDIO *, int, int);
+void inc_HISTOGRAMME_AUDIO(HISTOGRAMME_AUDIO * histo, int k, int m);
 
 /**
 *	Compare deux histogrammes audio
@@ -69,21 +69,7 @@ void inc_HISTOGRAMME_AUDIO(HISTOGRAMME_AUDIO *, int, int);
 *	@param HISTOGRAMME_AUDIO second histogramme à comparer
 *	@return int 0 si égaux, != 0 si différents
 */
-int compare_HISTOGRAMME_AUDIO(HISTOGRAMME_AUDIO, HISTOGRAMME_AUDIO);
-
-/**
-*	Evalue la comparaison des deux histogrammes audio passés en paramètres.
-*   Attention ! Cette comparaison n'est pas la même qu'avec compare_HISTOGRAMME_AUDIO(HISTOGRAMME_AUDIO, HISTOGRAMME_AUDIO).
-*	Celle-ci retourne un taux de ressemblance.
-* 	Utilité: Recherche
-*
-*	@param HISTOGRAMME_AUDIO premier histogramme à évaluer
-*	@param HISTOGRAMME_AUDIO second histogramme à évaluer
-*	@param int durée du premier fichier
-*	@param int durée du second fichier
-*	@return double l'évalution des deux histogrammes audio passés en paramètres
-*/
-double evaluer_HISTOGRAMME_AUDIO(HISTOGRAMME_AUDIO, HISTOGRAMME_AUDIO, int, int);
+int compare_HISTOGRAMME_AUDIO(HISTOGRAMME_AUDIO histo1, HISTOGRAMME_AUDIO histo2);
 
 
 /** Créer un histogramme pour un descripteur audio
@@ -96,7 +82,7 @@ double evaluer_HISTOGRAMME_AUDIO(HISTOGRAMME_AUDIO, HISTOGRAMME_AUDIO, int, int)
 *
 *  @return int code de retour
 */
-int generer_HISTOGRAMME_AUDIO(HISTOGRAMME_AUDIO *, char *, int, int);
+int generer_HISTOGRAMME_AUDIO(HISTOGRAMME_AUDIO * histo, char * chemin, int n, int m);
 
 /** Créer un histogramme pour un descripteur audio
 *   à partir d'un fichier d'extension TXT.
@@ -108,7 +94,7 @@ int generer_HISTOGRAMME_AUDIO(HISTOGRAMME_AUDIO *, char *, int, int);
 *
 *  @return int code de retour
 */
-int creer_histogramme_TXT_DESC_AUDIO(HISTOGRAMME_AUDIO *, char *, int, int);
+int creer_histogramme_TXT_DESC_AUDIO(HISTOGRAMME_AUDIO * histo, char * chemin, int n, int m);
 
 /** Créer un histogramme pour un descripteur audio
 *   à partir d'un fichier d'extension BIN.
@@ -138,6 +124,6 @@ int creer_histogramme_WAV_DESC_AUDIO(HISTOGRAMME_AUDIO * histo, char * chemin, i
 * Utilité: Générale
 * @param HISTOGRAMME_AUDIO * histogramme audio
 */
-void free_HISTOGRAMME_AUDIO(HISTOGRAMME_AUDIO *);
+void free_HISTOGRAMME_AUDIO(HISTOGRAMME_AUDIO * histo);
 
 #endif
