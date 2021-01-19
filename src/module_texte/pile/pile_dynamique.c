@@ -306,11 +306,13 @@ void charger_PILE_Desc_mot(PILE_descripteur_texte *p, char *save_descripteurs_te
 
 {
     FILE *f = fopen(save_descripteurs_textes, "r");
+    //system("cat sauvegardes/sauvegarde.desc");
     if (f)
     {
         Descripteur_texte tmp;
         while (fread(&tmp, sizeof(tmp), 1, f))
         {
+            printf("empile %d\n",tmp.id);
             EMPILE_desc(p, tmp, f);
         }
         fclose(f);

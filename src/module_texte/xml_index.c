@@ -81,7 +81,7 @@ void descripteur_de_texte(FILE *src, pile_mot *p, int seuil)
 int texte_deja_indexe(char *path_to_xml)
 {
     int code_retour = 0;
-    FILE *liste_base_desc = fopen("liste_base_descripteurs", "r");
+    FILE *liste_base_desc = fopen("sauvegardes/liste_base_descripteurs", "r");
     if (liste_base_desc)
     {
 
@@ -125,6 +125,9 @@ int fabrique_a_descripteur(char *path_to_xml, PILE_descripteur_texte *pile_desc,
 
     pile_mot p = init_pile_mot();
 
+    if(!src){
+        printf("erreur src %s\n",path_to_xml);
+    }
     if (tmp && tmp1 && src)
     {
         if (!texte_deja_indexe(path_to_xml))

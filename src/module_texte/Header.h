@@ -49,15 +49,17 @@ int Descripteur_texte_dossier(char *nom_dossier, PILE_descripteur_texte *pile_de
  * @param Table_Index t1
  * @param Table_Index t2
  * @param double seuilSimilarité => pourcentage de similarité entre 2 mêmes cases de l'histogramme
+ * @param Table_index t : table index à parcourir
  * @return 0 si égaux, 1 si similaires, 2 si trop différent
  */
-int comparaison(Descripteur_texte t1, Descripteur_texte t2, double seuil);
+int comparaison(Descripteur_texte *d1, Descripteur_texte *d2, double seuil,Table_Index t);
 
 /***
  * Recherche par critère
  * Cette fonction permet de rechercher des documents en fonction d'un critère donné
  * @param String mot à chercher
- * @param Strin[] resultats de la recherche, sous forme de chemin des documents
+ * @param String[] resultats de la recherche, sous forme de chemin des documents
+ * @param int *nbF : nombre de fichiers trouvés
  * @param double seuilSimilarité 
  */
 void rechercheParCritere(char *mot, char *fichiersSimilaires[], int *nbF, double seuilSimilarite);
@@ -68,8 +70,7 @@ void rechercheParCritere(char *mot, char *fichiersSimilaires[], int *nbF, double
  * @param File[] tableau à remplir
  * @param int seuilSimilarité 
  */
-void rechercheParDocument(char *cheminVersDocument, char *fichiersSimilaires[], int *nbF, double seuilSimilarite);
-
+int rechercheParDocument(char *cheminVersDocument, char *fichiersSimilaires[], double seuilSimilarite);
 
 
 
@@ -125,15 +126,24 @@ void path_maker(char *chemin, char *nom_dossier, char *nom_fichier);
 int texte_deja_indexe(char *path_to_xml);
 
 /***
- * 
+ * Permet de rechercher un mot dans une table index et renvoi un index
+ * @param Table_Index a : table index dans laquelle chercher
+ * @param char[] mot : mot à chercher dans a
+ * @return index du mot recherché
  */
-
 Table_Index rechercheMot(Table_Index a, char *mot);
+
 /***
- * 
+ * Permet de récupérer le descritpeur correspondant à lid fourni dans la pile de descripteur donnée en paramètre
+ * @param int id : id du descripteur à chercher
+ * @param PILE_descripteur_texte p : pile dans laquelle on cherche le descripteur
+ * @return Descripteur_Texte trouvé
  */
 Descripteur_texte* getDescripteur_Texte(int id, PILE_descripteur_texte *p);
+
 /***
- * 
+ * Permet de récupérer le chemin du fichier correspond à l'id de son descripteur
+ * @param int id : id du descripteur du fichier à chercher
+ * @param char chemin[] : chemin retourné
  */
 void getChemin(int id, char chemin[]);
