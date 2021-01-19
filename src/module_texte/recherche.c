@@ -16,13 +16,12 @@ int comparaison(Descripteur_texte *d1, Descripteur_texte *d2, double seuil)
     int nbR1;
     int nbR2;
 
-    
-    if(d2->pile_mot == NULL){
+    if (d2->pile_mot == NULL)
+    {
         printf("yo");
     }
     Cellule_mot *parcours_d2 = d2->pile_mot;
-        Cellule_mot *parcours_d1 = d1->pile_mot;
-
+    Cellule_mot *parcours_d1 = d1->pile_mot;
 
     while (parcours_d1 != NULL) // Parcours d1
     {
@@ -102,7 +101,7 @@ void rechercheParCritere(char *mot, char **fichiersSimilaires, int *nbF, double 
 
 void getChemin(int id, char chemin[])
 {
-    FILE *f = fopen("liste_base_descripteurs", "r");
+    FILE *f = fopen("sauvegardes/liste_base_descripteurs", "r");
     if (f)
     {
         int idLu;
@@ -136,7 +135,7 @@ Descripteur_texte *getDescripteur_Texte(int id, PILE_descripteur_texte *p)
         parcours = parcours->suivant;
     }
     //printf("%s\n",parcours->pile_mot->elt.mot);
-    return parcours;
+    return NULL;
 }
 
 Table_Index rechercheMot(Table_Index a, char *mot)
@@ -166,13 +165,13 @@ void rechercheParDocument(char *cheminVersDocument, char *fichiersSimilaires[], 
     //On indexe le nouveau document
     PILE_descripteur_texte pile = init_PILE_desc();
     Table_Index table = Init_Index();
+    Descripteur_texte *desc1;
 
-    int id = Descripteur_texte_fichier(cheminVersDocument, &pile, &table, 1);
-
-
-    //Si le fichier n'est pas indexé
-    if (pile != NULL)
+    int id = texte_deja_indexe(cheminVersDocument);
+    
+    if (id == 0)
     {
+        id = Descripteur_texte_fichier(cheminVersDocument, &pile, &table, 1); // Bug, idée : le nouveau fichier indexé ecrase la pile ?
         //Enregistrement Index
         enregistre_Table_Index(table, "sauvegardes/sauvegarde.index");
         //Enregistrement Pile
@@ -180,33 +179,32 @@ void rechercheParDocument(char *cheminVersDocument, char *fichiersSimilaires[], 
     }
 
     //on charge la pile des descripteurs
-    //charger_PILE_Desc_mot(&pile, "sauvegarde.desc");
-    
-    Descripteur_texte *parcours = NULL;
-    printf("on cherche le descripteur correspondant\n");
-    parcours = pile;
-    while (parcours != NULL)
-    {
-        //printf("parcours id :%d\n", parcours->id);
-        parcours = parcours->suivant;
-    }
-    //printf("%s\n",parcours->pile_mot->elt.mot);
-    
-    //On récupéere le descripteur qui vient d'être crée
-    Descripteur_texte *desc1 = getDescripteur_Texte(id, &pile);
+    charger_PILE_Desc_mot(&pile, "sauvegardes/sauvegarde.desc");
 
-    //On compare le desc1 avec tous les descripteurs de la pile sauf lui même
-    Descripteur_texte *desc2 = pile;
-    int res; // resultat de la comparaison
-    while (desc2 != NULL)
-    {   
-        res = comparaison(desc1, desc2, seuilSimilarite);
-        if (res < 2)
+    //On récupéere le descripteur qui vient d'être crée
+    desc1 = getDescripteur_Texte(id, &pile);
+
+    printf("id du descripteur=%d\n", id);
+
+    if (desc1 != NULL)
+    {
+        //On compare le desc1 avec tous les descripteurs de la pile sauf lui même
+        Descripteur_texte *desc2 = pile;
+        int res; // resultat de la comparaison
+        while (desc2 != NULL)
         {
-            getChemin(desc2->id, fichiersSimilaires[*nbF]);
-            *nbF++;
+            res = comparaison(desc1, desc2, seuilSimilarite);
+            if (res < 2)
+            {
+                getChemin(desc2->id, fichiersSimilaires[*nbF]);
+                *nbF++;
+            }
+            desc2 = desc2->suivant;
         }
-        desc2 = desc2->suivant;
+    }
+    else
+    {
+        fprintf(stderr, "erreur dans la recherche du descripteur du fichier source...");
     }
 }
 

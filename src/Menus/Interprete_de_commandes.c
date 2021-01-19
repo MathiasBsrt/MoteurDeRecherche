@@ -11,13 +11,13 @@
 
 #include "header.h"
 
-void MenuIndexation(PILE_descripteur_texte *pile,Table_Index *table)
+void MenuIndexation(PILE_descripteur_texte *pile, Table_Index *table)
 {
     int code;
     do
     {
         system("clear");
-        //Affichage du menu 
+        //Affichage du menu
         printf("///\tMENU INDEXATION\t///\n");
         printf("1. Indexation audio\n2. Indexation Image\n3. Indexation Texte\n4. Retour\n");
         printf("Veuillez choisir une action :\n");
@@ -38,7 +38,7 @@ void MenuIndexation(PILE_descripteur_texte *pile,Table_Index *table)
         else if (code == 3)
         {
 
-            MenuIndexation_texte(pile,table);
+            MenuIndexation_texte(pile, table);
         }
     } while (code != 4);
 }
@@ -60,7 +60,7 @@ void menus_admin(PILE_descripteur_texte *pile, Table_Index *table)
         }
         else if (code == 1)
         {
-            MenuIndexation(pile,table);
+            MenuIndexation(pile, table);
         }
         else if (code == 3)
         {
@@ -73,11 +73,34 @@ void menus_admin(PILE_descripteur_texte *pile, Table_Index *table)
 
 int main(void)
 {
+
     PILE_descripteur_texte pile_desc = init_PILE_desc();
     Table_Index table_index = Init_Index();
-    menus_admin(&pile_desc,&table_index);
+
+    charger_PILE_Desc_mot(&pile_desc,"sauvegardes/sauvegarde.desc");
+
+    //Exemple code recherche par document:
+    
+    char **fichiers;
+    int nbF = 0;
+    double seuil = 90.0;
+
+    fichiers = malloc(sizeof(char *) * 350);
+    for (int i = 0; i < 350; i++)
+    {
+        fichiers[i] = malloc(sizeof(char) * 512);
+    }
+    rechercheParDocument("module_texte/Textes_UTF8/27-Le_Stade_de_France_s_ouvre_utf8.xml", fichiers, &nbF, seuil);
+    printf("recherche par document :<\n");
+    for (int i = 0; i < nbF; i++)
+    {
+        printf("%s \n", fichiers[i]);
+    }
+
+    
+    //menus_admin(&pile_desc,&table_index);
     remove("sauvegardes/liste_base_descripteurs");
-    system("clear");
+    //system("clear");
     return 0;
     char **fichier;
     fichier = malloc(sizeof(char *) * 350);

@@ -125,15 +125,24 @@ void path_maker(char *chemin, char *nom_dossier, char *nom_fichier);
 int texte_deja_indexe(char *path_to_xml);
 
 /***
- * 
+ * Permet de rechercher un mot dans une table index et renvoi un index
+ * @param Table_Index a : table index dans laquelle chercher
+ * @param char[] mot : mot à chercher dans a
+ * @return index du mot recherché
  */
-
 Table_Index rechercheMot(Table_Index a, char *mot);
+
 /***
- * 
+ * Permet de récupérer le descritpeur correspondant à lid fourni dans la pile de descripteur donnée en paramètre
+ * @param int id : id du descripteur à chercher
+ * @param PILE_descripteur_texte p : pile dans laquelle on cherche le descripteur
+ * @return Descripteur_Texte trouvé
  */
 Descripteur_texte* getDescripteur_Texte(int id, PILE_descripteur_texte *p);
+
 /***
- * 
+ * Permet de récupérer le chemin du fichier correspond à l'id de son descripteur
+ * @param int id : id du descripteur du fichier à chercher
+ * @param char chemin[] : chemin retourné
  */
 void getChemin(int id, char chemin[]);
