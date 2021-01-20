@@ -53,42 +53,40 @@ typedef struct Resultat_Evalutation_t
 /** Initilalise un descripteur audio
 * Utilité: Générale
 * @param int id du descripteur
-* @param int n^2 nombre de fenêtre d'analyse
-* @param int nombre d'intervalles
+* @param unsigned int n^2 nombre de fenêtre d'analyse
+* @param unsigned int nombre d'intervalles
 * @param char * chemin vers le fichier à traiter
 *
 * @return DESC_AUDIO le descripteur audio initialisé
 */
-DESC_AUDIO init_DESC_AUDIO(int id, int n, int m, char * chemin);
+DESC_AUDIO init_DESC_AUDIO(int id, unsigned int n, unsigned int m, char * chemin);
 
 /** Initilalise un descripteur audio vide
-* @param int id de l'histogramme
-* @param int 2^n nombre de fenêtre d'analyse
-* @param int nombre d'intervalles
+* @param unsigned int 2^n nombre de fenêtre d'analyse
+* @param unsigned int nombre d'intervalles
 * @param char * chemin vers le fichier à traiter
 *
 * @return DESC_AUDIO le descripteur audio initialisé
 */
-DESC_AUDIO init_vide_DESC_AUDIO(int n, int m);
+DESC_AUDIO init_vide_DESC_AUDIO(unsigned int n, unsigned int m);
 
 /** Retourne le réels à l'index k,m
 * Utilité: Générale
 * @param DESC_AUDIO descripteur audio
-* @param int index ordonné (k)
-* @param int index abscisse (m)
+* @param unsigned int index ordonné (k)
+* @param unsigned int index abscisse (m)
 *
-* @return double la valeur réel à l'index k,m
+* @return unsigned int la valeur réel à l'index k,m
 */
-int get_DESC_AUDIO(DESC_AUDIO desc, int k, int m);
+unsigned int get_DESC_AUDIO(DESC_AUDIO desc, unsigned int k, unsigned int m);
 
 /** Affecte un réels à l'index k,m
 * Utilité: Générale
 * @param DESC_AUDIO * pointeur de descripteur audio
-* @param int index ordonné (k)
-* @param int index abscisse (m)
-* @param double valeur réel à affecter
+* @param unsigned int index ordonné (k)
+* @param unsigned int valeur réel à affecter
 */
-void set_DESC_AUDIO(DESC_AUDIO * desc, int k, int m, int val);
+void set_DESC_AUDIO(DESC_AUDIO * desc, unsigned int k, unsigned int m, unsigned int val);
 
 /** Affiche un descripteur audio sur la sortie standard (printf)
 * Utilité: Générale

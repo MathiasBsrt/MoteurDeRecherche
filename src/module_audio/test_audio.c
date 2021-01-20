@@ -5,13 +5,13 @@
 #include "base_descripteur.h"
 #include "pile_dynamique.h"
 
-int main(int argc, char * argv[])
+int main()
 {
     printf("--- DEBUT DES TESTS AUDIO --- \n");
     printf("  --- DESCRIPTEUR --- \n");
-    int n = 2;
-    int k = pow(2, n);
-    int m = 15;
+    unsigned int n = 2;
+    unsigned int k = pow(2, n);
+    unsigned int m = 15;
     printf("    --- Paramètres généraux proposés: --- \n");
     printf("      n = %d \n", n);
     printf("      k = 2^%d = %d \n", n, k);
@@ -24,7 +24,7 @@ int main(int argc, char * argv[])
     if(desc.histo.m != m) return 1;
     printf("      Descripteur: id=%d, k=%d, m=%d\n", desc.id, desc.histo.k, desc.histo.m);
 
-    int y, x;
+    unsigned int y, x;
 
     printf("    --- SET DESC AUDIO --- \n");
     for(y = 0; y < k; y++)

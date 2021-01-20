@@ -18,7 +18,7 @@
  *
  */
 
-DESC_AUDIO init_DESC_AUDIO(int id, int n, int m, char * chemin)
+DESC_AUDIO init_DESC_AUDIO(int id, unsigned int n, unsigned int m, char * chemin)
 {
 	if(deja_genere_DESC_AUDIO(chemin) == ALREADY_GENERATED)
 	{
@@ -29,23 +29,27 @@ DESC_AUDIO init_DESC_AUDIO(int id, int n, int m, char * chemin)
 	desc.id = id;
 	desc.histo = init_HISTOGRAMME_AUDIO(n, m);
 	int code = generer_HISTOGRAMME_AUDIO(&(desc.histo), chemin, n, m);
+	if(code == HISTOGRAMME_CREER_ERREUR)
+	{
+		fprintf(stderr, "[INIT_DESC_AUDIO] Une erreure est surevenue lors de la génération du descripteur.\n");
+	}
     lier_DESC_AUDIO_FICHIER(desc, chemin);
 	return desc;
 }
 
-DESC_AUDIO init_vide_DESC_AUDIO(int n, int m)
+DESC_AUDIO init_vide_DESC_AUDIO(unsigned int n, unsigned int m)
 {
 	DESC_AUDIO desc;
 	desc.histo = init_HISTOGRAMME_AUDIO(n, m);
 	return desc;
 }
 
-int get_DESC_AUDIO(DESC_AUDIO desc, int k, int m)
+unsigned int get_DESC_AUDIO(DESC_AUDIO desc, unsigned int k, unsigned int m)
 {
 	return get_HISTOGRAMME_AUDIO(desc.histo, k, m);
 }
 
-void set_DESC_AUDIO(DESC_AUDIO * desc, int k, int m, int val)
+void set_DESC_AUDIO(DESC_AUDIO * desc, unsigned int k, unsigned int m, unsigned int val)
 {
 	if(desc == NULL)
 	{
@@ -212,7 +216,6 @@ RES_EVAL_AUDIO evaluer_DESC_AUDIO(DESC_AUDIO desc1, DESC_AUDIO desc2, unsigned i
 	{
 		// On calcul le rapport entre les deux durées.
 		double rapport = (double) duration1 / duration2;
-		int new_duration1 = (int) (duration1 * rapport);
 		//printf("Rapport = %f\n", rapport);
 
 		// On calcul alors le nouveau 'n' pour le descripteur 1.
@@ -239,15 +242,9 @@ RES_EVAL_AUDIO evaluer_DESC_AUDIO(DESC_AUDIO desc1, DESC_AUDIO desc2, unsigned i
 		// On déclare un ensemble de variable pour nous simplifier la suite.
 		int index1 = 0, curseurIndex1 = 0;
 		int curseurIndex2 = 0;
-		// On créer notre buffer "min" pour stocker la valeur minimale.
-		// On l'initialise avec la plus grande valeurs possible pour un double.
-		// Cette notation permet de spécifier: 0x1.(mantisse)p(exposant réel)
-		double min = 0x1.fffffffffffffp-1;
-		int mini = 0;
-		int mini2 = 0;
+		
 		int index1_max = (histo1.k * histo1.m) - 1;
 		int index2_max = (desc2.histo.k * desc2.histo.m) - 1;
-		int found_something = 0;
 		int val1, val2;
 		int padding = histo1.m;
 		int size = (histo1.k * histo1.m) / padding;
@@ -334,7 +331,7 @@ RES_EVAL_AUDIO evaluer_DESC_AUDIO(DESC_AUDIO desc1, DESC_AUDIO desc2, unsigned i
 		
 		int offset = 0;
 		// On configure alors le réusltat
-		for(int i = 0; i < nb; i++)
+		for(unsigned int i = 0; i < nb; i++)
 		{
 			//printf("n = %d: ", i);
 			//printf("min = %f , mini = %d, time = %f\n", values[i], indicies[i] * padding, ((double) (indicies[i] * padding) / index1_max) * duration1);

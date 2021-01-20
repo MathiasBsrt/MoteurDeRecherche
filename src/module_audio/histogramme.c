@@ -23,13 +23,13 @@
  */
 
 
-HISTOGRAMME_AUDIO init_HISTOGRAMME_AUDIO(int n, int m)
+HISTOGRAMME_AUDIO init_HISTOGRAMME_AUDIO(unsigned int n, unsigned int m)
 {
 	HISTOGRAMME_AUDIO histo;
 	histo.k = (int) pow(2, n); // Nombre de fenêtre d'analyse
 	histo.m = m; // Nombre d'intervalles
 	histo.mat = (int *) malloc(sizeof(int) * histo.k * m);
-	int y, x;
+	unsigned int y, x;
 	for(y = 0; y < histo.k; y++)
 		for(x = 0; x < histo.m; x++)
 			set_HISTOGRAMME_AUDIO(&histo, y, x, 0);
@@ -38,7 +38,7 @@ HISTOGRAMME_AUDIO init_HISTOGRAMME_AUDIO(int n, int m)
 
 void affiche_HISTOGRAMME_AUDIO(HISTOGRAMME_AUDIO histo)
 {
-	int y, x;
+	unsigned int y, x;
 	printf("k = %d, m = %d\n", histo.k, histo.m);
 	printf("y \\ x\n");
 	for(y = 0; y < histo.k; y++)
@@ -62,9 +62,9 @@ void affiche_HISTOGRAMME_AUDIO(HISTOGRAMME_AUDIO histo)
 	}
 }
 
-int get_HISTOGRAMME_AUDIO(HISTOGRAMME_AUDIO histo, int k, int m)
+unsigned int get_HISTOGRAMME_AUDIO(HISTOGRAMME_AUDIO histo, unsigned int k, unsigned int m)
 {
-	if(k < 0 || k >= histo.k || m < 0 || m >= histo.m)
+	if(/*k < 0 ||*/ k >= histo.k /*|| m < 0*/ || m >= histo.m)
 	{
 		fprintf(stderr, "[HISTOGRAMME_AUDIO] Impossible de récuperer la valeur à l'index (%d,%d) OUT_OF_BOUND.\n", k, m);
 		exit(1);
@@ -77,9 +77,9 @@ int get_HISTOGRAMME_AUDIO(HISTOGRAMME_AUDIO histo, int k, int m)
 	return *(histo.mat + (k * histo.m + m));
 }
 
-void set_HISTOGRAMME_AUDIO(HISTOGRAMME_AUDIO * histo, int k, int m, int val)
+void set_HISTOGRAMME_AUDIO(HISTOGRAMME_AUDIO * histo, unsigned int k, unsigned int m, unsigned int val)
 {
-	if(k < 0 || k >= histo->k || m < 0 || m >= histo->m)
+	if(/*k < 0 ||*/ k >= histo->k /*|| m < 0*/ || m >= histo->m)
 	{
 		fprintf(stderr, "[HISTOGRAMME_AUDIO] Impossible de mettre la valeur à l'index (%d,%d) OUT_OF_BOUND.\n", k, m);
 		exit(1);
@@ -92,9 +92,9 @@ void set_HISTOGRAMME_AUDIO(HISTOGRAMME_AUDIO * histo, int k, int m, int val)
 	*(histo->mat + k * histo->m + m) = val;
 }
 
-void inc_HISTOGRAMME_AUDIO(HISTOGRAMME_AUDIO * histo, int k, int m)
+void inc_HISTOGRAMME_AUDIO(HISTOGRAMME_AUDIO * histo, unsigned int k, unsigned int m)
 {
-	if(k < 0 || k >= histo->k || m < 0 || m >= histo->m)
+	if(/*k < 0 ||*/ k >= histo->k /*|| m < 0*/ || m >= histo->m)
 	{
 		fprintf(stderr, "[HISTOGRAMME_AUDIO] Impossible d'incrementer la valeur à l'index (%d,%d) OUT_OF_BOUND.\n", k, m);
 		exit(1);
@@ -111,7 +111,7 @@ int compare_HISTOGRAMME_AUDIO(HISTOGRAMME_AUDIO histo1, HISTOGRAMME_AUDIO histo2
 {
 	if(histo1.k != histo2.k) return 1;
 	if(histo1.m != histo2.m) return 1;
-	int y, x;
+	unsigned int y, x;
 	for(y = 0; y < histo1.k; y++)
 		for(x = 0; x < histo1.m; x++)
 			if(get_HISTOGRAMME_AUDIO(histo1, y, x) != get_HISTOGRAMME_AUDIO(histo2, y, x)) { printf("y=%d, x=%d\n", y, x); return 1; }

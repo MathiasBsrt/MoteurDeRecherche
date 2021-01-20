@@ -26,7 +26,7 @@ void init_FICHIER_BASE_DESC()
 	// On créé le fichier BASE_DESC_FICHIER si il n'existe pas
 	FILE *file;
 	FILE *fp;
-    if (file = fopen(BASE_DESC_FICHIER, "r")){
+    if ((file = fopen(BASE_DESC_FICHIER, "r"))){
         fclose(file);
 	} else {
 		fp = fopen(BASE_DESC_FICHIER, "ab+");
@@ -37,11 +37,10 @@ void init_FICHIER_BASE_DESC()
 	
 
 	// On créé le fichier LISTE_BASE_FICHIER si il n'existe pas
-    if (file = fopen(LISTE_BASE_FICHIER, "r")){
+    if ((file = fopen(LISTE_BASE_FICHIER, "r"))){
         fclose(file);
 	} else {
 		fp = fopen(LISTE_BASE_FICHIER, "ab+");
-		int val = EOF;
 		fprintf(fp, "-1");
 		fclose(fp);
 	}
@@ -106,7 +105,6 @@ PILE_AUDIO charger_PILE_DESC_AUDIO(int * nb_charge)
 	DESC_AUDIO * desc;
 	int val;
 	int k, m;
-	int y, x;
 	//fscanf(baseDescFichier, "%d ", &val);
 	fread(&val, 4, 1, baseDescFichier);
 	do
@@ -149,7 +147,6 @@ DESC_AUDIO charger_byid_DESC_AUDIO(int id)
 	desc.id = -1;
 	int val;
 	int k, m;
-	int y, x;
 	//fscanf(baseDescFichier, "%d ", &val);
 	fread(&val, 4, 1, baseDescFichier);
 	do
@@ -304,7 +301,6 @@ char * fichier_lier_DESC_AUDIO(DESC_AUDIO desc)
 	if(listeBaseFichier == NULL) return NULL;
 
 	int id;
-	char * chemin;
 	do
 	{
 		fscanf(listeBaseFichier, "%d", &id);
@@ -319,6 +315,7 @@ char * fichier_lier_DESC_AUDIO(DESC_AUDIO desc)
 RES_RECHERCHE_AUDIO rechercher_DESC_AUDIO(char * source, unsigned int n, double threshold, int * code)
 {
 	RES_RECHERCHE_AUDIO resultat;
+	resultat.n = 0;
 
 	DESC_AUDIO desc_source = charger_byname_DESC_AUDIO(source);
 	if(desc_source.histo.mat == NULL) { *code = RECHERCHE_ERREUR; return resultat; }
@@ -330,13 +327,9 @@ RES_RECHERCHE_AUDIO rechercher_DESC_AUDIO(char * source, unsigned int n, double 
 
 	DESC_AUDIO desc;
 
-	char * test1;
-	char * test2;
 	while(!PILE_estVide_AUDIO(descripteurs))
 	{
 		descripteurs = dePILE_AUDIO(descripteurs, &desc);
-		test1 = fichier_lier_DESC_AUDIO(desc);
-		test2 = fichier_lier_DESC_AUDIO(desc_source);
 		if(desc.id == desc_source.id) { free_DESC_AUDIO(&desc); continue; } // On saute le descripteur source
 
 		RES_EVAL_AUDIO resultat_eval = evaluer_DESC_AUDIO(desc, desc_source, n, threshold);

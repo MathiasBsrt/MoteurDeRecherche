@@ -6,7 +6,7 @@ test_audio : histogramme.c histogramme.h wav_file_helper.c wav_file_helper.h des
 	gcc -c pile_dynamique.c -W -Wall
 	gcc -c test_audio.c -W -Wall
 	gcc -o test_audio.out histogramme.o wav_file_helper.o descripteur.o pile_dynamique.o base_descripteur.o test_audio.o -lm -W -Wall
-	./test_audio.out
+	#./test_audio.out
 
 main_histo : histogramme.c histogramme.h main_histo.c
 	gcc -c histogramme.c
