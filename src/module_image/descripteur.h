@@ -1,14 +1,15 @@
 #define tailleHistogramme 64
+#define tailleHistogrammeNB 8
 #define quantificateur 2
 #include <stdlib.h>
 #include <stdio.h>
 
-typedef struct Descripteur_t{
+typedef struct Descripteur_image_t{
     int id;
     int histogramme[tailleHistogramme];
-}Descripteur;
+}Descripteur_image;
 
-void affiche_Descripteur(Descripteur e);
-Descripteur saisir_Descripteur();
-void affecter_Descripteur(Descripteur e1, Descripteur e2);
-int compareDescripteur(Descripteur e1, Descripteur e2);
+void affiche_Descripteur_image(Descripteur_image e);
+Descripteur_image saisir_Descripteur_image();
+void affecter_Descripteur_image(Descripteur_image e1, Descripteur_image e2);
+int compareDescripteur_image(Descripteur_image e1, Descripteur_image e2);
