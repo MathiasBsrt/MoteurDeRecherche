@@ -1,6 +1,6 @@
 #include "Header.h"
 
-int comparaison(Descripteur_texte *d1, Descripteur_texte *d2, double seuil, Table_Index t)
+int comparaison(Descripteur_texte *d1, Descripteur_texte *d2, double seuil, Table_Index t, double *pourcentageS)
 {
     //Similaire si seuil% des mots sont similaire
     /****Une case est similaire si :
@@ -43,7 +43,7 @@ int comparaison(Descripteur_texte *d1, Descripteur_texte *d2, double seuil, Tabl
     printf("\nsimilaire sur %d cases\n", nbCaseIntersection);
 
     double pourcentage = (double)nbCaseIntersection / nbMot * 100;
-
+    *pourcentageS = pourcentage;
     printf("Similaire à %f pourcents\n", pourcentage);
     printf("seuil = %f\n", seuil);
     if (pourcentage == 100.0)
@@ -176,10 +176,16 @@ int rechercheParDocument(char *cheminVersDocument, char *fichiersSimilaires[], d
     desc1 = getDescripteur_Texte(id, &pile);
 
     //printf("id du descripteur 1 =%d\n", id);
+    //On utilise un tableau pour stocker les chemins ()
     char chemin1[100];
     getChemin(desc1->id, chemin1);
     // printf("chemin = %s\n", chemin1);
 
+    //On stock les pourcentages de similarité pour chaque fichier.
+    // On considère les deux tableaux (pourcentages et fichierSimilaires) triés de façon identique et correspodant. 
+    //C'est à dire que le pourcentage à l'indice i correspond au chemin à ce même indice
+    int pourcentages[350]; 
+    double pourcentagesS; // Pourcentage de similarité entre 2 descripteurs,
     if (desc1 != NULL)
     {
         //On compare le desc1 avec tous les descripteurs de la pile sauf lui même
@@ -190,12 +196,23 @@ int rechercheParDocument(char *cheminVersDocument, char *fichiersSimilaires[], d
 
             char chemin2[350];
             //printf("\nid du descripteur 2 =%d\n", desc2->id);
-            res = comparaison(desc1, desc2, seuilSimilarite, table);
+            res = comparaison(desc1, desc2, seuilSimilarite, table,&pourcentagesS);
             if (res < 2)
             {
                 getChemin(desc2->id, chemin2);
                 printf("fichier similaire : %s \n", chemin2);
-                strcpy(fichiersSimilaires[nbF], chemin2);
+                if(nbF==0){
+                    pourcentages[0] = pourcentagesS;
+                    strcpy(fichiersSimilaires[0], chemin2);
+                }else{
+                    for (int i = 0; i < nbF; i++)
+                    {
+                        if(){
+                            
+                        }
+                    }
+                    
+                }
                 nbF++;
             }
             desc2 = desc2->suivant;

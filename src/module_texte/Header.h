@@ -52,7 +52,7 @@ int Descripteur_texte_dossier(char *nom_dossier, PILE_descripteur_texte *pile_de
  * @param Table_index t : table index à parcourir
  * @return 0 si égaux, 1 si similaires, 2 si trop différent
  */
-int comparaison(Descripteur_texte *d1, Descripteur_texte *d2, double seuil,Table_Index t);
+int comparaison(Descripteur_texte *d1, Descripteur_texte *d2, double seuil,Table_Index t, double *pourcentageS);
 
 /***
  * Recherche par critère
