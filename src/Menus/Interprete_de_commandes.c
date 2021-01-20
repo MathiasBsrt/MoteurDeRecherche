@@ -104,7 +104,7 @@ void menu_user(PILE_descripteur_texte *pile, Table_Index *table)
             //int res = comparaison(d1,d2,80.0);
 
             
-            int nbF = rechercheParDocument("module_texte/Textes_UTF8/27-Le_Stade_de_France_s_ouvre_utf8.xml", fichiers, 13.0);
+            int nbF = rechercheParDocument_texte("module_texte/Textes_UTF8/27-Le_Stade_de_France_s_ouvre_utf8.xml", fichiers, 13.0);
             printf("nbF principal =%d\n",nbF);
             printf("recherche par document :<\n");
             for (int i = 0; i < nbF; i++)

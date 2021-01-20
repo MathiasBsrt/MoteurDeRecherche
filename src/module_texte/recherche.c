@@ -1,6 +1,6 @@
 #include "Header.h"
 
-int comparaison(Descripteur_texte *d1, Descripteur_texte *d2, double seuil, Table_Index t, double *pourcentageS)
+int comparaison_texte(Descripteur_texte *d1, Descripteur_texte *d2, double seuil, Table_Index t, double *pourcentageS)
 {
     //Similaire si seuil% des mots sont similaire
     /****Une case est similaire si :
@@ -58,7 +58,7 @@ int comparaison(Descripteur_texte *d1, Descripteur_texte *d2, double seuil, Tabl
     return 2;
 }
 
-void rechercheParCritere(char *mot, char **fichiersSimilaires, int *nbF, double seuilSimilarite)
+void rechercheParCritere_texte(char *mot, char **fichiersSimilaires, int *nbF, double seuilSimilarite)
 {
     printf("recherche par critère...\n");
     PILE_descripteur_texte pile = init_PILE_desc();
@@ -69,7 +69,7 @@ void rechercheParCritere(char *mot, char **fichiersSimilaires, int *nbF, double 
     //Dans cette table on cherche l'index du mot pour obtenir la liste des fichiers qui ont ce mot
 
     Table_Index indexMot;
-    indexMot = rechercheMot(table1, mot);
+    indexMot = rechercheMot_texte(table1, mot);
 
     if (indexMot == NULL)
     {
@@ -77,22 +77,20 @@ void rechercheParCritere(char *mot, char **fichiersSimilaires, int *nbF, double 
     }
     else
     {
-
         //On compare ce fichier avec tous les autres fichiers en appliquant le seuil
         printf("nb_max=%d\n", indexMot->nb_occ);
         *nbF = indexMot->nb_occ;
         for (int i = 0; i < indexMot->nb_occ; i++)
         {
-
             char chemin[MAX_STRING];
-            getChemin(indexMot->idTxt_avec_occ[0][i], chemin);
+            getChemin_texte(indexMot->idTxt_avec_occ[0][i], chemin);
             printf("chemin trouvé=%s\n", chemin);
             strcpy(fichiersSimilaires[i], chemin);
         }
     }
 }
 
-void getChemin(int id, char chemin[])
+void getChemin_texte(int id, char chemin[])
 {
     FILE *liste_base_desc = fopen("sauvegardes/liste_base_descripteurs", "r");
     if (liste_base_desc)
@@ -132,7 +130,7 @@ Descripteur_texte *getDescripteur_Texte(int id, PILE_descripteur_texte *p)
     return NULL;
 }
 
-Table_Index rechercheMot(Table_Index a, char *mot)
+Table_Index rechercheMot_texte(Table_Index a, char *mot)
 {
     if (a == NULL)
     {
@@ -145,15 +143,15 @@ Table_Index rechercheMot(Table_Index a, char *mot)
     }
     else if (strcmp(a->mot, mot) > 0)
     {
-        return rechercheMot(a->gauche, mot);
+        return rechercheMot_texte(a->gauche, mot);
     }
     else
     {
-        return rechercheMot(a->droit, mot);
+        return rechercheMot_texte(a->droit, mot);
     }
 }
 
-int rechercheParDocument(char *cheminVersDocument, char *fichiersSimilaires[], double seuilSimilarite)
+int rechercheParDocument_texte(char *cheminVersDocument, char *fichiersSimilaires[], double seuilSimilarite)
 {
 
     //On indexe le nouveau document
@@ -178,13 +176,13 @@ int rechercheParDocument(char *cheminVersDocument, char *fichiersSimilaires[], d
     //printf("id du descripteur 1 =%d\n", id);
     //On utilise un tableau pour stocker les chemins ()
     char chemin1[100];
-    getChemin(desc1->id, chemin1);
+    getChemin_texte(desc1->id, chemin1);
     // printf("chemin = %s\n", chemin1);
 
     //On stock les pourcentages de similarité pour chaque fichier.
-    // On considère les deux tableaux (pourcentages et fichierSimilaires) triés de façon identique et correspodant. 
+    // On considère les deux tableaux (pourcentages et fichierSimilaires) triés de façon identique et correspodant.
     //C'est à dire que le pourcentage à l'indice i correspond au chemin à ce même indice
-    int pourcentages[MAX_STRING]; 
+    int pourcentages[MAX_STRING];
     double pourcentagesS; // Pourcentage de similarité entre 2 descripteurs,
     if (desc1 != NULL)
     {
@@ -196,10 +194,10 @@ int rechercheParDocument(char *cheminVersDocument, char *fichiersSimilaires[], d
 
             char chemin2[MAX_STRING];
             //printf("\nid du descripteur 2 =%d\n", desc2->id);
-            res = comparaison(desc1, desc2, seuilSimilarite, table,&pourcentagesS);
+            res = comparaison_texte(desc1, desc2, seuilSimilarite, table, &pourcentagesS);
             if (res < 2)
             {
-                getChemin(desc2->id, chemin2);
+                getChemin_texte(desc2->id, chemin2);
                 printf("fichier similaire : %s \n", chemin2);
                 pourcentages[nbF] = pourcentagesS;
                 strcpy(fichiersSimilaires[nbF], chemin2);
@@ -209,28 +207,35 @@ int rechercheParDocument(char *cheminVersDocument, char *fichiersSimilaires[], d
             desc2 = desc2->suivant;
         }
 
+       /* for (int i = 0; i < nbF; i++)
+        {
+            printf("%s \n", fichiersSimilaires[i]);
+        }*/
+
+    /*
         //Trier les tableaux pourcenatges et fichiers similaires
         int temp;
         char tempString[MAX_STRING];
 
-        for (int i = nbF -1; i <= 0; i--)
+        for (int i = nbF - 1; i <= 0; i--)
         {
-         for (int j = 1; j < nbF; j++)
-         {
-             if(pourcentages[j-1]>pourcentages[j]){
-                 //echange tableau pourcentage
-                 temp = pourcentages[j-1];
-                 pourcentages[j-1] = pourcentages[j];
-                 pourcentages[j] = temp;
+            for (int j = 1; j < nbF; j++)
+            {
+                if (pourcentages[j - 1] > pourcentages[j])
+                {
+                    //echange tableau pourcentage
+                    temp = pourcentages[j - 1];
+                    pourcentages[j - 1] = pourcentages[j];
+                    pourcentages[j] = temp;
 
-                 //echange tableau string
-                 strcpy(tempString,fichiersSimilaires[j-1]);
-                 strcpy(fichiersSimilaires[j-1],fichiersSimilaires[j]);
-                 strcpy(fichiersSimilaires[j],tempString);
-             }
-         }
-            
-        }
-        
+                    //echange tableau string
+                    strcpy(tempString, fichiersSimilaires[j - 1]);
+                    strcpy(fichiersSimilaires[j - 1], fichiersSimilaires[j]);
+                    strcpy(fichiersSimilaires[j], tempString);
+                }
+            }
+        }*/
     }
+
+    return nbF;
 }
