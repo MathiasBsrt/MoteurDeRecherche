@@ -12,26 +12,26 @@
  *
  */
 
-PILE init_PILE()
+PILE_AUDIO init_PILE_AUDIO()
 {
-    PILE p;
+    PILE_AUDIO p;
     p = NULL;
     return p;
 }
 
-int PILE_estVide(PILE p)
+int PILE_estVide_AUDIO(PILE_AUDIO p)
 {
     return (p == NULL);
 }
 
-void affiche_PILE(PILE p)
+void affiche_PILE_AUDIO(PILE_AUDIO p)
 {
-    if (PILE_estVide(p))
+    if (PILE_estVide_AUDIO(p))
         fprintf(stderr, "La pile est vide\n");
 
     else
     {
-        CELLULE *parcours = p;
+        CELLULE_AUDIO *parcours = p;
         printf("\n\n\t AFFICHAGE DES DescripteurS ET LEURS OCCURENCES\n");
         do
         {
@@ -42,12 +42,12 @@ void affiche_PILE(PILE p)
     }
 }
 
-PILE emPILE(PILE p, DESC_AUDIO elt)
+PILE_AUDIO emPILE_AUDIO(PILE_AUDIO p, DESC_AUDIO elt)
 {
-    CELLULE *cel = malloc(sizeof(CELLULE));
+    CELLULE_AUDIO *cel = malloc(sizeof(CELLULE_AUDIO));
     cel->suivant = NULL;
     cel->elem = elt;
-    if (PILE_estVide(p))
+    if (PILE_estVide_AUDIO(p))
     {
         p = cel;
     }
@@ -62,9 +62,9 @@ PILE emPILE(PILE p, DESC_AUDIO elt)
     return cel;
 }
 
-PILE dePILE(PILE p, DESC_AUDIO *elt)
+PILE_AUDIO dePILE_AUDIO(PILE_AUDIO p, DESC_AUDIO *elt)
 {
-    if (PILE_estVide(p))
+    if (PILE_estVide_AUDIO(p))
         fprintf(stderr, "La pile est deja vide");
     else
     {
@@ -75,7 +75,7 @@ PILE dePILE(PILE p, DESC_AUDIO *elt)
         }
         else
         {
-            CELLULE* marqueur=p;
+            CELLULE_AUDIO* marqueur=p;
             *elt = p->elem;
             p=p->suivant;
             marqueur=NULL;
@@ -84,14 +84,4 @@ PILE dePILE(PILE p, DESC_AUDIO *elt)
     }
 
     return p;
-}
-
-PILE inverserPILE(PILE pile){
-  PILE sub=init_PILE();
-  DESC_AUDIO elem;
-  while(!PILE_estVide(pile)){
-    pile=dePILE(pile,&elem);
-    sub=emPILE(sub,elem);
-  }
-  return sub;
 }

@@ -32,14 +32,14 @@ void init_FICHIER_BASE_DESC()
 	fclose(fp);
 }
 
-PILE sauvegarder_DESC_AUDIO(PILE PILE_DESCRIPTEUR_AUDIO, DESC_AUDIO desc)
+PILE_AUDIO sauvegarder_DESC_AUDIO(PILE_AUDIO PILE_DESCRIPTEUR_AUDIO, DESC_AUDIO desc)
 {
-	PILE_DESCRIPTEUR_AUDIO = emPILE(PILE_DESCRIPTEUR_AUDIO, desc);
+	PILE_DESCRIPTEUR_AUDIO = emPILE_AUDIO(PILE_DESCRIPTEUR_AUDIO, desc);
 	return PILE_DESCRIPTEUR_AUDIO;
 }
 
 
-void sauvegarder_PILE_DESC_AUDIO(PILE PILE_DESCRIPTEUR_AUDIO)
+void sauvegarder_PILE_DESC_AUDIO(PILE_AUDIO PILE_DESCRIPTEUR_AUDIO)
 {
 	if(PILE_DESCRIPTEUR_AUDIO == NULL)
 	{
@@ -53,9 +53,9 @@ void sauvegarder_PILE_DESC_AUDIO(PILE PILE_DESCRIPTEUR_AUDIO)
 		exit(1);
 	}
 	DESC_AUDIO desc;
-	while(!PILE_estVide(PILE_DESCRIPTEUR_AUDIO))
+	while(!PILE_estVide_AUDIO(PILE_DESCRIPTEUR_AUDIO))
 	{
-		PILE_DESCRIPTEUR_AUDIO = dePILE(PILE_DESCRIPTEUR_AUDIO, &desc);
+		PILE_DESCRIPTEUR_AUDIO = dePILE_AUDIO(PILE_DESCRIPTEUR_AUDIO, &desc);
 		//fprintf(baseDescFichier, "%d %d %d ", desc.id, desc.histo.k, desc.histo.m);
 		fwrite(&(desc.id), 4, 1, baseDescFichier);
 		fwrite(&(desc.histo.k), 4, 1, baseDescFichier);
@@ -78,9 +78,9 @@ void sauvegarder_PILE_DESC_AUDIO(PILE PILE_DESCRIPTEUR_AUDIO)
 }
 
 
-PILE charger_PILE_DESC_AUDIO(int * nb_charge)
+PILE_AUDIO charger_PILE_DESC_AUDIO(int * nb_charge)
 {
-	PILE PILE_DESCRIPTEUR_AUDIO = init_PILE();
+	PILE_AUDIO PILE_DESCRIPTEUR_AUDIO = init_PILE_AUDIO();
 	FILE * baseDescFichier = fopen(BASE_DESC_FICHIER, "r");
 	if(nb_charge != NULL) *nb_charge = 0;
 	if(baseDescFichier == NULL)
@@ -110,7 +110,7 @@ PILE charger_PILE_DESC_AUDIO(int * nb_charge)
 				set_DESC_AUDIO(desc, y, x, val);
 			}
 		*/
-		PILE_DESCRIPTEUR_AUDIO = emPILE(PILE_DESCRIPTEUR_AUDIO, *desc);
+		PILE_DESCRIPTEUR_AUDIO = emPILE_AUDIO(PILE_DESCRIPTEUR_AUDIO, *desc);
 		if(nb_charge != NULL) *nb_charge++;
 
 		//fscanf(baseDescFichier, "%d ", &val);
@@ -163,11 +163,11 @@ DESC_AUDIO charger_byname_DESC_AUDIO(char * chemin)
 	return charger_byid_DESC_AUDIO(id);
 }
 
-PILE init_MULTIPLE_DESC_AUDIO(int start_id, int n, int m, char * cheminDir)
+PILE_AUDIO init_MULTIPLE_DESC_AUDIO(int start_id, int n, int m, char * cheminDir)
 {
 	struct dirent *dir;
     DIR *d = opendir(cheminDir);
-    PILE pile = init_PILE();
+    PILE_AUDIO pile = init_PILE_AUDIO();
     DESC_AUDIO * desc;
     int id = start_id;
 
@@ -189,7 +189,7 @@ PILE init_MULTIPLE_DESC_AUDIO(int start_id, int n, int m, char * cheminDir)
             	//printf("%s\n", chemin);
             	desc = (DESC_AUDIO *) malloc(sizeof(DESC_AUDIO));
             	*desc = init_DESC_AUDIO(id, n, m, chemin);
-            	pile = emPILE(pile, *desc);
+            	pile = emPILE_AUDIO(pile, *desc);
             	id++;
             }
         }
@@ -302,7 +302,7 @@ RES_RECHERCHE_AUDIO rechercher_DESC_AUDIO(char * source, unsigned int n, double 
 	if(desc_source.histo.mat == NULL) { *code = RECHERCHE_ERREUR; return resultat; }
 
 	int nb_charges;
-	PILE descripteurs = charger_PILE_DESC_AUDIO(&nb_charges);
+	PILE_AUDIO descripteurs = charger_PILE_DESC_AUDIO(&nb_charges);
 	int nb_retenus = 0;
 	RES_EVAL_AUDIO * resultats_evals = (RES_EVAL_AUDIO *) malloc(sizeof(RES_EVAL_AUDIO) * nb_charges);
 
@@ -310,9 +310,9 @@ RES_RECHERCHE_AUDIO rechercher_DESC_AUDIO(char * source, unsigned int n, double 
 
 	char * test1;
 	char * test2;
-	while(!PILE_estVide(descripteurs))
+	while(!PILE_estVide_AUDIO(descripteurs))
 	{
-		descripteurs = dePILE(descripteurs, &desc);
+		descripteurs = dePILE_AUDIO(descripteurs, &desc);
 		test1 = fichier_lier_DESC_AUDIO(desc);
 		test2 = fichier_lier_DESC_AUDIO(desc_source);
 		if(desc.id == desc_source.id) { free_DESC_AUDIO(&desc); continue; } // On saute le descripteur source

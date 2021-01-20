@@ -104,7 +104,7 @@ int indexationSon(){
 
     printf("  --- CONTROLEUR BASE DESCRIPTEUR --- \n");
     printf("    --- Initialisation du controleur --- \n");
-    PILE pileDescripteur = init_PILE();
+    PILE_AUDIO pileDescripteur = init_PILE_AUDIO();
     init_FICHIER_BASE_DESC();
 
     printf("    --- Création du descripteur audio de TEST_SON/corpus_fi.wav --- \n");
@@ -138,15 +138,15 @@ int indexationSon(){
     sauvegarder_PILE_DESC_AUDIO(pileDescripteur);
 
     printf("    --- Chargement des descripteurs enregistrés --- \n");
-    PILE secondePile = charger_PILE_DESC_AUDIO(NULL);
+    PILE_AUDIO secondePile = charger_PILE_DESC_AUDIO(NULL);
 
     printf("       --- Pile est vide ? --- \n");
-    printf("          %s \n", (PILE_estVide(secondePile) ? "Oui" : "Non"));
-    if(PILE_estVide(secondePile) != 0) return 1;
+    printf("          %s \n", (PILE_estVide_AUDIO(secondePile) ? "Oui" : "Non"));
+    if(PILE_estVide_AUDIO(secondePile) != 0) return 1;
 
     printf("       --- Depile premier descripteur --- \n");
     DESC_AUDIO descDepile1;
-    secondePile = dePILE(secondePile, &descDepile1);
+    secondePile = dePILE_AUDIO(secondePile, &descDepile1);
 
     printf("         --- Descripteur depile1 == celui empile ? --- \n");
     int compareDepile1Empile = compare_DESC_AUDIO(descDepile1, descCorpusWAV);
@@ -154,12 +154,12 @@ int indexationSon(){
     if(compareDepile1Empile != 0) return 1;
 
     printf("       --- Pile est vide ? --- \n");
-    printf("          %s \n", (PILE_estVide(secondePile) ? "Oui" : "Non"));
-    if(PILE_estVide(secondePile) != 0) return 1;
+    printf("          %s \n", (PILE_estVide_AUDIO(secondePile) ? "Oui" : "Non"));
+    if(PILE_estVide_AUDIO(secondePile) != 0) return 1;
 
     printf("       --- Depile second descripteur --- \n");
     DESC_AUDIO descDepile2;
-    secondePile = dePILE(secondePile, &descDepile2);
+    secondePile = dePILE_AUDIO(secondePile, &descDepile2);
 
     printf("         --- Descripteur depile2 == celui empile ? --- \n");
     int compareDepile2Empile = compare_DESC_AUDIO(descDepile2, descJingleWAV);
@@ -167,12 +167,12 @@ int indexationSon(){
     if(compareDepile2Empile != 0) return 1;
 
     printf("       --- Pile est vide ? --- \n");
-    printf("          %s \n", (PILE_estVide(secondePile) ? "Oui" : "Non"));
-    if(PILE_estVide(secondePile) != 0) return 1;
+    printf("          %s \n", (PILE_estVide_AUDIO(secondePile) ? "Oui" : "Non"));
+    if(PILE_estVide_AUDIO(secondePile) != 0) return 1;
 
     printf("       --- Depile troisième descripteur --- \n");
     DESC_AUDIO descDepile3;
-    secondePile = dePILE(secondePile, &descDepile3);
+    secondePile = dePILE_AUDIO(secondePile, &descDepile3);
 
     printf("         --- Descripteur depile3 == celui empile ? --- \n");
     int compareDepile3Empile = compare_DESC_AUDIO(descDepile3, descCymbaleWAV);
@@ -180,11 +180,11 @@ int indexationSon(){
     if(compareDepile3Empile != 0) return 1;
 
     printf("       --- Pile est vide ? --- \n");
-    printf("          %s \n", (PILE_estVide(secondePile) ? "Oui" : "Non"));
-    if(PILE_estVide(secondePile) != 1) return 1;
+    printf("          %s \n", (PILE_estVide_AUDIO(secondePile) ? "Oui" : "Non"));
+    if(PILE_estVide_AUDIO(secondePile) != 1) return 1;
 
     printf("    --- Création des descripteurs audio du dossier TEST_SON --- \n");
-    PILE pileDescDossier = init_MULTIPLE_DESC_AUDIO(0, 2, 15, "TEST_SON");
+    PILE_AUDIO pileDescDossier = init_MULTIPLE_DESC_AUDIO(0, 2, 15, "TEST_SON");
 
     
     printf("    --- Tests deja_genere_DESC_AUDIO(char *) --- \n");
@@ -224,9 +224,9 @@ int indexationSon(){
 
 
     DESC_AUDIO depileDesc;
-    while(!PILE_estVide(pileDescDossier))
+    while(!PILE_estVide_AUDIO(pileDescDossier))
     {
-    	pileDescDossier = dePILE(pileDescDossier, &depileDesc);
+    	pileDescDossier = dePILE_AUDIO(pileDescDossier, &depileDesc);
         char * chemin = fichier_lier_DESC_AUDIO(depileDesc);
         printf(" Fichier associé au descripteur %d: %s\n", depileDesc.id, 
             chemin != NULL ? chemin : "Introuvable");

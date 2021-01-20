@@ -32,25 +32,25 @@ typedef struct Resultat_Recheche_t
 void init_FICHIER_BASE_DESC();
 
 /** Sauvegarde un descripteur audio dans la pile des descripteurs
-* @param PILE la pile de descripteurs audios
+* @param PILE_AUDIO la pile de descripteurs audios
 * @param DESC_AUDIO le descripteur audio à ajouter
 *
-* @return PILE la nouvelle version de la pile de descripteurs audios
+* @return PILE_AUDIO la nouvelle version de la pile de descripteurs audios
 */
-PILE sauvegarder_DESC_AUDIO(PILE PILE_DESCRIPTEUR_AUDIO, DESC_AUDIO desc);
+PILE_AUDIO sauvegarder_DESC_AUDIO(PILE_AUDIO PILE_DESCRIPTEUR_AUDIO, DESC_AUDIO desc);
 
 /** Sauvegarde la pile de descripteurs dans le fichier BASE_DESC_FICHIER
-* @param PILE la pile de descripteurs audios
+* @param PILE_AUDIO la pile de descripteurs audios
 */
-void sauvegarder_PILE_DESC_AUDIO(PILE PILE_DESCRIPTEUR_AUDIO);
+void sauvegarder_PILE_DESC_AUDIO(PILE_AUDIO PILE_DESCRIPTEUR_AUDIO);
 
 /** Charge dans une nouvelle pile de descripteurs les descripteurs présents
 * dans le fichier BASE_DESC_FICHIER
 * @param nb_charge retourne le nombre de descripteurs chargés (peut être NULL).
 *
-* @return PILE la pile de descripteurs audios chargée.
+* @return PILE_AUDIO la pile de descripteurs audios chargée.
 */
-PILE charger_PILE_DESC_AUDIO(int * nb_charge);
+PILE_AUDIO charger_PILE_DESC_AUDIO(int * nb_charge);
 
 /** Charge un descripteur audio enregistrer dans BASE_DESC_FICHIER à partir de son identifiant
 * @param int id du descripteur audio que l'on veut charger.
@@ -73,9 +73,9 @@ DESC_AUDIO charger_byname_DESC_AUDIO(char * chemin);
 * @param int nombre d'intervalles
 * @param char * chemin vers le dossier contenant les fichiers à tratier
 *
-* @return PILE pile pile contenant les descripteurs créés
+* @return PILE_AUDIO pile pile contenant les descripteurs créés
 */
-PILE init_MULTIPLE_DESC_AUDIO(int start_id, int n, int m, char * cheminDir);
+PILE_AUDIO init_MULTIPLE_DESC_AUDIO(int start_id, int n, int m, char * cheminDir);
 
 /** Lie un descripteur audio à un fichier
 * @param DESC_AUDIO  descripteur audio à lier à un fichier
