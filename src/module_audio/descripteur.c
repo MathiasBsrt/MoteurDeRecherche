@@ -20,10 +20,16 @@
 
 DESC_AUDIO init_DESC_AUDIO(int id, int n, int m, char * chemin)
 {
+	if(deja_genere_DESC_AUDIO(chemin) == ALREADY_GENERATED)
+	{
+		printf("Descripteur déjà indexé pour le fichier '%s', annulation de l'indexation, retour du descripteur déjà généré.\n", chemin);
+		return charger_byname_DESC_AUDIO(chemin);
+	}
 	DESC_AUDIO desc;
 	desc.id = id;
 	desc.histo = init_HISTOGRAMME_AUDIO(n, m);
 	int code = generer_HISTOGRAMME_AUDIO(&(desc.histo), chemin, n, m);
+    lier_DESC_AUDIO_FICHIER(desc, chemin);
 	return desc;
 }
 

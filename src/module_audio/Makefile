@@ -1,11 +1,11 @@
 test_audio : histogramme.c histogramme.h wav_file_helper.c wav_file_helper.h descripteur.c descripteur.h pile_dynamique.h pile_dynamique.c base_descripteur.h base_descripteur.c test_audio.c
-	gcc -c histogramme.c
-	gcc -c wav_file_helper.c
-	gcc -c descripteur.c
-	gcc -c base_descripteur.c
-	gcc -c pile_dynamique.c
-	gcc -c test_audio.c
-	gcc -o test_audio.out histogramme.o wav_file_helper.o descripteur.o pile_dynamique.o base_descripteur.o test_audio.o -lm
+	gcc -c histogramme.c -W -Wall
+	gcc -c wav_file_helper.c -W -Wall
+	gcc -c descripteur.c -W -Wall
+	gcc -c base_descripteur.c -W -Wall
+	gcc -c pile_dynamique.c -W -Wall
+	gcc -c test_audio.c -W -Wall
+	gcc -o test_audio.out histogramme.o wav_file_helper.o descripteur.o pile_dynamique.o base_descripteur.o test_audio.o -lm -W -Wall
 	./test_audio.out
 
 main_histo : histogramme.c histogramme.h main_histo.c

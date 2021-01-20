@@ -80,28 +80,25 @@ int main(int argc, char * argv[])
     init_FICHIER_BASE_DESC();
 
     printf("    --- Création du descripteur audio de TEST_SON/corpus_fi.wav --- \n");
-    DESC_AUDIO descCorpusWAV = init_DESC_AUDIO(0, n, m, "TEST_SON/corpus_fi.wav");
-    lier_DESC_AUDIO_FICHIER(descCorpusWAV, "TEST_SON/corpus_fi.wav");
+    DESC_AUDIO descCorpusWAV = init_DESC_AUDIO(recuperer_nouvel_id_valide_AUDIO(), n, m, "TEST_SON/corpus_fi.wav");
     
     printf("    --- Sauvegarde du descripteur --- \n");
     pileDescripteur = sauvegarder_DESC_AUDIO(pileDescripteur, descCorpusWAV);
 
-    printf("    --- Sauvegarde de la pile de descripteurs --- \n");
-    sauvegarder_PILE_DESC_AUDIO(pileDescripteur);
+    /*printf("    --- Sauvegarde de la pile de descripteurs --- \n");
+    sauvegarder_PILE_DESC_AUDIO(pileDescripteur);*/
 
     printf("    --- Création du descripteur audio de TEST_SON/jingle_fi.wav --- \n");
-    DESC_AUDIO descJingleWAV = init_DESC_AUDIO(1, n + 2, m, "TEST_SON/jingle_fi.wav");
-    lier_DESC_AUDIO_FICHIER(descJingleWAV, "TEST_SON/jingle_fi.wav");
+    DESC_AUDIO descJingleWAV = init_DESC_AUDIO(recuperer_nouvel_id_valide_AUDIO(), n + 2, m, "TEST_SON/jingle_fi.wav");
     
     printf("    --- Sauvegarde du descripteur --- \n");
     pileDescripteur = sauvegarder_DESC_AUDIO(pileDescripteur, descJingleWAV);
     
-    printf("    --- Sauvegarde de la pile de descripteurs --- \n");
-    sauvegarder_PILE_DESC_AUDIO(pileDescripteur);
+    /*printf("    --- Sauvegarde de la pile de descripteurs --- \n");
+    sauvegarder_PILE_DESC_AUDIO(pileDescripteur);*/
 
     printf("    --- Création du descripteur audio de TEST_SON/cymbale.wav --- \n");
-    DESC_AUDIO descCymbaleWAV = init_DESC_AUDIO(2, n + 1, m, "TEST_SON/cymbale.wav");
-    lier_DESC_AUDIO_FICHIER(descCymbaleWAV, "TEST_SON/cymbale.wav");
+    DESC_AUDIO descCymbaleWAV = init_DESC_AUDIO(recuperer_nouvel_id_valide_AUDIO(), n + 1, m, "TEST_SON/cymbale.wav");
     
     printf("    --- Sauvegarde du descripteur --- \n");
     pileDescripteur = sauvegarder_DESC_AUDIO(pileDescripteur, descCymbaleWAV);
@@ -110,7 +107,9 @@ int main(int argc, char * argv[])
     sauvegarder_PILE_DESC_AUDIO(pileDescripteur);
 
     printf("    --- Chargement des descripteurs enregistrés --- \n");
-    PILE_AUDIO secondePile = charger_PILE_DESC_AUDIO(NULL);
+    int nbLoaded = 0;
+    PILE_AUDIO secondePile = charger_PILE_DESC_AUDIO(&nbLoaded);
+    printf("NB LOADED: %d\n", nbLoaded);
 
     printf("       --- Pile est vide ? --- \n");
     printf("          %s \n", (PILE_estVide_AUDIO(secondePile) ? "Oui" : "Non"));
@@ -156,23 +155,23 @@ int main(int argc, char * argv[])
     if(PILE_estVide_AUDIO(secondePile) != 1) return 1;
 
     printf("    --- Création des descripteurs audio du dossier TEST_SON --- \n");
-    PILE_AUDIO pileDescDossier = init_MULTIPLE_DESC_AUDIO(0, 2, 15, "TEST_SON");
+    PILE_AUDIO pileDescDossier = init_MULTIPLE_DESC_AUDIO(recuperer_nouvel_id_valide_AUDIO(), 2, 15, "WAV_FILES");
 
     
     printf("    --- Tests deja_genere_DESC_AUDIO(char *) --- \n");
-    int resCorpus = deja_genere_DESC_AUDIO("TEST_SON/corpus_fi.wav");
+    int resCorpus = deja_genere_DESC_AUDIO("WAV_FILES/corpus_fi.wav");
     if(resCorpus != ALREADY_GENERATED) { fprintf(stderr, "Le programme doit trouver un descripteur déjà généré pour le corpus.\n"); return 1; }
-    int resJingle = deja_genere_DESC_AUDIO("TEST_SON/jingle_fi.wav");
+    int resJingle = deja_genere_DESC_AUDIO("WAV_FILES/jingle_fi.wav");
     if(resJingle != ALREADY_GENERATED) { fprintf(stderr, "Le programme doit trouver un descripteur déjà généré pour le jingle.\n"); return 1; }
-    int resInconnu = deja_genere_DESC_AUDIO("TEST_SON/jingle_fi99.wav");
+    int resInconnu = deja_genere_DESC_AUDIO("WAV_FILES/jingle_fi99.wav");
     if(resInconnu == ALREADY_GENERATED) { fprintf(stderr, "Le programme ne doit pas trouver de descripteur déjà généré pour le jingle99.\n"); return 1; }
 
     printf("    --- Tests get_id_byname_DESC_AUDIO(char *) --- \n");
-    int idCorpus = get_id_byname_DESC_AUDIO("TEST_SON/corpus_fi.wav");
-    if(idCorpus != 0) { fprintf(stderr, "Le programme doit trouver un ID pour le corpus.\n"); return 1; }
-    int idJingle = get_id_byname_DESC_AUDIO("TEST_SON/jingle_fi.wav");
-    if(idJingle != 1) { fprintf(stderr, "Le programme doit trouver un ID pour le jingle.\n"); return 1; }
-    int idInconnu = get_id_byname_DESC_AUDIO("TEST_SON/jingle_fi99.wav");
+    int idCorpus = get_id_byname_DESC_AUDIO("WAV_FILES/corpus_fi.wav");
+    if(idCorpus == ID_NOT_FOUND) { fprintf(stderr, "Le programme doit trouver un ID pour le corpus.\n"); return 1; }
+    int idJingle = get_id_byname_DESC_AUDIO("WAV_FILES/jingle_fi.wav");
+    if(idJingle == ID_NOT_FOUND) { fprintf(stderr, "Le programme doit trouver un ID pour le jingle.\n"); return 1; }
+    int idInconnu = get_id_byname_DESC_AUDIO("WAV_FILES/jingle_fi99.wav");
     if(idInconnu != ID_NOT_FOUND) { fprintf(stderr, "Le programme ne doit pas trouver d'ID pour le jingle99.\n"); return 1; }
 
 
@@ -193,6 +192,9 @@ int main(int argc, char * argv[])
     descInconnu = charger_byname_DESC_AUDIO("TEST_SON/jingle_fi99.wav");
     if(descInconnu.id != ID_NOT_FOUND) { fprintf(stderr, "Le programme ne doit pas trouver de DESC_AUDIO pour le jingle99.\n"); return 1; }
 
+    printf("    --- Tests recuperer_nouvel_id_valide_AUDIO() --- \n");
+    int nouvelId = recuperer_nouvel_id_valide_AUDIO();
+    if(nouvelId != 6) { fprintf(stderr, "Le programme doit trouver un nouvel identifiant valide égale à 3. Il a trouvé %d.\n", nouvelId); return 1; } 
 
 
     DESC_AUDIO depileDesc;
@@ -207,18 +209,25 @@ int main(int argc, char * argv[])
     }
    
     printf("  --- RECHERCHE --- \n");
-    printf("    --- Recherche TEST_SON/jingle_fi.wav  dans TEST_SON/corpus_fi.wav avec les 3 meilleurs résultats --- \n");
+    printf("    --- Recherche WAV_FILES/jingle_fi.wav  dans WAV_FILES/corpus_fi.wav avec les 3 meilleurs résultats --- \n");
 
-    DESC_AUDIO desc1 = init_DESC_AUDIO(0, 5, 30, "TEST_SON/corpus_fi.wav");
-    DESC_AUDIO desc2 = init_DESC_AUDIO(1, 5, 30, "TEST_SON/jingle_fi.wav");
-    RES_EVAL_AUDIO resultat = evaluer_DESC_AUDIO(desc1, desc2, 3, EVAL_NORMAL);
-    printf("      Temps trouvés:\n");
-    for(int i = 0; i < resultat.n; i++)
-    {
-        printf("      i = %d: %f\n", i, resultat.times[i]);
-    }
+    DESC_AUDIO desc1 = charger_byname_DESC_AUDIO("TEST_SON/corpus_fi.wav");
+    DESC_AUDIO desc2 = charger_byname_DESC_AUDIO("TEST_SON/jingle_fi.wav");
+
     //affiche_DESC_AUDIO(desc1);
-    //affiche_DESC_AUDIO(desc2);
+
+    RES_EVAL_AUDIO resultat = evaluer_DESC_AUDIO(desc1, desc2, 3, EVAL_NORMAL);
+    if(resultat.n == 0)
+    {
+        printf("Aucun résultat trouvé.\n");
+    } else {
+        printf("      Temps trouvés:\n");
+        for(int i = 0; i < resultat.n; i++)
+        {
+            printf("      i = %d: %f\n", i, resultat.times[i]);
+        }
+    }
+
 
 
     printf("--- FIN DES TEST AUDIO --- \n");
