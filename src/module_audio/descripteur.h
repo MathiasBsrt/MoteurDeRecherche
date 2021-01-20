@@ -131,7 +131,7 @@ RES_EVAL_AUDIO evaluer_DESC_AUDIO(DESC_AUDIO desc1, DESC_AUDIO desc2, unsigned i
 * Utilité: Générale
 * @param DESC_AUDIO descripteur audio
 */
-void free_DESC_AUDIO(DESC_AUDIO * desc);
+void free_DESC_AUDIO(DESC_AUDIO desc);
 
 /** Initialise un résultat d'une évalutation audio
  * Utilité: Générale

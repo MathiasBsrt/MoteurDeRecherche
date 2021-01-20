@@ -114,7 +114,7 @@ int compare_HISTOGRAMME_AUDIO(HISTOGRAMME_AUDIO histo1, HISTOGRAMME_AUDIO histo2
 	unsigned int y, x;
 	for(y = 0; y < histo1.k; y++)
 		for(x = 0; x < histo1.m; x++)
-			if(get_HISTOGRAMME_AUDIO(histo1, y, x) != get_HISTOGRAMME_AUDIO(histo2, y, x)) { printf("y=%d, x=%d\n", y, x); return 1; }
+			if(get_HISTOGRAMME_AUDIO(histo1, y, x) != get_HISTOGRAMME_AUDIO(histo2, y, x)) { /*printf("y=%d, x=%d\n", y, x);*/ return 1; }
 	return 0;
 }
 
@@ -340,10 +340,7 @@ int creer_histogramme_WAV_DESC_AUDIO(HISTOGRAMME_AUDIO * histo, char * chemin, i
 }
 
 
-void free_HISTOGRAMME_AUDIO(HISTOGRAMME_AUDIO * histo)
+void free_HISTOGRAMME_AUDIO(HISTOGRAMME_AUDIO histo)
 {
-	if(histo != NULL)
-	{
-		if(histo->mat != NULL) { free(histo->mat); }
-	}
+	if(histo.mat != NULL) free(histo.mat);
 }

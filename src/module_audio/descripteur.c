@@ -353,7 +353,7 @@ RES_EVAL_AUDIO evaluer_DESC_AUDIO(DESC_AUDIO desc1, DESC_AUDIO desc2, unsigned i
 		free(indicies_min);
 		free(values);
 		free(indicies);
-		free_HISTOGRAMME_AUDIO(&histo1);
+		free_HISTOGRAMME_AUDIO(histo1);
 		
 	//} else return evaluer_DESC_AUDIO(desc2, desc1, nb, threshold); // On inverse simplement les arguments
 	} else return resultat;
@@ -367,9 +367,9 @@ void affiche_DESC_AUDIO(DESC_AUDIO desc)
 	affiche_HISTOGRAMME_AUDIO(desc.histo);
 }
 
-void free_DESC_AUDIO(DESC_AUDIO * desc)
+void free_DESC_AUDIO(DESC_AUDIO desc)
 {
-	free_HISTOGRAMME_AUDIO(&(desc->histo));
+	free_HISTOGRAMME_AUDIO(desc.histo);
 }
 
 void free_RES_EVAL_AUDIO(RES_EVAL_AUDIO res_eval_audio)

@@ -37,9 +37,9 @@ int indexationTexte(){
 int indexationSon(){
     printf("--- DEBUT DES TESTS AUDIO --- \n");
     printf("  --- DESCRIPTEUR --- \n");
-    int n = 2;
-    int k = pow(2, n);
-    int m = 15;
+    unsigned int n = 2;
+    unsigned int k = pow(2, n);
+    unsigned int m = 15;
     printf("    --- Paramètres généraux proposés: --- \n");
     printf("      n = %d \n", n);
     printf("      k = 2^%d = %d \n", n, k);
@@ -52,7 +52,7 @@ int indexationSon(){
     if(desc.histo.m != m) return 1;
     printf("      Descripteur: id=%d, k=%d, m=%d\n", desc.id, desc.histo.k, desc.histo.m);
 
-    int y, x;
+    unsigned int y, x;
 
     printf("    --- SET DESC AUDIO --- \n");
     for(y = 0; y < k; y++)
@@ -64,6 +64,7 @@ int indexationSon(){
         for(x = 0; x < m; x++)
             if(get_DESC_AUDIO(desc, y, x) != (y * desc.histo.m + x)) return 1;
 
+    free_DESC_AUDIO(desc);
     
     printf("    --- CREER HISTOGRAMME TXT DESC AUDIO --- \n");
 
@@ -71,7 +72,6 @@ int indexationSon(){
     int codeTXT = generer_HISTOGRAMME_AUDIO(&histoTXT, "./TEST_SON/corpus_fi.txt", n, m);
     if(codeTXT != HISTOGRAMME_CREER_SUCCES) return 1;
     //affiche_HISTOGRAMME_AUDIO(histoTXT);
-    
 
     printf("    --- CREER HISTOGRAMME BIN DESC AUDIO --- \n");
 
@@ -101,6 +101,9 @@ int indexationSon(){
     printf("        %s\n", (compareBINWAV == 0 ? "Vrai" : "Faux"));
     if(compareBINWAV != 0) return 1;
 
+    free_HISTOGRAMME_AUDIO(histoTXT);
+    free_HISTOGRAMME_AUDIO(histoBIN);
+    free_HISTOGRAMME_AUDIO(histoWAV);
 
     printf("  --- CONTROLEUR BASE DESCRIPTEUR --- \n");
     printf("    --- Initialisation du controleur --- \n");
@@ -134,10 +137,14 @@ int indexationSon(){
     printf("    --- Sauvegarde de la pile de descripteurs --- \n");
     sauvegarder_PILE_DESC_AUDIO(pileDescripteur);
 
+    free_DESC_AUDIO(descCorpusWAV);
+    free_DESC_AUDIO(descJingleWAV);
+    free_DESC_AUDIO(descCymbaleWAV);
+
     printf("    --- Chargement des descripteurs enregistrés --- \n");
     int nbLoaded = 0;
     PILE_AUDIO secondePile = charger_PILE_DESC_AUDIO(&nbLoaded);
-    printf("NB LOADED: %d\n", nbLoaded);
+    
 
     printf("       --- Pile est vide ? --- \n");
     printf("          %s \n", (PILE_estVide_AUDIO(secondePile) ? "Oui" : "Non"));
@@ -151,6 +158,7 @@ int indexationSon(){
     int compareDepile1Empile = compare_DESC_AUDIO(descDepile1, descCorpusWAV);
     printf("           %s\n", (compareDepile1Empile == 0 ? "Vrai" : "Faux"));
     if(compareDepile1Empile != 0) return 1;
+    free_DESC_AUDIO(descDepile1);
 
     printf("       --- Pile est vide ? --- \n");
     printf("          %s \n", (PILE_estVide_AUDIO(secondePile) ? "Oui" : "Non"));
@@ -164,6 +172,7 @@ int indexationSon(){
     int compareDepile2Empile = compare_DESC_AUDIO(descDepile2, descJingleWAV);
     printf("           %s\n", (compareDepile2Empile == 0 ? "Vrai" : "Faux"));
     if(compareDepile2Empile != 0) return 1;
+    free_DESC_AUDIO(descDepile2);
 
     printf("       --- Pile est vide ? --- \n");
     printf("          %s \n", (PILE_estVide_AUDIO(secondePile) ? "Oui" : "Non"));
@@ -177,6 +186,7 @@ int indexationSon(){
     int compareDepile3Empile = compare_DESC_AUDIO(descDepile3, descCymbaleWAV);
     printf("           %s\n", (compareDepile3Empile == 0 ? "Vrai" : "Faux"));
     if(compareDepile3Empile != 0) return 1;
+    free_DESC_AUDIO(descDepile3);
 
     printf("       --- Pile est vide ? --- \n");
     printf("          %s \n", (PILE_estVide_AUDIO(secondePile) ? "Oui" : "Non"));
@@ -211,6 +221,9 @@ int indexationSon(){
     DESC_AUDIO descInconnu = charger_byid_DESC_AUDIO(50);
     if(descInconnu.id != ID_NOT_FOUND) { fprintf(stderr, "Le programme ne doit pas trouver de DESC_AUDIO pour l'id 50.\n"); return 1; }
 
+    free_DESC_AUDIO(descCorpus);
+    free_DESC_AUDIO(descJingle);
+    free_DESC_AUDIO(descInconnu);
 
     printf("    --- Tests charger_byname_DESC_AUDIO(char *) --- \n");
     descCorpus = charger_byname_DESC_AUDIO("TEST_SON/corpus_fi.wav");
@@ -233,6 +246,7 @@ int indexationSon(){
         printf(" Fichier associé au descripteur %d: %s\n", depileDesc.id, 
             chemin != NULL ? chemin : "Introuvable");
     	if(chemin != NULL) free(chemin);
+        free_DESC_AUDIO(depileDesc);
         //affiche_DESC_AUDIO(depileDesc);
     }
    
@@ -256,7 +270,9 @@ int indexationSon(){
         }
     }
 
-
+    free_DESC_AUDIO(desc1);
+    free_DESC_AUDIO(desc2);
+    free_RES_EVAL_AUDIO(resultat);
 
     printf("--- FIN DES TEST AUDIO --- \n");
     return 0;

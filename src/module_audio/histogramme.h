@@ -122,8 +122,8 @@ int creer_histogramme_WAV_DESC_AUDIO(HISTOGRAMME_AUDIO * histo, char * chemin, i
 
 /** Libère la mémoire occupée par la matrice de l'histogramme passé en paramètre
 * Utilité: Générale
-* @param HISTOGRAMME_AUDIO * histogramme audio
+* @param HISTOGRAMME_AUDIO histogramme audio
 */
-void free_HISTOGRAMME_AUDIO(HISTOGRAMME_AUDIO * histo);
+void free_HISTOGRAMME_AUDIO(HISTOGRAMME_AUDIO histo);
 
 #endif

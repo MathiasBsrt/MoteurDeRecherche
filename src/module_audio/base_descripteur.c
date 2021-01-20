@@ -330,7 +330,7 @@ RES_RECHERCHE_AUDIO rechercher_DESC_AUDIO(char * source, unsigned int n, double 
 	while(!PILE_estVide_AUDIO(descripteurs))
 	{
 		descripteurs = dePILE_AUDIO(descripteurs, &desc);
-		if(desc.id == desc_source.id) { free_DESC_AUDIO(&desc); continue; } // On saute le descripteur source
+		if(desc.id == desc_source.id) { free_DESC_AUDIO(desc); continue; } // On saute le descripteur source
 
 		RES_EVAL_AUDIO resultat_eval = evaluer_DESC_AUDIO(desc, desc_source, n, threshold);
 		if(resultat_eval.n != 0)
@@ -338,6 +338,7 @@ RES_RECHERCHE_AUDIO rechercher_DESC_AUDIO(char * source, unsigned int n, double 
 			resultats_evals[nb_retenus] = resultat_eval;
 			nb_retenus++;
 		}
+		free_DESC_AUDIO(desc);
 	}
 
 	resultat.n = nb_retenus;
