@@ -1,4 +1,17 @@
 #include "controle_descripteur.h"
+/**
+ * @brief 
+ * 
+ * @param chemin 
+ * @param nom_dossier 
+ * @param nom_fichier 
+ */
+void path_maker1(char *chemin, char *nom_dossier, char *nom_fichier)
+{
+    strcpy(chemin, nom_dossier);
+    strcat(chemin, "/");
+    strcat(chemin, nom_fichier);
+}
 
 /***
  * Cette fonction permet de créer le descripteur d'un fichier
@@ -358,20 +371,20 @@ void lierDescripteur(Descripteur d, char *nom, int RGB_ou_NB)
  * @param chemin 
  * @param nom_dossier 
  * @param nom_fichier 
- */
-void path_maker(char *chemin, char *nom_dossier, char *nom_fichier)
+ /
+void path_maker1(char *chemin, char *nom_dossier, char *nom_fichier)
 {
   strcpy(chemin, nom_dossier);
   strcat(chemin, "/");
   strcat(chemin, nom_fichier);
-}
+}*/
 /**
  * @brief 
  * 
  * @param f 
  * @param nom_dossier 
  */
-void lecture_dossier(FILE *f, char *nom_dossier)
+void lecture_dossier_img(FILE *f, char *nom_dossier)
 {
   struct dirent *dir;
   DIR *d = opendir(nom_dossier);
@@ -385,7 +398,7 @@ void lecture_dossier(FILE *f, char *nom_dossier)
     {
       struct stat InfosFile;
       char chemin[100];
-      path_maker(chemin, nom_dossier, dir->d_name);
+      path_maker1(chemin, nom_dossier, dir->d_name);
       stat(chemin, &InfosFile);            //on recupere les stat du fichier lu pour savoir si c' est un dossier
       if (S_ISREG(InfosFile.st_mode) != 0) //on vérifie si c'est un fichier
       {
@@ -434,24 +447,30 @@ void genererDescripteurDossier(char *cheminDossier, int RGB_ou_NB)
 {
   PILE pile;
   FILE *fich;
+  printf("OK ICI\n");
   fich = fopen("nom_fichiers.txt", "w+");
   char chemin[255];
   char cheminFichier[255];
-  lecture_dossier(fich, cheminDossier);
+  lecture_dossier_img(fich, cheminDossier);
+  printf("OK ICI\n");
   if (RGB_ou_NB == 1)
   {
-    pile = chargerPILE("base_descripteur_image_NB");
+    printf("OK ICI\n");
+    pile = chargerPILE("sauvegardes/base_descripteur_image_NB");
+    printf("OK ICI\n");
   }
   else
   {
-    pile = chargerPILE("base_descripteur_image_RGB");
+    pile = chargerPILE("sauvegardes/base_descripteur_image_RGB");
   }
   if (!PILE_estVide(pile) && pile->elt.id == 1)
   {
+    printf("OK ICI\n");
     pile = inverserPILE(pile);
   }
   while (fscanf(fich, "%s", chemin) != EOF)
   {
+    printf("kk\n");
     strcpy(cheminFichier, cheminDossier);
     strcat(cheminFichier, chemin);
     if (RGB_ou_NB == 1)
@@ -459,7 +478,7 @@ void genererDescripteurDossier(char *cheminDossier, int RGB_ou_NB)
       if (!image_deja_indexe(chemin, "liste_base_image_NB"))
       {
         printf("%s \n", cheminFichier);
-
+        printf("kk\n");
         creationDescripteur(cheminFichier, &pile);
       }
     }
@@ -496,7 +515,7 @@ void lancer_indexation_image()
 //   f = fopen("nom_fichiers.txt", "w+");
 // }
 //
-// lecture_dossier(f, cheminDossier); // Dans f on a tous nos fichiers
+// lecture_dossier_img(f, cheminDossier); // Dans f on a tous nos fichiers
 // rewind(f);
 //
 // //On lit maintenant le fichier

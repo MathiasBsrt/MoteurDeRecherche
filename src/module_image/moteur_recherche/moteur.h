@@ -1,6 +1,6 @@
 /***
  * Moteur de recherche
- * Ce fichier regroupe les fonctins permettant le comparaison et la recherche de documents
+ * Ce fichier regroupe les fonctins permettant le comparaison_image et la recherche de documents
  */
 #include <stdio.h>
 //#include "../pile_dynamique.h"
@@ -12,7 +12,7 @@
  * @param double seuilSimilarité => pourcentage de similarité entre 2 mêmes cases de l'histogramme
  * @return 0 si égaux, 1 si similaires, 2 si trop différent
  */
-int comparaison(Descripteur d1, Descripteur d2, double seuil);
+int comparaison_image(Descripteur d1, Descripteur d2, double seuil);
 
 /***
  * Recherche par critère
@@ -21,7 +21,7 @@ int comparaison(Descripteur d1, Descripteur d2, double seuil);
  * @param File[] tableau à remplir
  * @param int seuilSimilarité 
  */
-void rechercheParCritere(RGB couleurDominante, FILE *fichiersSimilaires, int seuilSimilarite);
+void rechercheParCritere_img(RGB couleurDominante, FILE *fichiersSimilaires, int seuilSimilarite);
 
 /***
  * Recherche par document

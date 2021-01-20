@@ -29,11 +29,11 @@ void MenuIndexation(PILE_descripteur_texte *pile, Table_Index *table)
 
         else if (code == 1)
         {
-            //MenuIndexation_audio();
+            MenuIndexation_audio();
         }
         else if (code == 2)
         {
-            //MenuIndexation_image(pile,table);
+            MenuIndexation_image();
         }
         else if (code == 3)
         {
@@ -65,7 +65,7 @@ void Menu_affichage(PILE_descripteur_texte pile, Table_Index table)
         }
         else if (code == 3)
         {
-            Affichage_texte(pile);
+            //Affichage_texte(pile);
         }
     } while (code != 4);
 }

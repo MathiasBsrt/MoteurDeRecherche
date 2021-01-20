@@ -52,17 +52,6 @@ void chargement_desc_texte(PILE_descripteur_texte *pile_desc, Table_Index *table
     }
 }
 
-void Affichage_texte(PILE_descripteur_texte pile)
-{
-    int code;
-    do
-    {
-        printf("///\tAffichage des descripteurs textes\t///\n");
-        printf("Veuillez utiliser les flèches pour afficher le descripteur de votre choix\n");
-    } while (code!=);
-    
-}
-
 void MenuIndexation_texte(PILE_descripteur_texte *pile, Table_Index* table)
 {
     int indice_sauvegarde = 1;

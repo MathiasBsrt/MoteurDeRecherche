@@ -10,12 +10,12 @@
  */
 
 #include "../module_texte/Header.h"
-#include "../module_image/controle_descripteur.h"
+#include "../module_image/moteur_recherche/moteur.h"
 //#include "../module_audio/base_descripteur.h"
 
+//1. Outils pour le menu administrateur 
 
-
-//1.1 Outils pour le menu administrateur :
+//1.1 Outils partie texte:
 
 /**
  * @brief Sous-menu permettant de charger un descripteur de texte à partir du fichier de sauvegarde
@@ -35,4 +35,9 @@ void chargement_desc_texte(PILE_descripteur_texte *pile_desc, Table_Index *table
 void MenuIndexation_texte(PILE_descripteur_texte *pile, Table_Index* table);
 
 
-//2 Outils pour l'utilisateur
+//1.2 Outils partie image :
+/**
+ * @brief sous menu permettant de gérer l'indexation de fichiers image
+ * 
+ */
+void MenuIndexation_image();

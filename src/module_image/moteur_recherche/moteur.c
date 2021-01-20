@@ -1,8 +1,8 @@
 #include "moteur.h"
 
-int comparaison(Descripteur d1, Descripteur d2, double seuil)
+int comparaison_image(Descripteur d1, Descripteur d2, double seuil)
 {
-    //Méthode de comparaison : intersection des 2 histogrammes
+    //Méthode de comparaison_image : intersection des 2 histogrammes
 
     //Similaire si seuil% des cases sont similaire
     //Une case est similaire si l la valeur 1 et compris dans l'intervale val2-seuil; val2 +seuil
@@ -57,7 +57,7 @@ int comparaison(Descripteur d1, Descripteur d2, double seuil)
  * @param File[] tableau à remplir
  * @param int seuilSimilarité
  */
-void rechercheParCritere(RGB couleurDominante, FILE *fichiersSimilaires, int seuilSimilarite)
+void rechercheParCritere_img(RGB couleurDominante, FILE *fichiersSimilaires, int seuilSimilarite)
 {
     int couleur;
     float nbCouleurRecherche, nbTotal;
@@ -68,7 +68,7 @@ void rechercheParCritere(RGB couleurDominante, FILE *fichiersSimilaires, int seu
     // Charger la pile de tous les descripteurs avec la fonction dans controle descripteur
     PILE pile = init_pile();
     pile = chargerPILE("../base_descripteur_image_RGB");
-    // Pour chaque fichier faire la comparaison nb_de_données/nb_de_donnee_egal_au_RGB
+    // Pour chaque fichier faire la comparaison_image nb_de_données/nb_de_donnee_egal_au_RGB
     while (!PILE_estVide(pile))
     {
         pile = dePILE(pile, &desc);
@@ -112,7 +112,7 @@ void rechercheParDocument_RGB(char *cheminVersDocument, FILE *fichiersSimilaires
     while(!PILE_estVide(pile)){
         pile=dePILE(pile,&desc2);
         if(desc2.id!=id){
-            if(comparaison(desc1, desc2, seuilSimilarite)<2){
+            if(comparaison_image(desc1, desc2, seuilSimilarite)<2){
                 id_to_chemin(desc2.id,3,chemin);
                 fprintf(fichiersSimilaires, "%d %s", desc2.id,chemin);
             }
@@ -138,7 +138,7 @@ void rechercheParDocument_NB(char *cheminVersDocument, FILE *fichiersSimilaires,
     while(!PILE_estVide(pile)){
         pile=dePILE(pile,&desc2);
         if(desc2.id!=id){
-            if(comparaison(desc1, desc2, seuilSimilarite)<1){
+            if(comparaison_image(desc1, desc2, seuilSimilarite)<1){
                 id_to_chemin(desc2.id,3,chemin);
                 fprintf(fichiersSimilaires, "%d %s", desc2.id,chemin);
             }
@@ -199,7 +199,7 @@ void lancer_recherche_critere()
     scanf("%d", &couleur.green);
     printf("Entrez la couleur bleu : ");
     scanf("%d", &couleur.blue);
-    rechercheParCritere(couleur, fich, 20);
+    rechercheParCritere_img(couleur, fich, 20);
     fclose(fich);
 }
 /*

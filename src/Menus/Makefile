@@ -10,9 +10,9 @@ endif
 
 #directories
 BIN=../
-DIR_TEXTE=../module_texte
-DIR_AUDIO=../module_audio
-DIR_IMAGE=../module_image
+DIR_TEXTE=$(BIN)module_texte
+DIR_AUDIO=$(BIN)module_audio
+DIR_IMAGE=$(BIN)module_image
 
 #Menus
 SRCM=$(wildcard *.c)
@@ -24,11 +24,11 @@ OBJT=$(SRCT:.c=.o)
 
 #module audio
 SRCA=
-OBJA=$(SRCA.c=.o)
+OBJA=$(SRCA:.c=.o)
 
 #module image
-SRCI=$(wildcard $(DIR_IMAGE)/*.c) $(wildcard $(DIR_IMAGE)/moteur_recherche/*.c)
-OBJI=$(SRCI.C=.o)
+SRCI=$(wildcard $(DIR_IMAGE)/*.c) $(DIR_IMAGE)/moteur_recherche/moteur.c
+OBJI=$(SRCI:.c=.o)
 
 
 EXEC=$(BIN)moteur_recherche
