@@ -84,7 +84,7 @@ void rechercheParCritere(char *mot, char **fichiersSimilaires, int *nbF, double 
         for (int i = 0; i < indexMot->nb_occ; i++)
         {
 
-            char chemin[350];
+            char chemin[MAX_STRING];
             getChemin(indexMot->idTxt_avec_occ[0][i], chemin);
             printf("chemin trouvé=%s\n", chemin);
             strcpy(fichiersSimilaires[i], chemin);
@@ -184,7 +184,7 @@ int rechercheParDocument(char *cheminVersDocument, char *fichiersSimilaires[], d
     //On stock les pourcentages de similarité pour chaque fichier.
     // On considère les deux tableaux (pourcentages et fichierSimilaires) triés de façon identique et correspodant. 
     //C'est à dire que le pourcentage à l'indice i correspond au chemin à ce même indice
-    int pourcentages[350]; 
+    int pourcentages[MAX_STRING]; 
     double pourcentagesS; // Pourcentage de similarité entre 2 descripteurs,
     if (desc1 != NULL)
     {
@@ -194,28 +194,43 @@ int rechercheParDocument(char *cheminVersDocument, char *fichiersSimilaires[], d
         while (desc2 != NULL)
         {
 
-            char chemin2[350];
+            char chemin2[MAX_STRING];
             //printf("\nid du descripteur 2 =%d\n", desc2->id);
             res = comparaison(desc1, desc2, seuilSimilarite, table,&pourcentagesS);
             if (res < 2)
             {
                 getChemin(desc2->id, chemin2);
                 printf("fichier similaire : %s \n", chemin2);
-                if(nbF==0){
-                    pourcentages[0] = pourcentagesS;
-                    strcpy(fichiersSimilaires[0], chemin2);
-                }else{
-                    for (int i = 0; i < nbF; i++)
-                    {
-                        if(){
-                            
-                        }
-                    }
-                    
-                }
+                pourcentages[nbF] = pourcentagesS;
+                strcpy(fichiersSimilaires[nbF], chemin2);
+
                 nbF++;
             }
             desc2 = desc2->suivant;
         }
+
+        //Trier les tableaux pourcenatges et fichiers similaires
+        int temp;
+        char tempString[MAX_STRING];
+
+        for (int i = nbF -1; i <= 0; i--)
+        {
+         for (int j = 1; j < nbF; j++)
+         {
+             if(pourcentages[j-1]>pourcentages[j]){
+                 //echange tableau pourcentage
+                 temp = pourcentages[j-1];
+                 pourcentages[j-1] = pourcentages[j];
+                 pourcentages[j] = temp;
+
+                 //echange tableau string
+                 strcpy(tempString,fichiersSimilaires[j-1]);
+                 strcpy(fichiersSimilaires[j-1],fichiersSimilaires[j]);
+                 strcpy(fichiersSimilaires[j],tempString);
+             }
+         }
+            
+        }
+        
     }
 }
