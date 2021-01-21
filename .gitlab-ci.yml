@@ -6,10 +6,11 @@ build-job:
     - cd src/Menus
     - make
 
-tests:
-  stage: tests
+test:
+  stage: test
   script:
+    #- make projet-pfr
+    # - gcc testsCI/indexation.c -o testsCI/tests.out
     - cd testsCI
     - make
     - ./tests
-
