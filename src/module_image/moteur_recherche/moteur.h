@@ -14,9 +14,9 @@
  * @param Descripteur d1
  * @param Desripteur d2
  * @param double seuilSimilarité => pourcentage de similarité entre 2 mêmes cases de l'histogramme
- * @return 0 si égaux, 1 si similaires, 2 si trop différent
+ * @return 0 si égaux, 1 si similaires, 2 si trop différent et le pourcentage
  */
-int comparaison_image(Descripteur_image d1, Descripteur_image d2, double seuil,int RGB_ou_NB);
+int comparaison_image(Descripteur_image d1, Descripteur_image d2, double seuil,int RGB_ou_NB, double* pourcentage);
 
 /***
  * Recherche par critère

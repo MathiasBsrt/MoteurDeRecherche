@@ -1,5 +1,0 @@
-<<<<<<< HEAD
-51.txt 52.txt 53.txt 54.txt 55.txt 56.txt 57.txt 58.txt 59.txt 60.txt 61.txt 62.txt 63.txt 
-=======
-../tests/TEST_NB/txt/51.txt ../tests/TEST_NB/txt/52.txt ../tests/TEST_NB/txt/53.txt ../tests/TEST_NB/txt/54.txt ../tests/TEST_NB/txt/55.txt ../tests/TEST_NB/txt/56.txt ../tests/TEST_NB/txt/57.txt ../tests/TEST_NB/txt/58.txt ../tests/TEST_NB/txt/59.txt ../tests/TEST_NB/txt/60.txt ../tests/TEST_NB/txt/61.txt ../tests/TEST_NB/txt/62.txt ../tests/TEST_NB/txt/63.txt 
->>>>>>> moteurRecherche_image
