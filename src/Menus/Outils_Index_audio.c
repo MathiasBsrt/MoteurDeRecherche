@@ -98,7 +98,8 @@ void MenuIndexation_audio(PILE_AUDIO *pile_audio)
             printf("\n\n");
             descripteur = init_DESC_AUDIO(recuperer_nouvel_id_valide_AUDIO(), n, m, buffer);
             lier_DESC_AUDIO_FICHIER(descripteur, buffer);
-            sauvegarder_DESC_AUDIO(*pile_audio, descripteur);
+            *pile_audio = emPILE_AUDIO(*pile_audio, descripteur);
+            //sauvegarder_DESC_AUDIO(*pile_audio, descripteur);
             printf("\t=======INDEXATION FICHIERS TERMINÉE=======\n");
             printf("Retour au menu Indexation audio...\n");
             waiter();
@@ -106,6 +107,8 @@ void MenuIndexation_audio(PILE_AUDIO *pile_audio)
         else if (code == 2)
         {
 
+            if (indice_sauvegarde)
+                indice_sauvegarde = 0;
             do
             {
                 printf("Entrer un nom de dossier correct à indexer : ");
@@ -170,30 +173,5 @@ void MenuIndexation_audio(PILE_AUDIO *pile_audio)
             waiter();
             break;
         }
-    }
-    printf("Vous n'avez pas sauvegardé. Souhaitez vous sauvegarder (y/n) ? ");
-    while ((choix = getchar()) != 'y' && choix != 'n')
-        ;
-    switch (choix)
-    {
-    case 'y':
-    {
-        printf("Sauvegarde de la base de descripteurs...\n");
-        PILE_AUDIO a_charger = charger_PILE_DESC_AUDIO(NULL);
-        DESC_AUDIO tmp;
-        while (!PILE_estVide_AUDIO(*pile_audio))
-        {
-            *pile_audio = dePILE_AUDIO(*pile_audio, &tmp);
-            a_charger = emPILE_AUDIO(a_charger, tmp);
-        }
-        sauvegarder_PILE_DESC_AUDIO(a_charger);
-        printf("Sauvegarde effectuée avec succès !\n");
-        waiter();
-        break;
-    }
-    case 'n':
-        printf("Dommage.\n");
-        waiter();
-        break;
     }
 }

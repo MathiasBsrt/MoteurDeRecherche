@@ -7,10 +7,10 @@
 #include "pile_dynamique.h"
 
 /** Chemin vers le fichier contenant les descripteurs audios sauvegardés. */
-#define BASE_DESC_FICHIER "../sauvegardes/audio/base_descripteur_audio"
+#define BASE_DESC_FICHIER "base_descripteur_audio"
 
 /** Chemin vers le fichier contenant les liens entre descripteurs et fichier */
-#define LISTE_BASE_FICHIER "../sauvegardes/audio/liste_base_audio"
+#define LISTE_BASE_FICHIER "liste_base_audio"
 
 #define ID_NOT_FOUND -1
 #define ALREADY_GENERATED 1
