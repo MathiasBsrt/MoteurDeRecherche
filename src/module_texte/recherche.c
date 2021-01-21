@@ -191,50 +191,55 @@ int rechercheParDocument_texte(char *cheminVersDocument, char *fichiersSimilaire
         int res; // resultat de la comparaison
         while (desc2 != NULL)
         {
+            if (desc2->id != desc1->id)
+            { // On exclus le texte fourni du résultat de la recherche
+                char chemin2[MAX_STRING];
+                //printf("\nid du descripteur 2 =%d\n", desc2->id);
+                res = comparaison_texte(desc1, desc2, seuilSimilarite, table, &pourcentagesS);
+                if (res < 2)
+                {
+                    getChemin_texte(desc2->id, chemin2);
+                    printf("fichier similaire : %s \n", chemin2);
+                    pourcentages[nbF] = pourcentagesS;
+                    strcpy(fichiersSimilaires[nbF], chemin2);
 
-            char chemin2[MAX_STRING];
-            //printf("\nid du descripteur 2 =%d\n", desc2->id);
-            res = comparaison_texte(desc1, desc2, seuilSimilarite, table, &pourcentagesS);
-            if (res < 2)
-            {
-                getChemin_texte(desc2->id, chemin2);
-                printf("fichier similaire : %s \n", chemin2);
-                pourcentages[nbF] = pourcentagesS;
-                strcpy(fichiersSimilaires[nbF], chemin2);
-
-                nbF++;
+                    nbF++;
+                }
             }
+
             desc2 = desc2->suivant;
         }
 
-       /* for (int i = 0; i < nbF; i++)
-        {
-            printf("%s \n", fichiersSimilaires[i]);
-        }*/
 
-    /*
         //Trier les tableaux pourcenatges et fichiers similaires
         int temp;
         char tempString[MAX_STRING];
 
-        for (int i = nbF - 1; i <= 0; i--)
+        for (int i = 0; i < nbF - 1; i++)
         {
-            for (int j = 1; j < nbF; j++)
+            for (int j = 0; j < nbF - i - 1; j++)
             {
-                if (pourcentages[j - 1] > pourcentages[j])
+                if (pourcentages[j] < pourcentages[j + 1])
                 {
                     //echange tableau pourcentage
-                    temp = pourcentages[j - 1];
-                    pourcentages[j - 1] = pourcentages[j];
-                    pourcentages[j] = temp;
+                    temp = pourcentages[j];
+                    pourcentages[j] = pourcentages[j + 1];
+                    pourcentages[j + 1] = temp;
 
                     //echange tableau string
-                    strcpy(tempString, fichiersSimilaires[j - 1]);
-                    strcpy(fichiersSimilaires[j - 1], fichiersSimilaires[j]);
-                    strcpy(fichiersSimilaires[j], tempString);
+                    strcpy(tempString, fichiersSimilaires[j]);
+                    strcpy(fichiersSimilaires[j], fichiersSimilaires[j + 1]);
+                    strcpy(fichiersSimilaires[j + 1], tempString);
                 }
             }
-        }*/
+        }
+
+        printf("après tri\n");
+
+        for (int i = 0; i < nbF; i++)
+        {
+            printf("%s -> %d \n", fichiersSimilaires[i], pourcentages[i]);
+        }
     }
 
     return nbF;
