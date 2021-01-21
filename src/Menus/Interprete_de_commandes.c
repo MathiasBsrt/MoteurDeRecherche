@@ -11,7 +11,8 @@
 
 #include "header.h"
 
-void MenuIndexation(PILE_descripteur_texte *pile, Table_Index *table)
+
+void menus_admin(PILE_descripteur_texte *pile, Table_Index *table,PILE_AUDIO *pile_audio)
 {
     int code;
     do
@@ -29,7 +30,7 @@ void MenuIndexation(PILE_descripteur_texte *pile, Table_Index *table)
 
         else if (code == 1)
         {
-            MenuIndexation_audio();
+            MenuIndexation_audio(pile_audio);
         }
         else if (code == 2)
         {
@@ -43,77 +44,17 @@ void MenuIndexation(PILE_descripteur_texte *pile, Table_Index *table)
     } while (code != 4);
 }
 
-void Menu_affichage(PILE_descripteur_texte pile, Table_Index table)
-{
-    int code;
-    do
-    {
-        system("clear");
-        printf("///\tMENU VISUALISATION\t///\n");
-        printf("1. Affichage descripteurs audios\n2. Affichage descripteurs image\n3. Affichage descripteurs\n4. Retour\n");
-        printf("Veuillez choisir une action :\n");
-        scanf("%d", &code);
-        if (code < 1 || code > 4)
-        {
-            printf("Veuillez choisir une action valide.\n");
-        }
-        else if (code == 1)
-        {
-        }
-        else if (code == 2)
-        {
-        }
-        else if (code == 3)
-        {
-            //Affichage_texte(pile);
-        }
-    } while (code != 4);
-}
-
-void menus_admin(PILE_descripteur_texte *pile, Table_Index *table)
-{
-    int code;
-    do
-    {
-        system("clear");
-        //Affichage du menu
-        printf("///\tMENU ADMINISTRATEUR\t///\n");
-        printf("1. Indexation\n2. Visualisation des Descripteurs\n3. Controler le monde\n4. Quitter le mode administrateur\n");
-        printf("Veuillez choisir une action :\n");
-        scanf("%d", &code);
-        if (code < 1 || code > 4)
-        {
-            printf("Veuillez choisir une action valide.\n");
-        }
-        else if (code == 1)
-        {
-            MenuIndexation(pile, table);
-        }
-        else if (code == 2)
-        {
-            Menu_affichage(*pile, *table);
-        }
-        else if (code == 3)
-        {
-            printf("Cette option est encore en cours de développement...\n");
-            sleep(5);
-        }
-
-    } while (code != 4);
-}
-
 int main(void)
 {
+    //PILES ET TABLE POUR L'INDEXATION TEXTE
     PILE_descripteur_texte pile_desc = init_PILE_desc();
     Table_Index table_index = Init_Index();
-    menus_admin(&pile_desc, &table_index);
+
+    //PILE POUR L'AUDIO
+    PILE_AUDIO pile_audio=init_PILE_AUDIO();
+
+    menus_admin(&pile_desc, &table_index,&pile_audio);
     remove("sauvegardes/liste_base_descripteurs");
     system("clear");
     return 0;
-    char **fichier;
-    fichier = malloc(sizeof(char *) * 350);
-    for (int i = 0; i < 350; i++)
-    {
-        fichier[i] = malloc(sizeof(char) * 512);
-    }
 }

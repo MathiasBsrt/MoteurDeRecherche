@@ -2,10 +2,10 @@ CC=gcc
 DEBUG=yes
 ifeq ($(DEBUG),yes)
 	CFLAGS=-W -Wall -g
-	LDFLAGS=
+	LDFLAGS=-lm
 else
 	CFLAGS=-W -Wall
-	LDFLAGS=
+	LDFLAGS=-lm
 endif
 
 #directories
@@ -23,7 +23,7 @@ SRCT=$(wildcard $(DIR_TEXTE)/*.c) $(DIR_TEXTE)/index/index.c $(DIR_TEXTE)/MOT/mo
 OBJT=$(SRCT:.c=.o)
 
 #module audio
-SRCA=
+SRCA=$(wildcard $(DIR_AUDIO)/*.c) 
 OBJA=$(SRCA:.c=.o)
 
 #module image

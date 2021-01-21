@@ -11,7 +11,7 @@
 
 #include "../module_texte/Header.h"
 #include "../module_image/moteur_recherche/moteur.h"
-//#include "../module_audio/base_descripteur.h"
+#include "../module_audio/base_descripteur.h"
 
 //1. Outils pour le menu administrateur 
 
@@ -37,7 +37,17 @@ void MenuIndexation_texte(PILE_descripteur_texte *pile, Table_Index* table);
 
 //1.2 Outils partie image :
 /**
- * @brief sous menu permettant de gérer l'indexation de fichiers image
+ * @brief sous menu permettant de gérer l'indexation de fichiers images
  * 
  */
 void MenuIndexation_image();
+
+
+//1.3 Outils partie audio
+
+/**
+ * @brief sous menu permettant de gérer l'indexation de fichiers audios
+ * 
+ */
+void MenuIndexation_audio(PILE_AUDIO *pile_audio);
+
