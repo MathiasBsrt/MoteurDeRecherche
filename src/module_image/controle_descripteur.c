@@ -17,23 +17,37 @@ void path_maker1(char *chemin, char *nom_dossier, char *nom_fichier)
  * Cette fonction permet de créer le descripteur d'un fichier
  * donné et le stocker dans le fichier base_descripteur
  */
+<<<<<<< HEAD
 void creationDescripteur(char *chemin, PILE *p)
+=======
+void creationDescripteur_image(char *chemin, PILE_image *p)
+>>>>>>> moteurRecherche_image
 {
   //lire fichier pointé par le chemin
   //quantification de chaque pixel de l'image
   //Creer l'histograme
   //Creer variable descripteur et le remplir
   FILE *image;
+<<<<<<< HEAD
   Descripteur newDesc; //Le desctipeur à ajouter
+=======
+  Descripteur_image newDesc; //Le desctipeur à ajouter
+>>>>>>> moteurRecherche_image
 
   int lignes;
   int colonnes;
   int nbComposantes;
-  char *basec, *bname; //bname est le nom du fichier à indexer
+  char *basec; //bname est le nom du fichier à indexer
   // Intialisation des variables
 
   basec = strdup(chemin);
+<<<<<<< HEAD
   bname = basename(basec);
+=======
+
+  printf("basec %s \n", chemin);
+
+>>>>>>> moteurRecherche_image
   image = fopen(chemin, "r");
 
   //Lecture des propriétés de l'image
@@ -89,7 +103,11 @@ void creationDescripteur(char *chemin, PILE *p)
   creationHistogramme(matriceImageQuant, &newDesc, lignes, colonnes); // doit créer l'histo et remplir l'attribut histogramme du descripteur
 
   //Sauvegarde du nouveau descripteur
+<<<<<<< HEAD
   *p = SauvegardeDescripteur(newDesc, *p, bname, nbComposantes);
+=======
+  *p = SauvegardeDescripteur_image(newDesc, *p, basec, nbComposantes);
+>>>>>>> moteurRecherche_image
 
   for (int i = 0; i < lignes; i++)
   {
@@ -102,26 +120,49 @@ void creationDescripteur(char *chemin, PILE *p)
  * Cette fonction permet de sauvegarder un descripteur donné en paramètre dans le fichier base_descripteur_image
  * et de lier ce descripteur avec le fichier dans le fichier liste_base_image
  */
+<<<<<<< HEAD
 PILE SauvegardeDescripteur(Descripteur nouveau, PILE p, char *nom, int RGB_ou_NB)
 {
   if (!PILE_estVide(p))
+=======
+PILE_image SauvegardeDescripteur_image(Descripteur_image nouveau, PILE_image p, char *nom, int RGB_ou_NB)
+{
+  if (!PILE_estVide_image(p))
+>>>>>>> moteurRecherche_image
     nouveau.id = p->elt.id + 1;
   else
   {
     nouveau.id = 1;
   }
+<<<<<<< HEAD
   p = emPILE(p, nouveau);
   lierDescripteur(nouveau, nom, RGB_ou_NB);
+=======
+  p = emPILE_image(p, nouveau);
+  lierDescripteur_image(nouveau, nom, RGB_ou_NB);
+>>>>>>> moteurRecherche_image
 
   return p;
 }
 
 /***
- * Cette fonction permet de sauvegarder la pile passée en paramètre
- * dans le fichier base_descripteur_image.
- * La pile spécifiée écrase l'ancienne
+
  */
+<<<<<<< HEAD
 void sauvegarderPile(PILE p, int RGB_ou_NB)
+=======
+
+
+
+
+/**
+ * @brief Cette fonction permet de sauvegarder la pile passée en paramètre dans le fichier base_descripteur_image. La pile spécifiée écrase l'ancienne
+ *
+ * @param p 
+ * @param RGB_ou_NB 
+ */
+void sauvegarderPile_image(PILE_image p, int RGB_ou_NB)
+>>>>>>> moteurRecherche_image
 {
   //On stocke sous la forme de une ligne = un element de la pile : "[id] [e1] [e2 [e3] ..." pour les 64 elements du tableau histogramme (sans les crochets)
   FILE *pileFichier;
@@ -133,13 +174,18 @@ void sauvegarderPile(PILE p, int RGB_ou_NB)
   {
     pileFichier = fopen("base_descripteur_image_RGB", "w+");
   }
+<<<<<<< HEAD
   Descripteur copier;
   while (!PILE_estVide(p))
+=======
+  Descripteur_image copier;
+  while (!PILE_estVide_image(p))
+>>>>>>> moteurRecherche_image
   {
     //on ecrit l'id + espace
     //on ecrit l'histogramme, chaque valeur séparée par un espace
     //on revient à la ligne
-    p = dePILE(p, &copier);
+    p = dePILE_image(p, &copier);
     // On met tout en ligne, pas beosin des indices du tableau de l'histogramme.
     // On met tout en ligne pour faciliter la lecture par le futur charger fichier/pile. Un \n represente la fin d'un descripteur
     fprintf(pileFichier, "%d ", copier.id);
@@ -164,8 +210,13 @@ void sauvegarderPile(PILE p, int RGB_ou_NB)
   fclose(pileFichier);
 }
 
-/***
- * Cette méthode permet de lire une image noir et blanc
+/**
+ * @brief Cette méthode permet de lire une image noir et blanc
+ * 
+ * @param lignes 
+ * @param colonnes 
+ * @param matriceImage 
+ * @param image 
  * @return une matrice représentant l'image noir et blanc
  */
 int lire_imageNB(int lignes, int colonnes, int **matriceImage, FILE *image)
@@ -179,6 +230,16 @@ int lire_imageNB(int lignes, int colonnes, int **matriceImage, FILE *image)
   }
   return 0;
 }
+
+/**
+ * @brief Quantifie, par niveau de noir et blanc, une matrice représentant l'image noir et blanc 
+ * 
+ * @param matriceImageNB 
+ * @param matriceImageQuant 
+ * @param lignes 
+ * @param colonnes 
+ * @return int 
+ */
 int quantificationNB(int **matriceImageNB, int **matriceImageQuant, int lignes, int colonnes)
 {
   int niveau = tailleHistogrammeNB;
@@ -194,8 +255,14 @@ int quantificationNB(int **matriceImageNB, int **matriceImageQuant, int lignes, 
   return 0;
 }
 
-/***
- * Cette méthode permet de lire une RGB
+/**
+ * @brief Cette méthode permet de lire une RGB
+
+ * 
+ * @param lignes 
+ * @param colonnes 
+ * @param matriceImage 
+ * @param image 
  * @return une matrice représentant l'image RGB
  */
 int lire_imageRGB(int lignes, int colonnes, RGB **matriceImage, FILE *image)
@@ -240,10 +307,6 @@ int power(int x, int puiss)
   return resultat;
 }
 
-/***
- * Cette méthode permet de quantifier un pixel de type RGB
- * @return entier resultat de la quantification
- */
 int quantifie_un_pixelRGB(RGB pixel)
 {
   int resultat = 0;
@@ -277,8 +340,14 @@ int quantifie_un_pixelRGB(RGB pixel)
   return resultat;
 }
 
-/***
- * Cette méthode permet de quantifier une matrice de type RGB
+
+/**
+ * @brief Cette méthode permet de quantifier une matrice de type RGB
+ * 
+ * @param matriceImageRGB 
+ * @param matriceImageQuant 
+ * @param lignes 
+ * @param colonnes 
  * @return la matrice quantifiée et un code de retour (succes ou echec)
  */
 int quantificationRGB(RGB **matriceImageRGB, int **matriceImageQuant, int lignes, int colonnes)
@@ -293,10 +362,16 @@ int quantificationRGB(RGB **matriceImageRGB, int **matriceImageQuant, int lignes
   return 0;
 }
 
-/***
- * Cette méthode permet de créer un histogramme à partir de de la matrice quantifiée et de l'ajouter au nouveau descripteur
+/**
+ * @brief Cette méthode permet de créer un histogramme à partir de de la matrice quantifiée et de l'ajouter au nouveau descripteur
+ * 
+ * @param matriceImageQuant 
+ * @param newDesc 
+ * @param lignes 
+ * @param colonnes 
  * @return le nouveau descripteur et un code de retour (succès ou echec)
  */
+<<<<<<< HEAD
 
 /**
  * @brief 
@@ -308,6 +383,9 @@ int quantificationRGB(RGB **matriceImageRGB, int **matriceImageQuant, int lignes
  * @return int 
  */
 int creationHistogramme(int *matriceImageQuant[], Descripteur *newDesc, int lignes, int colonnes) // doit créer l'histo et remplir l'attribut histogramme du descripteur
+=======
+int creationHistogramme(int *matriceImageQuant[], Descripteur_image *newDesc, int lignes, int colonnes) // doit créer l'histo et remplir l'attribut histogramme du descripteur
+>>>>>>> moteurRecherche_image
 {
   for (int i = 0; i < lignes; i++)
   {
@@ -320,9 +398,13 @@ int creationHistogramme(int *matriceImageQuant[], Descripteur *newDesc, int lign
   return 0;
 }
 
+<<<<<<< HEAD
 /***
 
  */
+=======
+
+>>>>>>> moteurRecherche_image
 
 /**
  * @brief  * Cette fonction permet de lier un descripteur à son fichier
@@ -333,7 +415,11 @@ int creationHistogramme(int *matriceImageQuant[], Descripteur *newDesc, int lign
  * @param nom 
  * @param RGB_ou_NB 
  */
+<<<<<<< HEAD
 void lierDescripteur(Descripteur d, char *nom, int RGB_ou_NB)
+=======
+void lierDescripteur_image(Descripteur_image d, char *nom, int RGB_ou_NB)
+>>>>>>> moteurRecherche_image
 {
   FILE *pileFichier;
   if (RGB_ou_NB == 1)
@@ -371,20 +457,35 @@ void lierDescripteur(Descripteur d, char *nom, int RGB_ou_NB)
  * @param chemin 
  * @param nom_dossier 
  * @param nom_fichier 
+<<<<<<< HEAD
  /
 void path_maker1(char *chemin, char *nom_dossier, char *nom_fichier)
+=======
+ */
+void path_maker(char *chemin, char *nom_dossier, char *nom_fichier)
+>>>>>>> moteurRecherche_image
 {
   strcpy(chemin, nom_dossier);
   strcat(chemin, "/");
   strcat(chemin, nom_fichier);
+<<<<<<< HEAD
 }*/
 /**
  * @brief 
+=======
+}
+/**
+ * @brief lecture du dossier à indexer
+>>>>>>> moteurRecherche_image
  * 
  * @param f 
  * @param nom_dossier 
  */
+<<<<<<< HEAD
 void lecture_dossier_img(FILE *f, char *nom_dossier)
+=======
+void lecture_dossier(FILE *f, char *nom_dossier)
+>>>>>>> moteurRecherche_image
 {
   struct dirent *dir;
   DIR *d = opendir(nom_dossier);
@@ -402,7 +503,11 @@ void lecture_dossier_img(FILE *f, char *nom_dossier)
       stat(chemin, &InfosFile);            //on recupere les stat du fichier lu pour savoir si c' est un dossier
       if (S_ISREG(InfosFile.st_mode) != 0) //on vérifie si c'est un fichier
       {
+<<<<<<< HEAD
         fprintf(f, "%s ", dir->d_name);
+=======
+        fprintf(f, "%s ", chemin);
+>>>>>>> moteurRecherche_image
       }
     }
   }
@@ -443,6 +548,7 @@ int image_deja_indexe(char *path_to_xml, char *liste_base_image)
  * @param cheminDossier 
  * @param RGB_ou_NB 
  */
+<<<<<<< HEAD
 void genererDescripteurDossier(char *cheminDossier, int RGB_ou_NB)
 {
   PILE pile;
@@ -551,3 +657,48 @@ int main(int argc, char *argv[])
 
   return 0;
 }*/
+=======
+void genererDescripteur_imageDossier(char *cheminDossier, int RGB_ou_NB)
+{
+  PILE_image pile;
+  FILE *fich;
+  fich = fopen("nom_fichiers.txt", "w+");
+  char chemin[255];
+  lecture_dossier(fich, cheminDossier);
+
+  if (RGB_ou_NB == 1)
+  {
+    pile = chargerPILE_image("base_descripteur_image_NB",1);
+  }
+  else
+  {
+    pile = chargerPILE_image("base_descripteur_image_RGB",3);
+  }
+  if (!PILE_estVide_image(pile) && pile->elt.id == 1)
+  {
+    pile = inverserPILE_image(pile);
+
+  }
+  while (fscanf(fich, "%s", chemin) != EOF)
+  {
+    if (RGB_ou_NB == 1)
+    {
+      if (!image_deja_indexe(chemin, "liste_base_image_NB"))
+      {
+        creationDescripteur_image(chemin, &pile);
+      }
+    }
+    else
+    {
+      if (!image_deja_indexe(chemin, "liste_base_image_RGB"))
+      {
+        creationDescripteur_image(chemin, &pile);
+      }
+    }
+  }
+  sauvegarderPile_image(pile, RGB_ou_NB);
+  fclose(fich);
+}
+
+
+>>>>>>> moteurRecherche_image

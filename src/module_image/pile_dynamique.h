@@ -19,17 +19,17 @@
  * @brief Structure d'une Cellule
  *
  */
-typedef struct s_Cellule
+typedef struct s_Cellule_image
 {
-    Descripteur elt;
-    struct s_Cellule *suivant;
-}Cellule;
+    Descripteur_image elt;
+    struct s_Cellule_image *suivant;
+}Cellule_image;
 
 /**
  * @brief Structure d'une pile de mots avec occurences
  *
  */
-typedef Cellule* PILE;
+typedef Cellule_image* PILE_image;
 
 //FONCTIONS POUR PILES DE MOTS
 
@@ -40,7 +40,7 @@ typedef Cellule* PILE;
  * @param[in,out] elt
  * @return La pile sans le dernier element
  */
-PILE dePILE(PILE p, Descripteur *elt);
+PILE_image dePILE_image(PILE_image p, Descripteur_image *elt);
 
 /**
  * @brief Permet d'empiler un élément d'une pile de mots
@@ -49,21 +49,21 @@ PILE dePILE(PILE p, Descripteur *elt);
  * @param[in] elt
  * @return La pile avec elt
  */
-PILE emPILE(PILE p, Descripteur elt);
+PILE_image emPILE_image(PILE_image p, Descripteur_image elt);
 
 /**
  * @brief Permet d'initialiser une pile de mots
  *
  * @return une pile vide
  */
-PILE init_pile();
+PILE_image init_pile_image();
 
 /**
  * @brief Permet d'afficher une pile de mots
  *
  * @param[in] p
  */
-void affiche_PILE(PILE p);
+void affiche_PILE_image(PILE_image p);
 
 /**
  * @brief Permet de dire si une pile est vide ou non
@@ -71,7 +71,7 @@ void affiche_PILE(PILE p);
  * @param[in] p
  * @return 1 si vrai, 0 sinon
  */
-int PILE_estVide(PILE p);
+int PILE_estVide_image(PILE_image p);
 
 /**
  * @brief Permet de dire si un mot est dans une pile de mots
@@ -80,28 +80,10 @@ int PILE_estVide(PILE p);
  * @param[in] buffer
  * @return 1 si vrai, 0 sinon
  */
-int estDanslaPile(PILE p,char *buffer);
+int estDanslaPile_image(PILE_image p,char *buffer);
 
-PILE chargerPILE(char* cheminFichier);
-PILE inverserPILE(PILE pile);
-
-
-/*#include <stdio.h>
-#include <stdlib.h>
-#include "descripteur.h"
-typedef struct s_Cellule
-{
-    Descripteur elt;
-    struct s_Cellule *suivant;
-}Cellule;
-
-typedef Cellule* PILE;
+PILE_image chargerPILE_image(char* cheminFichier,int RGB_ou_NB);
+PILE_image inverserPILE_image(PILE_image pile);
 
 
 
-PILE init_PILE();
-void affiche_PILE(PILE pile);
-int PILE_estVide(PILE pile);
-PILE emPILE(PILE pile,Descripteur elem);
-PILE dePILE(PILE pile, Descripteur* elem);*/
-//PILE saisir_PILE();

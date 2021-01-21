@@ -1,15 +1,26 @@
 #include "moteur.h"
 
-int comparaison_image(Descripteur d1, Descripteur d2, double seuil)
+
+/**
+ * @brief compare deux image à travers un seuil de ressemblance défini par avance
+ * 
+ * @param d1 
+ * @param d2 
+ * @param seuil 
+ * @param RGB_ou_NB 
+ * @return int 
+ */
+int comparaison_image(Descripteur_image d1, Descripteur_image d2, double seuil,int RGB_ou_NB)
 {
-    //Méthode de comparaison_image : intersection des 2 histogrammes
+    //Méthode de comparaison : intersection des 2 histogrammes
 
     //Similaire si seuil% des cases sont similaire
     //Une case est similaire si l la valeur 1 et compris dans l'intervale val2-seuil; val2 +seuil
-    printf("\nd1 : \n");
-    affiche_Descripteur(d1);
-    printf("\nd2 : \n");
-    affiche_Descripteur(d2);
+    //printf("\nd1 : %d\n",d1.id);
+
+    //affiche_Descripteur_image(d1);
+    //printf("\nd2 : %d\n",d2.id);
+    //affiche_Descripteur_image(d2);
     if (d1.id == d2.id)
     {
         return 0;
@@ -21,21 +32,37 @@ int comparaison_image(Descripteur d1, Descripteur d2, double seuil)
     int nbCaseIntersection = 0;
     int val1;
     int val2;
-    for (int i = 0; i < tailleHistogramme; i++)
-    {
-        val1 = d1.histogramme[i];
-        val2 = d2.histogramme[i];
-        if (val2 - val2 * ((100.0 - seuil) / 100) <= val1 && val1 <= val2 + val2 * ((100.0 - seuil) / 100))
+    double pourcentage;
+    if(RGB_ou_NB==1){
+        for (int i = 0; i < tailleHistogrammeNB; i++)
+         {
+             val1 = d1.histogramme[i];
+             val2 = d2.histogramme[i];
+            if (val2 - val2 * ((100.0 - seuil) / 100.0) <= val1 && val1 <= val2 + val2 * ((100.0 - seuil) / 100.0))
         {
             nbCaseIntersection++;
         }
     }
+        pourcentage = (double)nbCaseIntersection / tailleHistogrammeNB * 100;
+    }
+    else{
+        for (int i = 0; i < tailleHistogramme; i++)
+         {
+             val1 = d1.histogramme[i];
+             val2 = d2.histogramme[i];
+            if (val2 - val2 * ((100.0 - seuil) / 100.0) <= val1 && val1 <= val2 + val2 * ((100.0 - seuil) / 100.0))
+        {
+            nbCaseIntersection++;
+        }
+    }
+        pourcentage = (double)nbCaseIntersection / tailleHistogramme * 100;
+    }
+
 
     //On obtient un tableau dont la longueur et le nb de cases similaire. On peut en tirer un pourcentage de similarité (sur les 64 cases d'un histogramme)
     //On compare la similarité au seuil
-    printf("\n similaire sur %d cases\n", nbCaseIntersection);
+    //printf("\n similaire sur %d cases\n", nbCaseIntersection);
 
-    double pourcentage = (double)nbCaseIntersection / tailleHistogramme * 100;
 
     printf("Similaire à %f pourcents\n", pourcentage);
     if (pourcentage == 100)
@@ -50,28 +77,29 @@ int comparaison_image(Descripteur d1, Descripteur d2, double seuil)
     return 2;
 }
 
-/***
- * Recherche par critère
- * Cette fonction permet de rechercher des documents en fonction d'u critère donné
+/**
+ * @brief Recherche par critère
+ * @brief Cette fonction permet de rechercher des documents en fonction d'u critère donné
  * @param RGB couleurDominante
  * @param File[] tableau à remplir
  * @param int seuilSimilarité
  */
-void rechercheParCritere_img(RGB couleurDominante, FILE *fichiersSimilaires, int seuilSimilarite)
+void rechercheParCritere_image(RGB couleurDominante, FILE *fichiersSimilaires, int seuilSimilarite)
 {
     int couleur;
     float nbCouleurRecherche, nbTotal;
-    Descripteur desc;
+    Descripteur_image desc;
     char chemin[255];
     //Calcule de la valeur du RGB
     couleur = quantifie_un_pixelRGB(couleurDominante);
+    printf("couleur : %d\n",couleur);
     // Charger la pile de tous les descripteurs avec la fonction dans controle descripteur
-    PILE pile = init_pile();
-    pile = chargerPILE("../base_descripteur_image_RGB");
-    // Pour chaque fichier faire la comparaison_image nb_de_données/nb_de_donnee_egal_au_RGB
-    while (!PILE_estVide(pile))
+    PILE_image pile = init_pile_image();
+    pile = chargerPILE_image("base_descripteur_image_RGB",3);
+    // Pour chaque fichier faire la comparaison nb_de_données/nb_de_donnee_egal_au_RGB
+    while (!PILE_estVide_image(pile))
     {
-        pile = dePILE(pile, &desc);
+        pile = dePILE_image(pile, &desc);
         nbCouleurRecherche = desc.histogramme[couleur];
         nbTotal = 0;
         for (int i = 0; i < tailleHistogramme; i++)
@@ -80,72 +108,81 @@ void rechercheParCritere_img(RGB couleurDominante, FILE *fichiersSimilaires, int
         }
         if ((nbCouleurRecherche / nbTotal) * 100 > seuilSimilarite)
         {
-            id_to_chemin(desc.id,3,chemin);
-            fprintf(fichiersSimilaires, "%d %s",desc.id, chemin);
+            id_to_chemin_image(desc.id,3,chemin);
+            fprintf(fichiersSimilaires, "%d %s\n",desc.id, chemin);
         }
     }
     //CSomparer le résultat avec le seuil et garder le fichier si il est au dessus
 }
 
-/***
- * Recherche par document
- * Cette fonction permet de rechercher des documents en fonction d'un document donné
+/**
+ * @brief Recherche par document
+ * @brief Cette fonction permet de rechercher des documents en fonction d'un document donné
  * @param String cheminVersDocument
  * @param File[] tableau à remplir
  * @param int seuilSimilarité
  */
 void rechercheParDocument_RGB(char *cheminVersDocument, FILE *fichiersSimilaires, int seuilSimilarite){
-    PILE pile=init_pile();
-    Descripteur desc1;
-    Descripteur desc2;
+    PILE_image pile=init_pile_image();
+    Descripteur_image desc1;
+    Descripteur_image desc2;
     char chemin[255];
-    int id=chemin_to_id(cheminVersDocument,3);
-    pile=chargerPILE("base_descripteur_image_RGB");
-    while(!PILE_estVide(pile)){
-        pile=dePILE(pile,&desc2);
+    int id=chemin_to_id_image(cheminVersDocument,3);
+    printf("cheminVersDocument : %s %d\n",chemin,id);
+    pile=chargerPILE_image("base_descripteur_image_RGB",3);
+    while(!PILE_estVide_image(pile)){
+        pile=dePILE_image(pile,&desc2);
         if(desc2.id==id){
             desc1=desc2;
         }
     }
     //charger pile
-    pile=chargerPILE("base_descripteur_image_RGB");
-    while(!PILE_estVide(pile)){
-        pile=dePILE(pile,&desc2);
+    pile=chargerPILE_image("base_descripteur_image_RGB",3);
+    while(!PILE_estVide_image(pile)){
+        pile=dePILE_image(pile,&desc2);
         if(desc2.id!=id){
-            if(comparaison_image(desc1, desc2, seuilSimilarite)<2){
-                id_to_chemin(desc2.id,3,chemin);
-                fprintf(fichiersSimilaires, "%d %s", desc2.id,chemin);
+            if(comparaison_image(desc1, desc2, seuilSimilarite,3)<2){
+                id_to_chemin_image(desc2.id,3,chemin);
+                fprintf(fichiersSimilaires, "%d %s\n", desc2.id,chemin);
+            }
+        }
+    }
+}
+/**
+ * @brief Compare deux documents noir et blanc
+ * 
+ * @param cheminVersDocument 
+ * @param fichiersSimilaires 
+ * @param seuilSimilarite 
+ */
+void rechercheParDocument_NB(char *cheminVersDocument, FILE *fichiersSimilaires, int seuilSimilarite){
+    PILE_image pile=init_pile_image();
+    Descripteur_image desc1;
+    Descripteur_image desc2;
+    char chemin[255];
+    int id=chemin_to_id_image(cheminVersDocument,1);
+    pile=chargerPILE_image("base_descripteur_image_NB",1);
+    while(!PILE_estVide_image(pile)){
+        pile=dePILE_image(pile,&desc2);
+        if(desc2.id==id){
+            desc1=desc2;
+        }
+    }
+    //charger pile
+    pile=chargerPILE_image("base_descripteur_image_NB",1);
+    while(!PILE_estVide_image(pile)){
+        pile=dePILE_image(pile,&desc2);
+        if(desc2.id!=id){
+            if(comparaison_image(desc1, desc2, seuilSimilarite,1)<2){
+                id_to_chemin_image(desc2.id,1,chemin);
+                fprintf(fichiersSimilaires, "%d %s\n", desc2.id,chemin);
             }
         }
     }
 }
 
-void rechercheParDocument_NB(char *cheminVersDocument, FILE *fichiersSimilaires, int seuilSimilarite){
-    PILE pile=init_pile();
-    Descripteur desc1;
-    Descripteur desc2;
-    char chemin[255];
-    int id=chemin_to_id(cheminVersDocument,1);
-    pile=chargerPILE("base_descripteur_image_NB");
-    while(!PILE_estVide(pile)){
-        pile=dePILE(pile,&desc2);
-        if(desc2.id==id){
-            desc1=desc2;
-        }
-    }
-    //charger pile
-    pile=chargerPILE("base_descripteur_image_NB");
-    while(!PILE_estVide(pile)){
-        pile=dePILE(pile,&desc2);
-        if(desc2.id!=id){
-            if(comparaison_image(desc1, desc2, seuilSimilarite)<1){
-                id_to_chemin(desc2.id,3,chemin);
-                fprintf(fichiersSimilaires, "%d %s", desc2.id,chemin);
-            }
-        }
-    }
-}
-void id_to_chemin(int id,int NB_RGB,char * chemin){
+
+void id_to_chemin_image(int id,int NB_RGB,char * chemin){
     FILE* fich;
     int bon_id;
     if(NB_RGB==1){
@@ -164,7 +201,7 @@ void id_to_chemin(int id,int NB_RGB,char * chemin){
     }
 }
 
-int chemin_to_id(char* chemin, int nb_RGB){
+int chemin_to_id_image(char* chemin, int nb_RGB){
     FILE* fich;
     char bon_chemin[255];
     int id;
@@ -195,19 +232,42 @@ void lancer_recherche_critere()
     RGB couleur;
     printf("Entrez un code RGB :\nValeur du rouge : ");
     scanf("%d", &couleur.red);
-    printf("Entrez la valeur du vert : ");
+    printf("Valeur du vert : ");
     scanf("%d", &couleur.green);
-    printf("Entrez la couleur bleu : ");
+    printf("Valeur du bleu : ");
     scanf("%d", &couleur.blue);
-    rechercheParCritere_img(couleur, fich, 20);
+    rechercheParCritere_image(couleur, fich, 10);
     fclose(fich);
 }
-/*
+
+void lancer_recherche_document_RGB()
+{
+    FILE *fich;
+    fich = fopen("Fichiers_similaires", "w+");
+    char cheminVersDocument[255];
+    printf("Entrez un chemin vers un fichier : ");
+    scanf("%s",cheminVersDocument);
+    rechercheParDocument_RGB(cheminVersDocument, fich,73);
+    fclose(fich);
+}
+
+void lancer_recherche_document_NB()
+{
+    FILE *fich;
+    fich = fopen("Fichiers_similaires", "w+");
+    char cheminVersDocument[255];
+    printf("Entrez un chemin vers un fichier : ");
+    scanf("%s",cheminVersDocument);
+    rechercheParDocument_NB(cheminVersDocument, fich,85);
+    fclose(fich);
+}
+
+
 int main(int argc, char const *argv[])
 {
-    lancer_indexation_image();
-
-    lancer_recherche_critere();
+    genererDescripteur_imageDossier("../tests/TEST_RGB/txt", 3); // Génération rgb
+    genererDescripteur_imageDossier("../tests/TEST_NB/txt", 1);  // Génératio nb
+    //lancer_recherche_critere();
+    lancer_recherche_document_NB();
     return 0;
 }
-*/

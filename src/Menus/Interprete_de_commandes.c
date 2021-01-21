@@ -45,6 +45,7 @@ void menus_admin(PILE_descripteur_texte *pile, Table_Index *table,PILE_AUDIO *pi
     } while (code != 4);
 }
 
+
 int main(void)
 {
     //PILES ET TABLE POUR L'INDEXATION TEXTE

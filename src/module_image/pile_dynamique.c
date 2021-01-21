@@ -11,42 +11,42 @@
  *
  */
 
-PILE init_pile()
+PILE_image init_pile_image()
 {
-    PILE p;
+    PILE_image p;
     p = NULL;
     return p;
 }
 
-int PILE_estVide(PILE p)
+int PILE_estVide_image(PILE_image p)
 {
     return (p == NULL);
 }
 
-void affiche_PILE(PILE p)
+void affiche_PILE_image(PILE_image p)
 {
-    if (PILE_estVide(p))
+    if (PILE_estVide_image(p))
         fprintf(stderr, "La pile est vide\n");
 
     else
     {
-        Cellule *parcours = p;
+        Cellule_image *parcours = p;
         printf("\n\n\t AFFICHAGE DES DescripteurS ET LEURS OCCURENCES\n");
         do
         {
-            affiche_Descripteur(parcours->elt);
+            affiche_Descripteur_image(parcours->elt);
             parcours = parcours->suivant;
         } while (parcours != NULL);
         printf("\n");
     }
 }
 
-PILE emPILE(PILE p, Descripteur elt)
+PILE_image emPILE_image(PILE_image p, Descripteur_image elt)
 {
-    Cellule *cel = malloc(sizeof(Cellule));
+    Cellule_image *cel = malloc(sizeof(Cellule_image));
     cel->suivant = NULL;
     cel->elt = elt;
-    if (PILE_estVide(p))
+    if (PILE_estVide_image(p))
     {
         p = cel;
     }
@@ -62,9 +62,9 @@ PILE emPILE(PILE p, Descripteur elt)
 }
 
 
-PILE dePILE(PILE p, Descripteur *elt)
+PILE_image dePILE_image(PILE_image p, Descripteur_image *elt)
 {
-    if (PILE_estVide(p))
+    if (PILE_estVide_image(p))
         fprintf(stderr, "La pile est deja vide");
     else
     {
@@ -76,7 +76,7 @@ PILE dePILE(PILE p, Descripteur *elt)
         }
         else
         {
-            Cellule* marqueur=p;
+            Cellule_image* marqueur=p;
             *elt = p->elt;
             p=p->suivant;
             marqueur=NULL;
@@ -87,26 +87,33 @@ PILE dePILE(PILE p, Descripteur *elt)
     return p;
 }
 
-PILE inverserPILE(PILE pile){
-  PILE sub=init_pile();
-  Descripteur elem;
-  while(!PILE_estVide(pile)){
-    pile=dePILE(pile,&elem);
-    sub=emPILE(sub,elem);
+PILE_image inverserPILE_image(PILE_image pile){
+  PILE_image sub=init_pile_image();
+  Descripteur_image elem;
+  while(!PILE_estVide_image(pile)){
+    pile=dePILE_image(pile,&elem);
+    sub=emPILE_image(sub,elem);
   }
   return  sub;
 }
 
-PILE chargerPILE(char* cheminFichier){
-  PILE pile=init_pile();
+PILE_image chargerPILE_image(char* cheminFichier,int RGB_ou_NB){
+  PILE_image pile=init_pile_image();
   FILE* fich=fopen(cheminFichier,"r");
   if(fich){
-    Descripteur desc;
+    Descripteur_image desc;
     while(fscanf(fich,"%d",&desc.id)!=EOF){
-      for(int i=0;i<tailleHistogramme;i++){
-        fscanf(fich,"%d",&desc.histogramme[i]);
+      if(RGB_ou_NB==1){
+        for(int i=0;i<tailleHistogrammeNB;i++){
+          fscanf(fich,"%d",&desc.histogramme[i]);
+        }
       }
-      pile=emPILE(pile,desc);
+      else{
+        for(int i=0;i<tailleHistogramme;i++){
+          fscanf(fich,"%d",&desc.histogramme[i]);
+        }
+      }
+      pile=emPILE_image(pile,desc);
     }
   }
 

@@ -41,7 +41,7 @@ void MenuIndexation_image()
                 scanf("%d",&choix_indexation);
                 if(choix_indexation==2)    choix_indexation=3;
             }while(choix_indexation!=1 && choix_indexation!=3);
-            genererDescripteurDossier(buffer,choix_indexation);
+            genererDescripteur_imageDossier(buffer,choix_indexation);
             
         }
         else if (code == 2)
