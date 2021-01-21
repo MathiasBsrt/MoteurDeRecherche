@@ -34,7 +34,7 @@ void add_char(char *buffer, char c, int *cpt)
  */
 int estPonctuation(char c)
 {
-    return (c == '.' || c == ',' || c == '?' || c == ';' || c == '!' || c == '\'' || c == ':' || c == '"' || c == '&' || c == '(' || c == ')' || c == '-' || c == '_' || c == '%' || !strcmp("$",&c) || !strcmp("€",&c) || !strcmp("£",&c) || !strcmp("«",&c) || !strcmp("»",&c));
+    return (c == '.' || c == ',' || c == '?' || c == ';' || c == '!' || c == '\'' || c == ':' || c == '"' || c == '&' || c == '(' || c == ')' || c == '-' || c == '_' || c == '%' || !strcmp("$",&c) || !strcmp("€",&c) || !strcmp("£",&c) || !strcmp("«",&c) || !strcmp("»",&c) || !strcmp("ةtة",&c));
 }
 
 
@@ -74,4 +74,3 @@ void xml_cleaner(FILE *src, FILE *dest)
     }
 }
 
->>>>>>> Menus

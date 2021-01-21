@@ -1,4 +1,4 @@
-#include <stdio.h>
+/*#include <stdio.h>
 #include <stdlib.h>
 #include "histogramme.h"
 
@@ -20,4 +20,4 @@ int main(int argc, char * argv[])
 	int code = generer_HISTOGRAMME_AUDIO(&histo, argv[1], n, m);
 	if(code != HISTOGRAMME_CREER_SUCCES) exit(code);
 	affiche_HISTOGRAMME_AUDIO(histo);
-}
+}*/

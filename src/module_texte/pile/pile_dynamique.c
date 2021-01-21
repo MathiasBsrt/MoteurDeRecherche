@@ -10,26 +10,26 @@
  */
 #include "pile_dynamique.h"
 
-PILE init_pile()
+pile_mot init_pile_mot()
 {
-    PILE p;
+    pile_mot p;
     p = NULL;
     return p;
 }
 
-int PILE_estVide(PILE p)
+int PILE_estVide_mot(pile_mot p)
 {
     return (p == NULL);
 }
 
-void affiche_PILE(PILE p)
+void affiche_PILE_mots(pile_mot p)
 {
-    if (PILE_estVide(p))
+    if (PILE_estVide_mot(p))
         fprintf(stderr, "La pile est vide\n");
 
     else
     {
-        Cellule *parcours = p;
+        Cellule_mot *parcours = p;
         printf("\n\n\t AFFICHAGE DES MOTS ET LEURS OCCURENCES\n");
         do
         {
@@ -40,18 +40,18 @@ void affiche_PILE(PILE p)
     }
 }
 
-PILE emPILE(PILE p, MOT elt)
+pile_mot emPILE_mot(pile_mot p, MOT elt)
 {
-    Cellule *cel = malloc(sizeof(Cellule));
+    Cellule_mot *cel = malloc(sizeof(Cellule_mot));
     cel->suivant = NULL;
     cel->elt = elt;
-    if (PILE_estVide(p))
+    if (PILE_estVide_mot(p))
     {
         p = cel;
     }
     else
     {
-        Cellule *parcours = p;
+        Cellule_mot *parcours = p;
         while (parcours->suivant != NULL)
             parcours = parcours->suivant;
         parcours->suivant = cel;
@@ -59,9 +59,9 @@ PILE emPILE(PILE p, MOT elt)
     return p;
 }
 
-PILE dePILE(PILE p, MOT *elt)
+pile_mot dePILE_mot(pile_mot p, MOT *elt)
 {
-    if (PILE_estVide(p))
+    if (PILE_estVide_mot(p))
         fprintf(stderr, "La pile est deja vide");
     else
     {
@@ -72,8 +72,8 @@ PILE dePILE(PILE p, MOT *elt)
         }
         else
         {
-            Cellule *parcour = p;
-            Cellule *marqueur;
+            Cellule_mot *parcour = p;
+            Cellule_mot *marqueur;
             while (parcour->suivant != NULL)
                 parcour = parcour->suivant;
             *elt = parcour->elt;
@@ -89,10 +89,10 @@ PILE dePILE(PILE p, MOT *elt)
     return p;
 }
 
-int estDanslaPile(PILE p, char *buffer)
+int estDanslaPile_mot(pile_mot p, char *buffer)
 {
-    Cellule *parcours = NULL;
-    if (!PILE_estVide(p))
+    Cellule_mot *parcours = NULL;
+    if (!PILE_estVide_mot(p))
     {
         int test = 0;
         parcours = p;
@@ -113,9 +113,7 @@ int estDanslaPile(PILE p, char *buffer)
 
 PILE_descripteur_texte init_PILE_desc()
 {
-    PILE_descripteur_texte p;
-    p = NULL;
-    return p;
+    return NULL;
 }
 
 int PILE_desc_estVide(PILE_descripteur_texte d)
@@ -123,12 +121,12 @@ int PILE_desc_estVide(PILE_descripteur_texte d)
     return (d == NULL);
 }
 
-int total_mot(PILE p, int *nombre_de_mots_differents)
+int total_mot(pile_mot p, int *nombre_de_mots_differents)
 {
     *nombre_de_mots_differents = 0;
-    Cellule *parcours = p;
+    Cellule_mot *parcours = p;
     int total = 0;
-    if (PILE_estVide(p))
+    if (PILE_estVide_mot(p))
     {
         perror("la pile est vide");
         exit(1);
@@ -142,20 +140,19 @@ int total_mot(PILE p, int *nombre_de_mots_differents)
     return total;
 }
 
-void Index_from_pile(Table_Index *table, PILE pile, int id_texte)
+void Index_from_pile(Table_Index *table, pile_mot pile, int id_texte)
 {
-    if (!PILE_estVide(pile))
+    if (!PILE_estVide_mot(pile))
     {
-        Cellule *parcours = pile;
+        Cellule_mot *parcours = pile;
         Index *index;
-        int passage = 0;
         while (parcours)
         {
 
             if (!(index = ExisteDansTable_Index(*table, parcours->elt.mot)))
             {
-                index=Ajout_Dans_Table_index(table, parcours->elt.mot);
-                Incremente_index(index,id_texte,parcours->elt.nbr_occurrence);
+                index = Ajout_Dans_Table_index(table, parcours->elt.mot);
+                Incremente_index(index, id_texte, parcours->elt.nbr_occurrence);
             }
             else
             {
@@ -166,12 +163,11 @@ void Index_from_pile(Table_Index *table, PILE pile, int id_texte)
     }
 }
 
-void EMPILE_desc_from_pile(PILE p, PILE_descripteur_texte *d, char *path_to_xml, Table_Index *table)
+int EMPILE_desc_from_pile(pile_mot p, PILE_descripteur_texte *d, char *path_to_xml, Table_Index *table)
 {
-    FILE *liste_descripteurs = fopen("liste_base_descripteurs", "a");
-    Index *index;
+    FILE *liste_descripteurs = fopen("sauvegardes/liste_base_descripteurs", "a");
     int mots_retenus;
-
+    int id;
     //on remplit le descripteur a empiler
     Descripteur_texte *descripteur = malloc(sizeof(Descripteur_texte));
     descripteur->suivant = NULL;
@@ -182,12 +178,13 @@ void EMPILE_desc_from_pile(PILE p, PILE_descripteur_texte *d, char *path_to_xml,
     if (PILE_desc_estVide(*d))
     {
         descripteur->id = 1;
+        id = 1;
         *d = descripteur;
         fprintf(liste_descripteurs, "%s %d\n", path_to_xml, descripteur->id);
     }
     else
     {
-        int id = 2;
+        id = 2;
         Descripteur_texte *parcours = *d;
         while (parcours->suivant != NULL)
         {
@@ -195,22 +192,24 @@ void EMPILE_desc_from_pile(PILE p, PILE_descripteur_texte *d, char *path_to_xml,
             parcours = parcours->suivant;
         }
         descripteur->id = id;
+
         fprintf(liste_descripteurs, "%s %d\n", path_to_xml, descripteur->id);
 
         parcours->suivant = descripteur;
     }
     Index_from_pile(table, p, descripteur->id);
     fclose(liste_descripteurs);
+    return id;
 }
 
-PILE lecturePILE(FILE* f,int nombredemots)
+pile_mot lecturePILE(FILE *f, int nombredemots)
 {
-    PILE pile=init_pile();
-    Cellule cel;
-    for(int i=0;i<nombredemots;i++)
+    pile_mot pile = init_pile_mot();
+    Cellule_mot cel;
+    for (int i = 0; i < nombredemots; i++)
     {
-       fread(&cel,sizeof(Cellule),1,f);
-       pile=emPILE(pile,cel.elt); 
+        fread(&cel, sizeof(Cellule_mot), 1, f);
+        pile = emPILE_mot(pile, cel.elt);
     }
     return pile;
 }
@@ -223,11 +222,11 @@ void copie_descripteur(Descripteur_texte *a, Descripteur_texte b)
     a->suivant = NULL;
 }
 
-void EMPILE_desc(PILE_descripteur_texte *d, Descripteur_texte descripteur,FILE *stream)
+void EMPILE_desc(PILE_descripteur_texte *d, Descripteur_texte descripteur, FILE *stream)
 {
     Descripteur_texte *ajout = malloc(sizeof(Descripteur_texte));
     copie_descripteur(ajout, descripteur);
-    ajout->pile_mot=lecturePILE(stream,ajout->nbr_mots_retenus);
+    ajout->pile_mot = lecturePILE(stream, ajout->nbr_mots_retenus);
     if (PILE_desc_estVide(*d))
     {
         *d = ajout;
@@ -269,13 +268,13 @@ void DEPILE_desc(PILE_descripteur_texte *p)
     }
 }
 
-void enregistre_PILE(PILE p,FILE* f)
+void enregistre_PILE(pile_mot p, FILE *f)
 {
-    Cellule *parcours=p;
-    while(parcours)
+    Cellule_mot *parcours = p;
+    while (parcours)
     {
-        fwrite(parcours,sizeof(Cellule),1,f);
-        parcours=parcours->suivant;
+        fwrite(parcours, sizeof(Cellule_mot), 1, f);
+        parcours = parcours->suivant;
     }
 }
 
@@ -295,7 +294,7 @@ void enregistre_PILE_Desc(PILE_descripteur_texte p, char *save_descripteurs_text
             while (parcours)
             {
                 fwrite(parcours, sizeof(Descripteur_texte), 1, f);
-                enregistre_PILE(parcours->pile_mot,f);
+                enregistre_PILE(parcours->pile_mot, f);
                 parcours = parcours->suivant;
             }
             fclose(f);
@@ -303,21 +302,23 @@ void enregistre_PILE_Desc(PILE_descripteur_texte p, char *save_descripteurs_text
     }
 }
 
+void charger_PILE_Desc_mot(PILE_descripteur_texte *p, char *save_descripteurs_textes)
 
-
-void charger_PILE_Desc(PILE_descripteur_texte *p, char *save_descripteurs_textes)
 {
     FILE *f = fopen(save_descripteurs_textes, "r");
+    //system("cat sauvegardes/sauvegarde.desc");
     if (f)
     {
-        PILE pile_mots;
-        Cellule *mot;
         Descripteur_texte tmp;
         while (fread(&tmp, sizeof(tmp), 1, f))
         {
-            EMPILE_desc(p, tmp,f);
-            fflush(f);
+            printf("empile %d\n",tmp.id);
+            EMPILE_desc(p, tmp, f);
         }
         fclose(f);
+    }
+    else
+    {
+        perror("Aucunes sauvegardes disponibles. Essayez d'indexer puis de sauvegarder");
     }
 }

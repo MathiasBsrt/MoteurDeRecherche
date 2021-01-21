@@ -1,80 +1,87 @@
 #include "pile_dynamique.h"
 #include "descripteur.h"
 
-PILE init_PILE(){
-  return NULL;
-}
-void affiche_PILE(PILE pile){
-   CELLULE *cell=pile;
-  while(cell!=NULL){
-    affiche_DESC_AUDIO(cell->elem);
-    cell=cell->suivant;
- }
-}
-int PILE_estVide(PILE pile){
-  return pile==NULL;
-}
-PILE emPILE(PILE pile,DESC_AUDIO elem){
-  CELLULE *cell=malloc(sizeof(CELLULE));
-  cell->elem=elem;
-  cell->suivant=NULL;
-  if(PILE_estVide(pile)){
-      pile=cell;
-    }
-    else{
-    CELLULE* curseur=pile;
-    while(curseur->suivant!=NULL){
-      curseur=curseur->suivant;
-    }
-    curseur->suivant=cell;
-  }
-  return pile;
-}
-PILE dePILE(PILE p, DESC_AUDIO *elt)
+/**
+ * @file pile_dynamique.c
+ * @author Baptiste POMARELLE
+ * @brief Les fonctions relatives a la pile de Descripteurs (et de leurs occurences) et a la pile de descripteurs
+ * @version 0.1
+ * @date 2020-12-16
+ *
+ * @copyright Copyright (c) 2020
+ *
+ */
+
+PILE_AUDIO init_PILE_AUDIO()
 {
-    if (PILE_estVide(p))
+    PILE_AUDIO p;
+    p = NULL;
+    return p;
+}
+
+int PILE_estVide_AUDIO(PILE_AUDIO p)
+{
+    return (p == NULL);
+}
+
+void affiche_PILE_AUDIO(PILE_AUDIO p)
+{
+    if (PILE_estVide_AUDIO(p))
+        fprintf(stderr, "La pile est vide\n");
+
+    else
+    {
+        CELLULE_AUDIO *parcours = p;
+        printf("\n\n\t AFFICHAGE DES DescripteurS ET LEURS OCCURENCES\n");
+        do
+        {
+            affiche_DESC_AUDIO(parcours->elem);
+            parcours = parcours->suivant;
+        } while (parcours != NULL);
+        printf("\n");
+    }
+}
+
+PILE_AUDIO emPILE_AUDIO(PILE_AUDIO p, DESC_AUDIO elt)
+{
+    CELLULE_AUDIO *cel = malloc(sizeof(CELLULE_AUDIO));
+    cel->suivant = NULL;
+    cel->elem = elt;
+    if (PILE_estVide_AUDIO(p))
+    {
+        p = cel;
+    }
+    else
+    {
+      cel->suivant=p;
+        // Cellule *parcours = p;
+        // while (parcours->suivant != NULL)
+        //     parcours = parcours->suivant;
+        // parcours->suivant = cel;
+    }
+    return cel;
+}
+
+PILE_AUDIO dePILE_AUDIO(PILE_AUDIO p, DESC_AUDIO *elt)
+{
+    if (PILE_estVide_AUDIO(p))
         fprintf(stderr, "La pile est deja vide");
     else
     {
         if (p->suivant == NULL)
         {
-            *elt=p->elem;
+            *elt = p->elem;
             p=NULL;
         }
         else
         {
-            CELLULE *parcour = p;
-            CELLULE *marqueur;
-            while (parcour->suivant != NULL)
-                parcour = parcour->suivant;
-            *elt = parcour->elem;
-            marqueur=parcour;
-            parcour=p;
-            while(parcour->suivant!=marqueur)
-                parcour = parcour->suivant;
-            parcour->suivant=NULL;
+            CELLULE_AUDIO* marqueur=p;
+            *elt = p->elem;
+            p=p->suivant;
+            marqueur=NULL;
             free(marqueur);
         }
     }
 
     return p;
 }
-// PILE saisir_PILE(){
-//   int nb_valeur;
-//   ELEMENT valeur;
-//   PILE pile;
-//   pile=init_PILE();
-//   printf("Entrez jusqu'à %d valeurs une à une\n",MAX);
-//   printf("Combien voulez vous entrer de valeurs dans la pile ?\n");
-//   scanf("%d",&nb_valeur);
-//   while(nb_valeur>MAX || nb_valeur<1){
-//     printf("Valeur impossible");
-//     printf("Combien voulez vous entrer de valeurs dans la pile ?\n");
-//     scanf("%d",&nb_valeur);
-//   }
-//   for(int i=0;i<nb_valeur;i++){
-//     valeur=saisir_ELEMENT();
-//     pile=emPILE(pile,valeur);
-//   }
-//   return pile;
-// }

@@ -13,19 +13,19 @@
 /**
  * @brief Permet de créer une pile contenant tous les stopwords
  * 
- * @return PILE pile de stopwords
+ * @return pile_mot pile de stopwords
  */
-PILE pile_stopwords()
+pile_mot pile_stopwords()
 {
     FILE *stopwords = fopen("stopwords.txt", "r");
     if (stopwords)
     {
         char buffer[MAX_WORD];
-        PILE pile_stopwords = init_pile();
+        pile_mot pile_stopwords = init_pile_mot();
         while (fscanf(stopwords, "%s", buffer) != EOF) //mise en mémoire des stopwords
-            pile_stopwords = emPILE(pile_stopwords, affecter_MOT(buffer));
+            pile_stopwords = emPILE_mot(pile_stopwords, affecter_MOT(buffer));
 
-        fclose(stopwords); 
+        fclose(stopwords);
         return pile_stopwords;
     }
     else
@@ -35,16 +35,14 @@ PILE pile_stopwords()
     }
 }
 
-
 void xml_filter(FILE *src, FILE *dest)
 
 {
     char buffer[MAX_WORD];
-    PILE pileStopwords = pile_stopwords();
+    pile_mot pileStopwords = pile_stopwords();
     while (fscanf(src, "%s ", buffer) != EOF)
     {
-        if (!estDanslaPile(pileStopwords, buffer))
+        if (!estDanslaPile_mot(pileStopwords, buffer))
             fprintf(dest, "%s ", buffer);
     }
 }
->>>>>>> Menus

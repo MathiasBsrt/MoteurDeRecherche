@@ -6,18 +6,18 @@
 #include <stdlib.h>
 #include "descripteur.h"
 
-typedef struct cellule_t{
+typedef struct cellule_audio_t{
   DESC_AUDIO elem;
-  struct cellule_t* suivant;
-}CELLULE;
-typedef CELLULE* PILE;
+  struct cellule_audio_t* suivant;
+}CELLULE_AUDIO;
+typedef CELLULE_AUDIO* PILE_AUDIO;
 
 
-PILE init_PILE();
-void affiche_PILE(PILE pile);
-int PILE_estVide(PILE pile);
-PILE emPILE(PILE pile, DESC_AUDIO elem);
-PILE dePILE(PILE pile, DESC_AUDIO* elem);
+PILE_AUDIO init_PILE_AUDIO();
+void affiche_PILE_AUDIO(PILE_AUDIO pile);
+int PILE_estVide_AUDIO(PILE_AUDIO pile);
+PILE_AUDIO emPILE_AUDIO(PILE_AUDIO pile, DESC_AUDIO elem);
+PILE_AUDIO dePILE_AUDIO(PILE_AUDIO pile, DESC_AUDIO* elem);
 //PILE saisir_PILE();
 
 #endif

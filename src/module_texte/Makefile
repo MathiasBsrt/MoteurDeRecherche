@@ -13,7 +13,7 @@ test2 : xml_cleaner.c Header.h
 	./test2.out
 	
 test3 : MOT/mot.c index/index.c pile/pile_dynamique.c outils.c xml_cleaner.c xml_tokenizer.c xml_index.c Header.h
-	gcc -c -g mot/mot.c
+	gcc -c -g MOT/mot.c
 	gcc -c -g index/index.c
 	gcc -c -g pile/pile_dynamique.c
 	gcc -c -g outils.c
@@ -23,6 +23,18 @@ test3 : MOT/mot.c index/index.c pile/pile_dynamique.c outils.c xml_cleaner.c xml
 	gcc -o test3.out mot.o index.o pile_dynamique.o outils.o xml_cleaner.o xml_tokenizer.o xml_index.o
 	rm -f *.o core
 	./test3.out
+
+recherche : recherche.c MOT/mot.c index/index.c pile/pile_dynamique.c outils.c xml_cleaner.c xml_tokenizer.c xml_index.c Header.h
+	gcc -c -g -Wall MOT/mot.c
+	gcc -c -g -Wall index/index.c
+	gcc -c -g -Wall pile/pile_dynamique.c
+	gcc -c -g -Wall outils.c
+	gcc -c -g -Wall xml_cleaner.c
+	gcc -c -g -Wall xml_tokenizer.c
+	gcc -c -g -Wall xml_index.c 
+	gcc -c -g -Wall recherche.c
+	gcc -o recherche.out mot.o index.o pile_dynamique.o outils.o xml_cleaner.o xml_tokenizer.o xml_index.o recherche.o
+	rm -f *.o core
 
 clean:
 	rm -f *.out core

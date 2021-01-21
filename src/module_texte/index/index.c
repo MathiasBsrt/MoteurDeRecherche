@@ -70,6 +70,7 @@ Index *Ajout_Dans_Table_index(Table_Index *table, char *mot)
         (*table)->gauche = NULL;
         (*table)->droit = NULL;
         strcpy((*table)->mot, mot);
+        return *table;
     }
     else
     {
@@ -80,6 +81,7 @@ Index *Ajout_Dans_Table_index(Table_Index *table, char *mot)
         else
             Ajout_Dans_Table_index(&(*table)->droit, mot);
     }
+    
 }
 
 void parcourInFixe(Table_Index a) //fonction intermédiaire pour l'affichage
@@ -184,5 +186,4 @@ void charger_Table_index(Table_Index *table, char *save_table_index)
         perror("erreur lors de l'ouverture du fichier de sauvegarde index");
         exit(3);
     }
->>>>>>> Menus
 }

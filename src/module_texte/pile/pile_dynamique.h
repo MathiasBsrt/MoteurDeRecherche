@@ -12,20 +12,20 @@
 #include "../index/index.h"
 
 /**
- * @brief Structure d'une Cellule
+ * @brief Structure d'une Cellule_mot
  * 
  */
-typedef struct s_Cellule
+typedef struct s_Cellule_mot
 {
     MOT elt;
-    struct s_Cellule *suivant;
-}Cellule;
+    struct s_Cellule_mot *suivant;
+}Cellule_mot;
 
 /**
  * @brief Structure d'une pile de mots avec occurences
  * 
  */
-typedef Cellule* PILE;
+typedef Cellule_mot* pile_mot;
 
 /**
  * @brief Strucutre d'un descripteur de texte
@@ -34,7 +34,7 @@ typedef Cellule* PILE;
 typedef struct s_Descripteur
 {
     int id;
-    PILE pile_mot;
+    pile_mot pile_mot;
     int nbr_mots_retenus;
     int nombre_mots_total;
     struct s_Descripteur* suivant;
@@ -58,7 +58,7 @@ typedef Descripteur_texte* PILE_descripteur_texte;
  * @param[in,out] elt 
  * @return La pile sans le dernier element 
  */
-PILE dePILE(PILE p, MOT *elt);
+pile_mot dePILE_mot(pile_mot p, MOT *elt);
 
 /**
  * @brief Permet d'empiler un élément d'une pile de mots
@@ -67,21 +67,21 @@ PILE dePILE(PILE p, MOT *elt);
  * @param[in] elt 
  * @return La pile avec elt
  */
-PILE emPILE(PILE p, MOT elt);
+pile_mot emPILE_mot(pile_mot p, MOT elt);
 
 /**
  * @brief Permet d'initialiser une pile de mots
  * 
  * @return une pile vide
  */
-PILE init_pile();
+pile_mot init_pile_mot();
 
 /**
  * @brief Permet d'afficher une pile de mots
  * 
  * @param[in] p 
  */
-void affiche_PILE(PILE p);
+void affiche_PILE_mots(pile_mot p);
 
 /**
  * @brief Permet de dire si une pile est vide ou non
@@ -89,7 +89,7 @@ void affiche_PILE(PILE p);
  * @param[in] p 
  * @return 1 si vrai, 0 sinon
  */
-int PILE_estVide(PILE p);
+int PILE_estVide_mot(pile_mot p);
 
 /**
  * @brief Permet de dire si un mot est dans une pile de mots
@@ -98,7 +98,7 @@ int PILE_estVide(PILE p);
  * @param[in] buffer 
  * @return 1 si vrai, 0 sinon
  */
-int estDanslaPile(PILE p, char *buffer);
+int estDanslaPile_mot(pile_mot p, char *buffer);
 
 
 
@@ -125,8 +125,10 @@ int PILE_desc_estVide(PILE_descripteur_texte d);
  * @param[in] p 
  * @param[in,out] d 
  * @param[in] path_to_xml Chemin vers le fichier xml
+ * @param[in] table 
+ * @return l'id du texte indexé
  */
-void EMPILE_desc_from_pile(PILE p, PILE_descripteur_texte *d, char *path_to_xml,Table_Index *table);
+int EMPILE_desc_from_pile(pile_mot p, PILE_descripteur_texte *d, char *path_to_xml,Table_Index *table);
 
 /**
  * @brief Permet d'empiler un descripteur dans une pile de descripteurs
@@ -143,7 +145,12 @@ void EMPILE_desc(PILE_descripteur_texte *d, Descripteur_texte descripteur, FILE*
  */
 void DEPILE_desc(PILE_descripteur_texte *p);
 
-
+/**
+ * @brief Permet d'enregistrer une pile de descripteurs
+ * 
+ * @param[in] p 
+ * @param[in] save_descripteurs_textes 
+ */
 void enregistre_PILE_Desc(PILE_descripteur_texte p, char *save_descripteurs_textes);
 
 /**
@@ -152,4 +159,4 @@ void enregistre_PILE_Desc(PILE_descripteur_texte p, char *save_descripteurs_text
  * @param[in,out] p 
  * @param[in] save_descripteurs_textes 
  */
-void charger_PILE_Desc(PILE_descripteur_texte *p, char *save_descripteurs_textes);
+void charger_PILE_Desc_mot(PILE_descripteur_texte *p, char *save_descripteurs_textes);

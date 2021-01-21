@@ -56,4 +56,3 @@ int compare_MOT(MOT a,MOT b);
  * @return un mot 
  */
 MOT affecter_MOT(char* word);
->>>>>>> Menus

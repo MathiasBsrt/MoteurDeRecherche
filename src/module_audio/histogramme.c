@@ -3,12 +3,25 @@
 #include <string.h>
 #include <math.h>
 #include "histogramme.h"
+#include "wav_file_helper.h"
 
 // Normalement la valeur minimale que peux prendre un short int (2 octets)
 // est -32768, mais pour le bien de la conversion dans un interval [-1; 1],
 // +1 a été ajouté.
 #define SHORT_INT_MIN_VALUE -32767
 #define SHORT_INT_MAX_VALUE 32767
+
+/**
+ * @file histogramme.c
+ * @author Théo TRAFNY
+ * @brief Les fonctions relatives à la gestion des histogrammes audio.
+ * @version 0.1
+ * @date 2021-01-19
+ *
+ * @copyright Copyright (c) 2020
+ *
+ */
+
 
 HISTOGRAMME_AUDIO init_HISTOGRAMME_AUDIO(int n, int m)
 {
@@ -316,8 +329,21 @@ int creer_histogramme_WAV_DESC_AUDIO(HISTOGRAMME_AUDIO * histo, char * chemin, i
 		//printf("%d %d %lf\n", i, buffer, val);
 		y = floor(i / y_ratio);
 		x = floor((val + 1) / x_ratio);
+		// Il se peut que la valeur lue soit -32768
+		// et c'est une valeur que le programme n'est pas capable de gérer,
+		// on saute donc l'enregistrement de cette valeur.
+		if(x < 0) continue;
 		inc_HISTOGRAMME_AUDIO(histo, y, x);
 	}
 
 	return HISTOGRAMME_CREER_SUCCES;
+}
+
+
+void free_HISTOGRAMME_AUDIO(HISTOGRAMME_AUDIO * histo)
+{
+	if(histo != NULL)
+	{
+		if(histo->mat != NULL) { free(histo->mat); }
+	}
 }

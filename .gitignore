@@ -5,4 +5,9 @@ base_descripteur_*
 liste_base_*
 !base_descripteur_*_OK
 !liste_base_*_OK
+*.desc
+*.index
+tmp
+tmp1
+moteur_recherche
 
