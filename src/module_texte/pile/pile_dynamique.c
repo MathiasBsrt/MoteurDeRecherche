@@ -165,7 +165,7 @@ void Index_from_pile(Table_Index *table, pile_mot pile, int id_texte)
 
 int EMPILE_desc_from_pile(pile_mot p, PILE_descripteur_texte *d, char *path_to_xml, Table_Index *table)
 {
-    FILE *liste_descripteurs = fopen("sauvegardes/liste_base_descripteurs", "a");
+    FILE *liste_descripteurs = fopen("sauvegardes/txt/liste_base_descripteurs", "a");
     int mots_retenus;
     int id;
     //on remplit le descripteur a empiler

@@ -51,3 +51,12 @@ void MenuIndexation_image();
  */
 void MenuIndexation_audio(PILE_AUDIO *pile_audio);
 
+//2 Outils pour le menu user
+
+//3 outils généraux
+
+/**
+ * @brief Permet à l'utilisateur de décider de passer a autre chose
+ * 
+ */
+void waiter();

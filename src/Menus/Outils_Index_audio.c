@@ -33,21 +33,21 @@ PILE_AUDIO chargement_desc_audio(PILE_AUDIO *pile_desc, int *ind_sauv)
             pile_retour = charger_PILE_DESC_AUDIO(&nbr);
             printf("Chargement des données réussie.\n%d descripteurs chargés.\n", nbr);
             *ind_sauv = 1;
-            sleep(5);
+            waiter();
             break;
         }
         case 'n':
             break;
         default:
             break;
-        }
+        } 
     }
     else
     {
         pile_retour = charger_PILE_DESC_AUDIO(&nbr);
         printf("Chargement des données réussie.\n%d descripteurs chargés.\n", nbr);
         *ind_sauv = 1;
-        sleep(5);
+        waiter();
     }
     return pile_retour;
 }
@@ -55,8 +55,8 @@ PILE_AUDIO chargement_desc_audio(PILE_AUDIO *pile_desc, int *ind_sauv)
 void MenuIndexation_audio(PILE_AUDIO *pile_audio)
 {
     int code, choix_indexation;
-    char buffer[MAX_INPUT];
-    int id, n, m;
+    char buffer[MAX_INPUT]; 
+    int id=0, n, m;
 
     int indice_sauvegarde = 1;
 
@@ -97,10 +97,10 @@ void MenuIndexation_audio(PILE_AUDIO *pile_audio)
             printf("\n\n");
             descripteur = init_DESC_AUDIO(id, n, m, buffer);
             lier_DESC_AUDIO_FICHIER(descripteur, buffer);
-            sauvegarder_DESC_AUDIO(pile_audio, descripteur);
+            sauvegarder_DESC_AUDIO(*pile_audio, descripteur);
             printf("\t=======INDEXATION FICHIERS TERMINÉE=======\n");
             printf("Retour au menu Indexation audio...\n");
-            sleep(5);
+            waiter();
         }
         else if (code == 2)
         {
@@ -108,49 +108,51 @@ void MenuIndexation_audio(PILE_AUDIO *pile_audio)
                 indice_sauvegarde = 0;
             system("clear");
             //Affichage du menu
-            //printf("///\tMENU INDEXATION AUDIO\t///\n");
-            //printf("1. Indexer un fichier\n2. Indexer un dossier\n3. Retour\n");
-            //printf("Veuillez choisir une action :\n");
-            //scanf("%d", &code);
-            /* if (code < 1 || code > 4)
+            printf("///\tMENU INDEXATION AUDIO\t///\n");
+            printf("1. Indexer un fichier\n2. Indexer un dossier\n3. Retour\n");
+            printf("Veuillez choisir une action :\n");
+            scanf("%d", &code);
+            if (code < 1 || code > 4)
             {
                 printf("Veuillez choisir une action valide.\n");
             }
             else if (code == 2)
-            {*/
-            do
             {
-                printf("Entrer un nom de dossier correct à indexer : ");
-                scanf("%s", buffer);
-            } while (access(buffer, F_OK));
-            do
+                do
+                {
+                    printf("Entrer un nom de dossier correct à indexer : ");
+                    scanf("%s", buffer);
+                } while (access(buffer, F_OK));
+                do
+                {
+                    printf("Entrer le nombre de fenêtres d'analyses (Valeur recommandée 5): ");
+                    scanf("%d", &n);
+                } while (n < 1);
+                do
+                {
+                    printf("Entrer le nombre d'intervalles (Valeur recommandée 30): ");
+                    scanf("%d", &m);
+                } while (m < 1);
+                printf("\n\n");
+                init_MULTIPLE_DESC_AUDIO(id, n, m, buffer);
+                printf("\t=======INDEXATION DOSSIER TERMINÉE=======\n");
+                printf("Retour au menu Indexation audio...\n");
+                waiter();
+                }
+            }
+            else if (code == 3)
             {
-                printf("Entrer le nombre de fenêtres d'analyses (Valeur recommandée 5): ");
-                scanf("%d", &n);
-            } while (n < 1);
-            do
+                printf("Sauvegarde de la base de descripteurs...\n");
+                sauvegarder_PILE_DESC_AUDIO(*pile_audio);
+                printf("Sauvegarde effectuée avec succès !\n");
+                waiter();
+                indice_sauvegarde = 1;
+            }
+            else if (code == 4)
             {
-                printf("Entrer le nombre d'intervalles (Valeur recommandée 30): ");
-                scanf("%d", &m);
-            } while (m < 1);
-            printf("\n\n");
-            init_MULTIPLE_DESC_AUDIO(id, n, m, buffer);
-            printf("\t=======INDEXATION DOSSIER TERMINÉE=======\n");
-            printf("Retour au menu Indexation audio...\n");
-            sleep(5);
-            //}
+                *pile_audio = chargement_desc_audio(pile_audio, &indice_sauvegarde);
+            }
         }
-        else if (code == 3)
-        {
-            printf("Sauvegarde de la base de descripteurs...\n");
-            sauvegarder_PILE_DESC_AUDIO(pile_audio);
-            printf("Sauvegarde effectuée avec succès !\n");
-            sleep(5);
-            indice_sauvegarde = 1;
-        }
-        else if (code == 4)
-        {
-            *pile_audio = chargement_desc_audio(pile_audio, &indice_sauvegarde);
-        }
-    } while (code != 5);
-}
+        while (code != 5)
+            ;
+    }

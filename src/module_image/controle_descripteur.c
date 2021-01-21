@@ -461,6 +461,44 @@ int image_deja_indexe(char *path_to_xml, char *liste_base_image)
   }
   return code_retour;
 }
+/**
+ * @brief 
+ * 
+ * @param cheminImage 
+ * @param RGB_ou_NB 
+ */
+void genererDescripteur_image(char *cheminImage, int RGB_ou_NB)
+{
+    PILE_image pile; 
+
+    if (RGB_ou_NB == 1)
+    {
+        pile = chargerPILE_image("sauvegardes/img/base_descripteur_image_NB", 1);
+    }
+    else
+    {
+        pile = chargerPILE_image("sauvegardes/img/base_descripteur_image_RGB", 3);
+    }
+    if (!PILE_estVide_image(pile) && pile->elt.id == 1)
+    {
+        pile = inverserPILE_image(pile);
+    }
+    if (RGB_ou_NB == 1)
+    {
+        if (!image_deja_indexe(cheminImage, "sauvegardes/img/liste_base_image_NB"))
+        {
+            creationDescripteur_image(cheminImage, &pile);
+        }
+    }
+    else
+    {
+        if (!image_deja_indexe(cheminImage, "sauvegardes/img/liste_base_image_RGB"))
+        {
+            creationDescripteur_image(cheminImage, &pile);
+        }
+    }
+    sauvegarderPile_image(pile, RGB_ou_NB);
+}
 
 /**
  * @brief 
@@ -478,11 +516,11 @@ void genererDescripteur_imageDossier(char *cheminDossier, int RGB_ou_NB)
 
   if (RGB_ou_NB == 1)
   {
-    pile = chargerPILE_image("base_descripteur_image_NB",1);
+    pile = chargerPILE_image("sauvegardes/img/base_descripteur_image_NB",1);
   }
   else
   {
-    pile = chargerPILE_image("base_descripteur_image_RGB",3);
+    pile = chargerPILE_image("sauvegardes/img/base_descripteur_image_RGB",3);
   }
   if (!PILE_estVide_image(pile) && pile->elt.id == 1)
   {
@@ -493,14 +531,14 @@ void genererDescripteur_imageDossier(char *cheminDossier, int RGB_ou_NB)
   {
     if (RGB_ou_NB == 1)
     {
-      if (!image_deja_indexe(chemin, "liste_base_image_NB"))
+      if (!image_deja_indexe(chemin, "sauvegardes/img/liste_base_image_NB"))
       {
         creationDescripteur_image(chemin, &pile);
       }
     }
     else
     {
-      if (!image_deja_indexe(chemin, "liste_base_image_RGB"))
+      if (!image_deja_indexe(chemin, "sauvegardes/img/liste_base_image_RGB"))
       {
         creationDescripteur_image(chemin, &pile);
       }

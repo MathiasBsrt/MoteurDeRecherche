@@ -32,7 +32,7 @@ void MenuRecherche_audio(PILE_AUDIO *pile_audio)
         if (code < 1 || code > 3)
         {
             printf("Veuillez choisir une action valide.\n");
-            sleep(3);
+            waiter();
         }
         else if (code == 1) //Recherche par doc
         {

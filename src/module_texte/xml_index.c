@@ -81,7 +81,7 @@ void descripteur_de_texte(FILE *src, pile_mot *p, int seuil)
 int texte_deja_indexe(char *path_to_xml)
 {
     int code_retour = 0;
-    FILE *liste_base_desc = fopen("sauvegardes/liste_base_descripteurs", "r");
+    FILE *liste_base_desc = fopen("sauvegardes/txt/liste_base_descripteurs", "r");
     if (liste_base_desc)
     {
 

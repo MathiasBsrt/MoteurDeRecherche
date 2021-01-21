@@ -9,7 +9,13 @@
  * 
  */
 #include "header.h"
-
+void waiter()
+{
+    fflush(stdin);
+    while(getchar()!='\n');
+    printf("Appuyer sur la touche Entrée pour continuer...\n");
+    getchar();
+}
 
 void chargement_desc_texte(PILE_descripteur_texte *pile_desc, Table_Index *table_index, int *ind_sauv)
 {
@@ -29,11 +35,11 @@ void chargement_desc_texte(PILE_descripteur_texte *pile_desc, Table_Index *table
         {
             *pile_desc = NULL;
             *table_index = NULL;
-            charger_PILE_Desc_mot(pile_desc, "sauvegardes/sauvegarde.desc");
-            charger_Table_index(table_index, "sauvegardes/sauvegarde.index");
+            charger_PILE_Desc_mot(pile_desc, "sauvegardes/txt/sauvegarde.desc");
+            charger_Table_index(table_index, "sauvegardes/txt/sauvegarde.index");
             printf("Chargement des données réussie.\n");
             *ind_sauv = 1;
-            sleep(5);
+            waiter();
             break;
         }
         case 'n':
@@ -44,19 +50,19 @@ void chargement_desc_texte(PILE_descripteur_texte *pile_desc, Table_Index *table
     }
     else
     {
-        charger_PILE_Desc_mot(pile_desc, "sauvegardes/sauvegarde.desc");
-        charger_Table_index(table_index, "sauvegardes/sauvegarde.index");
+        charger_PILE_Desc_mot(pile_desc, "sauvegardes/txt/sauvegarde.desc");
+        charger_Table_index(table_index, "sauvegardes/txt/sauvegarde.index");
         printf("Chargement des données réussie.");
         *ind_sauv = 1;
-        sleep(5);
+        waiter();
     }
 }
 
-void MenuIndexation_texte(PILE_descripteur_texte *pile, Table_Index* table)
+void MenuIndexation_texte(PILE_descripteur_texte *pile, Table_Index *table)
 {
     int indice_sauvegarde = 1;
     int code;
-   
+
     do
     {
         system("clear");
@@ -88,9 +94,9 @@ void MenuIndexation_texte(PILE_descripteur_texte *pile, Table_Index* table)
             } while (seuil < 0);
 
             Descripteur_texte_fichier(buffer, pile, table, seuil);
-            printf("\t=======INDEXATION FICHIERS TERMINÉE=======\n");
+            printf("\t=======INDEXATION FICHIER TERMINÉE=======\n");
             printf("Retour au menu Indexation texte...\n");
-            sleep(5);
+            waiter();
         }
         else if (code == 2)
         {
@@ -106,16 +112,16 @@ void MenuIndexation_texte(PILE_descripteur_texte *pile, Table_Index* table)
             Descripteur_texte_dossier(buffer, pile, table, seuil);
             printf("\t=======INDEXATION DOSSIER TERMINÉE=======\n");
             printf("Retour au menu Indexation texte...\n");
-            sleep(5);
+            waiter();
         }
         else if (code == 3)
         {
             printf("Sauvegarde de la base de descripteurs...\n");
-            enregistre_PILE_Desc(*pile, "sauvegardes/sauvegarde.desc");
+            enregistre_PILE_Desc(*pile, "sauvegardes/txt/sauvegarde.desc");
             printf("Sauvegarde de la Table des Index...\n");
-            enregistre_Table_Index(*table, "sauvegardes/sauvegarde.index");
+            enregistre_Table_Index(*table, "sauvegardes/txt/sauvegarde.index");
             printf("Sauvegarde effectuée avec succès !\n");
-            sleep(5);
+            waiter();
             indice_sauvegarde = 1;
         }
         else if (code == 4)
@@ -136,20 +142,19 @@ void MenuIndexation_texte(PILE_descripteur_texte *pile, Table_Index* table)
         case 'y':
         {
             printf("Sauvegarde de la base de descripteurs...\n");
-            enregistre_PILE_Desc(*pile, "sauvegardes/sauvegarde.desc");
+            enregistre_PILE_Desc(*pile, "sauvegardes/txt/sauvegarde.desc");
             printf("Sauvegarde de la Table des Index...\n");
-            enregistre_Table_Index(*table, "sauvegardes/sauvegarde.index");
+            enregistre_Table_Index(*table, "sauvegardes/txt/sauvegarde.index");
             printf("Sauvegarde effectuée avec succès !\n");
-            sleep(5);
+            waiter();
             break;
         }
         case 'n':
             printf("OK TANT PIS BB SPA LA MORT OH\n");
-            sleep(5);
+            waiter();
             break;
         }
     }
 }
-
 
 // module_texte/Textes_UTF8
