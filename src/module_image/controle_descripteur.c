@@ -510,4 +510,38 @@ void genererDescripteur_imageDossier(char *cheminDossier, int RGB_ou_NB)
   fclose(fich);
 }
 
+void genererDescripteur_image(char *cheminImage, int RGB_ou_NB)
+{
+  PILE_image pile;
+
+  if (RGB_ou_NB == 1)
+  {
+    pile = chargerPILE_image("base_descripteur_image_NB",1);
+  }
+  else
+  {
+    pile = chargerPILE_image("base_descripteur_image_RGB",3);
+  }
+  if (!PILE_estVide_image(pile) && pile->elt.id == 1)
+  {
+    pile = inverserPILE_image(pile);
+
+  }
+  if (RGB_ou_NB == 1)
+  {
+    if (!image_deja_indexe(cheminImage, "liste_base_image_NB"))
+    {
+      creationDescripteur_image(cheminImage, &pile);
+    }
+  }
+  else
+  {
+    if (!image_deja_indexe(cheminImage, "liste_base_image_RGB"))
+    {
+      creationDescripteur_image(cheminImage, &pile);
+    }
+  }
+  sauvegarderPile_image(pile, RGB_ou_NB);
+}
+
 

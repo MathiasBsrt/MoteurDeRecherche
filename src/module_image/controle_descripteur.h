@@ -67,3 +67,4 @@ int quantificationNB(int **matriceImageNB,int** matriceImageQuant,int lignes,int
 void lierDescripteur_image(Descripteur_image d, char *nom, int RGB_ou_NB);
 
 void genererDescripteur_imageDossier(char *cheminDossier,int RGB_ou_NB);
+void genererDescripteur_image(char *cheminImage, int RGB_ou_NB);

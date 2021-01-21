@@ -263,12 +263,14 @@ void lancer_recherche_document_NB()
 }
 
 
-/*
+
 int main(int argc, char const *argv[])
 {
-    genererDescripteur_imageDossier("../tests/TEST_RGB/txt", 3); // Génération rgb
-    genererDescripteur_imageDossier("../tests/TEST_NB/txt", 1);  // Génératio nb
+    genererDescripteur_image("../tests/TEST_RGB/txt/01.txt",3); //RGB
+    genererDescripteur_image("../tests/TEST_NB/txt/51.txt",1); // Génératio nb
+    //genererDescripteur_imageDossier("../tests/TEST_RGB/txt", 3); // Génération rgb
+    //genererDescripteur_imageDossier("../tests/TEST_NB/txt", 1);  // Génératio nb
     //lancer_recherche_critere();
     lancer_recherche_document_NB();
     return 0;
-}*/
+}

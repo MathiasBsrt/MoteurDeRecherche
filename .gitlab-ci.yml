@@ -16,15 +16,14 @@ test-indexation:
     - rm -f *.o *.out
     - make indexationImage
     - ./indexationImage.out
-    - rm -f *.o *.out
 
 test-recherche:
   stage: test
   script:
     #- make projet-pfr
     - cd testsCI
-    - make recherche
-    - ./recherche.out
+    - make rechercheSon
+    - ./rechercheSon.out
     - rm -f *.o *.out
 
 test-progPrincipal:
