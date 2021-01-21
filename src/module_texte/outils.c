@@ -17,7 +17,7 @@ void path_maker(char *chemin, char *nom_dossier, char *nom_fichier)
     strcat(chemin, nom_fichier);
 }
 
-void lecture_dossier(FILE *f, char *nom_dossier)
+void lecture_dossier_texte(FILE *f, char *nom_dossier)
 {
     struct dirent *dir;
     DIR *d = opendir(nom_dossier);

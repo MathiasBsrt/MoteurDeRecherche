@@ -263,6 +263,7 @@ void lancer_recherche_document_NB()
 }
 
 
+/*
 int main(int argc, char const *argv[])
 {
     genererDescripteur_imageDossier("../tests/TEST_RGB/txt", 3); // Génération rgb
@@ -270,4 +271,4 @@ int main(int argc, char const *argv[])
     //lancer_recherche_critere();
     lancer_recherche_document_NB();
     return 0;
-}
+}*/

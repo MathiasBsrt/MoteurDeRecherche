@@ -166,7 +166,7 @@ int Descripteur_texte_dossier(char *nom_dossier, PILE_descripteur_texte *pile_de
     if (f)
     {
         printf("--> Dossier en cours d'indexation\n");
-        lecture_dossier(f, nom_dossier);
+        lecture_dossier_texte(f, nom_dossier);
         char path_to_xml[MAX_WORD];
         char nom_fichier[MAX_WORD / 2];
         while (fscanf(f, "%s", nom_fichier) != EOF)

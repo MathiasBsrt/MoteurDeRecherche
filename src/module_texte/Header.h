@@ -107,7 +107,7 @@ void xml_filter(FILE *src, FILE *dest);
  * @param[in] f le descripteur du fichier dans lequel on va enregistrer les noms de fichiers
  * @param[in] nom_dossier le nom du dossier
  */
-void lecture_dossier(FILE *f, char *nom_dossier);
+void lecture_dossier_texte(FILE *f, char *nom_dossier);
 
 /**
  * @brief Permet de mettre un chemin vers un fichier sous forme de chaine de caracteres

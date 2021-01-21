@@ -3,6 +3,7 @@
 #include <string.h>
 #include "descripteur.h"
 
+/*
 int main(int argc, char * argv[])
 {
     if(argc == 0 || argc > 3)
@@ -39,4 +40,4 @@ int main(int argc, char * argv[])
 
     free_RES_EVAL_AUDIO(resultat);
 
-}
+}*/

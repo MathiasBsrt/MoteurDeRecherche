@@ -36,21 +36,13 @@ int creationHistogramme(int *matriceImageQuant[],Descripteur_image *newDesc,int 
  * donné et le stocker dans le fichier base_descripteur
  */
 
-<<<<<<< HEAD
- void creationDescripteur(char *chemin,PILE * p);
-=======
  void creationDescripteur_image(char *chemin,PILE_image * p);
->>>>>>> moteurRecherche_image
 
 /**
  * Cette fonction permet de sauvegarder un descripteur donné en paramètre dans le fichier base_descripteur_image
  * et de lier ce descripteur avec le fichier dans le fichier liste_base_image
  */
-<<<<<<< HEAD
- PILE SauvegardeDescripteur(Descripteur nouveau, PILE p, char *nom,int RGB_ou_NB);
-=======
  PILE_image SauvegardeDescripteur_image(Descripteur_image nouveau, PILE_image p, char *nom,int RGB_ou_NB);
->>>>>>> moteurRecherche_image
 
 /***
  * Cette fonction permet de charger la pile stockée dans
@@ -66,22 +58,12 @@ int creationHistogramme(int *matriceImageQuant[],Descripteur_image *newDesc,int 
  * dans le fichier base_descripteur_image.
  * La pile spécifiée écrase l'ancienne
  */
-<<<<<<< HEAD
-void sauvegarderPile(PILE p,int RGB_ou_NB);
-=======
 void sauvegarderPile_image(PILE_image p,int RGB_ou_NB);
->>>>>>> moteurRecherche_image
 
 int lire_imageNB(int lignes, int colonnes, int* matriceImage[], FILE *image);
 int lire_imageRGB(int lignes, int colonnes, RGB** matriceImage, FILE *image);
 int quantificationNB(int **matriceImageNB,int** matriceImageQuant,int lignes,int colonnes);
 
-<<<<<<< HEAD
-void lierDescripteur(Descripteur d, char *nom, int RGB_ou_NB);
-
-void genererDescripteurDossier(char *cheminDossier,int RGB_ou_NB);
-=======
 void lierDescripteur_image(Descripteur_image d, char *nom, int RGB_ou_NB);
 
 void genererDescripteur_imageDossier(char *cheminDossier,int RGB_ou_NB);
->>>>>>> moteurRecherche_image

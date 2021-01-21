@@ -17,22 +17,14 @@ void path_maker1(char *chemin, char *nom_dossier, char *nom_fichier)
  * Cette fonction permet de créer le descripteur d'un fichier
  * donné et le stocker dans le fichier base_descripteur
  */
-<<<<<<< HEAD
-void creationDescripteur(char *chemin, PILE *p)
-=======
 void creationDescripteur_image(char *chemin, PILE_image *p)
->>>>>>> moteurRecherche_image
 {
   //lire fichier pointé par le chemin
   //quantification de chaque pixel de l'image
   //Creer l'histograme
   //Creer variable descripteur et le remplir
   FILE *image;
-<<<<<<< HEAD
-  Descripteur newDesc; //Le desctipeur à ajouter
-=======
   Descripteur_image newDesc; //Le desctipeur à ajouter
->>>>>>> moteurRecherche_image
 
   int lignes;
   int colonnes;
@@ -41,13 +33,9 @@ void creationDescripteur_image(char *chemin, PILE_image *p)
   // Intialisation des variables
 
   basec = strdup(chemin);
-<<<<<<< HEAD
-  bname = basename(basec);
-=======
 
   printf("basec %s \n", chemin);
 
->>>>>>> moteurRecherche_image
   image = fopen(chemin, "r");
 
   //Lecture des propriétés de l'image
@@ -103,11 +91,7 @@ void creationDescripteur_image(char *chemin, PILE_image *p)
   creationHistogramme(matriceImageQuant, &newDesc, lignes, colonnes); // doit créer l'histo et remplir l'attribut histogramme du descripteur
 
   //Sauvegarde du nouveau descripteur
-<<<<<<< HEAD
-  *p = SauvegardeDescripteur(newDesc, *p, bname, nbComposantes);
-=======
   *p = SauvegardeDescripteur_image(newDesc, *p, basec, nbComposantes);
->>>>>>> moteurRecherche_image
 
   for (int i = 0; i < lignes; i++)
   {
@@ -120,27 +104,16 @@ void creationDescripteur_image(char *chemin, PILE_image *p)
  * Cette fonction permet de sauvegarder un descripteur donné en paramètre dans le fichier base_descripteur_image
  * et de lier ce descripteur avec le fichier dans le fichier liste_base_image
  */
-<<<<<<< HEAD
-PILE SauvegardeDescripteur(Descripteur nouveau, PILE p, char *nom, int RGB_ou_NB)
-{
-  if (!PILE_estVide(p))
-=======
 PILE_image SauvegardeDescripteur_image(Descripteur_image nouveau, PILE_image p, char *nom, int RGB_ou_NB)
 {
   if (!PILE_estVide_image(p))
->>>>>>> moteurRecherche_image
     nouveau.id = p->elt.id + 1;
   else
   {
     nouveau.id = 1;
   }
-<<<<<<< HEAD
-  p = emPILE(p, nouveau);
-  lierDescripteur(nouveau, nom, RGB_ou_NB);
-=======
   p = emPILE_image(p, nouveau);
   lierDescripteur_image(nouveau, nom, RGB_ou_NB);
->>>>>>> moteurRecherche_image
 
   return p;
 }
@@ -148,9 +121,6 @@ PILE_image SauvegardeDescripteur_image(Descripteur_image nouveau, PILE_image p, 
 /***
 
  */
-<<<<<<< HEAD
-void sauvegarderPile(PILE p, int RGB_ou_NB)
-=======
 
 
 
@@ -162,7 +132,6 @@ void sauvegarderPile(PILE p, int RGB_ou_NB)
  * @param RGB_ou_NB 
  */
 void sauvegarderPile_image(PILE_image p, int RGB_ou_NB)
->>>>>>> moteurRecherche_image
 {
   //On stocke sous la forme de une ligne = un element de la pile : "[id] [e1] [e2 [e3] ..." pour les 64 elements du tableau histogramme (sans les crochets)
   FILE *pileFichier;
@@ -174,13 +143,8 @@ void sauvegarderPile_image(PILE_image p, int RGB_ou_NB)
   {
     pileFichier = fopen("base_descripteur_image_RGB", "w+");
   }
-<<<<<<< HEAD
-  Descripteur copier;
-  while (!PILE_estVide(p))
-=======
   Descripteur_image copier;
   while (!PILE_estVide_image(p))
->>>>>>> moteurRecherche_image
   {
     //on ecrit l'id + espace
     //on ecrit l'histogramme, chaque valeur séparée par un espace
@@ -371,21 +335,7 @@ int quantificationRGB(RGB **matriceImageRGB, int **matriceImageQuant, int lignes
  * @param colonnes 
  * @return le nouveau descripteur et un code de retour (succès ou echec)
  */
-<<<<<<< HEAD
-
-/**
- * @brief 
- * 
- * @param matriceImageQuant 
- * @param newDesc 
- * @param lignes 
- * @param colonnes 
- * @return int 
- */
-int creationHistogramme(int *matriceImageQuant[], Descripteur *newDesc, int lignes, int colonnes) // doit créer l'histo et remplir l'attribut histogramme du descripteur
-=======
 int creationHistogramme(int *matriceImageQuant[], Descripteur_image *newDesc, int lignes, int colonnes) // doit créer l'histo et remplir l'attribut histogramme du descripteur
->>>>>>> moteurRecherche_image
 {
   for (int i = 0; i < lignes; i++)
   {
@@ -398,13 +348,6 @@ int creationHistogramme(int *matriceImageQuant[], Descripteur_image *newDesc, in
   return 0;
 }
 
-<<<<<<< HEAD
-/***
-
- */
-=======
-
->>>>>>> moteurRecherche_image
 
 /**
  * @brief  * Cette fonction permet de lier un descripteur à son fichier
@@ -415,11 +358,7 @@ int creationHistogramme(int *matriceImageQuant[], Descripteur_image *newDesc, in
  * @param nom 
  * @param RGB_ou_NB 
  */
-<<<<<<< HEAD
-void lierDescripteur(Descripteur d, char *nom, int RGB_ou_NB)
-=======
 void lierDescripteur_image(Descripteur_image d, char *nom, int RGB_ou_NB)
->>>>>>> moteurRecherche_image
 {
   FILE *pileFichier;
   if (RGB_ou_NB == 1)
@@ -457,35 +396,20 @@ void lierDescripteur_image(Descripteur_image d, char *nom, int RGB_ou_NB)
  * @param chemin 
  * @param nom_dossier 
  * @param nom_fichier 
-<<<<<<< HEAD
- /
-void path_maker1(char *chemin, char *nom_dossier, char *nom_fichier)
-=======
  */
-void path_maker(char *chemin, char *nom_dossier, char *nom_fichier)
->>>>>>> moteurRecherche_image
+/*void path_maker(char *chemin, char *nom_dossier, char *nom_fichier)
 {
   strcpy(chemin, nom_dossier);
   strcat(chemin, "/");
   strcat(chemin, nom_fichier);
-<<<<<<< HEAD
 }*/
 /**
- * @brief 
-=======
-}
-/**
  * @brief lecture du dossier à indexer
->>>>>>> moteurRecherche_image
  * 
  * @param f 
  * @param nom_dossier 
  */
-<<<<<<< HEAD
-void lecture_dossier_img(FILE *f, char *nom_dossier)
-=======
-void lecture_dossier(FILE *f, char *nom_dossier)
->>>>>>> moteurRecherche_image
+void lecture_dossier_image(FILE *f, char *nom_dossier)
 {
   struct dirent *dir;
   DIR *d = opendir(nom_dossier);
@@ -503,11 +427,7 @@ void lecture_dossier(FILE *f, char *nom_dossier)
       stat(chemin, &InfosFile);            //on recupere les stat du fichier lu pour savoir si c' est un dossier
       if (S_ISREG(InfosFile.st_mode) != 0) //on vérifie si c'est un fichier
       {
-<<<<<<< HEAD
-        fprintf(f, "%s ", dir->d_name);
-=======
         fprintf(f, "%s ", chemin);
->>>>>>> moteurRecherche_image
       }
     }
   }
@@ -548,123 +468,13 @@ int image_deja_indexe(char *path_to_xml, char *liste_base_image)
  * @param cheminDossier 
  * @param RGB_ou_NB 
  */
-<<<<<<< HEAD
-void genererDescripteurDossier(char *cheminDossier, int RGB_ou_NB)
-{
-  PILE pile;
-  FILE *fich;
-  printf("OK ICI\n");
-  fich = fopen("nom_fichiers.txt", "w+");
-  char chemin[255];
-  char cheminFichier[255];
-  lecture_dossier_img(fich, cheminDossier);
-  printf("OK ICI\n");
-  if (RGB_ou_NB == 1)
-  {
-    printf("OK ICI\n");
-    pile = chargerPILE("sauvegardes/base_descripteur_image_NB");
-    printf("OK ICI\n");
-  }
-  else
-  {
-    pile = chargerPILE("sauvegardes/base_descripteur_image_RGB");
-  }
-  if (!PILE_estVide(pile) && pile->elt.id == 1)
-  {
-    printf("OK ICI\n");
-    pile = inverserPILE(pile);
-  }
-  while (fscanf(fich, "%s", chemin) != EOF)
-  {
-    printf("kk\n");
-    strcpy(cheminFichier, cheminDossier);
-    strcat(cheminFichier, chemin);
-    if (RGB_ou_NB == 1)
-    {
-      if (!image_deja_indexe(chemin, "liste_base_image_NB"))
-      {
-        printf("%s \n", cheminFichier);
-        printf("kk\n");
-        creationDescripteur(cheminFichier, &pile);
-      }
-    }
-    else
-    {
-      if (!image_deja_indexe(chemin, "liste_base_image_RGB"))
-      {
-        printf("%s \n", cheminFichier);
-        creationDescripteur(cheminFichier, &pile);
-      }
-    }
-  }
-  sauvegarderPile(pile, RGB_ou_NB);
-  fclose(fich);
-}
-
-void lancer_indexation_image()
-{
-
-  genererDescripteurDossier("../tests/TEST_RGB/txt/", 3); // Génération rgb
-  genererDescripteurDossier("../tests/TEST_NB/txt/", 1);  // Génératio nb
-
-  // printf("Indexation RGB 01 et RGB 02");
-  // creationDescripteur("tests/TEST_RGB/txt/01.txt"); // Génération rgb
-  // creationDescripteur("tests/TEST_RGB/txt/02.txt"); // Génératio nb
-}
-// FILE *f = fopen("nom_fichiers.txt", "w+");
-//
-// if (f == NULL)
-// {
-//   char commande[1000];
-//   strcpy(commande, "touch nom_fichiers.txt");
-//   system(commande);
-//   f = fopen("nom_fichiers.txt", "w+");
-// }
-//
-// lecture_dossier_img(f, cheminDossier); // Dans f on a tous nos fichiers
-// rewind(f);
-//
-// //On lit maintenant le fichier
-// //On lance une indexation pour chaque fichiers
-// char val[100];
-// char cheminFichier[100];
-// int res = 0;
-// do
-// {
-//   strcpy(cheminFichier, cheminDossier);
-//   res = fscanf(f, "%s", val);
-//   strcat(cheminFichier, val);
-//   printf("cheminFichier= %s \n", cheminFichier);
-//   creationDescripteur(cheminFichier);
-//
-// } while (res != EOF);
-//
-// fclose(f);
-//
-// printf("fin de la génération des descripteurs du dossier %s", cheminDossier);
-// //Ajouter la modif de davy pour la pile
-//}
-
-/*
-int main(int argc, char *argv[])
-{
-  genererDescripteurDossier("tests/TEST_RGB/txt/",3); // Génération rgb
-  genererDescripteurDossier("tests/TEST_NB/txt/",1); // Génératio nb
-
-   // printf("Indexation RGB 01 et RGB 02");
-   // creationDescripteur("tests/TEST_RGB/txt/01.txt"); // Génération rgb
-   // creationDescripteur("tests/TEST_RGB/txt/02.txt"); // Génératio nb
-
-  return 0;
-}*/
-=======
 void genererDescripteur_imageDossier(char *cheminDossier, int RGB_ou_NB)
 {
   PILE_image pile;
   FILE *fich;
   fich = fopen("nom_fichiers.txt", "w+");
   char chemin[255];
-  lecture_dossier(fich, cheminDossier);
+  lecture_dossier_image(fich, cheminDossier);
 
   if (RGB_ou_NB == 1)
   {
@@ -701,4 +511,3 @@ void genererDescripteur_imageDossier(char *cheminDossier, int RGB_ou_NB)
 }
 
 
->>>>>>> moteurRecherche_image
