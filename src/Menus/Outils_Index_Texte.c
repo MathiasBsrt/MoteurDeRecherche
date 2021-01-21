@@ -78,7 +78,7 @@ void MenuIndexation_texte(PILE_descripteur_texte *pile, Table_Index *table)
         if (code < 1 || code > 5)
         {
             printf("Veuillez choisir une action valide.\n");
-            sleep(3);
+            waiter();
         }
 
         else if (code == 1)
