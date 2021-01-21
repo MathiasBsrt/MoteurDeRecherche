@@ -35,7 +35,7 @@ int indexationImage(){
     resCmd = resCmd || system(cmd3); //retourne 0 si égaux
     resCmd = resCmd || system(cmd4); //retourne 0 si égaux
 
-    if(resCmd){
+    if(resCmd==1){
         printf("ERREUR DANS L'INDEXATION DES IMAGES\n");
     }else{
         printf("SUCCES DANS L'INDEXATION DES IMAGES\n");
