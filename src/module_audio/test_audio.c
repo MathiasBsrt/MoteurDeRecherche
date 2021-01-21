@@ -230,7 +230,9 @@ int main()
 
     //affiche_DESC_AUDIO(desc1);
 
-    RES_EVAL_AUDIO resultat = evaluer_DESC_AUDIO(desc1, desc2, 3, EVAL_NORMAL);
+    double taux = 80.0;
+    printf("%f -> %f\n", taux, taux_ressemblence_vers_seuil(taux));
+    RES_EVAL_AUDIO resultat = evaluer_DESC_AUDIO(desc1, desc2, 3, taux_ressemblence_vers_seuil(taux));
     if(resultat.n == 0)
     {
         printf("Aucun résultat trouvé.\n");
