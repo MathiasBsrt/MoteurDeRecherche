@@ -5,6 +5,7 @@
 #include "base_descripteur.h"
 #include "pile_dynamique.h"
 
+/*
 int main(int argc, char * argv[])
 {
     if(argc == 0 || argc > 3)
@@ -49,4 +50,4 @@ int main(int argc, char * argv[])
 
     free_RES_EVAL_AUDIO(resultat);
 
-}
+}*/

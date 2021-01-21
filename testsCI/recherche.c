@@ -102,6 +102,7 @@ int rechercheSon(){
     printf(" ======= TESTS MODULE_AUDIO RECHERCHE OK =======\n");
 }
 
+/*
 int main(int argc, char const *argv[])
 {
     int res;
@@ -110,3 +111,4 @@ int main(int argc, char const *argv[])
     res = rechercheTexte();
     return res;
 }
+*/

@@ -5,6 +5,7 @@
 #include "base_descripteur.h"
 #include "pile_dynamique.h"
 
+/*
 int main(int argc, char * argv[])
 {
     printf("--- DEBUT DES TESTS AUDIO --- \n");
@@ -223,4 +224,4 @@ int main(int argc, char * argv[])
 
     printf("--- FIN DES TEST AUDIO --- \n");
     return 0;
-}
+}*/

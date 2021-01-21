@@ -262,7 +262,7 @@ void lancer_recherche_document_NB()
     fclose(fich);
 }
 
-
+/*
 
 int main(int argc, char const *argv[])
 {
@@ -273,4 +273,4 @@ int main(int argc, char const *argv[])
     //lancer_recherche_critere();
     lancer_recherche_document_NB();
     return 0;
-}
+}*/
