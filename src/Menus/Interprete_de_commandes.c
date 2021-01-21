@@ -130,7 +130,6 @@ void menu()
 
         else if (code == 1)
         {
-            int indice_sortie = 0;
             char test[MAX_WORD];
             printf("Veuillez entrer le mot de passe admin : ");
             scanf("%s", test);
@@ -160,7 +159,6 @@ int main(void)
 
     menu();
 
-    remove("sauvegardes/liste_base_descripteurs");
     system("clear");
     return 0;
 }

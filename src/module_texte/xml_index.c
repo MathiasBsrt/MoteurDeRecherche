@@ -19,22 +19,30 @@
  */
 void recherche_et_destruction(pile_mot *p, MOT mot)
 {
-    Cellule_mot *marqueur;
-    Cellule_mot *parcours = *p;
-    while (parcours)
+    if (!PILE_estVide_mot(*p))
+
     {
-        if (compare_MOT(mot, parcours->elt))
+        Cellule_mot *marqueur;
+        Cellule_mot *parcours = *p;
+        while (parcours)
         {
-            marqueur = parcours;
-            break;
+            if (compare_MOT(mot, parcours->elt))
+            {
+                marqueur = parcours;
+                break;
+            }
+            parcours = parcours->suivant;
         }
-        parcours = parcours->suivant;
+        parcours = *p;
+        while (parcours->suivant != marqueur)
+            parcours = parcours->suivant;
+        parcours->suivant = marqueur->suivant;
+        free(marqueur);
     }
-    parcours = *p;
-    while (parcours->suivant != marqueur)
-        parcours = parcours->suivant;
-    parcours->suivant = marqueur->suivant;
-    free(marqueur);
+    else
+    {
+        perror("la pile est completement vide");
+    }
 }
 
 /**
@@ -118,15 +126,16 @@ int texte_deja_indexe(char *path_to_xml)
  */
 int fabrique_a_descripteur(char *path_to_xml, PILE_descripteur_texte *pile_desc, Table_Index *table_index, int seuil)
 {
-    int id=0;
+    int id = 0;
     FILE *tmp = fopen("tmp", "w+");   //fichier de destination du xml_cleaner
     FILE *tmp1 = fopen("tmp1", "w+"); // fichier de destination du xml_tokenizer
     FILE *src = fopen(path_to_xml, "r");
 
     pile_mot p = init_pile_mot();
 
-    if(!src){
-        printf("erreur src %s\n",path_to_xml);
+    if (!src)
+    {
+        printf("erreur src %s\n", path_to_xml);
     }
     if (tmp && tmp1 && src)
     {
@@ -139,15 +148,13 @@ int fabrique_a_descripteur(char *path_to_xml, PILE_descripteur_texte *pile_desc,
 
             descripteur_de_texte(tmp1, &p, seuil);
 
-            id=EMPILE_desc_from_pile(p, pile_desc, path_to_xml, table_index);
-
+            id = EMPILE_desc_from_pile(p, pile_desc, path_to_xml, table_index);
         }
         else
         {
             perror("Texte déjà rentré !\n");
         }
-        return 
-        fclose(tmp);
+        return fclose(tmp);
         fclose(tmp1);
         fclose(src);
         remove("temp");
@@ -188,7 +195,7 @@ int Descripteur_texte_fichier(char *nom_fichier, PILE_descripteur_texte *pile_de
 {
     int id;
     printf("--> Fichier en cours d'indexation\n");
-    id=fabrique_a_descripteur(nom_fichier, pile_desc, table_index, seuil);
+    id = fabrique_a_descripteur(nom_fichier, pile_desc, table_index, seuil);
     remove("tmp");
     remove("tmp1");
     return id;

@@ -12,7 +12,8 @@
 void waiter()
 {
     fflush(stdin);
-    while(getchar()!='\n');
+    while (getchar() != '\n')
+        ;
     printf("Appuyer sur la touche Entrée pour continuer...\n");
     getchar();
 }
@@ -60,22 +61,22 @@ void chargement_desc_texte(PILE_descripteur_texte *pile_desc, Table_Index *table
 
 void MenuIndexation_texte(PILE_descripteur_texte *pile, Table_Index *table)
 {
-    int indice_sauvegarde = 1;
     int code;
-
+    //Déclarations de variables
+    char buffer[MAX_INPUT];
+    int seuil, valeur_Limite;
+    charger_PILE_Desc_mot(pile, "sauvegardes/txt/sauvegarde.desc");
+    charger_Table_index(table, "sauvegardes/txt/sauvegarde.index");
     do
     {
         system("clear");
-        //Déclarations de variables
-        char buffer[MAX_INPUT];
-        int seuil, valeur_Limite;
 
         //Affichage du menu
         printf("///\tMENU INDEXATION TEXTE\t///\n");
-        printf("1. Indexer un fichier\n2. Indexer un dossier\n3. Sauvegarder la progression\n4. Charger la progression\n5. Retour\n");
+        printf("1. Indexer un fichier\n2. Indexer un dossier\n3. Retour\n");
         printf("Veuillez choisir une action :\n");
         scanf("%d", &code);
-        if (code < 1 || code > 5)
+        if (code < 1 || code > 4)
         {
             printf("Veuillez choisir une action valide.\n");
             waiter();
@@ -83,10 +84,11 @@ void MenuIndexation_texte(PILE_descripteur_texte *pile, Table_Index *table)
 
         else if (code == 1)
         {
-            if (indice_sauvegarde)
-                indice_sauvegarde = 0;
-            printf("Entrer un nom de fichier à indexer : ");
-            scanf("%s", buffer);
+            do
+            {
+                printf("Entrer un nom de dossier correct à indexer : ");
+                scanf("%s", buffer);
+            } while (access(buffer, F_OK));
             do
             {
                 printf("Entrer maintenant un seuil qui définira les mots ignorés en fonction de leur nombre d'apparition (0 pour ignorer ce paramètre) : ");
@@ -100,10 +102,11 @@ void MenuIndexation_texte(PILE_descripteur_texte *pile, Table_Index *table)
         }
         else if (code == 2)
         {
-            if (indice_sauvegarde)
-                indice_sauvegarde = 0;
-            printf("Entrer un nom de dossier à indexer : ");
-            scanf("%s", buffer);
+            do
+            {
+                printf("Entrer un nom de dossier correct à indexer : ");
+                scanf("%s", buffer);
+            } while (access(buffer, F_OK));
             do
             {
                 printf("Entrer maintenant un seuil qui définira les mots ignorés en fonction de leur nombre d'apparition (0 pour ignorer ce paramètre) : ");
@@ -114,47 +117,15 @@ void MenuIndexation_texte(PILE_descripteur_texte *pile, Table_Index *table)
             printf("Retour au menu Indexation texte...\n");
             waiter();
         }
-        else if (code == 3)
-        {
-            printf("Sauvegarde de la base de descripteurs...\n");
-            enregistre_PILE_Desc(*pile, "sauvegardes/txt/sauvegarde.desc");
-            printf("Sauvegarde de la Table des Index...\n");
-            enregistre_Table_Index(*table, "sauvegardes/txt/sauvegarde.index");
-            printf("Sauvegarde effectuée avec succès !\n");
-            waiter();
-            indice_sauvegarde = 1;
-        }
-        else if (code == 4)
-        {
-            chargement_desc_texte(pile, table, &indice_sauvegarde);
-        }
+    } while (code != 3);
 
-    } while (code != 5);
-    if (code == 5 && !indice_sauvegarde)
-    {
-        char choix;
-        system("clear");
-        printf("///\t ATTENTION TYE FADA OH TYA PAS SAUVEGARDE BB\n///\t C'EST PAS GRAVE BB ON T'EN VEUX PAS\n\tTU VEUX SAUVEGARDER OU PAS OH?(y/n) ");
-        while ((choix = getchar()) != 'y' && choix != 'n')
-            ;
-        switch (choix)
-        {
-        case 'y':
-        {
-            printf("Sauvegarde de la base de descripteurs...\n");
-            enregistre_PILE_Desc(*pile, "sauvegardes/txt/sauvegarde.desc");
-            printf("Sauvegarde de la Table des Index...\n");
-            enregistre_Table_Index(*table, "sauvegardes/txt/sauvegarde.index");
-            printf("Sauvegarde effectuée avec succès !\n");
-            waiter();
-            break;
-        }
-        case 'n':
-            printf("OK TANT PIS BB SPA LA MORT OH\n");
-            waiter();
-            break;
-        }
-    }
+    printf("Sauvegarde de la base de descripteurs...\n");
+    enregistre_PILE_Desc(*pile, "sauvegardes/txt/sauvegarde.desc");
+
+    printf("Sauvegarde de la Table des Index...\n");
+    enregistre_Table_Index(*table, "sauvegardes/txt/sauvegarde.index");
+    printf("Sauvegarde effectuée avec succès !\n");
+    waiter();
 }
 
 // module_texte/Textes_UTF8

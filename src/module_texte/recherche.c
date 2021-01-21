@@ -62,9 +62,9 @@ void rechercheParCritere_texte(char *mot, char **fichiersSimilaires, int *nbF, d
 {
     printf("recherche par critère...\n");
     PILE_descripteur_texte pile = init_PILE_desc();
-    charger_PILE_Desc_mot(&pile, "sauvegarde.desc");
+    charger_PILE_Desc_mot(&pile, "sauvegardes/txt/sauvegarde.desc");
     Table_Index table1 = Init_Index();
-    charger_Table_index(&table1, "sauvegarde.index");
+    charger_Table_index(&table1, "sauvegardes/txt/sauvegarde.index");
 
     //Dans cette table on cherche l'index du mot pour obtenir la liste des fichiers qui ont ce mot
 
@@ -92,7 +92,7 @@ void rechercheParCritere_texte(char *mot, char **fichiersSimilaires, int *nbF, d
 
 void getChemin_texte(int id, char chemin[])
 {
-    FILE *liste_base_desc = fopen("sauvegardes/liste_base_descripteurs", "r");
+    FILE *liste_base_desc = fopen("sauvegardes/txt/liste_base_descripteurs", "r");
     if (liste_base_desc)
     {
 
@@ -167,8 +167,8 @@ int rechercheParDocument_texte(char *cheminVersDocument, char *fichiersSimilaire
     }
 
     //on charge la pile des descripteurs
-    charger_Table_index(&table, "sauvegardes/sauvegarde.index");
-    charger_PILE_Desc_mot(&pile, "sauvegardes/sauvegarde.desc");
+    charger_Table_index(&table, "sauvegardes/txt/sauvegarde.index");
+    charger_PILE_Desc_mot(&pile, "sauvegardes/txt/sauvegarde.desc");
 
     //On récupéere le descripteur qui vient d'être crée
     desc1 = getDescripteur_Texte(id, &pile);
