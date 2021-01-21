@@ -67,7 +67,7 @@ void MenuRecherche_audio(PILE_AUDIO *pile_audio)
         system("clear");
         //Affichage du menu
         printf("///\tMENU RECHERCHE AUDIO\t///\n");
-        printf("1. Recherche par critère\n2. Recherche par document\n3. Retour\n");
+        printf("1. Recherche par document\n3. Retour\n");
         printf("Veuillez choisir une action :\n");
         scanf("%d", &code);
         if (code < 1 || code > 3)
@@ -75,14 +75,15 @@ void MenuRecherche_audio(PILE_AUDIO *pile_audio)
             printf("Veuillez choisir une action valide.\n");
             sleep(3);
         }
-        else if (code == 1) //Recherche par critère
+        else if (code == 1) //Recherche par doc
         {
-           
-        }
-        else if (code == 2) //Recherche par document
-        {
-            
+            //Demander chemin fichier filename
+            char filename1[MAX_STRING];
+            int codeRetour = 0;
+            int fetch_n_best = 3;
+
+            RES_RECHERCHE_AUDIO resultat = rechercher_DESC_AUDIO(filename1, fetch_n_best, EVAL_VERYTOUGH, &codeRetour);
         }
 
-    } while (code != 3);
+    } while (code != 2);
 }
