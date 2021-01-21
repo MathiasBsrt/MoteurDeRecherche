@@ -24,12 +24,26 @@
 void init_FICHIER_BASE_DESC()
 {
 	// On créé le fichier BASE_DESC_FICHIER si il n'existe pas
-	FILE *fp = fopen(BASE_DESC_FICHIER, "ab+");
-	fclose(fp);
+	FILE *file;
+	FILE *fp;
+    if ((file = fopen(BASE_DESC_FICHIER, "r"))){
+        fclose(file);
+	} else {
+		fp = fopen(BASE_DESC_FICHIER, "ab+");
+		int val = EOF;
+		fwrite(&val, 4, 1, fp);
+		fclose(fp);
+	}
+	
 
 	// On créé le fichier LISTE_BASE_FICHIER si il n'existe pas
-	fp = fopen(LISTE_BASE_FICHIER, "ab+");
-	fclose(fp);
+    if ((file = fopen(LISTE_BASE_FICHIER, "r"))){
+        fclose(file);
+	} else {
+		fp = fopen(LISTE_BASE_FICHIER, "ab+");
+		fprintf(fp, "-1");
+		fclose(fp);
+	}
 }
 
 PILE_AUDIO sauvegarder_DESC_AUDIO(PILE_AUDIO PILE_DESCRIPTEUR_AUDIO, DESC_AUDIO desc)
@@ -91,7 +105,6 @@ PILE_AUDIO charger_PILE_DESC_AUDIO(int * nb_charge)
 	DESC_AUDIO * desc;
 	int val;
 	int k, m;
-	int y, x;
 	//fscanf(baseDescFichier, "%d ", &val);
 	fread(&val, 4, 1, baseDescFichier);
 	do
@@ -111,7 +124,7 @@ PILE_AUDIO charger_PILE_DESC_AUDIO(int * nb_charge)
 			}
 		*/
 		PILE_DESCRIPTEUR_AUDIO = emPILE_AUDIO(PILE_DESCRIPTEUR_AUDIO, *desc);
-		if(nb_charge != NULL) *nb_charge++;
+		if(nb_charge != NULL) *nb_charge = *nb_charge + 1;
 
 		//fscanf(baseDescFichier, "%d ", &val);
 		fread(&val, 4, 1, baseDescFichier);
@@ -134,7 +147,6 @@ DESC_AUDIO charger_byid_DESC_AUDIO(int id)
 	desc.id = -1;
 	int val;
 	int k, m;
-	int y, x;
 	//fscanf(baseDescFichier, "%d ", &val);
 	fread(&val, 4, 1, baseDescFichier);
 	do
@@ -187,8 +199,14 @@ PILE_AUDIO init_MULTIPLE_DESC_AUDIO(int start_id, int n, int m, char * cheminDir
             if (S_ISREG(InfosFile.st_mode) != 0) //on vérifie si c'est un fichier
             {
             	//printf("%s\n", chemin);
+				if(deja_genere_DESC_AUDIO(chemin) == ALREADY_GENERATED)
+				{
+					printf("Fichier '%s' déjà indexé, saut de l'indexation de ce fichier.\n", chemin);
+ 					continue;
+				}
             	desc = (DESC_AUDIO *) malloc(sizeof(DESC_AUDIO));
             	*desc = init_DESC_AUDIO(id, n, m, chemin);
+				lier_DESC_AUDIO_FICHIER(*desc, chemin);
             	pile = emPILE_AUDIO(pile, *desc);
             	id++;
             }
@@ -201,6 +219,7 @@ PILE_AUDIO init_MULTIPLE_DESC_AUDIO(int start_id, int n, int m, char * cheminDir
 
 int lier_DESC_AUDIO_FICHIER(DESC_AUDIO desc, char * chemin)
 {
+	if(deja_genere_DESC_AUDIO(chemin) == ALREADY_GENERATED) return 0;
 	FILE * listeBaseFichier = fopen(LISTE_BASE_FICHIER, "rw");
 	char tmpFichier[100];
 	strcpy(tmpFichier, LISTE_BASE_FICHIER);
@@ -282,7 +301,6 @@ char * fichier_lier_DESC_AUDIO(DESC_AUDIO desc)
 	if(listeBaseFichier == NULL) return NULL;
 
 	int id;
-	char * chemin;
 	do
 	{
 		fscanf(listeBaseFichier, "%d", &id);
@@ -297,6 +315,7 @@ char * fichier_lier_DESC_AUDIO(DESC_AUDIO desc)
 RES_RECHERCHE_AUDIO rechercher_DESC_AUDIO(char * source, unsigned int n, double threshold, int * code)
 {
 	RES_RECHERCHE_AUDIO resultat;
+	resultat.n = 0;
 
 	DESC_AUDIO desc_source = charger_byname_DESC_AUDIO(source);
 	if(desc_source.histo.mat == NULL) { *code = RECHERCHE_ERREUR; return resultat; }
@@ -308,14 +327,10 @@ RES_RECHERCHE_AUDIO rechercher_DESC_AUDIO(char * source, unsigned int n, double 
 
 	DESC_AUDIO desc;
 
-	char * test1;
-	char * test2;
 	while(!PILE_estVide_AUDIO(descripteurs))
 	{
 		descripteurs = dePILE_AUDIO(descripteurs, &desc);
-		test1 = fichier_lier_DESC_AUDIO(desc);
-		test2 = fichier_lier_DESC_AUDIO(desc_source);
-		if(desc.id == desc_source.id) { free_DESC_AUDIO(&desc); continue; } // On saute le descripteur source
+		if(desc.id == desc_source.id) { free_DESC_AUDIO(desc); continue; } // On saute le descripteur source
 
 		RES_EVAL_AUDIO resultat_eval = evaluer_DESC_AUDIO(desc, desc_source, n, threshold);
 		if(resultat_eval.n != 0)
@@ -323,6 +338,7 @@ RES_RECHERCHE_AUDIO rechercher_DESC_AUDIO(char * source, unsigned int n, double 
 			resultats_evals[nb_retenus] = resultat_eval;
 			nb_retenus++;
 		}
+		free_DESC_AUDIO(desc);
 	}
 
 	resultat.n = nb_retenus;
@@ -347,4 +363,20 @@ void free_RES_RECHERCHE_AUDIO(RES_RECHERCHE_AUDIO resultat)
 		free_RES_EVAL_AUDIO(resultat.resultats[i]);
 	}
 	free(resultat.resultats);
+}
+
+
+int recuperer_nouvel_id_valide_AUDIO()
+{
+	FILE * listeBaseFichier = fopen(LISTE_BASE_FICHIER, "r");
+	int id;
+	int lastId = -1;
+	char fichier[100];
+	fscanf(listeBaseFichier, "%d %s", &id, fichier);
+	while(id != EOF)
+	{
+		lastId = id;
+		fscanf(listeBaseFichier, "%d %s", &id, fichier);	
+	}
+	return lastId + 1;
 }

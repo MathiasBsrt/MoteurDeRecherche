@@ -21,12 +21,12 @@ typedef struct Histogramme_Audio_t
 
 /** Initilalise un histogramme audio
 * Utilité: Générale
-* @param int nombre de fenêtre d'analyse (k)
-* @param int nombre d'intervalles (m)
+* @param unsigned int nombre de fenêtre d'analyse (k)
+* @param unsigned int nombre d'intervalles (m)
 *
 * @return HISTOGRAMME_AUDIO l'histogramme audio initialisé
 */
-HISTOGRAMME_AUDIO init_HISTOGRAMME_AUDIO(int n, int m);
+HISTOGRAMME_AUDIO init_HISTOGRAMME_AUDIO(unsigned int n, unsigned int m);
 
 /** Afficher l'histogramme comme une matrice
 * Utilité: Générale
@@ -37,29 +37,29 @@ void affiche_HISTOGRAMME_AUDIO(HISTOGRAMME_AUDIO histo);
 /** Retourne l'entier à l'index k,m
 * Utilité: Générale
 * @param HISTOGRAMME_AUDIO histogramme audio
-* @param int index odronnée (k)
-* @param int index abscisse (m)
+* @param unsigned int index odronnée (k)
+* @param unsigned int index abscisse (m)
 *
-* @return double la valeur réel à l'index k,m
+* @return unsigned int la valeur réel à l'index k,m
 */
-int get_HISTOGRAMME_AUDIO(HISTOGRAMME_AUDIO histo, int k, int m);
+unsigned int get_HISTOGRAMME_AUDIO(HISTOGRAMME_AUDIO histo, unsigned int k, unsigned int m);
 
 /** Affecte un réels à l'index k,m
 * Utilité: Générale
 * @param HISTOGRAMME_AUDIO * pointeur d'histogramme audio
-* @param int index odronnée (k)
-* @param int index abscisse (m)
-* @param double valeur réel à affecter
+* @param unsigned int index odronnée (k)
+* @param unsigned int index abscisse (m)
+* @param unsigned int valeur réel à affecter
 */
-void set_HISTOGRAMME_AUDIO(HISTOGRAMME_AUDIO * histo, int k, int m, int val);
+void set_HISTOGRAMME_AUDIO(HISTOGRAMME_AUDIO * histo, unsigned int k, unsigned int m, unsigned int val);
 
 /** Incremente de 1 la valeur à l'index k,m
 * Utilité: Indexation
 * @param HISTOGRAMME_AUDIO * pointeur d'histogramme audio
-* @param int index odronnée (k)
-* @param int index abscisse (m)
+* @param unsigned int index odronnée (k)
+* @param unsigned int index abscisse (m)
 */
-void inc_HISTOGRAMME_AUDIO(HISTOGRAMME_AUDIO * histo, int k, int m);
+void inc_HISTOGRAMME_AUDIO(HISTOGRAMME_AUDIO * histo, unsigned int k, unsigned int m);
 
 /**
 *	Compare deux histogrammes audio
@@ -122,8 +122,8 @@ int creer_histogramme_WAV_DESC_AUDIO(HISTOGRAMME_AUDIO * histo, char * chemin, i
 
 /** Libère la mémoire occupée par la matrice de l'histogramme passé en paramètre
 * Utilité: Générale
-* @param HISTOGRAMME_AUDIO * histogramme audio
+* @param HISTOGRAMME_AUDIO histogramme audio
 */
-void free_HISTOGRAMME_AUDIO(HISTOGRAMME_AUDIO * histo);
+void free_HISTOGRAMME_AUDIO(HISTOGRAMME_AUDIO histo);
 
 #endif

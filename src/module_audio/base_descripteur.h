@@ -40,6 +40,7 @@ void init_FICHIER_BASE_DESC();
 PILE_AUDIO sauvegarder_DESC_AUDIO(PILE_AUDIO PILE_DESCRIPTEUR_AUDIO, DESC_AUDIO desc);
 
 /** Sauvegarde la pile de descripteurs dans le fichier BASE_DESC_FICHIER
+* Attention ! Cette méthode supprime tout ce qui existait avant.
 * @param PILE_AUDIO la pile de descripteurs audios
 */
 void sauvegarder_PILE_DESC_AUDIO(PILE_AUDIO PILE_DESCRIPTEUR_AUDIO);
@@ -123,6 +124,14 @@ RES_RECHERCHE_AUDIO rechercher_DESC_AUDIO(char * source, unsigned int n, double 
  * @param resultat le résultat de la recherche
  */
 void free_RES_RECHERCHE_AUDIO(RES_RECHERCHE_AUDIO resultat);
+
+
+/**
+ * @brief Génère un identifiant qui n'a toujours pas été utilisé.
+ * 
+ * @return int identifiant trouvé
+ */
+int recuperer_nouvel_id_valide_AUDIO();
 
 
 

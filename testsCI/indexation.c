@@ -3,25 +3,38 @@
  */
 //#SI notre prog de test retourn 1 : echec de la pipeline
 #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
 // Includes pour tests son
 #include <math.h>
-<<<<<<< HEAD:testsCI/indexationSon.c
+#include "../src/module_audio/wav_file_helper.h"
 #include "../src/module_audio/descripteur.h"
 #include "../src/module_audio/histogramme.h"
 #include "../src/module_audio/base_descripteur.h"
+#include "../src/module_audio/pile_dynamique.h"
 
+int indexationImage(){
+    //Lancer une indexation pour tous les fichiers du dossier de test
+    //On récupere les fichiers générés base_descripteur_image et lier_base_image
+    //On compare ces deux fichiers avec nos fichiers base_descripteur_image_OK et lier_base_image_OK => ces deux fichiers sont une version confirmée de nos indexations
+    int res = 0;
+
+    //if base_descripteur_image != base_descripteur_OK || lier_base_image != lier_base_image_OK
+
+    if(res){
+        printf("ERREUR DANS L'INDEXATION DES IMAGES");
+    }else{
+        printf("SUCCES DANS L'INDEXATION DES IMAGES");
+    }
+    return res;
+}
+
+int indexationTexte(){
+    return 0;
+}
 
 int indexationSon(){
-
-=======
-#include "descripteur.h"
-#include "histogramme.h"
-#include "base_descripteur.h"
-#include "pile_dynamique.h"
-
-int main()
-{
->>>>>>> module_audio:src/module_audio/test_audio.c
     printf("--- DEBUT DES TESTS AUDIO --- \n");
     printf("  --- DESCRIPTEUR --- \n");
     unsigned int n = 2;
@@ -98,11 +111,7 @@ int main()
     init_FICHIER_BASE_DESC();
 
     printf("    --- Création du descripteur audio de TEST_SON/corpus_fi.wav --- \n");
-<<<<<<< HEAD:testsCI/indexationSon.c
-    DESC_AUDIO descCorpusWAV = init_DESC_AUDIO(0, n, m, "TEST_SON/corpus_fi.wav");
-=======
     DESC_AUDIO descCorpusWAV = init_DESC_AUDIO(recuperer_nouvel_id_valide_AUDIO(), n, m, "TEST_SON/corpus_fi.wav");
->>>>>>> module_audio:src/module_audio/test_audio.c
     
     printf("    --- Sauvegarde du descripteur --- \n");
     pileDescripteur = sauvegarder_DESC_AUDIO(pileDescripteur, descCorpusWAV);
@@ -111,11 +120,7 @@ int main()
     sauvegarder_PILE_DESC_AUDIO(pileDescripteur);*/
 
     printf("    --- Création du descripteur audio de TEST_SON/jingle_fi.wav --- \n");
-<<<<<<< HEAD:testsCI/indexationSon.c
-    DESC_AUDIO descJingleWAV = init_DESC_AUDIO(1, n + 2, m, "TEST_SON/jingle_fi.wav");
-=======
     DESC_AUDIO descJingleWAV = init_DESC_AUDIO(recuperer_nouvel_id_valide_AUDIO(), n + 2, m, "TEST_SON/jingle_fi.wav");
->>>>>>> module_audio:src/module_audio/test_audio.c
     
     printf("    --- Sauvegarde du descripteur --- \n");
     pileDescripteur = sauvegarder_DESC_AUDIO(pileDescripteur, descJingleWAV);
@@ -187,9 +192,6 @@ int main()
     printf("          %s \n", (PILE_estVide_AUDIO(secondePile) ? "Oui" : "Non"));
     if(PILE_estVide_AUDIO(secondePile) != 1) return 1;
 
-<<<<<<< HEAD:testsCI/indexationSon.c
-
-=======
     printf("    --- Création des descripteurs audio du dossier TEST_SON --- \n");
     PILE_AUDIO pileDescDossier = init_MULTIPLE_DESC_AUDIO(recuperer_nouvel_id_valide_AUDIO(), 2, 15, "WAV_FILES");
 
@@ -271,7 +273,6 @@ int main()
     free_DESC_AUDIO(desc1);
     free_DESC_AUDIO(desc2);
     free_RES_EVAL_AUDIO(resultat);
->>>>>>> module_audio:src/module_audio/test_audio.c
 
     printf("--- FIN DES TEST AUDIO --- \n");
     return 0;
@@ -279,7 +280,10 @@ int main()
 
 int main(int argc, char const *argv[])
 {
+    int res = 0;
+    res = res || indexationImage();
+    res = res || indexationSon();
+    res = res || indexationTexte();
     
-    return indexationSon();
-
+    return res;
 }
