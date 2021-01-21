@@ -10,47 +10,6 @@
  */
 #include "header.h"
 
-PILE_AUDIO chargement_desc_audio(PILE_AUDIO *pile_desc, int *ind_sauv)
-{
-    int nbr;
-    PILE_AUDIO pile_retour;
-    if (*pile_desc)
-    {
-
-        char choix;
-        do
-        {
-            system("clear");
-            printf("///Votre pile de descripteurs ou votre table d'index n'est pas vide, êtes-vous sur de vouloir écrire par dessus ?(y/n) \n");
-            choix = getchar();
-        } while (choix != 'y' && choix != 'n');
-        switch (choix)
-        {
-        case 'y':
-        {
-            *pile_desc = NULL;
-
-            pile_retour = charger_PILE_DESC_AUDIO(&nbr);
-            printf("Chargement des données réussie.\n%d descripteurs chargés.\n", nbr);
-            *ind_sauv = 1;
-            sleep(5);
-            break;
-        }
-        case 'n':
-            break;
-        default:
-            break;
-        }
-    }
-    else
-    {
-        pile_retour = charger_PILE_DESC_AUDIO(&nbr);
-        printf("Chargement des données réussie.\n%d descripteurs chargés.\n", nbr);
-        *ind_sauv = 1;
-        sleep(5);
-    }
-    return pile_retour;
-}
 
 void MenuRecherche_audio(PILE_AUDIO *pile_audio)
 {
