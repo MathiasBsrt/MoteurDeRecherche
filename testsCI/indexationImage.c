@@ -8,8 +8,9 @@
 
 
 int indexationImage(){
-    creationDescripteur("../src/module_image/tests/TEST_RGB/txt/01.txt"); // Génération rgb
-    creationDescripteur("../src/module_image/tests/TEST_NB/txt/51.txt"); // Génératio nb
+    PILE_image p = init_pile_image();
+    creationDescripteur_image("../src/module_image/tests/TEST_RGB/txt/01.txt",&p); // Génération rgb
+    creationDescripteur_image("../src/module_image/tests/TEST_NB/txt/51.txt",&p); // Génératio nb
     
     //Utilistion de diff (cmd unix)
     char cmd[100] = "diff base_descripteur_image ./TEST_IMAGE/base_descripteur_image_OK";
