@@ -51,7 +51,7 @@ void MenuRecherche_texte()
                 scanf("%lf", &seuil_similarite);
             } while (seuil_similarite < 0 || seuil_similarite > 100);
 
-            rechercheParCritere_texte(buffer, fichierSimil, &nb_fichierSimil, seuil_similarite);
+            rechercheParCritere_texte(buffer, fichierSimil, &nb_fichierSimil);
             if (fichierSimil[0])
             {
                 printf("Souhaitez vous afficher le meilleur résultat (y/n)? ");
@@ -80,6 +80,18 @@ void MenuRecherche_texte()
                 scanf("%lf", &seuil_similarite);
             } while (seuil_similarite < 0 || seuil_similarite > 100);
             rechercheParDocument_texte(buffer, fichierSimil, seuil_similarite);
+            if (fichierSimil[0])
+            {
+                printf("Souhaitez vous afficher le meilleur résultat (y/n)? ");
+                while ((choix = getchar()) != 'y' && choix != 'n')
+                    ;
+                if (choix == 'y')
+                {
+                    system("clear");
+                    strcat(commande_affichage,"cat ");
+                    system(strcat(commande_affichage, fichierSimil[0]));
+                }
+            }
             waiter();
         }
 

@@ -123,6 +123,7 @@ int texte_deja_indexe(char *path_to_xml)
  * 
  * @param[in] path_to_xml chemin vers un fichier xml
  * @param[in,out] pile_desc Pile de descripteurs
+ * @return l'id attribué au texte
  */
 int fabrique_a_descripteur(char *path_to_xml, PILE_descripteur_texte *pile_desc, Table_Index *table_index, int seuil)
 {
@@ -154,15 +155,14 @@ int fabrique_a_descripteur(char *path_to_xml, PILE_descripteur_texte *pile_desc,
         {
             perror("Texte déjà rentré !\n");
         }
-        return fclose(tmp);
+        fclose(tmp);
         fclose(tmp1);
         fclose(src);
         remove("temp");
     }
     else
     {
-        perror("erreur dans l'ouverture des fichiers");
-        exit(3);
+        fprintf(stderr,"Erreur dans l'ouverture de %s",path_to_xml);
     }
     return id;
 }

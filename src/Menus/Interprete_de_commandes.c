@@ -11,7 +11,7 @@
 
 #include "header.h"
 
-void menus_admin(PILE_descripteur_texte *pile, Table_Index *table, PILE_AUDIO *pile_audio)
+void menus_admin(PILE_AUDIO *pile_audio)
 {
     int code;
     do
@@ -38,7 +38,7 @@ void menus_admin(PILE_descripteur_texte *pile, Table_Index *table, PILE_AUDIO *p
         else if (code == 3)
         {
 
-            MenuIndexation_texte(pile, table);
+            MenuIndexation_texte();
         }
     } while (code != 4);
 }
@@ -107,9 +107,6 @@ void menu()
     else
         modif_mot_de_passe(1,motdepasse);
 
-    //PILE POUR LE TEXTE
-    PILE_descripteur_texte pile_desc = init_PILE_desc();
-    Table_Index table_index = Init_Index();
 
     //PILE POUR L'AUDIO
     PILE_AUDIO pile_audio = init_PILE_AUDIO();
@@ -135,7 +132,7 @@ void menu()
             scanf("%s", test);
             if (!strcmp(test, motdepasse))
             {
-                menus_admin(&pile_desc, &table_index, &pile_audio);
+                menus_admin(&pile_audio);
             }
             else
             {

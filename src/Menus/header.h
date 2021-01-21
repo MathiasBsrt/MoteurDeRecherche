@@ -24,7 +24,8 @@
  * @param[in,out] pile 
  * @param[in,out] table 
  */
-void MenuIndexation_texte(PILE_descripteur_texte *pile, Table_Index* table);
+void MenuIndexation_texte();
+
 
 
 //1.2 Outils partie image :
