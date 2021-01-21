@@ -4,6 +4,7 @@
 //#SI notre prog de test retourn 1 : echec de la pipeline
 #include "recherche.h"
 #include "indexation.h"
+#include <stdio.h>
 
 int main(int argc, char const *argv[])
 {
@@ -15,5 +16,13 @@ int main(int argc, char const *argv[])
     res = res || rechercheSon();
     res = res || rechercheTexte();
 
+    if (res)
+    {
+        printf("TEST OK");
+    }
+    else
+    {
+        printf("TEST NOK");
+    }
     return res;
 }

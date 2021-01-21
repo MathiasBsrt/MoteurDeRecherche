@@ -36,9 +36,9 @@ int indexationImage(){
     resCmd = resCmd || system(cmd4); //retourne 0 si égaux
 
     if(resCmd){
-        printf("ERREUR DANS L'INDEXATION DES IMAGES");
+        printf("ERREUR DANS L'INDEXATION DES IMAGES\n");
     }else{
-        printf("SUCCES DANS L'INDEXATION DES IMAGES");
+        printf("SUCCES DANS L'INDEXATION DES IMAGES\n");
     }
     return resCmd;
 }
@@ -290,6 +290,7 @@ int indexationSon(){
     printf("--- FIN DES TEST AUDIO --- \n");
     return 0;
 }
+
 
 /*
 int main(int argc, char const *argv[])
