@@ -52,7 +52,7 @@ int Descripteur_texte_dossier(char *nom_dossier, PILE_descripteur_texte *pile_de
  * @param Table_index t : table index à parcourir
  * @return 0 si égaux, 1 si similaires, 2 si trop différent
  */
-int comparaison(Descripteur_texte *d1, Descripteur_texte *d2, double seuil,Table_Index t);
+int comparaison_texte(Descripteur_texte *d1, Descripteur_texte *d2, double seuil,Table_Index t, double *pourcentageS);
 
 /***
  * Recherche par critère
@@ -62,7 +62,7 @@ int comparaison(Descripteur_texte *d1, Descripteur_texte *d2, double seuil,Table
  * @param int *nbF : nombre de fichiers trouvés
  * @param double seuilSimilarité 
  */
-void rechercheParCritere(char *mot, char *fichiersSimilaires[], int *nbF, double seuilSimilarite);
+void rechercheParCritere_texte(char *mot, char *fichiersSimilaires[], int *nbF, double seuilSimilarite);
 /***
  * Recherche par document
  * Cette fonction permet de rechercher des documents en fonction d'un document donné
@@ -70,7 +70,7 @@ void rechercheParCritere(char *mot, char *fichiersSimilaires[], int *nbF, double
  * @param File[] tableau à remplir
  * @param int seuilSimilarité 
  */
-int rechercheParDocument(char *cheminVersDocument, char *fichiersSimilaires[], double seuilSimilarite);
+int rechercheParDocument_texte(char *cheminVersDocument, char *fichiersSimilaires[], double seuilSimilarite);
 
 
 
@@ -131,7 +131,7 @@ int texte_deja_indexe(char *path_to_xml);
  * @param char[] mot : mot à chercher dans a
  * @return index du mot recherché
  */
-Table_Index rechercheMot(Table_Index a, char *mot);
+Table_Index rechercheMot_texte(Table_Index a, char *mot);
 
 /***
  * Permet de récupérer le descritpeur correspondant à lid fourni dans la pile de descripteur donnée en paramètre
@@ -146,4 +146,4 @@ Descripteur_texte* getDescripteur_Texte(int id, PILE_descripteur_texte *p);
  * @param int id : id du descripteur du fichier à chercher
  * @param char chemin[] : chemin retourné
  */
-void getChemin(int id, char chemin[]);
+void getChemin_texte(int id, char chemin[]);
