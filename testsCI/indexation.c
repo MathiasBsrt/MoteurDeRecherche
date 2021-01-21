@@ -13,21 +13,34 @@
 #include "../src/module_audio/histogramme.h"
 #include "../src/module_audio/base_descripteur.h"
 #include "../src/module_audio/pile_dynamique.h"
+#include "../src/module_image/controle_descripteur.h"
 
 int indexationImage(){
-    //Lancer une indexation pour tous les fichiers du dossier de test
-    //On récupere les fichiers générés base_descripteur_image et lier_base_image
-    //On compare ces deux fichiers avec nos fichiers base_descripteur_image_OK et lier_base_image_OK => ces deux fichiers sont une version confirmée de nos indexations
-    int res = 0;
+    
+    genererDescripteur_image("../src/module_image/tests/TEST_RGB/txt/01.txt", 3);
+    genererDescripteur_image("../src/module_image/tests/TEST_NB/txt/51.txt", 1);
 
-    //if base_descripteur_image != base_descripteur_OK || lier_base_image != lier_base_image_OK
+    //creationDescripteur("../src/module_image/tests/TEST_RGB/txt/01.txt"); // Génération rgb
+    //creationDescripteur("../src/module_image/tests/TEST_NB/txt/51.txt"); // Génératio nb
+    
+    //Utilistion de diff (cmd unix)
+    char cmd[100] = "diff base_descripteur_image_RGB ./TEST_IMAGE/base_descripteur_image_RGB_OK";
+    char cmd2[100] = "diff base_descripteur_image_NB ./TEST_IMAGE/base_descripteur_image_NB_OK";
+    char cmd3[100] = "diff liste_base_image_RGB ./TEST_IMAGE/liste_base_image_RGB_OK";
+    char cmd4[100] = "diff liste_base_image_NB ./TEST_IMAGE/liste_base_image_NB_OK";
 
-    if(res){
+
+    int resCmd = system(cmd); //retourne 0 si égaux
+    resCmd = resCmd || system(cmd2); //retourne 0 si égaux
+    resCmd = resCmd || system(cmd3); //retourne 0 si égaux
+    resCmd = resCmd || system(cmd4); //retourne 0 si égaux
+
+    if(resCmd){
         printf("ERREUR DANS L'INDEXATION DES IMAGES");
     }else{
         printf("SUCCES DANS L'INDEXATION DES IMAGES");
     }
-    return res;
+    return resCmd;
 }
 
 int indexationTexte(){
