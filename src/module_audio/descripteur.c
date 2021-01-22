@@ -376,3 +376,8 @@ void free_RES_EVAL_AUDIO(RES_EVAL_AUDIO res_eval_audio)
 {
 	free(res_eval_audio.times);
 }
+
+double taux_ressemblence_vers_seuil(double tauxRessemblance)
+{
+	return (tauxRessemblance * EVAL_MAX) / 100.0;
+}

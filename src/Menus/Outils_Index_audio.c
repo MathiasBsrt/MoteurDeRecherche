@@ -125,7 +125,14 @@ void MenuIndexation_audio(PILE_AUDIO *pile_audio)
                 scanf("%d", &m);
             } while (m < 1);
             printf("\n\n");
-            *pile_audio = init_MULTIPLE_DESC_AUDIO(recuperer_nouvel_id_valide_AUDIO(), n, m, buffer);
+            PILE_AUDIO pile_desc = init_MULTIPLE_DESC_AUDIO(recuperer_nouvel_id_valide_AUDIO(), n, m, buffer);
+            DESC_AUDIO desc;
+            while(!PILE_desc_estVide(pile_desc))
+            {
+                pile_desc = dePILE_AUDIO(pile_desc, &desc);
+                *pile_audio = emPILE_AUDIO(*pile_audio, desc);
+            }
+           
             printf("\t=======INDEXATION DOSSIER TERMINÉE=======\n");
             printf("Retour au menu Indexation audio...\n");
             waiter();
