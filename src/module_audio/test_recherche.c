@@ -4,6 +4,7 @@
 #include "descripteur.h"
 #include "base_descripteur.h"
 
+/*
 int main(int argc, char * argv[])
 {
     if(argc != 2)
@@ -48,4 +49,4 @@ int main(int argc, char * argv[])
     
     free_RES_RECHERCHE_AUDIO(resultat);
 
-}
+}*/

@@ -9,6 +9,8 @@
  * 
  */
 #include "../MOT/mot.h"
+#include <unistd.h>
+
 #define MAX_INDEX 50
 /**
  * @brief Structure d'un index de mot

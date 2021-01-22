@@ -3,34 +3,14 @@
 build-job:
   stage: build
   script:
-    - echo "build"
+    - cd src/Menus
+    - echo "c'est bieng"
 
-test-indexation:
+test:
   stage: test
   script:
     #- make projet-pfr
     # - gcc testsCI/indexation.c -o testsCI/tests.out
     - cd testsCI
-    - make indexationSon
-    - ./indexationSon.out
-    - rm -f *.o *.out
-    - make indexationImage
-    - ./indexationImage.out
-    - rm -f *.o *.out
-
-test-recherche:
-  stage: test
-  script:
-    #- make projet-pfr
-    - cd testsCI
-    - make recherche
-    - ./recherche.out
-    - rm -f *.o *.out
-
-test-progPrincipal:
-  stage: test
-  script:
-    #- make projet-pfr
-    - gcc testsCI/progP.c -o testsCI/tests.out
-    - ./testsCI/tests.out
-
+    - make
+    - ./tests

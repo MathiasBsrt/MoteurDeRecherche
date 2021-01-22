@@ -165,7 +165,7 @@ void Index_from_pile(Table_Index *table, pile_mot pile, int id_texte)
 
 int EMPILE_desc_from_pile(pile_mot p, PILE_descripteur_texte *d, char *path_to_xml, Table_Index *table)
 {
-    FILE *liste_descripteurs = fopen("sauvegardes/liste_base_descripteurs", "a");
+    FILE *liste_descripteurs = fopen("sauvegardes/txt/liste_base_descripteurs", "a");
     int mots_retenus;
     int id;
     //on remplit le descripteur a empiler
@@ -242,7 +242,7 @@ void EMPILE_desc(PILE_descripteur_texte *d, Descripteur_texte descripteur, FILE 
     }
 }
 
-void DEPILE_desc(PILE_descripteur_texte *p)
+Descripteur_texte* DEPILE_desc(PILE_descripteur_texte *p)
 {
     if (PILE_desc_estVide(*p))
         fprintf(stderr, "La pile est deja vide");
@@ -263,7 +263,7 @@ void DEPILE_desc(PILE_descripteur_texte *p)
             while (parcours->suivant != marqueur)
                 parcours = parcours->suivant;
             parcours->suivant = NULL;
-            free(marqueur);
+            return marqueur;
         }
     }
 }
@@ -312,13 +312,9 @@ void charger_PILE_Desc_mot(PILE_descripteur_texte *p, char *save_descripteurs_te
         Descripteur_texte tmp;
         while (fread(&tmp, sizeof(tmp), 1, f))
         {
-            printf("empile %d\n",tmp.id);
             EMPILE_desc(p, tmp, f);
         }
         fclose(f);
     }
-    else
-    {
-        perror("Aucunes sauvegardes disponibles. Essayez d'indexer puis de sauvegarder");
-    }
+    
 }

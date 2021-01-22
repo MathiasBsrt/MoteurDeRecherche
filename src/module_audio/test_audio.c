@@ -5,6 +5,7 @@
 #include "base_descripteur.h"
 #include "pile_dynamique.h"
 
+/*
 int main()
 {
     printf("--- DEBUT DES TESTS AUDIO --- \n");
@@ -88,17 +89,17 @@ int main()
     printf("    --- Sauvegarde du descripteur --- \n");
     pileDescripteur = sauvegarder_DESC_AUDIO(pileDescripteur, descCorpusWAV);
 
-    /*printf("    --- Sauvegarde de la pile de descripteurs --- \n");
+    //printf("    --- Sauvegarde de la pile de descripteurs --- \n");
     sauvegarder_PILE_DESC_AUDIO(pileDescripteur);*/
-
+/*
     printf("    --- Création du descripteur audio de TEST_SON/jingle_fi.wav --- \n");
     DESC_AUDIO descJingleWAV = init_DESC_AUDIO(recuperer_nouvel_id_valide_AUDIO(), n + 2, m, "TEST_SON/jingle_fi.wav");
     
     printf("    --- Sauvegarde du descripteur --- \n");
     pileDescripteur = sauvegarder_DESC_AUDIO(pileDescripteur, descJingleWAV);
     
-    /*printf("    --- Sauvegarde de la pile de descripteurs --- \n");
-    sauvegarder_PILE_DESC_AUDIO(pileDescripteur);*/
+    printf("    --- Sauvegarde de la pile de descripteurs --- \n");
+    sauvegarder_PILE_DESC_AUDIO(pileDescripteur);
 
     printf("    --- Création du descripteur audio de TEST_SON/cymbale.wav --- \n");
     DESC_AUDIO descCymbaleWAV = init_DESC_AUDIO(recuperer_nouvel_id_valide_AUDIO(), n + 1, m, "TEST_SON/cymbale.wav");
@@ -250,4 +251,4 @@ int main()
 
     printf("--- FIN DES TEST AUDIO --- \n");
     return 0;
-}
+}*/

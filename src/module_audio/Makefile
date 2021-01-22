@@ -39,6 +39,13 @@ test_recherche : histogramme.c histogramme.h wav_file_helper.c wav_file_helper.h
 	gcc -o test_recherche.out histogramme.o wav_file_helper.o descripteur.o pile_dynamique.o base_descripteur.o test_recherche.o -lm
 	./test_recherche.out TEST_SON/jingle_fi.wav
 
+everything : histogramme.c histogramme.h wav_file_helper.c wav_file_helper.h descripteur.c descripteur.h pile_dynamique.h pile_dynamique.c base_descripteur.h base_descripteur.c
+	gcc -c histogramme.c -W -Wall
+	gcc -c wav_file_helper.c -W -Wall
+	gcc -c descripteur.c -W -Wall
+	gcc -c base_descripteur.c -W -Wall
+	gcc -c pile_dynamique.c -W -Wall
+
 clean:
 	rm -f *.o *.out
 	

@@ -58,7 +58,7 @@ int comparaison_texte(Descripteur_texte *d1, Descripteur_texte *d2, double seuil
     return 2;
 }
 
-void rechercheParCritere_texte(char *mot, char **fichiersSimilaires, int *nbF, double seuilSimilarite)
+void rechercheParCritere_texte(char *mot, char **fichiersSimilaires, int *nbF)
 {
     printf("recherche par critère...\n");
     PILE_descripteur_texte pile = init_PILE_desc();
@@ -92,7 +92,7 @@ void rechercheParCritere_texte(char *mot, char **fichiersSimilaires, int *nbF, d
 
 void getChemin_texte(int id, char chemin[])
 {
-    FILE *liste_base_desc = fopen("sauvegardes/liste_base_descripteurs", "r");
+    FILE *liste_base_desc = fopen("sauvegardes/txt/liste_base_descripteurs", "r");
     if (liste_base_desc)
     {
 
@@ -102,6 +102,7 @@ void getChemin_texte(int id, char chemin[])
         {
             if (id_texte == id)
             {
+                printf("chemin trouvé : %s",chemin);
                 break;
             }
         }
@@ -157,6 +158,11 @@ int rechercheParDocument_texte(char *cheminVersDocument, char *fichiersSimilaire
     //On indexe le nouveau document
     PILE_descripteur_texte pile = init_PILE_desc();
     Table_Index table = Init_Index();
+
+    //on charge la pile des descripteurs
+    charger_Table_index(&table, "sauvegarde.index");
+    charger_PILE_Desc_mot(&pile, "sauvegarde.desc");
+
     Descripteur_texte *desc1;
     int nbF = 0;
     int id = texte_deja_indexe(cheminVersDocument);
@@ -165,11 +171,14 @@ int rechercheParDocument_texte(char *cheminVersDocument, char *fichiersSimilaire
     {
         id = Descripteur_texte_fichier(cheminVersDocument, &pile, &table, 1); // Bug, idée : le nouveau fichier indexé ecrase la pile ?
     }
-
-    //on charge la pile des descripteurs
-    charger_Table_index(&table, "sauvegardes/sauvegarde.index");
-    charger_PILE_Desc_mot(&pile, "sauvegardes/sauvegarde.desc");
-
+    printf("id : %d",id);
+    Descripteur_texte *parcours=pile;
+    while(parcours)
+    {
+        printf("id : %d\n",parcours->id);
+        parcours=parcours->suivant;
+    }
+    
     //On récupéere le descripteur qui vient d'être crée
     desc1 = getDescripteur_Texte(id, &pile);
 

@@ -107,28 +107,29 @@ PILE_AUDIO charger_PILE_DESC_AUDIO(int * nb_charge)
 	int k, m;
 	//fscanf(baseDescFichier, "%d ", &val);
 	fread(&val, 4, 1, baseDescFichier);
-	do
-	{
-		fread(&k, 4, 1, baseDescFichier);
-		fread(&m, 4, 1, baseDescFichier);
-		//fscanf(baseDescFichier, "%d %d", &k, &m);
-		desc = (DESC_AUDIO *) malloc(sizeof(DESC_AUDIO));
-		desc->id = val;
-		desc->histo = init_HISTOGRAMME_AUDIO((int) log2(k), m);
-		fread(desc->histo.mat, 4, desc->histo.k * desc->histo.m, baseDescFichier);
-		/*for(y = 0; y < desc->histo.k; y++)
-			for(x = 0; x < desc->histo.m; x++)
-			{
-				fscanf(baseDescFichier, "%d ", &val);
-				set_DESC_AUDIO(desc, y, x, val);
-			}
-		*/
-		PILE_DESCRIPTEUR_AUDIO = emPILE_AUDIO(PILE_DESCRIPTEUR_AUDIO, *desc);
-		if(nb_charge != NULL) *nb_charge = *nb_charge + 1;
+	if(val != EOF)
+		do
+		{
+			fread(&k, 4, 1, baseDescFichier);
+			fread(&m, 4, 1, baseDescFichier);
+			//fscanf(baseDescFichier, "%d %d", &k, &m);
+			desc = (DESC_AUDIO *) malloc(sizeof(DESC_AUDIO));
+			desc->id = val;
+			desc->histo = init_HISTOGRAMME_AUDIO((int) log2(k), m);
+			fread(desc->histo.mat, 4, desc->histo.k * desc->histo.m, baseDescFichier);
+			/*for(y = 0; y < desc->histo.k; y++)
+				for(x = 0; x < desc->histo.m; x++)
+				{
+					fscanf(baseDescFichier, "%d ", &val);
+					set_DESC_AUDIO(desc, y, x, val);
+				}
+			*/
+			PILE_DESCRIPTEUR_AUDIO = emPILE_AUDIO(PILE_DESCRIPTEUR_AUDIO, *desc);
+			if(nb_charge != NULL) *nb_charge = *nb_charge + 1;
 
-		//fscanf(baseDescFichier, "%d ", &val);
-		fread(&val, 4, 1, baseDescFichier);
-	} while(val != EOF);
+			//fscanf(baseDescFichier, "%d ", &val);
+			fread(&val, 4, 1, baseDescFichier);
+		} while(val != EOF);
 
 	fclose(baseDescFichier);
 	return PILE_DESCRIPTEUR_AUDIO;

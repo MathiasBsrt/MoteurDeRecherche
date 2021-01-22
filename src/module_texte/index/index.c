@@ -81,7 +81,6 @@ Index *Ajout_Dans_Table_index(Table_Index *table, char *mot)
         else
             Ajout_Dans_Table_index(&(*table)->droit, mot);
     }
-    
 }
 
 void parcourInFixe(Table_Index a) //fonction intermédiaire pour l'affichage
@@ -113,14 +112,13 @@ void parcourInFixe2(Table_Index a, FILE *f) //fonction intermédiaire pour l'enr
     {
         parcourInFixe2(a->gauche, f);
         fwrite(a, sizeof(Index), 1, f);
-        for(int i=0;i<2;i++)
+        for (int i = 0; i < 2; i++)
         {
-            fwrite(a->idTxt_avec_occ[i],sizeof(int),a->nb_occ,f);
+            fwrite(a->idTxt_avec_occ[i], sizeof(int), a->nb_occ, f);
         }
         parcourInFixe2(a->droit, f);
     }
 }
-
 
 void enregistre_Table_Index(Table_Index table, char *save_table_index)
 {
@@ -136,11 +134,10 @@ void enregistre_Table_Index(Table_Index table, char *save_table_index)
     else
     {
         fprintf(stderr, "la table est vide, rien n'a ete enregistre.\n");
-        exit(5);
     }
 }
 
-void Ajout_dans_table_pourCharger(Table_Index *table, Index index,FILE *stream)
+void Ajout_dans_table_pourCharger(Table_Index *table, Index index, FILE *stream)
 {
     int test;
 
@@ -152,10 +149,10 @@ void Ajout_dans_table_pourCharger(Table_Index *table, Index index,FILE *stream)
         (*table)->gauche = NULL;
         (*table)->droit = NULL;
         strcpy((*table)->mot, index.mot);
-        for(int i=0;i<2;i++)
+        for (int i = 0; i < 2; i++)
         {
-            (*table)->idTxt_avec_occ[i]=malloc(sizeof(int)*(*table)->nb_max);
-            fread((*table)->idTxt_avec_occ[i],sizeof(int),(*table)->nb_occ,stream);
+            (*table)->idTxt_avec_occ[i] = malloc(sizeof(int) * (*table)->nb_max);
+            fread((*table)->idTxt_avec_occ[i], sizeof(int), (*table)->nb_occ, stream);
         }
     }
     else
@@ -163,9 +160,9 @@ void Ajout_dans_table_pourCharger(Table_Index *table, Index index,FILE *stream)
 
         test = strcmp((*table)->mot, index.mot);
         if (test > 0)
-            Ajout_dans_table_pourCharger(&(*table)->gauche, index,stream);
+            Ajout_dans_table_pourCharger(&(*table)->gauche, index, stream);
         else
-            Ajout_dans_table_pourCharger(&(*table)->droit, index,stream);
+            Ajout_dans_table_pourCharger(&(*table)->droit, index, stream);
     }
 }
 
@@ -174,16 +171,11 @@ void charger_Table_index(Table_Index *table, char *save_table_index)
     FILE *f = fopen(save_table_index, "r");
     if (f)
     {
-        Index *tmp=malloc(sizeof(Index));
+        Index *tmp = malloc(sizeof(Index));
         while (fread(tmp, sizeof(Index), 1, f))
         {
-            Ajout_dans_table_pourCharger(table, *tmp,f);
+            Ajout_dans_table_pourCharger(table, *tmp, f);
         }
         fclose(f);
-    }
-    else
-    {
-        perror("erreur lors de l'ouverture du fichier de sauvegarde index");
-        exit(3);
     }
 }
