@@ -45,11 +45,11 @@ void MenuRecherche_texte()
         {
             printf("Entrer un mot a chercher : ");
             scanf("%s", buffer);
-            do
+           /* do
             {
                 printf("Entrer un seuil de similarité : ");
                 scanf("%lf", &seuil_similarite);
-            } while (seuil_similarite < 0 || seuil_similarite > 100);
+            } while (seuil_similarite < 0 || seuil_similarite > 100);*/
 
             rechercheParCritere_texte(buffer, fichierSimil, &nb_fichierSimil);
             if (fichierSimil[0])
@@ -60,7 +60,7 @@ void MenuRecherche_texte()
                 if (choix == 'y')
                 {
                     system("clear");
-                    strcat(commande_affichage,"cat ");
+                    strcat(commande_affichage,"gedit ");
                     system(strcat(commande_affichage, fichierSimil[0]));
                 }
             }
@@ -88,7 +88,7 @@ void MenuRecherche_texte()
                 if (choix == 'y')
                 {
                     system("clear");
-                    strcat(commande_affichage,"cat ");
+                    strcat(commande_affichage,"gedit ");
                     system(strcat(commande_affichage, fichierSimil[0]));
                 }
             }

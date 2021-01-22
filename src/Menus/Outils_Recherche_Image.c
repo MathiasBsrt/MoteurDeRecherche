@@ -10,6 +10,48 @@
  */
 #include "header.h"
 
+void txt_to_bmp(char *txt)
+{
+    char b[7];
+    int i = strlen(txt);
+    txt[i - 3] = 'b';
+    txt[i - 2] = 'm';
+    txt[i - 1] = 'p';
+    while (txt[i - 1] != '/')
+    {
+        i--;
+    }
+    strcpy(b, txt + i);
+    txt[i - 1] = '\0';
+    while (txt[i] != '/')
+    {
+        txt[i] = '\0';
+        i--;
+    }
+    strcat(txt, b);
+}
+
+void txt_to_png(char *txt)
+{
+    char b[7];
+    int i = strlen(txt);
+    txt[i - 3] = 'j';
+    txt[i - 2] = 'p';
+    txt[i - 1] = 'g';
+    while (txt[i - 1] != '/')
+    {
+        i--;
+    }
+    strcpy(b, txt + i);
+    txt[i - 1] = '\0';
+    while (txt[i] != '/')
+    {
+        txt[i] = '\0';
+        i--;
+    }
+    strcat(txt, b);
+}
+
 void MenuRecherche_image()
 {
     int code;
@@ -29,6 +71,7 @@ void MenuRecherche_image()
         else if (code == 1)
         {
             lancer_recherche_critere();
+            waiter();
         }
         else if (code == 2)
         {
@@ -42,12 +85,25 @@ void MenuRecherche_image()
                 waiter();
             }
             else if (code == 1)
+            {
                 lancer_recherche_document_NB();
+                waiter();
+            }
+
             else if (code == 2)
             {
                 lancer_recherche_document_RGB();
+               /* char chemin[MAX_STRING];
+                FILE *f = fopen("sauvegardes/img/Fichiers_similaires","r");
+                fscanf(f,"%s",chemin);
+                //txt_to_png(chemin);
+                char cmd[100] = "cmd";
+                system(strcat(cmd,chemin));
+                fclose(f);*/
+                waiter();
             }
         }
 
     } while (code != 3);
 }
+//module_image/tests/TEST_RGB/txt

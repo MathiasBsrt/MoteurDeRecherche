@@ -171,13 +171,13 @@ int rechercheParDocument_texte(char *cheminVersDocument, char *fichiersSimilaire
     {
         id = Descripteur_texte_fichier(cheminVersDocument, &pile, &table, 1); // Bug, idée : le nouveau fichier indexé ecrase la pile ?
     }
-    printf("id : %d",id);
-    Descripteur_texte *parcours=pile;
+    //printf("id : %d",id);
+   /* Descripteur_texte *parcours=pile;
     while(parcours)
     {
         printf("id : %d\n",parcours->id);
         parcours=parcours->suivant;
-    }
+    }*/
     
     //On récupéere le descripteur qui vient d'être crée
     desc1 = getDescripteur_Texte(id, &pile);

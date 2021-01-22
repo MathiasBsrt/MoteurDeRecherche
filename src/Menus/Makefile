@@ -48,7 +48,8 @@ $(EXEC) : $(OBJA) $(OBJI) $(OBJT) $(OBJM)
 .PHONY: clean mrproper
 
 clean:
-	rm -rf $(OBJM) $(OBJT) $(OBJT) $(OBJA)
+	rm -rf $(OBJM) $(OBJT) $(OBJT) $(OBJA) $(DIR_SAVE)/txt/liste_base_descripteurs 
+	rm -rf $(DIR_SAVE)/txt/liste_base_descripteurs $(DIR_SAVE)/img/* $(BIN)base_descripteur_audio $(BIN)liste_base_audio $(BIN)sauvegarde.desc $(BIN)sauvegarde.index
 
 mrproper: clean
 	rm -rf $(EXEC)

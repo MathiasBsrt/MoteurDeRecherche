@@ -95,7 +95,6 @@ void modif_mot_de_passe(int code,char* mdp)
     waiter();
     fclose(f);
 }
-
 void menu()
 {
     char motdepasse[MAX_WORD];
@@ -103,10 +102,12 @@ void menu()
     //recupération mot de passe
     FILE *mdp = fopen("sauvegardes/mdp", "r");
     if (mdp)
+    {
         fread(motdepasse, sizeof(char) * MAX_WORD, 1, mdp);
+        fclose(mdp);
+    }
     else
-        modif_mot_de_passe(1,motdepasse);
-
+        modif_mot_de_passe(1, motdepasse);
 
     //PILE POUR L'AUDIO
     PILE_AUDIO pile_audio = init_PILE_AUDIO();
@@ -145,11 +146,12 @@ void menu()
             menus_user();
         }
         else if (code == 3)
-            modif_mot_de_passe(0,motdepasse);
+            modif_mot_de_passe(0, motdepasse);
 
     } while (code != 4);
-    fclose(mdp);
 }
+
+
 int main(void)
 {
     //PILES ET TABLE POUR L'INDEXATION TEXTE
