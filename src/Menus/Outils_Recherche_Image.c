@@ -71,6 +71,16 @@ void MenuRecherche_image()
         else if (code == 1)
         {
             lancer_recherche_critere();
+            FILE *fich = fopen("sauvegardes/img/Fichiers_similaires", "r");
+            char chemin[255];
+            float tmp;
+            fscanf(fich, "%f %s", &tmp, chemin);
+            printf("chemin avant : %s\n", chemin);
+            txt_to_png(chemin);
+            printf("chemin après : %s\n", chemin);
+            char cmd[100] = "eog ";
+            system(strcat(cmd, chemin));
+            fclose(fich);
             waiter();
         }
         else if (code == 2)
@@ -87,19 +97,32 @@ void MenuRecherche_image()
             else if (code == 1)
             {
                 lancer_recherche_document_NB();
+                FILE *fich = fopen("sauvegardes/img/Fichiers_similaires", "r");
+                char chemin[255];
+                float tmp;
+                fscanf(fich, "%f %s", &tmp, chemin);
+                printf("chemin avant : %s\n", chemin);
+                txt_to_png(chemin);
+                printf("chemin après : %s\n", chemin);
+                char cmd[100] = "eog ";
+                system(strcat(cmd, chemin));
+                fclose(fich);
                 waiter();
             }
 
             else if (code == 2)
             {
                 lancer_recherche_document_RGB();
-               /* char chemin[MAX_STRING];
-                FILE *f = fopen("sauvegardes/img/Fichiers_similaires","r");
-                fscanf(f,"%s",chemin);
-                //txt_to_png(chemin);
-                char cmd[100] = "cmd";
-                system(strcat(cmd,chemin));
-                fclose(f);*/
+                FILE *fich = fopen("sauvegardes/img/Fichiers_similaires", "r");
+                char chemin[255];
+                float tmp;
+                fscanf(fich, "%f %s", &tmp, chemin);
+                printf("chemin avant : %s\n", chemin);
+                txt_to_png(chemin);
+                printf("chemin après : %s\n", chemin);
+                char cmd[100] = "eog ";
+                system(strcat(cmd, chemin));
+                fclose(fich);
                 waiter();
             }
         }
