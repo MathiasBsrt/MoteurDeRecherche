@@ -9,6 +9,7 @@
  * 
  */
 #include "header.h"
+#include "math.h"
 
 void MenuRecherche_audio()
 {
@@ -59,8 +60,48 @@ void MenuRecherche_audio()
                         printf("\t Résultat %d dans le fichier '%s':\n", i + 1, resultat.resultats[i].fichier);
                         for (int j = 0; j < resultat.resultats[i].n; j++)
                         {
-                            printf("\t\t j = %d: %f\n", j, resultat.resultats[i].times[j]);
+                            printf("\t\t Resultat %d-%d: %f\n", i + 1, j + 1, resultat.resultats[i].times[j]);
                         }
+                    }
+
+                    char choix;
+                    printf("Voulez vous ouvrir un document à la position trouvée (y/n) ? ");
+                    while ((choix = getchar()) != 'y' && choix != 'n')
+                        ;
+                    switch (choix)
+                    {
+                    case 'y':
+                    {
+                        int iResultat;
+                        printf("Entrez le numéro du résultat (ex. 1-2, saisir 1): ");
+                        do
+                        {     
+                            scanf("%d", &iResultat);
+                        } while (iResultat < 1 || iResultat > resultat.n);
+
+                        int jResultat;
+                        printf("Entrez l'identifiant du résultat (ex. 1-2, saisir 2): ");
+                        do
+                        {     
+                            scanf("%d", &jResultat);
+                        } while (jResultat < 1 || jResultat > resultat.n);
+
+                        iResultat--;
+                        jResultat--;
+
+                        char * filename = resultat.resultats[iResultat].fichier;
+                        double time = resultat.resultats[iResultat].times[jResultat];
+
+                        printf("Ouverture du fichier '%s' à %.1f secondes.\n", filename, time);
+                        char command[100];
+                        sprintf(command, "vlc --start-time=%.1f %s", time, filename);
+                        system(command);
+
+                        break;
+                    }
+                    case 'n':
+                        printf("Dommage.\n");
+                        break;
                     }
                 }
 

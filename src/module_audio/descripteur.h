@@ -30,6 +30,7 @@
 #define EVAL_VERYHIGH 0.24
 #define EVAL_TOUGH 0.30
 #define EVAL_VERYTOUGH 0.36
+#define EVAL_MAX 0.38
 
 /**	@struct DESC_AUDIO
  * Definition de la structure d'un descripteur audio
@@ -144,6 +145,14 @@ RES_EVAL_AUDIO init_RES_EVAL_AUDIO();
 * @param RES_EVAL_AUDIO résultat de l'évaluation audio
 */
 void free_RES_EVAL_AUDIO(RES_EVAL_AUDIO res_eval_audio);
+
+/**
+ * @brief Convertis le taux de ressenmblance vers une valeur acceptable par la recherche.
+ * 
+ * @param double taux de ressemblance générale de l'application [0; 100]
+ * @return double seuil de sécurité pour la recherche audio
+ */
+double taux_ressemblence_vers_seuil(double tauxRessemblance);
 
 
 #endif
