@@ -136,7 +136,7 @@ void rechercheParCritere_image(RGB couleurDominante, FILE *fichiersSimilaires, i
     }
     trier_tab_pourcentage_chemin(fichiers,pourcentage_fichier,nbfichiers);
     for(int i=0;i<nbfichiers;i++){
-        printf("%s contient cette couleur à %f pourcents",fichiers[i],pourcentage_fichier[i]);
+        printf("%s contient cette couleur à %f pourcents\n",fichiers[i],pourcentage_fichier[i]);
         fprintf(fichiersSimilaires, "%f %s\n",pourcentage_fichier[i] ,fichiers[i]);
     }
 
@@ -187,7 +187,7 @@ void rechercheParDocument_RGB(char *cheminVersDocument, FILE *fichiersSimilaires
     }
     trier_tab_pourcentage_chemin(fichiers,pourcentage_fichier,nbfichiers);
     for(int i=0;i<nbfichiers;i++){
-        printf("%s est similaire à %f pourcents",fichiers[i],pourcentage_fichier[i]);
+        printf("%s est similaire à %f pourcents\n",fichiers[i],pourcentage_fichier[i]);
         fprintf(fichiersSimilaires, "%f %s\n",pourcentage_fichier[i] ,fichiers[i]);
     }
         for(int i=0;i<25;i++){
@@ -235,7 +235,7 @@ void rechercheParDocument_NB(char *cheminVersDocument, FILE *fichiersSimilaires,
     }
     trier_tab_pourcentage_chemin(fichiers,pourcentage_fichier,nbfichiers);
     for(int i=0;i<nbfichiers;i++){
-        printf("%s est similaire à %f pourcents",fichiers[i],pourcentage_fichier[i]);
+        printf("%s est similaire à %f pourcents\n",fichiers[i],pourcentage_fichier[i]);
         fprintf(fichiersSimilaires, "%f %s\n",pourcentage_fichier[i] ,fichiers[i]);
     }
         for(int i=0;i<25;i++){

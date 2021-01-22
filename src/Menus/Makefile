@@ -44,3 +44,11 @@ $(EXEC) : $(OBJA) $(OBJI) $(OBJT) $(OBJM)
 
 %.o: %.c
 	$(CC) -o $@ -c $< $(CFLAGS)
+
+.PHONY: clean mrproper
+
+clean:
+    rm -rf $(OBJM) $(OBJT) $(OBJT) $(OBJA)
+
+mrproper: clean
+    rm -rf $(EXEC)
