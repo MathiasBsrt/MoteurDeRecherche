@@ -62,7 +62,7 @@ int comparaison_texte(Descripteur_texte *d1, Descripteur_texte *d2, double seuil
  * @param int *nbF : nombre de fichiers trouvés
  * @param double seuilSimilarité 
  */
-void rechercheParCritere_texte(char *mot, char *fichiersSimilaires[], int *nbF, double seuilSimilarite);
+void rechercheParCritere_texte(char *mot, char *fichiersSimilaires[], int *nbF);
 /***
  * Recherche par document
  * Cette fonction permet de rechercher des documents en fonction d'un document donné

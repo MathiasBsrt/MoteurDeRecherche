@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include "wav_file_helper.h"
 
-/*
 int main(int argc, char * argv[])
 {
     if(argc == 1)
@@ -15,4 +14,4 @@ int main(int argc, char * argv[])
         printf("Durée de %s: %d (s)\n", argv[1], duration);
     } else printf("Usage: %s [filename]", argv[0]);
     return 0;
-}*/
+}
