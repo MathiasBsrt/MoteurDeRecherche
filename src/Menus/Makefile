@@ -48,7 +48,7 @@ $(EXEC) : $(OBJA) $(OBJI) $(OBJT) $(OBJM)
 .PHONY: clean mrproper
 
 clean:
-    rm -rf $(OBJM) $(OBJT) $(OBJT) $(OBJA)
+	rm -rf $(OBJM) $(OBJT) $(OBJT) $(OBJA)
 
 mrproper: clean
-    rm -rf $(EXEC)
+	rm -rf $(EXEC)
