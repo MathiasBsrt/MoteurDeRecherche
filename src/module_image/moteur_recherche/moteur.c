@@ -10,7 +10,7 @@
  * @param RGB_ou_NB 
  * @return int 
  */
-int comparaison_image(Descripteur_image d1, Descripteur_image d2, double seuil,int RGB_ou_NB)
+int comparaison_image(Descripteur_image d1, Descripteur_image d2, double seuil,int RGB_ou_NB,double* pourcentage)
 {
     //Méthode de comparaison : intersection des 2 histogrammes
 
@@ -32,7 +32,6 @@ int comparaison_image(Descripteur_image d1, Descripteur_image d2, double seuil,i
     int nbCaseIntersection = 0;
     int val1;
     int val2;
-    double pourcentage;
     if(RGB_ou_NB==1){
         for (int i = 0; i < tailleHistogrammeNB; i++)
          {
@@ -43,7 +42,7 @@ int comparaison_image(Descripteur_image d1, Descripteur_image d2, double seuil,i
             nbCaseIntersection++;
         }
     }
-        pourcentage = (double)nbCaseIntersection / tailleHistogrammeNB * 100;
+        *pourcentage = (double)nbCaseIntersection / tailleHistogrammeNB * 100;
     }
     else{
         for (int i = 0; i < tailleHistogramme; i++)
@@ -55,7 +54,7 @@ int comparaison_image(Descripteur_image d1, Descripteur_image d2, double seuil,i
             nbCaseIntersection++;
         }
     }
-        pourcentage = (double)nbCaseIntersection / tailleHistogramme * 100;
+        *pourcentage = (double)nbCaseIntersection / tailleHistogramme * 100;
     }
 
 
@@ -64,17 +63,34 @@ int comparaison_image(Descripteur_image d1, Descripteur_image d2, double seuil,i
     //printf("\n similaire sur %d cases\n", nbCaseIntersection);
 
 
-    printf("Similaire à %f pourcents\n", pourcentage);
-    if (pourcentage == 100)
+    //printf("Similaire à %f pourcents\n", pourcentage);
+    if (*pourcentage == 100)
     {
         return 0;
     }
-    else if (pourcentage >= seuil)
+    else if (*pourcentage >= seuil)
     {
         return 1;
     }
 
     return 2;
+}
+void trier_tab_pourcentage_chemin(char* chemins_fichiers[255],double* pourcentages,int taille){
+    int temp;
+    char tempString[255];
+    for(int i=0;i<taille;i++){
+        for(int j=0;j<taille-i-1;j++){
+            if(pourcentages[j]<pourcentages[j+1]){
+                temp=pourcentages[j];
+                pourcentages[j]=pourcentages[j+1];
+                pourcentages[j+1]=temp;
+
+                strcpy(tempString,chemins_fichiers[j]);
+                strcpy(chemins_fichiers[j],chemins_fichiers[j+1]);
+                strcpy(chemins_fichiers[j+1],tempString);
+            }
+        }
+    }
 }
 
 /**
@@ -89,13 +105,18 @@ void rechercheParCritere_image(RGB couleurDominante, FILE *fichiersSimilaires, i
     int couleur;
     float nbCouleurRecherche, nbTotal;
     Descripteur_image desc;
-    char chemin[255];
+    char** fichiers=malloc(sizeof(char*)*25);
+    for(int i=0;i<25;i++){
+        fichiers[i]=malloc(sizeof(char)*255);
+    }
+    double pourcentage_fichier[25];
+    int nbfichiers=0;
     //Calcule de la valeur du RGB
     couleur = quantifie_un_pixelRGB(couleurDominante);
     printf("couleur : %d\n",couleur);
     // Charger la pile de tous les descripteurs avec la fonction dans controle descripteur
     PILE_image pile = init_pile_image();
-    pile = chargerPILE_image("base_descripteur_image_RGB",3);
+    pile = chargerPILE_image("sauvegardes/img/base_descripteur_image_RGB",3);
     // Pour chaque fichier faire la comparaison nb_de_données/nb_de_donnee_egal_au_RGB
     while (!PILE_estVide_image(pile))
     {
@@ -106,13 +127,22 @@ void rechercheParCritere_image(RGB couleurDominante, FILE *fichiersSimilaires, i
         {
             nbTotal += desc.histogramme[i];
         }
-        if ((nbCouleurRecherche / nbTotal) * 100 > seuilSimilarite)
+        if ((nbCouleurRecherche / nbTotal) * 100 > seuilSimilarite && nbfichiers<25)
         {
-            id_to_chemin_image(desc.id,3,chemin);
-            fprintf(fichiersSimilaires, "%d %s\n",desc.id, chemin);
+                id_to_chemin_image(desc.id,3,fichiers[nbfichiers]);
+                pourcentage_fichier[nbfichiers]=(nbCouleurRecherche / (float)nbTotal) * 100;
+                nbfichiers++;
         }
     }
-    //CSomparer le résultat avec le seuil et garder le fichier si il est au dessus
+    trier_tab_pourcentage_chemin(fichiers,pourcentage_fichier,nbfichiers);
+    for(int i=0;i<nbfichiers;i++){
+        fprintf(fichiersSimilaires, "%f %s\n",pourcentage_fichier[i] ,fichiers[i]);
+    }
+
+    for(int i=0;i<25;i++){
+        free(fichiers[i]);
+    }
+    free(fichiers);
 }
 
 /**
@@ -126,10 +156,16 @@ void rechercheParDocument_RGB(char *cheminVersDocument, FILE *fichiersSimilaires
     PILE_image pile=init_pile_image();
     Descripteur_image desc1;
     Descripteur_image desc2;
-    char chemin[255];
+    double pourcentage;
+    char** fichiers=malloc(sizeof(char*)*25);
+    for(int i=0;i<25;i++){
+        fichiers[i]=malloc(sizeof(char)*255);
+    }
+    double pourcentage_fichier[25];
+    int nbfichiers=0;
     int id=chemin_to_id_image(cheminVersDocument,3);
-    printf("cheminVersDocument : %s %d\n",chemin,id);
-    pile=chargerPILE_image("base_descripteur_image_RGB",3);
+    //printf("cheminVersDocument : %s %d\n",chemin,id);
+    pile=chargerPILE_image("sauvegardes/img/base_descripteur_image_RGB",3);
     while(!PILE_estVide_image(pile)){
         pile=dePILE_image(pile,&desc2);
         if(desc2.id==id){
@@ -137,16 +173,25 @@ void rechercheParDocument_RGB(char *cheminVersDocument, FILE *fichiersSimilaires
         }
     }
     //charger pile
-    pile=chargerPILE_image("base_descripteur_image_RGB",3);
+    pile=chargerPILE_image("sauvegardes/img/base_descripteur_image_RGB",3);
     while(!PILE_estVide_image(pile)){
         pile=dePILE_image(pile,&desc2);
         if(desc2.id!=id){
-            if(comparaison_image(desc1, desc2, seuilSimilarite,3)<2){
-                id_to_chemin_image(desc2.id,3,chemin);
-                fprintf(fichiersSimilaires, "%d %s\n", desc2.id,chemin);
+            if(comparaison_image(desc1, desc2, seuilSimilarite,3,&pourcentage)<2 && nbfichiers<25){
+                id_to_chemin_image(desc2.id,3,fichiers[nbfichiers]);
+                pourcentage_fichier[nbfichiers]=pourcentage;
+                nbfichiers++;
             }
         }
     }
+    trier_tab_pourcentage_chemin(fichiers,pourcentage_fichier,nbfichiers);
+    for(int i=0;i<nbfichiers;i++){
+        fprintf(fichiersSimilaires, "%f %s\n",pourcentage_fichier[i] ,fichiers[i]);
+    }
+        for(int i=0;i<25;i++){
+        free(fichiers[i]);
+    }
+    free(fichiers);
 }
 /**
  * @brief Compare deux documents noir et blanc
@@ -159,9 +204,15 @@ void rechercheParDocument_NB(char *cheminVersDocument, FILE *fichiersSimilaires,
     PILE_image pile=init_pile_image();
     Descripteur_image desc1;
     Descripteur_image desc2;
-    char chemin[255];
+    char** fichiers=malloc(sizeof(char*)*25);
+    for(int i=0;i<25;i++){
+        fichiers[i]=malloc(sizeof(char)*255);
+    }
+    double pourcentage_fichier[25];
+    int nbfichiers=0;
+    double pourcentage;
     int id=chemin_to_id_image(cheminVersDocument,1);
-    pile=chargerPILE_image("base_descripteur_image_NB",1);
+    pile=chargerPILE_image("sauvegardes/img/base_descripteur_image_NB",1);
     while(!PILE_estVide_image(pile)){
         pile=dePILE_image(pile,&desc2);
         if(desc2.id==id){
@@ -169,16 +220,25 @@ void rechercheParDocument_NB(char *cheminVersDocument, FILE *fichiersSimilaires,
         }
     }
     //charger pile
-    pile=chargerPILE_image("base_descripteur_image_NB",1);
+    pile=chargerPILE_image("sauvegardes/img/base_descripteur_image_NB",1);
     while(!PILE_estVide_image(pile)){
         pile=dePILE_image(pile,&desc2);
         if(desc2.id!=id){
-            if(comparaison_image(desc1, desc2, seuilSimilarite,1)<2){
-                id_to_chemin_image(desc2.id,1,chemin);
-                fprintf(fichiersSimilaires, "%d %s\n", desc2.id,chemin);
+            if(comparaison_image(desc1, desc2, seuilSimilarite,1,&pourcentage)<2 && nbfichiers<25){
+                id_to_chemin_image(desc2.id,1,fichiers[nbfichiers]);
+                pourcentage_fichier[nbfichiers]=pourcentage;
+                nbfichiers++;
             }
         }
     }
+    trier_tab_pourcentage_chemin(fichiers,pourcentage_fichier,nbfichiers);
+    for(int i=0;i<nbfichiers;i++){
+        fprintf(fichiersSimilaires, "%f %s\n",pourcentage_fichier[i] ,fichiers[i]);
+    }
+        for(int i=0;i<25;i++){
+        free(fichiers[i]);
+    }
+    free(fichiers);
 }
 
 
@@ -186,10 +246,10 @@ void id_to_chemin_image(int id,int NB_RGB,char * chemin){
     FILE* fich;
     int bon_id;
     if(NB_RGB==1){
-        fich=fopen("liste_base_image_NB","r");
+        fich=fopen("sauvegardes/img/liste_base_image_NB","r");
     }
     else{
-        fich=fopen("liste_base_image_RGB","r");
+        fich=fopen("sauvegardes/img/liste_base_image_RGB","r");
     }
     if(fich!=NULL){
         while(fscanf(fich,"%d %s",&bon_id,chemin)!=EOF){
@@ -206,10 +266,10 @@ int chemin_to_id_image(char* chemin, int nb_RGB){
     char bon_chemin[255];
     int id;
     if(nb_RGB==1){
-        fich=fopen("liste_base_image_NB","r");
+        fich=fopen("sauvegardes/img/liste_base_image_NB","r");
     }
     else{
-        fich=fopen("liste_base_image_RGB","r");
+        fich=fopen("sauvegardes/img/liste_base_image_RGB","r");
     }
     if(fich!=NULL){
         while(fscanf(fich,"%d %s",&id,bon_chemin)!=EOF){
@@ -228,7 +288,7 @@ int chemin_to_id_image(char* chemin, int nb_RGB){
 void lancer_recherche_critere()
 {
     FILE *fich;
-    fich = fopen("Fichiers_similaires", "w+");
+    fich = fopen("sauvegardes/img/Fichiers_similaires", "w+");
     RGB couleur;
     printf("Entrez un code RGB :\nValeur du rouge : ");
     scanf("%d", &couleur.red);
@@ -236,29 +296,29 @@ void lancer_recherche_critere()
     scanf("%d", &couleur.green);
     printf("Valeur du bleu : ");
     scanf("%d", &couleur.blue);
-    rechercheParCritere_image(couleur, fich, 10);
+    rechercheParCritere_image(couleur, fich, SEUIL_DOMINANTE);
     fclose(fich);
 }
 
 void lancer_recherche_document_RGB()
 {
     FILE *fich;
-    fich = fopen("Fichiers_similaires", "w+");
+    fich = fopen("sauvegardes/img/Fichiers_similaires", "w+");
     char cheminVersDocument[255];
     printf("Entrez un chemin vers un fichier : ");
     scanf("%s",cheminVersDocument);
-    rechercheParDocument_RGB(cheminVersDocument, fich,73);
+    rechercheParDocument_RGB(cheminVersDocument, fich,SEUIL_RGB);
     fclose(fich);
 }
 
 void lancer_recherche_document_NB()
 {
     FILE *fich;
-    fich = fopen("Fichiers_similaires", "w+");
+    fich = fopen("sauvegardes/img/Fichiers_similaires", "w+");
     char cheminVersDocument[255];
     printf("Entrez un chemin vers un fichier : ");
     scanf("%s",cheminVersDocument);
-    rechercheParDocument_NB(cheminVersDocument, fich,85);
+    rechercheParDocument_NB(cheminVersDocument, fich,SEUIL_NB);
     fclose(fich);
 }
 

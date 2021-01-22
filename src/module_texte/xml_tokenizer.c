@@ -17,7 +17,7 @@
  */
 pile_mot pile_stopwords()
 {
-    FILE *stopwords = fopen("stopwords.txt", "r");
+    FILE *stopwords = fopen("sauvegardes/txt/stopwords.txt", "r");
     if (stopwords)
     {
         char buffer[MAX_WORD];

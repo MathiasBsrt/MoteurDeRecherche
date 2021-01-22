@@ -16,7 +16,7 @@
  * @param double seuilSimilarité => pourcentage de similarité entre 2 mêmes cases de l'histogramme
  * @return 0 si égaux, 1 si similaires, 2 si trop différent
  */
-int comparaison_image(Descripteur_image d1, Descripteur_image d2, double seuil,int RGB_ou_NB);
+int comparaison_image(Descripteur_image d1, Descripteur_image d2, double seuil,int RGB_ou_NB, double* pourcentage);
 
 /***
  * Recherche par critère
@@ -41,3 +41,8 @@ void rechercheParDocument_NB(char *cheminVersDocument, FILE *fichiersSimilaires,
 void id_to_chemin_image(int id,int NB_RGB,char* chemin);
 
 int chemin_to_id_image(char* chemin, int nb_RGB);
+
+void lancer_recherche_critere();
+
+void lancer_recherche_document_RGB();
+void lancer_recherche_document_NB();

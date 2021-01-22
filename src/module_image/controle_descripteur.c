@@ -137,11 +137,11 @@ void sauvegarderPile_image(PILE_image p, int RGB_ou_NB)
   FILE *pileFichier;
   if (RGB_ou_NB == 1)
   {
-    pileFichier = fopen("base_descripteur_image_NB", "w+");
+    pileFichier = fopen("sauvegardes/img/base_descripteur_image_NB", "w+");
   }
   else
   {
-    pileFichier = fopen("base_descripteur_image_RGB", "w+");
+    pileFichier = fopen("sauvegardes/img/base_descripteur_image_RGB", "w+");
   }
   Descripteur_image copier;
   while (!PILE_estVide_image(p))
@@ -363,11 +363,11 @@ void lierDescripteur_image(Descripteur_image d, char *nom, int RGB_ou_NB)
   FILE *pileFichier;
   if (RGB_ou_NB == 1)
   {
-    pileFichier = fopen("liste_base_image_NB", "a");
+    pileFichier = fopen("sauvegardes/img/liste_base_image_NB", "a");
   }
   else
   {
-    pileFichier = fopen("liste_base_image_RGB", "a");
+    pileFichier = fopen("sauvegardes/img/liste_base_image_RGB", "a");
   }
   //Condition si le fichier n'existe pas
   if (pileFichier == NULL)
@@ -375,14 +375,14 @@ void lierDescripteur_image(Descripteur_image d, char *nom, int RGB_ou_NB)
     char commande[1000];
     if (RGB_ou_NB == 1)
     {
-      strcpy(commande, "touch base_descripteur_image_NB");
+      strcpy(commande, "touch sauvegardes/img/base_descripteur_image_NB");
     }
     else
     {
-      strcpy(commande, "touch base_descripteur_image_RGB");
+      strcpy(commande, "touch sauvegardes/img/base_descripteur_image_RGB");
     }
     system(commande);
-    pileFichier = fopen("liste_base_image", "w+");
+    pileFichier = fopen("sauvegardes/img/liste_base_image", "w+");
   }
 
   //on ecrit l'id + le nom du fichier + retour à la la ligne
@@ -472,17 +472,17 @@ void genererDescripteur_imageDossier(char *cheminDossier, int RGB_ou_NB)
 {
   PILE_image pile;
   FILE *fich;
-  fich = fopen("nom_fichiers.txt", "w+");
+  fich = fopen("sauvegardes/img/nom_fichiers.txt", "w+");
   char chemin[255];
   lecture_dossier_image(fich, cheminDossier);
 
   if (RGB_ou_NB == 1)
   {
-    pile = chargerPILE_image("base_descripteur_image_NB",1);
+    pile = chargerPILE_image("sauvegardes/img/base_descripteur_image_NB",1);
   }
   else
   {
-    pile = chargerPILE_image("base_descripteur_image_RGB",3);
+    pile = chargerPILE_image("sauvegardes/img/base_descripteur_image_RGB",3);
   }
   if (!PILE_estVide_image(pile) && pile->elt.id == 1)
   {
@@ -493,14 +493,14 @@ void genererDescripteur_imageDossier(char *cheminDossier, int RGB_ou_NB)
   {
     if (RGB_ou_NB == 1)
     {
-      if (!image_deja_indexe(chemin, "liste_base_image_NB"))
+      if (!image_deja_indexe(chemin, "sauvegardes/img/liste_base_image_NB"))
       {
         creationDescripteur_image(chemin, &pile);
       }
     }
     else
     {
-      if (!image_deja_indexe(chemin, "liste_base_image_RGB"))
+      if (!image_deja_indexe(chemin, "sauvegardes/img/liste_base_image_RGB"))
       {
         creationDescripteur_image(chemin, &pile);
       }
@@ -545,3 +545,36 @@ void genererDescripteur_image(char *cheminImage, int RGB_ou_NB)
 }
 
 
+void genererDescripteur_image(char *cheminImage, int RGB_ou_NB)
+{
+  PILE_image pile;
+
+  if (RGB_ou_NB == 1)
+  {
+    pile = chargerPILE_image("sauvegardes/img/base_descripteur_image_NB",1);
+  }
+  else
+  {
+    pile = chargerPILE_image("sauvegardes/img/base_descripteur_image_RGB",3);
+  }
+  if (!PILE_estVide_image(pile) && pile->elt.id == 1)
+  {
+    pile = inverserPILE_image(pile);
+
+  }
+  if (RGB_ou_NB == 1)
+  {
+    if (!image_deja_indexe(cheminImage, "sauvegardes/img/liste_base_image_NB"))
+    {
+      creationDescripteur_image(cheminImage, &pile);
+    }
+  }
+  else
+  {
+    if (!image_deja_indexe(cheminImage, "sauvegardes/img/liste_base_image_RGB"))
+    {
+      creationDescripteur_image(cheminImage, &pile);
+    }
+  }
+  sauvegarderPile_image(pile, RGB_ou_NB);
+}
