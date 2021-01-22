@@ -13,6 +13,7 @@ BIN=../
 DIR_TEXTE=$(BIN)module_texte
 DIR_AUDIO=$(BIN)module_audio
 DIR_IMAGE=$(BIN)module_image
+DIR_SAVE=$(BIN)sauvegardes
 
 #Menus
 SRCM=$(wildcard *.c)
