@@ -2,9 +2,8 @@
 
 /**
  * @file pile_dynamique.c
- * @author Baptiste POMARELLE
+ * @author DUVIVIER Davy
  * @brief Les fonctions relatives a la pile de Descripteurs (et de leurs occurences) et a la pile de descripteurs
- * @version 0.1
  * @date 2020-12-16
  *
  * @copyright Copyright (c) 2020
@@ -40,7 +39,13 @@ void affiche_PILE_image(PILE_image p)
         printf("\n");
     }
 }
-
+/**
+ * @brief Empile un descripteur d'image dans la pile
+ * 
+ * @param p 
+ * @param elt 
+ * @return PILE_image 
+ */
 PILE_image emPILE_image(PILE_image p, Descripteur_image elt)
 {
     Cellule_image *cel = malloc(sizeof(Cellule_image));
@@ -61,7 +66,13 @@ PILE_image emPILE_image(PILE_image p, Descripteur_image elt)
     return cel;
 }
 
-
+/**
+ * @brief Dépile un élément de la pile
+ * 
+ * @param p 
+ * @param elt 
+ * @return PILE_image, Descripteur_image
+ */
 PILE_image dePILE_image(PILE_image p, Descripteur_image *elt)
 {
     if (PILE_estVide_image(p))
@@ -86,7 +97,12 @@ PILE_image dePILE_image(PILE_image p, Descripteur_image *elt)
 
     return p;
 }
-
+/**
+ * @brief retourne la pile pour un affichage plus clair dans le fichier
+ * 
+ * @param pile 
+ * @return PILE_image 
+ */
 PILE_image inverserPILE_image(PILE_image pile){
   PILE_image sub=init_pile_image();
   Descripteur_image elem;
@@ -96,7 +112,13 @@ PILE_image inverserPILE_image(PILE_image pile){
   }
   return  sub;
 }
-
+/**
+ * @brief Charge la pile de descripteur d'image déjà indexées
+ * 
+ * @param cheminFichier 
+ * @param RGB_ou_NB 
+ * @return PILE_image 
+ */
 PILE_image chargerPILE_image(char* cheminFichier,int RGB_ou_NB){
   PILE_image pile=init_pile_image();
   FILE* fich=fopen(cheminFichier,"r");

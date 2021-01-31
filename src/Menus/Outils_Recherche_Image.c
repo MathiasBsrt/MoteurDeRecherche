@@ -10,47 +10,6 @@
  */
 #include "header.h"
 
-void txt_to_bmp(char *txt)
-{
-    char b[7];
-    int i = strlen(txt);
-    txt[i - 3] = 'b';
-    txt[i - 2] = 'm';
-    txt[i - 1] = 'p';
-    while (txt[i - 1] != '/')
-    {
-        i--;
-    }
-    strcpy(b, txt + i);
-    txt[i - 1] = '\0';
-    while (txt[i] != '/')
-    {
-        txt[i] = '\0';
-        i--;
-    }
-    strcat(txt, b);
-}
-
-void txt_to_png(char *txt)
-{
-    char b[7];
-    int i = strlen(txt);
-    txt[i - 3] = 'j';
-    txt[i - 2] = 'p';
-    txt[i - 1] = 'g';
-    while (txt[i - 1] != '/')
-    {
-        i--;
-    }
-    strcpy(b, txt + i);
-    txt[i - 1] = '\0';
-    while (txt[i] != '/')
-    {
-        txt[i] = '\0';
-        i--;
-    }
-    strcat(txt, b);
-}
 
 void MenuRecherche_image()
 {

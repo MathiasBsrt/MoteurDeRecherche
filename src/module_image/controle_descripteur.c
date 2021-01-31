@@ -1,6 +1,18 @@
 #include "controle_descripteur.h"
 /**
- * @brief 
+ * @file controle_descripteur.c
+ * @author DUVIVIER Davy et BOSSAERTS Mathias
+ * @brief Regroupe la partie d'indexation des images
+ * @date 2020-12-16
+ *
+ * @copyright Copyright (c) 2020
+ *
+ */
+
+
+
+/**
+ * @brief Cette fonction permet de créer le chemin d'accès à un fichier
  * 
  * @param chemin 
  * @param nom_dossier 
@@ -14,8 +26,15 @@ void path_maker1(char *chemin, char *nom_dossier, char *nom_fichier)
 }
 
 /***
- * Cette fonction permet de créer le descripteur d'un fichier
- * donné et le stocker dans le fichier base_descripteur
+
+ */
+
+
+/**
+ * @brief  Cette fonction permet de créer le descripteur d'un fichier donné et le stocker dans le fichier base_descripteur
+ * 
+ * @param chemin 
+ * @param p pile
  */
 void creationDescripteur_image(char *chemin, PILE_image *p)
 {
@@ -101,8 +120,18 @@ void creationDescripteur_image(char *chemin, PILE_image *p)
 }
 
 /**
- * Cette fonction permet de sauvegarder un descripteur donné en paramètre dans le fichier base_descripteur_image
- * et de lier ce descripteur avec le fichier dans le fichier liste_base_image
+ * 
+ * 
+ */
+
+/**
+ * @brief Cette fonction permet de sauvegarder un descripteur donné en paramètre dans le fichier base_descripteur_image et de lier ce descripteur avec le fichier dans le fichier liste_base_image
+ * 
+ * @param nouveau 
+ * @param p 
+ * @param nom 
+ * @param RGB_ou_NB 
+ * @return PILE_image 
  */
 PILE_image SauvegardeDescripteur_image(Descripteur_image nouveau, PILE_image p, char *nom, int RGB_ou_NB)
 {
@@ -271,6 +300,12 @@ int power(int x, int puiss)
   return resultat;
 }
 
+/**
+ * @brief Quantifie un seul pixel RGB en un entier
+ * 
+ * @param pixel 
+ * @return un int représentant le pixel quantifié
+ */
 int quantifie_un_pixelRGB(RGB pixel)
 {
   int resultat = 0;
@@ -390,19 +425,7 @@ void lierDescripteur_image(Descripteur_image d, char *nom, int RGB_ou_NB)
 
   fclose(pileFichier);
 }
-/**
- * @brief 
- * 
- * @param chemin 
- * @param nom_dossier 
- * @param nom_fichier 
- */
-/*void path_maker(char *chemin, char *nom_dossier, char *nom_fichier)
-{
-  strcpy(chemin, nom_dossier);
-  strcat(chemin, "/");
-  strcat(chemin, nom_fichier);
-}*/
+
 /**
  * @brief lecture du dossier à indexer
  * 
@@ -435,7 +458,7 @@ void lecture_dossier_image(FILE *f, char *nom_dossier)
   rewind(f); //on remet le pointeur du fichier au début
 }
 /**
- * @brief 
+ * @brief vérifie si une image a déjà été indexé
  * 
  * @param path_to_xml 
  * @param liste_base_image 
@@ -463,7 +486,7 @@ int image_deja_indexe(char *path_to_xml, char *liste_base_image)
 }
 
 /**
- * @brief 
+ * @brief Permet d'indexer un dossier entier
  * 
  * @param cheminDossier 
  * @param RGB_ou_NB 
@@ -510,17 +533,23 @@ void genererDescripteur_imageDossier(char *cheminDossier, int RGB_ou_NB)
   fclose(fich);
 }
 
+/**
+ * @brief Permet d'indexer une image à la fois
+ * 
+ * @param cheminImage 
+ * @param RGB_ou_NB 
+ */
 void genererDescripteur_image(char *cheminImage, int RGB_ou_NB)
 {
   PILE_image pile;
 
   if (RGB_ou_NB == 1)
   {
-    pile = chargerPILE_image("base_descripteur_image_NB",1);
+    pile = chargerPILE_image("sauvegardes/img/base_descripteur_image_NB",1);
   }
   else
   {
-    pile = chargerPILE_image("base_descripteur_image_RGB",3);
+    pile = chargerPILE_image("sauvegardes/img/base_descripteur_image_RGB",3);
   }
   if (!PILE_estVide_image(pile) && pile->elt.id == 1)
   {
@@ -529,14 +558,14 @@ void genererDescripteur_image(char *cheminImage, int RGB_ou_NB)
   }
   if (RGB_ou_NB == 1)
   {
-    if (!image_deja_indexe(cheminImage, "liste_base_image_NB"))
+    if (!image_deja_indexe(cheminImage, "sauvegardes/img/liste_base_image_NB"))
     {
       creationDescripteur_image(cheminImage, &pile);
     }
   }
   else
   {
-    if (!image_deja_indexe(cheminImage, "liste_base_image_RGB"))
+    if (!image_deja_indexe(cheminImage, "sauvegardes/img/liste_base_image_RGB"))
     {
       creationDescripteur_image(cheminImage, &pile);
     }

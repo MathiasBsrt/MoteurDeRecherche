@@ -1,5 +1,13 @@
 #include "moteur.h"
-
+/**
+ * @file moteur.c
+ * @author DUVIVIER Davy et BOSSAERTS Mathias
+ * @brief Regroupe la partie recherche des images
+ * @date 2020-12-16
+ *
+ * @copyright Copyright (c) 2020
+ *
+ */
 
 /**
  * @brief compare deux image à travers un seuil de ressemblance défini par avance
@@ -16,11 +24,7 @@ int comparaison_image(Descripteur_image d1, Descripteur_image d2, double seuil,i
 
     //Similaire si seuil% des cases sont similaire
     //Une case est similaire si l la valeur 1 et compris dans l'intervale val2-seuil; val2 +seuil
-    //printf("\nd1 : %d\n",d1.id);
-
-    //affiche_Descripteur_image(d1);
-    //printf("\nd2 : %d\n",d2.id);
-    //affiche_Descripteur_image(d2);
+ 
     if (d1.id == d2.id)
     {
         return 0;
@@ -60,10 +64,7 @@ int comparaison_image(Descripteur_image d1, Descripteur_image d2, double seuil,i
 
     //On obtient un tableau dont la longueur et le nb de cases similaire. On peut en tirer un pourcentage de similarité (sur les 64 cases d'un histogramme)
     //On compare la similarité au seuil
-    //printf("\n similaire sur %d cases\n", nbCaseIntersection);
 
-
-    //printf("Similaire à %f pourcents\n", pourcentage);
     if (*pourcentage == 100)
     {
         return 0;
@@ -75,6 +76,14 @@ int comparaison_image(Descripteur_image d1, Descripteur_image d2, double seuil,i
 
     return 2;
 }
+
+/**
+ * @brief Trie le tableau obtenu dans l'ordre décroissant de leur pourcentages de correspondance
+ * 
+ * @param chemins_fichiers 
+ * @param pourcentages 
+ * @param taille 
+ */
 void trier_tab_pourcentage_chemin(char* chemins_fichiers[255],double* pourcentages,int taille){
     int temp;
     char tempString[255];
@@ -136,7 +145,6 @@ void rechercheParCritere_image(RGB couleurDominante, FILE *fichiersSimilaires, i
     }
     trier_tab_pourcentage_chemin(fichiers,pourcentage_fichier,nbfichiers);
     for(int i=0;i<nbfichiers;i++){
-        printf("%s contient cette couleur à %f pourcents\n",fichiers[i],pourcentage_fichier[i]);
         fprintf(fichiersSimilaires, "%f %s\n",pourcentage_fichier[i] ,fichiers[i]);
     }
 
@@ -187,7 +195,6 @@ void rechercheParDocument_RGB(char *cheminVersDocument, FILE *fichiersSimilaires
     }
     trier_tab_pourcentage_chemin(fichiers,pourcentage_fichier,nbfichiers);
     for(int i=0;i<nbfichiers;i++){
-        printf("%s est similaire à %f pourcents\n",fichiers[i],pourcentage_fichier[i]);
         fprintf(fichiersSimilaires, "%f %s\n",pourcentage_fichier[i] ,fichiers[i]);
     }
         for(int i=0;i<25;i++){
@@ -235,7 +242,6 @@ void rechercheParDocument_NB(char *cheminVersDocument, FILE *fichiersSimilaires,
     }
     trier_tab_pourcentage_chemin(fichiers,pourcentage_fichier,nbfichiers);
     for(int i=0;i<nbfichiers;i++){
-        printf("%s est similaire à %f pourcents\n",fichiers[i],pourcentage_fichier[i]);
         fprintf(fichiersSimilaires, "%f %s\n",pourcentage_fichier[i] ,fichiers[i]);
     }
         for(int i=0;i<25;i++){
@@ -244,7 +250,14 @@ void rechercheParDocument_NB(char *cheminVersDocument, FILE *fichiersSimilaires,
     free(fichiers);
 }
 
-
+/**
+ * @brief Transforme un identifiant d'image en un chemin d'accès à l'image
+ * 
+ * @param id 
+ * @param NB_RGB 
+ * @param chemin 
+ * @return chemin d'accès
+ */
 void id_to_chemin_image(int id,int NB_RGB,char * chemin){
     FILE* fich;
     int bon_id;
@@ -264,6 +277,13 @@ void id_to_chemin_image(int id,int NB_RGB,char * chemin){
     }
 }
 
+/**
+ * @brief Transforme un chemin d'accès à l'image en un identifiant
+ * 
+ * @param chemin 
+ * @param nb_RGB 
+ * @return int : identifiant
+ */
 int chemin_to_id_image(char* chemin, int nb_RGB){
     FILE* fich;
     char bon_chemin[255];
@@ -287,7 +307,10 @@ int chemin_to_id_image(char* chemin, int nb_RGB){
 
 }
 
-
+/**
+ * @brief Lance la recherche par critère
+ * 
+ */
 void lancer_recherche_critere()
 {
     FILE *fich;
@@ -302,7 +325,10 @@ void lancer_recherche_critere()
     rechercheParCritere_image(couleur, fich, SEUIL_DOMINANTE);
     fclose(fich);
 }
-
+/**
+ * @brief Lance la recherche par comparaison de document RGB
+ * 
+ */
 void lancer_recherche_document_RGB()
 {
     FILE *fich;
@@ -314,6 +340,10 @@ void lancer_recherche_document_RGB()
     fclose(fich);
 }
 
+/**
+ * @brief Lance la recherche par comparaison de document noir et blanc
+ * 
+ */
 void lancer_recherche_document_NB()
 {
     FILE *fich;
@@ -325,15 +355,39 @@ void lancer_recherche_document_NB()
     fclose(fich);
 }
 
-/*
 
-int main(int argc, char const *argv[])
-{
-    genererDescripteur_image("../tests/TEST_RGB/txt/01.txt",3); //RGB
-    genererDescripteur_image("../tests/TEST_NB/txt/51.txt",1); // Génératio nb
-    //genererDescripteur_imageDossier("../tests/TEST_RGB/txt", 3); // Génération rgb
-    //genererDescripteur_imageDossier("../tests/TEST_NB/txt", 1);  // Génératio nb
-    //lancer_recherche_critere();
-    lancer_recherche_document_NB();
-    return 0;
-}*/
+void txt_to_bmp(char* txt){
+    char b[7];
+    int i=strlen(txt);
+    txt[i-3]='b';
+    txt[i-2]='m';
+    txt[i-1]='p';
+    while(txt[i-1]!='/'){
+        i--;
+    }
+    strcpy(b,txt+i);
+    txt[i-1]='\0';
+    while(txt[i]!='/'){
+        txt[i]='\0';
+        i--;
+    }
+    strcat(txt,b);
+}
+void txt_to_png(char* txt){
+    char b[7];
+    int i=strlen(txt);
+    txt[i-3]='j';
+    txt[i-2]='p';
+    txt[i-1]='g';
+    while(txt[i-1]!='/'){
+        i--;
+    }
+    strcpy(b,txt+i);
+    txt[i-1]='\0';
+    while(txt[i]!='/'){
+        txt[i]='\0';
+        i--;
+    }
+    strcat(txt,b);
+}
+

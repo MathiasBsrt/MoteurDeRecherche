@@ -1,3 +1,13 @@
+/**
+ * @file descripteur.c
+ * @author DUVIVIER Davy et BOSSAERTS Mathias
+ * @brief header des outils du descripteurs d'image
+ * @date 2020-12-16
+ *
+ * @copyright Copyright (c) 2020
+ *
+ */
+
 #define tailleHistogramme 64
 #define tailleHistogrammeNB 8
 #define quantificateur 2
