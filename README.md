@@ -7,9 +7,9 @@ Nous avons élaboré un moteur de recherche (image, son, audio).
 Veuillez lire le cahier des charges ainsi que le dossier de spécification se trouvant dans le dossier "documentation/"
 
 ## Lancement
-Pour lancer le moteur de recherche, vous devez vous placer dans le dossier src et lancer la commande suivante :
+Pour compiler et lancer le moteur de recherche, vous devez vous placer dans le dossier pfr (à la racine) et lancer la commande suivante :
 ```
-cd Menus && make && cd .. && ./moteur_recherche
+cd src/Menus && make && cd .. && ./moteur_recherche
 ```
 
 
