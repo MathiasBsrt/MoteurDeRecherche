@@ -1,3 +1,11 @@
+/**
+ * @file descripteur.c
+ * @author Théo TRAFNY
+ * @brief L'ensemble de fichier descripteur.h et descripteur.c sont là pour donner
+ * au programme principal un ensemble d'outils (structures, méthodes et macros) pour
+ * pouvoir manipuler efficacement et simplement le concept de descripteur audio.
+ */
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
@@ -5,18 +13,6 @@
 #include "descripteur.h"
 #include "base_descripteur.h"
 #include "wav_file_helper.h"
-
-
-/**
- * @file descripteur.c
- * @author Théo TRAFNY
- * @brief Les fonctions relatives à la gestion des descripteurs audio.
- * @version 0.1
- * @date 2021-01-19
- *
- * @copyright Copyright (c) 2020
- *
- */
 
 DESC_AUDIO init_DESC_AUDIO(int id, unsigned int n, unsigned int m, char * chemin)
 {

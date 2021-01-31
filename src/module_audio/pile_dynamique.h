@@ -1,3 +1,9 @@
+/**
+ * @file pile_dynamique.h
+ * @author Baptiste POMARELLE
+ * @brief Spécification d'une pile dynamique de descripteurs.
+ */
+
 #ifndef PILE_DESC_AUDIO_H_INCLUS 
 
 #define PILE_DESC_AUDIO_H_INCLUS

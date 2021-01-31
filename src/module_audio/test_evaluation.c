@@ -1,3 +1,9 @@
+/**
+ * @file test_evaluation.c
+ * @author Théo TRAFNY
+ * @brief Programme de test pour pouvoir générer une évaluation entre deux descripteurs.
+ */
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>

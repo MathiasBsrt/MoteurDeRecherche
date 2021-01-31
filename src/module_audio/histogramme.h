@@ -1,3 +1,11 @@
+/**
+ * @file histogramme.h
+ * @author Théo TRAFNY
+ * @brief L'ensemble de fichier histogramme.h et histogramme.c sont là pour donner
+ * au programme principal un ensemble d'outils (structure, méthodes et macros) pour
+ * pouvoir manipuler efficacement et simplement le concept d'histogramme audio.
+ */
+
 #ifndef HISTOGRAMME_AUDIO_H_INCLUS 
 
 #define HISTOGRAMME_AUDIO_H_INCLUS

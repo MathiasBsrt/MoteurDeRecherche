@@ -1,3 +1,9 @@
+/**
+ * @file main_histo.c
+ * @author Théo TRAFNY
+ * @brief Programme de test pour pouvoir générer un histogramme.
+ */
+
 /*#include <stdio.h>
 #include <stdlib.h>
 #include "histogramme.h"
