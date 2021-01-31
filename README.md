@@ -5,13 +5,13 @@ Projet commun à plusieurs cours de la première année SRI.
 Nous avons élaboré un moteur de recherche (image, son, audio).
 
 Veuillez lire le cahier des charges ainsi que le dossier de spécification se trouvant dans le dossier "documentation/"
+Lien gitlab du dépot : https://gitlab.com/MathiasBsrt/pfr
 
 ## Lancement
 Pour compiler et lancer le moteur de recherche, vous devez vous placer dans le dossier pfr (à la racine) et lancer la commande suivante :
 ```
 cd src/Menus && make && cd .. && ./moteur_recherche
 ```
-
 
 ## Ressources
 
