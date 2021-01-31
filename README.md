@@ -7,32 +7,11 @@ Nous avons élaboré un moteur de recherche (image, son, audio).
 Veuillez lire le cahier des charges ainsi que le dossier de spécification se trouvant dans le dossier "documentation/"
 
 ## Lancement
-
-A l'heure actuelle, les modules sont indépendants et pas fonctionnels à 100%.
-Vous pouvez néanmoins les essayer :
-### Module Image
+Pour lancer le moteur de recherche, vous devez vous placer dans le dossier src et lancer la commande suivante :
 ```
-cd {chemin}/pfr/src/module_image
-make test
-./test.out tests/TEST_RGB/{nom d'une image.txt}
-```
-Vous pouvez visualiser les sorties dans les fichiers base_descripteur_image et liste_base_image.
-### Module Texte
-
-### Module Audio
-
-Vous pouvez utiliser le fichier de test (encore à completer) avec:
-```bash
-cd {chemin}/pfr/src/module_audio
-make test_audio
+cd Menus && make && cd .. && ./moteur_recherche
 ```
 
-Vous pouvez créer un histogramme (à partir d'un fichier TXT) à l'aide de:
-```bash
-cd {chemin}/pfr/src/module_audio
-make creer_histo_txt
-./main_histo_text <chemin fichier.txt> <k fenêtres d'analyses> <m intervalles>
-```
 
 ## Ressources
 
