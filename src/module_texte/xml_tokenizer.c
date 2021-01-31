@@ -39,10 +39,10 @@ void xml_filter(FILE *src, FILE *dest)
 
 {
     char buffer[MAX_WORD];
-    pile_mot pileStopwords = pile_stopwords();
-    while (fscanf(src, "%s ", buffer) != EOF)
+    pile_mot pileStopwords = pile_stopwords(); //on récupère la liste des stopwords dans une pile de mots
+    while (fscanf(src, "%s ", buffer) != EOF) //lecture du fichier a filtrer
     {
-        if (!estDanslaPile_mot(pileStopwords, buffer))
+        if (!estDanslaPile_mot(pileStopwords, buffer)) //si le mot lu est différent de tous les stopwords, alors c'est bon
             fprintf(dest, "%s ", buffer);
     }
 }

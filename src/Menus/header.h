@@ -21,8 +21,7 @@
 /**
  * @brief sous menu permettant de gérer l'indexation de fichiers textes
  * 
- * @param[in,out] pile 
- * @param[in,out] table 
+ *  
  */
 void MenuIndexation_texte();
 
@@ -49,7 +48,7 @@ void MenuIndexation_audio(PILE_AUDIO *pile_audio);
 //1.1 Recherche texte
 
 /**
- * @brief 
+ * @brief sous menu permettant la recherche de fichiers texte
  * 
  */
 void MenuRecherche_texte();
@@ -57,7 +56,7 @@ void MenuRecherche_texte();
 //1.2 Recherche image
 
 /**
- * @brief 
+ * @brief sous menu permettant la recherche de fichiers image
  * 
  */
 void MenuRecherche_image();
@@ -66,14 +65,14 @@ void MenuRecherche_image();
 //1.3 Recherche audio
 
 /**
- * @brief 
+ * @brief sous menu permettant la recherche de fichiers audio
  * 
  */
 void MenuRecherche_audio();
 //3 outils généraux
 
 /**
- * @brief Permet à l'utilisateur de décider de passer a autre chose
+ * @brief Permet à l'utilisateur d'avoir à appuyer sur entrer pour continuer
  * 
  */
 void waiter();

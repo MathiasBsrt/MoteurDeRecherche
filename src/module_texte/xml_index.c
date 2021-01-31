@@ -26,16 +26,20 @@ void recherche_et_destruction(pile_mot *p, MOT mot)
         Cellule_mot *parcours = *p;
         while (parcours)
         {
+            //on cherche le MOT dans la pile
             if (compare_MOT(mot, parcours->elt))
             {
                 marqueur = parcours;
+                //une fois trouvé, on le marque
                 break;
             }
+            
             parcours = parcours->suivant;
         }
         parcours = *p;
         while (parcours->suivant != marqueur)
             parcours = parcours->suivant;
+        //on relie directement le précédent du marqueur à son suivant
         parcours->suivant = marqueur->suivant;
         free(marqueur);
     }
@@ -55,17 +59,20 @@ void recherche_et_destruction(pile_mot *p, MOT mot)
 void descripteur_de_texte(FILE *src, pile_mot *p, int seuil)
 {
     char buffer[MAX_WORD];
+    //Lecture des mots présents dans le fichier
     while (fscanf(src, "%s ", buffer) != EOF)
     {
         if (!(estDanslaPile_mot(*p, buffer)))
         {
-
+            //s'il n'est pas dans la pile, on l'empile
             *p = emPILE_mot(*p, affecter_MOT(buffer));
+            //puis on incrémente
             estDanslaPile_mot(*p, buffer);
         }
     }
 
     Cellule_mot *parcours = *p;
+    //Si le seuil est != de 0, on vient supprimer les occurences
     if (seuil)
 
     {
@@ -89,6 +96,7 @@ void descripteur_de_texte(FILE *src, pile_mot *p, int seuil)
 int texte_deja_indexe(char *path_to_xml)
 {
     int code_retour = 0;
+    //On récupère la liste des chemins de fichiers déjà indexés
     FILE *liste_base_desc = fopen("sauvegardes/txt/liste_base_descripteurs", "r");
     if (liste_base_desc)
     {
@@ -98,7 +106,7 @@ int texte_deja_indexe(char *path_to_xml)
         while (fscanf(liste_base_desc, "%s %d", buffer, &id_texte) != EOF)
         {
 
-            if (!strcmp(buffer, path_to_xml))
+            if (!strcmp(buffer, path_to_xml))//Si la cehmin passé en paramètre est le même que celui lu, on retourne son id
             {
                 code_retour = id_texte;
 
@@ -128,7 +136,7 @@ int texte_deja_indexe(char *path_to_xml)
 int fabrique_a_descripteur(char *path_to_xml, PILE_descripteur_texte *pile_desc, Table_Index *table_index, int seuil)
 {
     int id = 0;
-    FILE *tmp = fopen("tmp", "w+");   //fichier de destination du xml_cleaner
+    FILE *tmp = fopen("tmp", "w+");   //fichier de destination du xml_cleaner / source de xml_tokenizer
     FILE *tmp1 = fopen("tmp1", "w+"); // fichier de destination du xml_tokenizer
     FILE *src = fopen(path_to_xml, "r");
 
@@ -142,10 +150,10 @@ int fabrique_a_descripteur(char *path_to_xml, PILE_descripteur_texte *pile_desc,
     {
         if (!texte_deja_indexe(path_to_xml))
         {
-            xml_cleaner(src, tmp);
-            rewind(tmp);
-            xml_filter(tmp, tmp1);
-            rewind(tmp1);
+            xml_cleaner(src, tmp); //première étape de nettoyage
+            rewind(tmp); //on remet le curseur au début du fichier tmp
+            xml_filter(tmp, tmp1); // deuxième étape de nettoyage
+            rewind(tmp1); //on remet le curseur au début du fichier tmp 1
 
             descripteur_de_texte(tmp1, &p, seuil);
 
@@ -173,13 +181,13 @@ int Descripteur_texte_dossier(char *nom_dossier, PILE_descripteur_texte *pile_de
     if (f)
     {
         printf("--> Dossier en cours d'indexation\n");
-        lecture_dossier_texte(f, nom_dossier);
+        lecture_dossier_texte(f, nom_dossier); //On récupère tous les noms de fichiers présents dans la racine du dossier afin de les traiter
         char path_to_xml[MAX_WORD];
         char nom_fichier[MAX_WORD / 2];
         while (fscanf(f, "%s", nom_fichier) != EOF)
         {
             path_maker(path_to_xml, nom_dossier, nom_fichier); //permet de recuperer le chemin vers un fichier xml dans path_to_xml
-            fabrique_a_descripteur(path_to_xml, pile_desc, table_index, seuil);
+            fabrique_a_descripteur(path_to_xml, pile_desc, table_index, seuil); //création des descripteurs 1 à 1
         }
         fclose(f);
         remove("tmp");
@@ -195,7 +203,7 @@ int Descripteur_texte_fichier(char *nom_fichier, PILE_descripteur_texte *pile_de
 {
     int id;
     printf("--> Fichier en cours d'indexation\n");
-    id = fabrique_a_descripteur(nom_fichier, pile_desc, table_index, seuil);
+    id = fabrique_a_descripteur(nom_fichier, pile_desc, table_index, seuil); //création du descripteur
     remove("tmp");
     remove("tmp1");
     return id;

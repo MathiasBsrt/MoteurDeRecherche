@@ -1,3 +1,13 @@
+/**
+ * @file recherche.c
+ * @author Mathias Bossaerts
+ * @brief Fonctions de recherche du module texte
+ * @version 0.1
+ * @date 2021-01-10
+ * 
+ * @copyright Copyright (c) 2021
+ * 
+ */
 #include "Header.h"
 
 int comparaison_texte(Descripteur_texte *d1, Descripteur_texte *d2, double seuil, Table_Index t, double *pourcentageS)
@@ -11,10 +21,6 @@ int comparaison_texte(Descripteur_texte *d1, Descripteur_texte *d2, double seuil
     // On ajoute cette case dans le teableau d'intersection
     int nbCaseIntersection = 0;
 
-    if (d2->pile_mot == NULL)
-    {
-        printf("yo");
-    }
     Cellule_mot *parcours_d1 = d1->pile_mot;
 
     parcours_d1 = d1->pile_mot;
@@ -40,12 +46,12 @@ int comparaison_texte(Descripteur_texte *d1, Descripteur_texte *d2, double seuil
         parcours_d1 = parcours_d1->suivant; // Mot suivant
     }
 
-    printf("\nsimilaire sur %d cases\n", nbCaseIntersection);
+    //printf("\nsimilaire sur %d cases\n", nbCaseIntersection);
 
     double pourcentage = (double)nbCaseIntersection / nbMot * 100;
     *pourcentageS = pourcentage;
-    printf("Similaire à %f pourcents\n", pourcentage);
-    printf("seuil = %f\n", seuil);
+    //printf("Similaire à %f pourcents\n", pourcentage);
+    //printf("seuil = %f\n", seuil);
     if (pourcentage == 100.0)
     {
         return 0;
@@ -78,13 +84,13 @@ void rechercheParCritere_texte(char *mot, char **fichiersSimilaires, int *nbF)
     else
     {
         //On compare ce fichier avec tous les autres fichiers en appliquant le seuil
-        printf("nb_max=%d\n", indexMot->nb_occ);
+        //printf("nb_max=%d\n", indexMot->nb_occ);
         *nbF = indexMot->nb_occ;
         for (int i = 0; i < indexMot->nb_occ; i++)
         {
             char chemin[MAX_STRING];
             getChemin_texte(indexMot->idTxt_avec_occ[0][i], chemin);
-            printf("chemin trouvé=%s\n", chemin);
+            printf("chemin trouvé=%s avec %d fois le mot %s\n", chemin,indexMot->idTxt_avec_occ[1][i],mot);
             strcpy(fichiersSimilaires[i], chemin);
         }
     }
@@ -102,7 +108,7 @@ void getChemin_texte(int id, char chemin[])
         {
             if (id_texte == id)
             {
-                printf("chemin trouvé : %s",chemin);
+                //printf("chemin trouvé : %s",chemin);
                 break;
             }
         }
@@ -113,15 +119,15 @@ Descripteur_texte *getDescripteur_Texte(int id, PILE_descripteur_texte *p)
 {
 
     Descripteur_texte *parcours = NULL;
-    printf("on cherche le descripteur correspondant\n");
+    //printf("on cherche le descripteur correspondant\n");
     parcours = *p;
     while (parcours != NULL)
     {
-        printf("parcours id :%d\n", parcours->id);
+        //printf("parcours id :%d\n", parcours->id);
 
         if (parcours->id == id)
         {
-            printf(" descripteur bien trouvé\n\n");
+            //printf(" descripteur bien trouvé\n\n");
 
             return parcours;
         }
@@ -135,7 +141,7 @@ Table_Index rechercheMot_texte(Table_Index a, char *mot)
 {
     if (a == NULL)
     {
-        printf("mot non trouvé");
+        //printf("mot non trouvé");
         return NULL;
     }
     else if (strcmp(a->mot, mot) == 0)
@@ -208,7 +214,6 @@ int rechercheParDocument_texte(char *cheminVersDocument, char *fichiersSimilaire
                 if (res < 2)
                 {
                     getChemin_texte(desc2->id, chemin2);
-                    printf("fichier similaire : %s \n", chemin2);
                     pourcentages[nbF] = pourcentagesS;
                     strcpy(fichiersSimilaires[nbF], chemin2);
 
@@ -247,7 +252,7 @@ int rechercheParDocument_texte(char *cheminVersDocument, char *fichiersSimilaire
 
         for (int i = 0; i < nbF; i++)
         {
-            printf("%s -> %d \n", fichiersSimilaires[i], pourcentages[i]);
+            printf("Fichier similaire : %s à %d pourcents \n", fichiersSimilaires[i], pourcentages[i]);
         }
     }
 

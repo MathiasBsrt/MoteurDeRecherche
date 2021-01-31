@@ -47,17 +47,21 @@ void xml_cleaner(FILE *src, FILE *dest)
     do
     {
         if (parcours == '<')
+        //On enleve les balises 
             while ((parcours = fgetc(src)) != '>')
                 ;
         else if (nbr_char < MAX_STRING - 1)
         {
             if (estPonctuation(parcours))
+            //On enleve la ponctuation
                 add_char(buffer, ' ', &nbr_char);
             else
+            //on récupère le mot lettre a lettre dans la variable buffer
                 add_char(buffer, parcours, &nbr_char);
         }
         else
         {
+            //si le buffer est plein, on le sauvegarde dans le fichier dest
             fprintf(dest, "%s", buffer);
             strcpy(buffer, "");
             nbr_char = 0;
@@ -73,4 +77,3 @@ void xml_cleaner(FILE *src, FILE *dest)
         fprintf(dest, "%s", buffer);
     }
 }
-
