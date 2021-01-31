@@ -1,3 +1,14 @@
+/**
+ * @file base_descripteur.c
+ * @author Théo TRAFNY
+ * @brief L'ensemble de fichier base_descripteur.h et base_descripteur.c sont là pour donner
+ * au programme principal un ensemble d'outils (structure, méthodes et macros) pour
+ * pouvoir intéragir facilement avec les deux fichiers de sauvegardes
+ * définis par les macros BASE_DESC_FICHIER et LISTE_BASE_FICHIER.
+ * La méthode de recherche est aussi présente dans ces fichiers car le programme utilise les deux fichiers ci-dessus.
+ * C'est pourquoi la spécification et l'implémentation de cette fonction ce trouve ici.
+ */
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>

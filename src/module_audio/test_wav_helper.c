@@ -1,3 +1,10 @@
+/**
+ * @file test_wav_helper.c
+ * @author Théo TRAFNY
+ * @brief Programme de test pour vérifier le bon fonctionnement des méthodes de wav_file_helper.c et wav_file_helper.h
+ */
+
+
 #include <stdio.h>
 #include "wav_file_helper.h"
 /*
