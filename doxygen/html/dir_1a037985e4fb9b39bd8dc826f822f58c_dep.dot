@@ -1,0 +1,13 @@
+digraph "D:/Documents/UPSSITECH/Projet FR/pfr/src/module_audio" {
+  compound=true
+  node [ fontsize="10", fontname="Helvetica"];
+  edge [ labelfontsize="10", labelfontname="Helvetica"];
+  subgraph clusterdir_a1bab6b81cec34f1a83e9a5d25da3575 {
+    graph [ bgcolor="#ddddee", pencolor="black", label="src" fontname="Helvetica", fontsize="10", URL="dir_a1bab6b81cec34f1a83e9a5d25da3575.html"]
+  subgraph clusterdir_1a037985e4fb9b39bd8dc826f822f58c {
+    graph [ bgcolor="#eeeeff", pencolor="black", label="" URL="dir_1a037985e4fb9b39bd8dc826f822f58c.html"];
+    dir_1a037985e4fb9b39bd8dc826f822f58c [shape=plaintext label="module_audio"];
+    dir_ce67fb2b291c7124fb55f890056dbe7b [shape=box label="tests" color="black" fillcolor="white" style="filled" URL="dir_ce67fb2b291c7124fb55f890056dbe7b.html"];
+  }
+  }
+}

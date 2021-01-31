@@ -1,0 +1,13 @@
+digraph "D:/Documents/UPSSITECH/Projet FR" {
+  compound=true
+  node [ fontsize="10", fontname="Helvetica"];
+  edge [ labelfontsize="10", labelfontname="Helvetica"];
+  subgraph clusterdir_6fd14bde4b3e4e3c87dfd3d5c5c24791 {
+    graph [ bgcolor="#ddddee", pencolor="black", label="UPSSITECH" fontname="Helvetica", fontsize="10", URL="dir_6fd14bde4b3e4e3c87dfd3d5c5c24791.html"]
+  subgraph clusterdir_2e505e07b1faf70f05b37476e6576f40 {
+    graph [ bgcolor="#eeeeff", pencolor="black", label="" URL="dir_2e505e07b1faf70f05b37476e6576f40.html"];
+    dir_2e505e07b1faf70f05b37476e6576f40 [shape=plaintext label="Projet FR"];
+    dir_0ed251e3e54b358904dc912f4ff2114e [shape=box label="pfr" color="red" fillcolor="white" style="filled" URL="dir_0ed251e3e54b358904dc912f4ff2114e.html"];
+  }
+  }
+}
