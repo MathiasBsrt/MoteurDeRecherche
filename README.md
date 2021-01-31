@@ -17,7 +17,7 @@ cd Menus && make && cd .. && ./moteur_recherche
 
 Les guide d'utilisations des outils utiles pour le projet se trouvent dans le dossier "guide/".
 
-Pour accèder à la documentation du code, ouvrez le fichier doxygen/html/index.html
+Pour accèder à la documentation du code, ouvrez le fichier ``doxygen/html/index.html``
 La liste des fonctions et des strcutures sont disponibles à partir des menus.
 
 Le rapport du projet et le manuel utilisateur se trouvent dans le dossier documentation.
