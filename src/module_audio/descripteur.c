@@ -1,5 +1,5 @@
 /**
- * @file descripteur.h
+ * @file descripteur.c
  * @author Théo TRAFNY
  * @brief L'ensemble de fichier descripteur.h et descripteur.c sont là pour donner
  * au programme principal un ensemble d'outils (structures, méthodes et macros) pour
