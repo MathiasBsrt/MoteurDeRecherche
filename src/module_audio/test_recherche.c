@@ -1,3 +1,9 @@
+/**
+ * @file test_recherche.c
+ * @author Théo TRAFNY
+ * @brief Programme de test pour pouvoir générer une recherche d'un fichier.
+ */
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>

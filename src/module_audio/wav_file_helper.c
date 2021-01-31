@@ -1,3 +1,11 @@
+/**
+ * @file wav_file_helper.c
+ * @author Théo TRAFNY
+ * @brief Petit outil permettant de récupérer des informations présentes 
+ * dans l'entête du fichier au format WAV.
+ * Lien vers le Wiki: https://fr.wikipedia.org/wiki/Waveform_Audio_File_Format#En-t%C3%AAte_de_fichier_WAV
+ */
+
 #include <stdio.h>
 #include "wav_file_helper.h"
 

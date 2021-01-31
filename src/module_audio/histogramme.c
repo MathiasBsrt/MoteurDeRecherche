@@ -1,3 +1,11 @@
+/**
+ * @file histogramme.c
+ * @author Théo TRAFNY
+ * @brief L'ensemble de fichier histogramme.h et histogramme.c sont là pour donner
+ * au programme principal un ensemble d'outils (structure, méthodes et macros) pour
+ * pouvoir manipuler efficacement et simplement le concept d'histogramme audio.
+ */
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -10,17 +18,6 @@
 // +1 a été ajouté.
 #define SHORT_INT_MIN_VALUE -32767
 #define SHORT_INT_MAX_VALUE 32767
-
-/**
- * @file histogramme.c
- * @author Théo TRAFNY
- * @brief Les fonctions relatives à la gestion des histogrammes audio.
- * @version 0.1
- * @date 2021-01-19
- *
- * @copyright Copyright (c) 2020
- *
- */
 
 
 HISTOGRAMME_AUDIO init_HISTOGRAMME_AUDIO(unsigned int n, unsigned int m)

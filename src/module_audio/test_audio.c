@@ -1,3 +1,9 @@
+/**
+ * @file test_audio.c
+ * @author Théo TRAFNY
+ * @brief Ensemble de tests pour vérifier le bon fonctionnement du module audio.
+ */
+
 #include <stdio.h>
 #include <math.h>
 #include "descripteur.h"
