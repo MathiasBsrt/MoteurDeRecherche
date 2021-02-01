@@ -6,7 +6,7 @@ Nous avons élaboré un moteur de recherche (image, son, audio).
 
 Veuillez lire le cahier des charges ainsi que le dossier de spécification se trouvant dans le dossier "documentation/"
 
-Lien gitlab du dépot : https://gitlab.com/MathiasBsrt/pfr
+Ce projet utilise la méthode d'intégration continue. Vous pouvez visualiser la pipeline ici : https://gitlab.com/MathiasBsrt/pfr/-/pipelines
 
 ## Lancement
 Pour compiler et lancer le moteur de recherche, vous devez vous placer dans le dossier pfr (à la racine) et lancer la commande suivante :
